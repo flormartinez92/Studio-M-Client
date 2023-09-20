@@ -1,6 +1,8 @@
-export default function Input({ label, type }) {
+export default function Input({ label, type, className }) {
   return (
-    <div className="flex flex-col items-center justify-center mb-4">
+    <div
+      className={`flex flex-col items-center justify-center mb-4 ${className}`}
+    >
       <label className="font-mystery-mixed text-2xl mb-8">{label}</label>
       <input
         type={type}
