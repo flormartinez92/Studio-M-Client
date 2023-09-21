@@ -180,8 +180,8 @@ export function ArrowReload({ width, height, color }) {
 export function BurgerMenu() {
   return (
     <svg
-      width="20"
-      height="16"
+      width="24"
+      height="24"
       viewBox="0 0 20 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
