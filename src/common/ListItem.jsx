@@ -1,18 +1,25 @@
-"use client"
-
 import React from "react";
 import IconButton from "./IconButton";
-import { Icon } from "@iconify/react";
 
-export default function ListItem({ title, icon, itemStyle, listStyle }) {
-  const style = itemStyle ? itemStyle : "";
-
+export default function ListItem({
+  text,
+  className,
+  iconOne,
+  iconTwo,
+  iconThree,
+}) {
   return (
-    <div className={`flex flex-row items-center justify-around max-w-[319px] max-h-10 border-b border-[#C7C7C7] ml-2 ${listStyle}`} style={{ boxShadow: "-2px 0px 2px 0px rgba(199, 199, 199, 0.50)"}}>
-      <p className="mr-auto">{title}</p>
-      <IconButton iconButtonStyle={"text-[#389817] w-[21px] h-[21px]"} icon={<Icon icon="typcn:plus"/>} />
-      <IconButton iconButtonStyle={"text-[#1bbee2] w-[21px] h-[21px]"} icon={<Icon icon="material-symbols:edit"/>} />
-      <IconButton iconButtonStyle={`${style} `} icon={icon} /> 
+    <div
+      className={`flex items-center justify-between bg-white p-2 px-4 w-full border-solid border-2 border-gray ${
+        className || ""
+      }`}
+    >
+      <p className="font-ms-gothic text-xl">{text}</p>
+      <div className="flex justify-center items-center gap-3">
+        <IconButton>{iconOne}</IconButton>
+        <IconButton>{iconTwo}</IconButton>
+        <IconButton>{iconThree}</IconButton>
+      </div>
     </div>
   );
 }

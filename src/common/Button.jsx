@@ -1,11 +1,11 @@
-export default function Button({ text, className }) {
+export default function Button({ children, className, type }) {
   return (
     <button
-      className={`bg-[#1E1E1E] text-[#FFFFFF] font-mystery-mixed text-2xl p-4 w-220 h-81 ${
-        className || ""
-      }`}
+      className={`bg-black text-white text-2xl p-4 ${
+        type === "rounder" ? "rounded-2xl px-14 py-3" : null
+      } ${className || ""}`}
     >
-      {text}
+      {children}
     </button>
   );
 }
