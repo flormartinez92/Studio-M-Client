@@ -1,6 +1,5 @@
 import React from "react";
 import Border from "./Border";
-import { Check } from "@/common/Icons";
 
 export default function CheckList({ icon, className }) {
   return (
