@@ -1,15 +1,24 @@
-export default function Input({ label, type, className }) {
+export default function Input({
+  name,
+  label,
+  type,
+  placeholder,
+  className,
+  ...inputProps
+}) {
   return (
-    <div
-      className={`flex flex-col items-center justify-center mb-4 ${className}`}
-    >
-      <label className="font-mystery-mixed text-2xl mb-8">{label}</label>
+    <div className={`flex flex-col my-2 ${className || ""}`}>
+      <label htmlFor={name} className="font-mystery-mixed text-3xl mb-1">
+        {label}
+      </label>
       <input
         type={type}
-        className="bg-[#D9D9D9] text-base w-64 h-8 pl-3 mb-7"
+        placeholder={placeholder}
+        id={name}
+        name={name}
+        className="p-2 pl-3 font-ms-gothic outline-none"
+        {...inputProps}
       />
     </div>
   );
 }
-
-// Falta poner la fuente del input que seria MS PGothic, no la encontre.

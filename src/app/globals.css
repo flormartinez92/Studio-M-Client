@@ -7,9 +7,13 @@
     font-family: "mystery-mixed";
     src: url(../../public/fonts/Mystery-Mixed-Regular.otf);
   }
+  @font-face {
+    font-family: "ms-gothic";
+    src: url(../../public/fonts/Ms-Gothic.ttf);
+  }
 }
 
-body {
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;

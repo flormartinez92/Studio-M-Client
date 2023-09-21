@@ -1,10 +1,6 @@
 export default function Border({ children, className }) {
   return (
-    <div
-      className={`p-4 border-4 border-solid border-[#E21B7B] bg-transparent  ${
-        className || ""
-      } `}
-    >
+    <div className={`p-3 border-2 border-solid border-pink ${className || ""}`}>
       {children}
     </div>
   );

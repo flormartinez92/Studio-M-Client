@@ -1,11 +1,14 @@
-import React from "react";
-
-export default function IconButton({ iconButtonStyle, icon }) {
-  const style = iconButtonStyle ? iconButtonStyle : "";
-
+export default function IconButton({
+  children,
+  className,
+  ...iconButtonProps
+}) {
   return (
-    <div>
-      <button className={`${style}`}>{icon}</button>
-    </div>
+    <button
+      className={`flex items-center justify-center ${className || ""}`}
+      {...iconButtonProps}
+    >
+      {children}
+    </button>
   );
 }
