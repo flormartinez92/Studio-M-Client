@@ -8,7 +8,7 @@ export default function AdminButton({ icon, text, className }) {
       }`}
     >
       {icon}
-      <p className="font-ms-gothic">{text}</p>
+      <p className="font-ms-gothic text-2xl">{text}</p>
     </Button>
   );
 }
