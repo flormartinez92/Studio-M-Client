@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 
 export const Qr_social_networks = ({
