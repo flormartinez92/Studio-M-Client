@@ -68,7 +68,7 @@ export default function Intro() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center w-100% relative mt-20 mb-20">
+      <div className="flex flex-col items-center w-100% relative mt-10 mb-20">
         <Image src="/img/paper.png" width={500} height={500} alt="Picture" />
         <p className="text-5xl text-black font-mystery-mixed absolute top-10">
           Studio by M

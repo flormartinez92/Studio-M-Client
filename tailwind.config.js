@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     fontFamily: {
       "mystery-mixed": ["mystery-mixed"],
-      "ms-gothic": ["ms-gothic"],
+      "ms-gothic": ["ms-gothic-Nueva"],
     },
     colors: {
       page: "#C7C7C7",
