@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
 
-export const Qr_social_networks = ({
+export default function Qr_social_networks({
   styles,
   rotation,
   url,
   height = 100,
   width = 100,
   alt,
-}) => {
+}) {
   return (
     <div className={`${rotation}`}>
       <Image
@@ -20,4 +20,4 @@ export const Qr_social_networks = ({
       ></Image>
     </div>
   );
-};
+}

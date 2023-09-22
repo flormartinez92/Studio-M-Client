@@ -1,9 +1,10 @@
+"use client";
 import { Qr_social_networks } from "@/common/Qr_social_networks";
 import Image from "next/image";
 
-export const Footer = () => {
+export default function Footer() {
   return (
-    <div className="relative bg-[url('/Fondo.png')] bg-no-repeat w-[100%] h-screen flex flex-col text-center overflow-y-scroll bg-cover bg-center">
+    <div className="relative bg-[url('/Fondo.png')] bg-no-repeat w-[100%] h-full flex flex-col text-center bg-cover bg-center">
       <h2 className="font-mystery-mixed text-white mt-[90px] text-[45px]">
         Studio by M
       </h2>
@@ -45,7 +46,6 @@ export const Footer = () => {
           height={108}
           alt="wpp"
         />
-
         <Qr_social_networks
           styles={"mt-4 mt-[27px] w-[115px] h-[124px]"}
           url={"tiktok.png"}
@@ -64,4 +64,4 @@ export const Footer = () => {
       ></Image>
     </div>
   );
-};
+}
