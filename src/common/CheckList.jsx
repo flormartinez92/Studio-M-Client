@@ -13,3 +13,4 @@ export default function CheckList({ icon, text, className }) {
     </div>
   );
 }
+
