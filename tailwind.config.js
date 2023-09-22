@@ -20,6 +20,7 @@ module.exports = {
       red: "#A31616",
       white: "#F5F0F0",
       black: "#1E1E1E",
+      lightGrey: "#D9D9D9",
     },
   },
   plugins: [],
