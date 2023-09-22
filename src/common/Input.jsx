@@ -4,11 +4,15 @@ export default function Input({
   type,
   placeholder,
   className,
+  classNameLabel,
   ...inputProps
 }) {
   return (
     <div className={`flex flex-col my-2 ${className || ""}`}>
-      <label htmlFor={name} className="font-mystery-mixed text-3xl mb-1">
+      <label
+        htmlFor={name}
+        className={`font-mystery-mixed mb-1 ${classNameLabel || ""}`}
+      >
         {label}
       </label>
       <input
