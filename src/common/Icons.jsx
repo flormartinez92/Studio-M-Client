@@ -33,12 +33,13 @@ export function Clock() {
     </svg>
   );
 }
+
 export function Check() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="60"
-      height="60"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
     >
       <g fill="none" fill-rule="evenodd">
@@ -195,11 +196,11 @@ export function ArrowReload({ width, height, color }) {
   );
 }
 
-export function BurgerMenu() {
+export function BurgerMenu({ width, height }) {
   return (
     <svg
-      width="24"
-      height="24"
+      width={width || "24"}
+      height={height || "24"}
       viewBox="0 0 20 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
