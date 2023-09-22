@@ -9,11 +9,8 @@ export default function Input({
 }) {
   return (
     <div className={`flex flex-col my-2 ${className || ""}`}>
-      <label
-        htmlFor={name}
-        className={`font-mystery-mixed mb-1 ${classNameLabel || ""}`}
-      >
-        {label}
+      <label htmlFor={name} className={`font-mystery-mixed mb-1 ${classNameLabel || ""}`}>
+        {label ? label : null}
       </label>
       <input
         type={type}
