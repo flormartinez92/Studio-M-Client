@@ -7,9 +7,9 @@ import Image from "next/image";
 export default function Intro() {
   return (
     <div>
-      <h1 className="text-5xl text-black font-mystery-mixed p-2 mt-20 mb-20 flex items-center justify-center transform -rotate-6">
+      <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
         Qué vas a aprender hoy?
-      </h1>
+      </h2>
       <div className="flex overflow-x-auto">
         <div className="w-80 ml-4 mr-4">
           <Cards
@@ -40,12 +40,12 @@ export default function Intro() {
       </div>
 
       <div className="w-full h-full flex flex-col justify-center">
-        <h2 className="text-5xl text-black font-mystery-mixed p-2 mt-20 mb-20 flex items-center justify-center transform -rotate-6">
+        <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
           Qué esperar de un curso en by M studio?
         </h2>
 
         <div className="m-3 flex content-start items-center">
-          <CheckList className="p-3" icon={<Check />} />
+          <CheckList className="p-3 border-pink" icon={<Check />} />
           <p className="font-ms-gothic ml-2">
             Aprende a tu ritmo y de manera asincrónica
           </p>
@@ -61,7 +61,7 @@ export default function Intro() {
           </p>
         </div>
         <div className="m-3 flex content-start items-center">
-          <CheckList className="p-3" icon={<Check />} />
+          <CheckList className="p-3  border-pink" icon={<Check />} />
           <p className="font-ms-gothic ml-2">
             Obtén tu certificado al finalizar
           </p>
@@ -73,7 +73,7 @@ export default function Intro() {
         <p className="text-5xl text-black font-mystery-mixed absolute top-10">
           Studio by M
         </p>
-        <p className="text-3xl text-black font-mystery-mixed absolute top-20">
+        <p className="text-3xl text-black font-mystery-mixed absolute top-28">
           Cuenta con el apoyo de
         </p>
         <Image src="/img/image1.png" width={178} height={87} alt="Picture" />

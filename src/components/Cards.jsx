@@ -10,7 +10,7 @@ export default function Cards({ title, buttonTitle, icon, img, className }) {
         {title}
       </h2>
       <Image src={img} width={500} height={500} alt="Picture" />
-      <Border className="flex gap-2 w-[70%] absolute bottom-2 left-1/2 transform -translate-x-1/2">
+      <Border className="flex gap-2 w-[70%] absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink">
         <Button className="font-mystery-mixed">{buttonTitle}</Button>
         <Button>{icon}</Button>
       </Border>
