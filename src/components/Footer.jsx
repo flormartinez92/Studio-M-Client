@@ -1,4 +1,3 @@
-"use client";
 import { Qr_social_networks } from "@/common/Qr_social_networks";
 import Image from "next/image";
 
