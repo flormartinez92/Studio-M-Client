@@ -1,3 +1,4 @@
+import CourseInfo from "@/components/CourseInfo";
 import Cover from "@/components/Cover";
 import Intro from "@/components/Intro";
 
