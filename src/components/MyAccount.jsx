@@ -19,7 +19,7 @@ export default function MyAccount() {
         <div className="flex flex-col items-center mt-6">
           <div className="relative">
             <Image
-              src={"/image/usuario.png"}
+              src={"/img/usuario.png"}
               width={100}
               height={100}
               className="rounded-full w-[82px] h-[83px]"
