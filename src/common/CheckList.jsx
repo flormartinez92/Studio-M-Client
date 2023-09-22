@@ -8,7 +8,7 @@ export default function CheckList({ icon, text, className }) {
         className || ""
       }`}
     >
-      <Border className={`border-4 p-0.5 ${className || ""}`}>{icon}</Border>
+      <Border className={`border-3 p-0.5 ${className || ""}`}>{icon}</Border>
       <p className="font-ms-gothic leading-tight">{text}</p>
     </div>
   );

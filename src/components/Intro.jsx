@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Intro() {
   return (
-    <div>
+    <div className="bg-white">
       <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
         Qué vas a aprender hoy?
       </h2>

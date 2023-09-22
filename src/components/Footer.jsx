@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <div className="relative bg-[url('/Fondo.png')] bg-no-repeat w-[100%] h-full flex flex-col text-center bg-cover bg-center">
+    <div className="relative w-[100%] h-full flex flex-col text-center bg-full bg-no-repeat bg-cover bg-center">
       <h2 className="font-mystery-mixed text-white mt-[90px] text-[45px]">
         Studio by M
       </h2>
@@ -55,7 +55,7 @@ export default function Footer() {
         />
       </div>
       <Image
-        src={"/Star_blue_1.png"}
+        src={"/img/Star_blue_1.png"}
         width={50}
         height={50}
         alt="Logo"

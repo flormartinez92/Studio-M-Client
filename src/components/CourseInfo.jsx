@@ -23,7 +23,7 @@ export default function CourseInfo({
         <h2 className="font-mystery-mixed text-4xl">{courseTitle}</h2>
         <div className="relative">
           <Image
-            src={"/img/paper.svg"}
+            src={"/svg/paper.svg"}
             width={"100"}
             height={"100"}
             alt="FOTO"

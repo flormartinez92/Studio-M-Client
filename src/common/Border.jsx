@@ -1,6 +1,6 @@
 export default function Border({ children, className }) {
   return (
-    <div className={`p-3 border-2 border-solid  ${className || ""}`}>
+    <div className={`border-solid  ${className || ""}`}>
       {children}
     </div>
   );
