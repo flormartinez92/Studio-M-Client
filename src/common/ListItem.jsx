@@ -11,7 +11,7 @@ export default function ListItem({
 }) {
   return (
     <div
-      className={`flex items-center justify-between bg-white p-2 px-4 w-full border-solid border-2 border-gray ${
+      className={`flex items-center justify-between bg-white px-4 border-solid border border-gray shadow-lg ${
         className || ""
       }`}
     >
