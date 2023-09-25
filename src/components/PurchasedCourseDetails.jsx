@@ -1,18 +1,25 @@
 import Border from "@/common/Border";
 import Button from "@/common/Button";
+import { BurgerDots } from "@/common/Icons";
 
 export default function PurchasedCourseDetails() {
   return (
-    <div className="text-center font-ms-gothic h-auto py-[30px]">
-      <h2 className="text-[20px] px-[50px] pb-[35px]">
+    <div className="text-center font-ms-gothic h-auto py-[30px] md:px-[20px]">
+      <div className="flex flex-col w-[24px] h-[24px] xl:w-[40px] xl:h-[40px] md:pl-[40px]">
+        <BurgerDots />
+        <h2 className="text-[16px] md:text-[20px] xl:text-[27px] absolute left-12 md:left-[100px] md:-bottom-[120px] xl:left-[110px] xl:-bottom-[133px]">
+          Secciones del curso
+        </h2>
+      </div>
+      <h2 className="text-[20px] pt-[30px] md:pt-[60px] px-[50px] pb-[35px] md:text-[25px] md:font-mystery-mixed md:text-start  xl:text-[35px]">
         Modulo 1: Fundamentos Avanzados de UX Research
       </h2>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
           Tema 1: Roadmaps Estratégicos de Investigación
         </h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Planificación y diseño de roadmaps de investigación efectivos.
           </li>
@@ -26,9 +33,11 @@ export default function PurchasedCourseDetails() {
         </ol>
       </div>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">Tema 2: Lean UX Canvas y Journey Maps</h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
+          Tema 2: Lean UX Canvas y Journey Maps
+        </h3>
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Creación de Lean UX Canvases para definir objetivos e hipótesis.
           </li>
@@ -43,11 +52,11 @@ export default function PurchasedCourseDetails() {
         </ol>
       </div>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
           Tema 3: Matriz de Necesidades y Tree Testing
         </h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Desarrollo de matrices de necesidades para identificar puntos
             problemáticos.
@@ -63,16 +72,16 @@ export default function PurchasedCourseDetails() {
         </ol>
       </div>
 
-      <h2 className="text-[20px] px-[50px] pb-[35px]">
+      <h2 className="text-[20px] px-[50px] pb-[35px] md:text-[25px] md:font-mystery-mixed md:text-start md:pl-[60px] xl:text-[35px]">
         Modulo 2: Optimización de la Experiencia del Usuario a través de Datos y
         Pruebas
       </h2>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
           Tema 1: Análisis de Comportamiento del Usuario
         </h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Seguimiento y análisis de datos para comprender el comportamiento
             del usuario.
@@ -87,12 +96,12 @@ export default function PurchasedCourseDetails() {
         </ol>
       </div>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
           Tema 2: Matriz FVD (Frecuencia, Valor, Dificultad) y Evaluación de
           Riesgos
         </h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Creación y uso de la matrix FVD para priorizar características y
             mejoras.
@@ -108,11 +117,11 @@ export default function PurchasedCourseDetails() {
         </ol>
       </div>
 
-      <div className="text-start px-[14px] pb-[35px]">
-        <h3 className="text-[18px]">
+      <div className="text-start px-[14px] pb-[35px] md:pl-[60px]">
+        <h3 className="text-[18px] md:text-[22.5px] xl:text-[30px]">
           Tema 3: Diseño y Análisis de Experimentos
         </h3>
-        <ol className=" list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px]">
+        <ol className="list-decimal py-[20px] pl-[25px] pr-[15px] text-[16px] md:text-[20px] xl:text-[27px] md:pl-[35px]">
           <li>
             Diseño y ejecución de experimentos para validar hipótesis de diseño.
           </li>
@@ -126,10 +135,10 @@ export default function PurchasedCourseDetails() {
           </li>
         </ol>
       </div>
-      <h2 className="font-mystery-mixed text-[20px] mx-auto px-[35px] pb-[25px] ">
-        Proyecto final: Propùesta de rediseño basado en insights de UX Research
+      <h2 className="font-mystery-mixed text-[20px] mx-auto px-[35px] pb-[25px] md:text-[25px] xl:text-[35px]">
+        Proyecto final: Propuesta de rediseño basado en insights de UX Research
       </h2>
-      <p className="px-[50px] pb-[30px] text-[16px] leading-tight">
+      <p className="px-[50px] pb-[30px] text-[16px] leading-tight md:text-[20px] xl:text-[27px] md:w-[90%] md:m-auto">
         El proyecto final de esta especialización será una propuesta integral de
         rediseño de un producto o servicio digital. Utilizarás las metodologías
         y técnicas avanzadas de investigación aprendidas a lo largo del curso
@@ -138,15 +147,15 @@ export default function PurchasedCourseDetails() {
         demostrar tu capacidad para aplicar estrategias de investigación de
         usuarios en la creación de experiencias excepcionales y eficaces.
       </p>
-      <p className="text-[18px] px-[50px] pb-[30px] leading-tight">
+      <p className="text-[18px] px-[50px] pb-[30px] mt-[30px] leading-tight md:text-[22.5px] xl:text-[30px] md:w-[70%] md:m-auto md:leading-normal">
         Al completar esta especialización, estarás preparado para abordar
         desafíos complejos de UX Research, tomar decisiones de diseño informadas
         y contribuir significativamente al desarrollo de productos digitales
         centrados en el usuario.
       </p>
       <div className="flex items-center justify-center mb-[70px] mt-[10px] py-[40px]">
-        <Border className={"w-auto h-auto border-3 border-pink shadow-xl "}>
-          <Button className={"p-[20px] font-mystery-mixed text-[23px]"}>
+        <Border className="flex w-auto h-auto border-[3px] border-pink shadow-xl">
+          <Button className="p-[20px] font-mystery-mixed text-[23px] m-[10px] md:text-[30px] md:py-[10px] md:px-[30px]">
             Entregar proyecto
           </Button>
         </Border>
