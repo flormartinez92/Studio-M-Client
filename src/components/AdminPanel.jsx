@@ -3,8 +3,7 @@ import { DashIcons, MenuBook, Percent, User } from "@/common/Icons";
 
 export default function AdminPanel() {
   return (
-    <div className="flex flex-col gap-12 items-center justify-center my-10">
-      {}
+    <div className="flex flex-col gap-12 items-center justify-center my-10 pt-8 pb-[120px]">
       <AdminButton
         icon={<MenuBook width={90} height={90} />}
         text={"10 proyectos para corregir"}
