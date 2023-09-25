@@ -7,9 +7,10 @@ import React from "react";
 export default function ActiveCourses() {
   return (
     <div>
-      <h2 className="text-4xl font-mystery-mixed mt-20 mb-10 flex justify-center">
+      <h2 className="text-4xl font-mystery-mixed mt-20 mb-10 text-center flex justify-center">
         Cursos Activos
       </h2>
+
       <ListItem
         text="UX Writing"
         iconOne={<Plus color="#4FE21B" />}
