@@ -15,7 +15,13 @@ export default function ListItem({
         className || ""
       }`}
     >
-      <p className={`font-ms-gothic ${classNameText ? classNameText : "text-xl"}`}>{text}</p>
+      <p
+        className={`font-ms-gothic ${
+          classNameText ? classNameText : "text-xl"
+        }`}
+      >
+        {text}
+      </p>
       <div className="flex justify-center items-center gap-3">
         <IconButton>{iconOne}</IconButton>
         <IconButton>{iconTwo}</IconButton>
