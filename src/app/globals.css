@@ -19,12 +19,14 @@
   margin: 0;
 }
 
-body {
+/* body {
   background-image: url(../../public/img/background.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   width: 100%;
-} 
-
-
+  min-height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+} */
