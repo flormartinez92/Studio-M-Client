@@ -7,17 +7,17 @@ import Image from "next/image";
 export default function Intro() {
   return (
     <div className="bg-white">
-      <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
+      <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-40 mb-20 -rotate-6">
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto">
-        <div className="w-70 ml-4 mr-4">
+        <div className="w-70 ml-6 mr-4">
           <Cards
             title="UX Research"
             buttonTitle="Ver curso"
             icon={<CartShopSimple />}
             img="/img/indonesiaGrande.png"
-            className="max-w-[205px]"
+            className="max-w-[205px] "
           />
         </div>
         <div className="w-70 ml-4 mr-4">
@@ -47,22 +47,22 @@ export default function Intro() {
         <div className="gap-3 flex flex-col items-center justify-center w-[90%]">
           <CheckList
             text="Aprende a tu ritmo y de manera asincrónica"
-            className="p-0.5 border-pink"
+            className="p-0.5 border-pink mr-5"
             icon={<Check />}
           />
           <CheckList
             text="Accede a contenido actualizado"
-            className="p-0.5 border-green"
+            className="p-0.5 border-green mr-5"
             icon={<Check />}
           />
           <CheckList
             text="Accede y conecta con una comunidad de trainees"
-            className="p-0.5 border-blue"
+            className="p-0.5 border-blue mr-5"
             icon={<Check />}
           />
           <CheckList
             text="Obtén tu certificado al finalizar"
-            className="p-0.5 border-pink"
+            className="p-0.5 border-pink mr-5"
             icon={<Check />}
           />
         </div>
