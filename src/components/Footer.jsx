@@ -3,7 +3,7 @@ export const Footer = () => {
     <div
       className="
     bg-[url('/Fondo.png')]
-    sm:bg-[url('/Fondo_3.png')] 
+    md:bg-[url('/Fondo_3.png')] 
     bg-no-repeat 
     w-full 
     h-full
@@ -17,8 +17,8 @@ export const Footer = () => {
         relative
         grid
         grid-cols-1 
-        sm:grid-cols-2
-        sm:py-[100px]
+        md:grid-cols-2
+        md:py-[100px]
         lg:py-[130px] 
         max-w-[80rem]
         place-content-center
@@ -30,17 +30,20 @@ export const Footer = () => {
         font-mystery-mixed 
         text-white 
         mt-[90px] 
-        text-[45px] 
-        sm:text-[100px] 
-        sm:text-left 
-        sm:ml-[110px] 
-        sm:flex 
-        sm:flex-col 
-        sm:items-start 
-        sm:justify-center 
-        sm:mt-0 
-        sm:mb-0 
-        sm:leading-none"
+        text-[45px]
+        sm:text-[65px] 
+        md:text-[70px]
+        lg:text-[80px]
+        xl:text-[100px]
+        md:text-left 
+        md:ml-[110px] 
+        md:flex 
+        md:flex-col 
+        md:items-start 
+        md:justify-center 
+        md:mt-0 
+        md:mb-0 
+        md:leading-none"
         >
           Studio by M
         </h2>
@@ -50,17 +53,21 @@ export const Footer = () => {
         text-white 
         text-[16px] 
         text-left 
-        leading-[20px] 
+        leading-[20px]
+        sm:text-[20px] 
         mt-6 
         mx-[40px] 
-        sm:text-[34px] 
-        sm:leading-10  
-        sm:ml-[110px] 
-        sm:tracking-[-2.9px] 
-        sm:w-[85%] 
-        sm:col-start-1 
-        sm:row-start-2 
-        sm:mt-[90px]
+        md:text-[24px]
+        lg:text-[28px]
+        xl:text-[34px]
+
+        md:leading-10  
+        md:ml-[110px] 
+        md:tracking-[-2.9px] 
+        md:w-[85%] 
+        md:col-start-1 
+        md:row-start-2 
+        md:mt-[90px]
         "
         >
           Soy Macarena Bernal. Me defino como una apasionada docente,
@@ -74,18 +81,21 @@ export const Footer = () => {
         font-mystery-mixed 
         text-white 
         text-[35px] 
+        sm:text-[55px]
         mt-[45px] 
-        mb-[17px] 
-        sm:text-[80px]  
-        sm:col-start-2 
-        sm:row-start-1 
-        sm:flex 
-        sm:flex-col 
-        sm:items-center 
-        sm:justify-center 
-        sm:mt-0 
-        sm:mb-0 
-        sm:leading-none"
+        mb-[17px]
+        md:text-[70px] 
+          
+        xl:text-[80px]
+        md:col-start-2 
+        md:row-start-1 
+        md:flex 
+        md:flex-col 
+        md:items-center 
+        md:justify-center 
+        md:mt-0 
+        md:mb-0 
+        md:leading-none"
         >
           Contacto
         </h2>
@@ -99,10 +109,11 @@ export const Footer = () => {
         place-items-center 
         grid-cols-2 
         mb-[30px] 
-        sm:mt-0 
-        sm:col-start-2 
-        sm:row-start-2 
-        sm:h-[200px]"
+        md:mt-0 
+        md:col-start-2 
+        md:row-start-2
+        lg:h-[200px]
+        "
         >
           <div
             className="
@@ -110,8 +121,18 @@ export const Footer = () => {
           bg-no-repeat 
           w-[99px]
           h-[108px]
-          md:w-[137px]
-          md:h-[149px]
+          md:w-[90px]
+          md:h-[100px]
+          md:ml-[50px]
+          md:mt-[50px]
+          lg:w-[100px]
+          lg:h-[110px]
+          lg:ml-[50px]
+          lg:mt-[50px]
+          xl:w-[137px]
+          xl:h-[149px]
+          xl:ml-0
+          xl:mt-0
           bg-contain
           -mr-[1px]
           "
@@ -123,10 +144,19 @@ export const Footer = () => {
           w-[122px]
           h-[118px]
           md:bg-[url('/github.png')]
-          md:w-[149px]
-          md:h-[143px]
+          md:w-[90px]
+          md:h-[100px]
           md:ml-[50px]
-          md:mt-[50px]
+          md:mt-[80px]
+          md:mr-[50px]
+          lg:w-[100px]
+          lg:h-[110px]
+          lg:ml-[60px]
+          xl:w-[149px]
+          xl:h-[143px]
+          xl:ml-[50px]
+          xl:mt-[50px]
+          xl:mr-0
           bg-contain
           mt-[17px]
           ml-[10px]
@@ -139,8 +169,16 @@ export const Footer = () => {
           w-[113px]
           h-[108px]
           md:bg-[url('/instagram.png')]
-          md:w-[135px]
-          md:h-[130px]
+          md:w-[100px]
+          md:h-[105px]
+          md:ml-[53px]
+          md:mb-[53px]
+          lg:w-[110px]
+          lg:h-[125px]
+          xl:w-[135px]
+          xl:h-[130px]
+          xl:ml-0
+          xl:mb-0
           bg-contain
           mr-[12px]
           "
@@ -151,9 +189,18 @@ export const Footer = () => {
           bg-no-repeat 
           w-[127px]
           h-[119px]
-          md:w-[127px]
-          md:h-[119px]
-          md:ml-[65px]
+          md:w-[100px]
+          md:h-[108px]
+          md:-translate-y-[40px]
+          md:translate-x-[3px]
+          lg:w-[110px]
+          lg:h-[118px]
+          lg:translate-x-[10px]
+          xl:w-[127px]
+          xl:h-[119px]
+          xl:ml-[65px]
+          xl:-translate-y-0
+          xl:translate-x-0
           bg-contain
           mt-[40px]
           ml-[20px]
@@ -169,10 +216,19 @@ export const Footer = () => {
           row-start-auto col-[1/3]
           mt-[15px]
           mr-[25px]
-          md:w-[115px]
-          md:h-[124px]
+          md:w-[100px]
+          md:h-[107px]
           md:mr-0
-          md:ml-[10px]
+          md:-translate-y-[60px]
+          lg:w-[110px]
+          lg:h-[116px]
+          lg:translate-x-[2px]
+          xl:w-[115px]
+          xl:h-[124px]
+          xl:mr-0
+          xl:ml-[10px]
+          xl:-translate-y-0
+          xl:translate-x-0
           "
           ></div>
         </div>
@@ -184,14 +240,20 @@ export const Footer = () => {
           bg-no-repeat
           w-[67px]
           h-[64px]
-          md:w-[113px]
-          md:h-[106px]
-          lg:w-[206px]
-          lg:h-[197px] 
           -top-[32.1px]
           right-[10px]
-          lg:-top-[102px]
-          lg:right-[70px]
+          md:w-[113px]
+          md:h-[106px]
+          md:-top-[55.1px]
+          md:right-[45px]
+          lg:w-[180px]
+          lg:h-[187px]
+          lg:-top-[89.5px]
+          lg:right-[40px]
+          xl:w-[206px]
+          xl:h-[197px]
+          xl:-top-[102px]
+          xl:right-[70px]
           bg-contain"
         ></div>
       </div>
