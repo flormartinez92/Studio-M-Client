@@ -14,7 +14,6 @@ export default function Cover() {
             width={270}
             height={140}
             alt="paperDesktopCover"
-            layout="fixed"
             className="absolute"
           />
           <Image
