@@ -6,7 +6,7 @@ import Border from "../common/Border";
 export default function Cards({ title, buttonTitle, icon, img, className }) {
   return (
     <div className={`w-80 relative ${className || ""}`}>
-      <h2 className="text-4xl text-white bg-black font-mystery-mixed p-2 flex items-center justify-center rounded-t-md">
+      <h2 className="text-3xl text-white bg-black font-mystery-mixed p-2 flex items-center justify-center rounded-t-md">
         {title}
       </h2>
       <Image src={img} width={500} height={500} alt="Picture" />
