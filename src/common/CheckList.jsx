@@ -3,14 +3,9 @@ import Border from "./Border";
 
 export default function CheckList({ icon, text, className }) {
   return (
-    <div
-      className={`flex justify-center items-center gap-4 w-[80%] ${
-        className || ""
-      }`}
-    >
-      <Border className={`border-3 p-0.5 ${className || ""}`}>{icon}</Border>
-      <p className="font-ms-gothic leading-tight">{text}</p>
+    <div className={`p-5 flex items-start w-[80%] gap-2 ${className || ""}`}>
+      <Border className={`border-2 p-0.5 ${className || ""}`}>{icon}</Border>
+      <p className=" font-ms-gothic leading-tight">{text}</p>
     </div>
   );
 }
-
