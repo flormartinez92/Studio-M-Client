@@ -11,7 +11,7 @@ export const Qr_social_networks = ({
   return (
     <div className={`${rotation}`}>
       <Image
-        src={"/images/" + url}
+        src={"/" + url}
         width={width}
         height={height}
         alt={`${alt}`}
