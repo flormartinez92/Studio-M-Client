@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Button from "./Button";
 
-export default function PurchasedCourse() {
+export default function PurchasedCourse({}) {
   return (
     <div className="flex  flex-col justify-center items-center my-14">
       <h3 className=" font-mystery-mixed text-[32px] text-h2Black -rotate-3">
@@ -11,7 +11,12 @@ export default function PurchasedCourse() {
         <h3 className=" font-mystery-mixed text-[32px] text-h2Black -rotate-3 m-auto">
           Ux research
         </h3>
-        <Image src={"/images/Group29.png"} width={99} height={101.16} />
+        <Image
+          src={"/images/Group29.png"}
+          width={99}
+          height={101.16}
+          alt="Group29"
+        />
       </div>
       <div className="mx-12 mb-20">
         <h4 className="font-ms-gothic text-center text-[20px] text-h3Black my-4">
@@ -26,11 +31,9 @@ export default function PurchasedCourse() {
           en la creación de soluciones basadas en insights sólidos.
         </p>
       </div>
-      <Button
-        children={"Iniciar Curso"}
-        type={"rounder"}
-        className={"font-ms-gothic"}
-      />
+      <Button type="rounder" className="font-ms-gothic">
+        Iniciar Curso
+      </Button>
     </div>
   );
 }
