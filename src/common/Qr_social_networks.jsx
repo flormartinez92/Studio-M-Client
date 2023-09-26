@@ -11,11 +11,11 @@ export const Qr_social_networks = ({
   return (
     <div className={`${rotation}`}>
       <Image
-        src={"/" + url}
+        src={"/img/" + url}
         width={width}
         height={height}
-        alt={`${alt}`}
         className={`${styles}`}
+        alt={`${alt}`}
       ></Image>
     </div>
   );
