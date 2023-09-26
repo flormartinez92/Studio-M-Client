@@ -59,14 +59,14 @@ export default function Navbar() {
 
             <div className=" mx-auto  mb-[60px] mt-[4rem] relative">
               <Image
-                src="/img/SquarePink.png" //cambiar imagen
+                src="/img/pink-square.png" //cambiar imagen
                 width={55}
                 height={55}
                 alt="pinkSquare"
                 className="m-auto absolute left-[-1rem] -top-2 "
               />
               <Image
-                src="/img/SquareGreen.png" //cambiar imagen
+                src="/img/green-square.png" //cambiar imagen
                 width={59}
                 height={59}
                 alt="greenSquare"
