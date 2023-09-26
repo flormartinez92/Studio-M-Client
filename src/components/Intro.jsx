@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Intro() {
   return (
     <div className="bg-white ">
-      <h2 className="text-5xl text-left font-mystery-mixed mt-20 mb-20 md:ml-20 -rotate-3">
+      <h2 className="text-5xl text-left font-mystery-mixed mb-20 md:ml-20 -rotate-3">
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
