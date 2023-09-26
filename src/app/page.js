@@ -6,7 +6,7 @@ import { Test } from "@/components/Text";
 export default function Home() {
   return (
     <main>
-      <Test />
+      <Register />
     </main>
   );
 }
