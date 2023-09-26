@@ -15,13 +15,13 @@ export default function Navbar() {
   return (
     <>
       {menuOpen ? (
-        <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center">
+        <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center duration-700">
           <div className="flex items-center justify-end">
             <IconButton
-              className="cursor-pointer mx-4 mt-4"
+              className="cursor-pointer mx-6 mt-6"
               onClick={toggleMenu}
             >
-              <Close width="24" height="24" color="white" />
+              <Close width="30" height="30" color="white" />
             </IconButton>
           </div>
           <div className="flex flex-col items-center justify-center z-10 absolute w-full left-0 py-7 pl-7 transition-all ease-in duration-500">
@@ -83,7 +83,7 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className=" bg-black p-5 shadow text-white font-mystery-mixed  md:flex md:items-center md:justify-end">
+        <nav className=" bg-black p-5 shadow text-white font-mystery-mixed duration-700  md:flex md:items-center md:justify-end">
           <div className="flex justify-between items-center">
             <span className="text-[35px] font-bold cursor-pointer md:hidden">
               Studio by M
