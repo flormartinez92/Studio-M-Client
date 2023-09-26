@@ -7,34 +7,35 @@ import Image from "next/image";
 export default function Intro() {
   return (
     <div className="bg-white">
-      <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
+      <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-40 mb-20 -rotate-6">
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto">
-        <div className="w-80 ml-4 mr-4">
+        <div className="w-70 ml-6 mr-4">
           <Cards
             title="UX Research"
             buttonTitle="Ver curso"
             icon={<CartShopSimple />}
-            img="/img/indonesia.png"
-            className="mr-4"
+            img="/img/indonesiaGrande.png"
+            className="max-w-[205px] "
           />
         </div>
-        <div className="w-80 mr-4">
+        <div className="w-70 ml-4 mr-4">
           <Cards
             title="UX Writing"
             buttonTitle="Ver curso"
             icon={<CartShopSimple />}
             img="/img/studio.png"
-            className="mr-4"
+            className="max-w-[205px]"
           />
         </div>
-        <div className="w-80">
+        <div className="w-70 ml-4 mr-4">
           <Cards
             title="UI Design"
             buttonTitle="Ver curso"
             icon={<CartShopSimple />}
             img="/img/tirza.png"
+            className="max-w-[205px]"
           />
         </div>
       </div>
@@ -43,28 +44,27 @@ export default function Intro() {
         <h2 className="text-5xl text-black text-center font-mystery-mixed p-2 mt-20 mb-20 -rotate-6">
           Qué esperar de un curso en by M studio?
         </h2>
-
-        <div className="m-3 flex content-start items-center">
-          <CheckList className="p-3 border-pink" icon={<Check />} />
-          <p className="font-ms-gothic ml-2">
-            Aprende a tu ritmo y de manera asincrónica
-          </p>
-        </div>
-        <div className="m-3 flex content-start items-center">
-          <CheckList className="border-green p-3" icon={<Check />} />
-          <p className="font-ms-gothic ml-2">Accede a contenido actualizado</p>
-        </div>
-        <div className="m-3 flex content-start items-center">
-          <CheckList className="border-blue p-3" icon={<Check />} />
-          <p className="font-ms-gothic ml-2">
-            Accede y conecta con una comunidad de trainees
-          </p>
-        </div>
-        <div className="m-3 flex content-start items-center">
-          <CheckList className="p-3  border-pink" icon={<Check />} />
-          <p className="font-ms-gothic ml-2">
-            Obtén tu certificado al finalizar
-          </p>
+        <div className="gap-3 flex flex-col items-center justify-center w-[90%]">
+          <CheckList
+            text="Aprende a tu ritmo y de manera asincrónica"
+            className="p-0.5 border-pink mr-5"
+            icon={<Check />}
+          />
+          <CheckList
+            text="Accede a contenido actualizado"
+            className="p-0.5 border-green mr-5"
+            icon={<Check />}
+          />
+          <CheckList
+            text="Accede y conecta con una comunidad de trainees"
+            className="p-0.5 border-blue mr-5"
+            icon={<Check />}
+          />
+          <CheckList
+            text="Obtén tu certificado al finalizar"
+            className="p-0.5 border-pink mr-5"
+            icon={<Check />}
+          />
         </div>
       </div>
 

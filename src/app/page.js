@@ -1,13 +1,13 @@
-import CourseInfo from "@/components/CourseInfo";
-import Cover from "@/components/Cover";
-import Intro from "@/components/Intro";
+import { Footer } from "@/components/Footer";
 
+import Cover from "@/components/Cover";
 
 export default function Home() {
   return (
     <main>
-      <Cover />
-      <Intro />
+      {/* <Cover /> */}
+
+      <Footer />
     </main>
   );
 }

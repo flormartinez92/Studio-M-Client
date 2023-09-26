@@ -1,66 +1,262 @@
-import { Qr_social_networks } from "@/common/Qr_social_networks";
-import Image from "next/image";
-
-export default function Footer() {
+export const Footer = () => {
   return (
-    <div className="relative w-[100%] h-full flex flex-col text-center bg-full bg-no-repeat bg-cover bg-center">
-      <h2 className="font-mystery-mixed text-white mt-[90px] text-[45px]">
-        Studio by M
-      </h2>
-      <p className="font-ms-gothic text-white text-[16px] text-left leading-[20px] mt-6 mx-[40px]">
-        Soy Macarena Bernal. Me defino como una apasionada docente,
-        desarrolladora Fullstack y diseñadora UX/UI. Mi camino en el mundo de la
-        tecnología me ha permitido fusionar mi amor por la enseñanza con la
-        creación de experiencias digitales accesibles y atractivas.
-      </p>
-      <h2 className="font-mystery-mixed text-white text-[35px] mt-[45px] mb-[17px]">
-        Contacto
-      </h2>
-      <div className="w-full max-w-[250px] h-auto mx-auto  grid place-items-center grid-cols-2 mb-[30px]">
-        <Qr_social_networks
-          styles={" mr-[1px] w-[113px] h-[108px]"}
-          url={"behance.png"}
-          width={100}
-          height={108}
-          alt="behance"
-        />
-        <Qr_social_networks
-          styles={"mt-10 ml-[19px] w-[122px] h-[118px]"}
-          url={"instagram.png"}
-          width={100}
-          height={108}
-          alt="instagram"
-        />
-        <Qr_social_networks
-          styles={"mr-[20px] mt-[20px] w-[113px] h-[108px]"}
-          url={"github.png"}
-          width={100}
-          height={108}
-          alt="github"
-        />
-        <Qr_social_networks
-          styles={"mt-[55px] ml-4 w-[127px] h-[119px]"}
-          url={"wpp.png"}
-          width={100}
-          height={108}
-          alt="wpp"
-        />
-        <Qr_social_networks
-          styles={"mt-4 mt-[27px] w-[115px] h-[124px]"}
-          url={"tiktok.png"}
-          rotation={"col-span-2"}
-          width={100}
-          height={108}
-          alt="tiktok"
-        />
+    <div
+      className="
+    bg-[url('/Fondo.png')]
+    md:bg-[url('/Fondo_3.png')] 
+    bg-no-repeat 
+    w-full 
+    h-full
+    text-center 
+    bg-cover 
+    bg-center 
+    "
+    >
+      <div
+        className="
+        relative
+        grid
+        grid-cols-1 
+        md:grid-cols-2
+        md:py-[100px]
+        lg:py-[130px] 
+        max-w-[80rem]
+        place-content-center
+        mx-auto     
+        "
+      >
+        <h2
+          className="
+        font-mystery-mixed 
+        text-white 
+        mt-[90px] 
+        text-[45px]
+        sm:text-[65px] 
+        md:text-[70px]
+        lg:text-[80px]
+        xl:text-[100px]
+        md:text-left 
+        md:ml-[110px] 
+        md:flex 
+        md:flex-col 
+        md:items-start 
+        md:justify-center 
+        md:mt-0 
+        md:mb-0 
+        md:leading-none"
+        >
+          Studio by M
+        </h2>
+        <p
+          className="
+        font-ms-gothic 
+        text-white 
+        text-[16px] 
+        text-left 
+        leading-[20px]
+        sm:text-[20px] 
+        mt-6 
+        mx-[40px] 
+        md:text-[24px]
+        lg:text-[28px]
+        xl:text-[34px]
+
+        md:leading-10  
+        md:ml-[110px] 
+        md:tracking-[-2.9px] 
+        md:w-[85%] 
+        md:col-start-1 
+        md:row-start-2 
+        md:mt-[90px]
+        "
+        >
+          Soy Macarena Bernal. Me defino como una apasionada docente,
+          desarrolladora Fullstack y diseñadora UX/UI. Mi camino en el mundo de
+          la tecnología me ha permitido fusionar mi amor por la enseñanza con la
+          creación de experiencias digitales accesibles y atractivas.
+        </p>
+
+        <h2
+          className="
+        font-mystery-mixed 
+        text-white 
+        text-[35px] 
+        sm:text-[55px]
+        mt-[45px] 
+        mb-[17px]
+        md:text-[70px] 
+          
+        xl:text-[80px]
+        md:col-start-2 
+        md:row-start-1 
+        md:flex 
+        md:flex-col 
+        md:items-center 
+        md:justify-center 
+        md:mt-0 
+        md:mb-0 
+        md:leading-none"
+        >
+          Contacto
+        </h2>
+        <div
+          className="
+        w-full 
+        max-w-[250px] 
+        h-auto 
+        mx-auto 
+        grid 
+        place-items-center 
+        grid-cols-2 
+        mb-[30px] 
+        md:mt-0 
+        md:col-start-2 
+        md:row-start-2
+        lg:h-[200px]
+        "
+        >
+          <div
+            className="
+          bg-[url('/behance.png')] 
+          bg-no-repeat 
+          w-[99px]
+          h-[108px]
+          md:w-[90px]
+          md:h-[100px]
+          md:ml-[50px]
+          md:mt-[50px]
+          lg:w-[100px]
+          lg:h-[110px]
+          lg:ml-[50px]
+          lg:mt-[50px]
+          xl:w-[137px]
+          xl:h-[149px]
+          xl:ml-0
+          xl:mt-0
+          bg-contain
+          -mr-[1px]
+          "
+          ></div>
+          <div
+            className="
+          bg-[url('/instagram.png')] 
+          bg-no-repeat 
+          w-[122px]
+          h-[118px]
+          md:bg-[url('/github.png')]
+          md:w-[90px]
+          md:h-[100px]
+          md:ml-[50px]
+          md:mt-[80px]
+          md:mr-[50px]
+          lg:w-[100px]
+          lg:h-[110px]
+          lg:ml-[60px]
+          xl:w-[149px]
+          xl:h-[143px]
+          xl:ml-[50px]
+          xl:mt-[50px]
+          xl:mr-0
+          bg-contain
+          mt-[17px]
+          ml-[10px]
+          "
+          ></div>
+          <div
+            className="
+          bg-[url('/github.png')] 
+          bg-no-repeat 
+          w-[113px]
+          h-[108px]
+          md:bg-[url('/instagram.png')]
+          md:w-[100px]
+          md:h-[105px]
+          md:ml-[53px]
+          md:mb-[53px]
+          lg:w-[110px]
+          lg:h-[125px]
+          xl:w-[135px]
+          xl:h-[130px]
+          xl:ml-0
+          xl:mb-0
+          bg-contain
+          mr-[12px]
+          "
+          ></div>
+          <div
+            className="
+          bg-[url('/wpp.png')] 
+          bg-no-repeat 
+          w-[127px]
+          h-[119px]
+          md:w-[100px]
+          md:h-[108px]
+          md:-translate-y-[40px]
+          md:translate-x-[3px]
+          lg:w-[110px]
+          lg:h-[118px]
+          lg:translate-x-[10px]
+          xl:w-[127px]
+          xl:h-[119px]
+          xl:ml-[65px]
+          xl:-translate-y-0
+          xl:translate-x-0
+          bg-contain
+          mt-[40px]
+          ml-[20px]
+          "
+          ></div>
+          <div
+            className="
+          bg-[url('/tiktok.png')] 
+          bg-no-repeat 
+          w-[115px]
+          h-[124px]
+          bg-contain
+          row-start-auto col-[1/3]
+          mt-[15px]
+          mr-[25px]
+          md:w-[100px]
+          md:h-[107px]
+          md:mr-0
+          md:-translate-y-[60px]
+          lg:w-[110px]
+          lg:h-[116px]
+          lg:translate-x-[2px]
+          xl:w-[115px]
+          xl:h-[124px]
+          xl:mr-0
+          xl:ml-[10px]
+          xl:-translate-y-0
+          xl:translate-x-0
+          "
+          ></div>
+        </div>
+        {/* ICON SOL */}
+        <div
+          className="
+          absolute
+          bg-[url('/Star_blue_1.png')] 
+          bg-no-repeat
+          w-[67px]
+          h-[64px]
+          -top-[32.1px]
+          right-[10px]
+          md:w-[113px]
+          md:h-[106px]
+          md:-top-[55.1px]
+          md:right-[45px]
+          lg:w-[180px]
+          lg:h-[187px]
+          lg:-top-[89.5px]
+          lg:right-[40px]
+          xl:w-[206px]
+          xl:h-[197px]
+          xl:-top-[102px]
+          xl:right-[70px]
+          bg-contain"
+        ></div>
       </div>
-      <Image
-        src={"/img/Star_blue_1.png"}
-        width={50}
-        height={50}
-        alt="Logo"
-        className="w-[85px] h-[90px] flex flex-col items-center justify-start absolute top-[-46px] right-[20px]"
-      ></Image>
     </div>
   );
-}
+};
