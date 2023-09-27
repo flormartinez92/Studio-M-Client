@@ -2,18 +2,18 @@
 
 import React, { useState } from "react";
 import Button from "@/common/Button";
-import { Message } from "./Message";
+import { Message } from "../common/Message";
 import Image from "next/image";
 import { Arrow, BurgerMenu, Check } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 
-export default function CourseSections() {
+export default function CourseSections({numberMessage, titleMessage}) {
   const [completed, setCompleted] = useState(false);
   const handleClick = () => !completed && setCompleted(true);
 
   return (
     <div className="bg-white bg-opacity-0 flex flex-col justify-between h-auto items-center gap-8">
-      <div className="flex flex-row w-[92%] items-center justify-between mt-4">
+      <div className="flex flex-row w-[90%] items-center justify-between mt-4">
         <div className="flex flex-row justify-between gap-6 text-base">
           <IconButton className={""}>
             <BurgerMenu width="16" height="16" color={"black"} />
@@ -28,8 +28,8 @@ export default function CourseSections() {
       </div>
       <div>
         <Message
-          item_num={"1"}
-          text={"Planificación y diseño de roadmaps de investigación efectivos"}
+          item_num={numberMessage}
+          text={titleMessage}
           className={
             "text-white text-2xl w-[90%] bg-no-repeat bg-cover bg-center py-12 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
           }
