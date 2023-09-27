@@ -75,7 +75,7 @@ export function Percent({ width, height }) {
     <svg
       width={width || "20"}
       height={height || "20"}
-      viewBox="0 0 67 90"
+      viewBox="0 0 90 90"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -87,7 +87,7 @@ export function Percent({ width, height }) {
       </g>
       <defs>
         <clipPath id="clip0_118_2681">
-          <rect width="67" height="90" fill="white" />
+          <rect width="90" height="90" fill="white" />
         </clipPath>
       </defs>
     </svg>
