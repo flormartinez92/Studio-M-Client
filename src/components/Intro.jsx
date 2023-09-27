@@ -6,8 +6,8 @@ import Image from "next/image";
 
 export default function Intro() {
   return (
-    <div className="bg-white ">
-      <h2 className="text-5xl text-left font-mystery-mixed mb-20 md:ml-20 -rotate-3">
+    <div className="bg-#F5F0F0">
+      <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
@@ -18,6 +18,8 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/indonesiaGrande.png"
             className="max-w-[205px]"
+            classNameButton="py-1 px-3"
+            classNameIconButton="py-1 px-2"
           />
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
@@ -27,6 +29,8 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/studio.png"
             className="max-w-[205px]"
+            classNameButton="py-1 px-3"
+            classNameIconButton="py-1 px-2"
           />
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
@@ -36,15 +40,17 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/tirza.png"
             className="max-w-[205px]"
+            classNameButton="py-1 px-3"
+            classNameIconButton="py-1 px-2"
           />
         </div>
       </div>
 
       <div className="w-full h-full flex flex-col justify-center">
-        <h2 className="text-5xl text-left font-mystery-mixed p-2 mt-20 mb-20 -rotate-3 md:ml-20">
+        <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
           Qué esperar de un curso en by M studio?
         </h2>
-        <div className="md:text-4xl mb:gap-3 flex flex-col items-center justify-center w-[90%] md:ml-40">
+        <div className="md:text-4xl mb:gap-3 flex flex-col items-center justify-center w-[90%] md:ml-40 md:mb-20">
           <CheckList
             text="Aprende a tu ritmo y de manera asincrónica"
             className="p-0.5 border-pink mr-5"
