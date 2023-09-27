@@ -1,83 +1,107 @@
-import PurchasedCourseDetails from "@/components/PurchasedCourseDetails";
+import Border from "@/common/Border";
+import Button from "@/common/Button";
+import { BurgerDots } from "@/common/Icons";
+import fakeDataCourseDetails from "./fakeDataCourseDetails";
+import Link from "next/link";
 
-export default function PurchasedCourseDetailsPage() {
+export default function PurchasedCourseDetails() {
   return (
-    <PurchasedCourseDetails
-      module1={"Modulo 1: Fundamentos Avanzados de UX Research"}
-      topic1_1={"Tema 1: Roadmaps Estratégicos de Investigación"}
-      subtopic1_1={
-        "Planificación y diseño de roadmaps de investigación efectivos."
-      }
-      subtopic2_1={
-        "Priorización de areas clave de investigación para optimizar recursos."
-      }
-      subtopic3_1={
-        "Integración de roadmaps en la estrategia general del producto."
-      }
-      topic2_1={"Tema 2: Lean UX Canvas y Journey Maps"}
-      subtopic1_2={
-        "Creación de Lean UX Canvases para definir objetivos e hipótesis."
-      }
-      subtopic2_2={
-        "Diseño de journey maps para visualizar y analizar el viaje del usuario."
-      }
-      subtopic3_2={
-        "Aplicación de Lean UX y journey maps en la toma de decisiones de diseño."
-      }
-      topic3_1={"Tema 3: Matriz de Necesidades y Tree Testing"}
-      subtopic1_3={
-        "Desarrollo de matrices de necesidades para identificar puntos problemáticos."
-      }
-      subtopic2_3={
-        "Implementación de tree testing para evaluar la navegación y la estructura de la información."
-      }
-      subtopic3_3={
-        "Utilización de resultados para ajustar la arquitectura de la información y el diseño."
-      }
-      module2={
-        "Modulo 2: Optimización de la Experiencia del Usuario a través de Datos y Pruebas"
-      }
-      topic1_2={"Tema 1: Análisis de Comportamiento del Usuario"}
-      subtopic1_1_2={
-        "Seguimiento y análisis de datos para comprender el comportamiento del usuario."
-      }
-      subtopic2_1_2={
-        "Extracción de insights valiosos a través de análisis cualitativos y cuantitativos."
-      }
-      subtopic3_1_2={
-        "Aplicación de datos para informar la toma de decisiones de diseño."
-      }
-      topic2_2={
-        "Tema 2: Matriz FVD (Frecuencia, Valor, Dificultad) y Evaluación de Riesgos"
-      }
-      subtopic1_2_2={
-        "Creación y uso de la matrix FVD para priorizar características y mejoras."
-      }
-      subtopic2_2_2={
-        "Evaluación de riesgos para identificar posibles obstáculos en la experiencia del usuario."
-      }
-      subtopic3_2_2={
-        "Integración de la matriz FVD y la evaluación de riesgos en la estrategia de diseño."
-      }
-      topic3_2={"Tema 3: Diseño y Análisis de Experimentos"}
-      subtopic1_3_2={
-        "Diseño y ejecución de experimentos para validar hipótesis de diseño."
-      }
-      subtopic2_3_2={
-        " Análisis de resultados experimentales y ajuste de soluciones de diseño."
-      }
-      subtopic3_3_2={
-        "Utilización de insights de experimentos para optimizar la experiencia del usuario."
-      }
-      finalProjectTitle={
-        "Proyecto final: Propuesta de rediseño basado en insights de UX Research"
-      }
-      finalProjectDescription={
-        "El proyecto final de esta especialización será una propuesta integral de rediseño de un producto o servicio digital. Utilizarás las metodologías y técnicas avanzadas de investigación aprendidas a lo largo del curso para identificar áreas de mejora, priorizar cambios y diseñar soluciones basadas en insights sólidos de UX Research. Este proyecto te permitirá demostrar tu capacidad para aplicar estrategias de investigación de usuarios en la creación de experiencias excepcionales y eficaces."
-      }
-      finalProjectDescription2={
-        "Al completar esta especialización, estarás preparado para abordar desafíos complejos de UX Research, tomar decisiones de diseño informadas y contribuir significativamente al desarrollo de productos digitales centrados en el usuario."
-      }
-    />
+    <div
+      className="text-center font-ms-gothic h-auto py-[30px] 
+    md:px-5"
+    >
+      <div
+        className="flex flex-col w-6 h-6
+      md:pl-10
+      xl:w-10 xl:h-10"
+      >
+        <BurgerDots />
+        <h2
+          className="text-base absolute left-12
+        md:text-xl md:left-[6.25rem] md:top-[1.625rem]
+        xl:text-[27px] xl:left-[110px] xl:top-[35px]"
+        >
+          Secciones del curso
+        </h2>
+      </div>
+
+      {fakeDataCourseDetails.map((courseDetails, index) => (
+        <div key={index}>
+          {courseDetails.modules.map((module) => (
+            <div key={module.name}>
+              <h2
+                className=" text-xl pt-8 px-12 pb-9
+                md:pt-16 md:text-2xl md:font-mystery-mixed md:text-start  
+                xl:text-4xl"
+              >
+                {module.name}
+              </h2>
+
+              {module.topics.map((topic) => (
+                <div
+                  key={topic.name}
+                  className="text-start px-3.5 pb-9 
+                md:pl-14"
+                >
+                  <h3
+                    className="text-lg pl-3 pb-4 
+                    md:text-2xl 
+                    xl:text-3xl"
+                  >
+                    {topic.name}
+                  </h3>
+                  {topic.subtopics.map((subtopic) => (
+                    <ul
+                      key={subtopic.text}
+                      className="pl-6 pr-4 leading-5 text-base 
+                    md:text-xl md:pl-9
+                    xl:text-3xl "
+                    >
+                      <Link href={"/course"}>
+                        {/* ESTA NO ES LA RUTA CORRECTA PERO HABIA QUE PONER UNA */}
+                        <li>{`${subtopic.number}. ${subtopic.text}`}</li>
+                      </Link>
+                    </ul>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+
+          {courseDetails.finalProject.map((info) => (
+            <div key={info.title}>
+              <h2
+                className="font-mystery-mixed text-xl mx-auto pt-4 px-9 pb-6
+              md:text-2xl 
+              xl:text-4xl"
+              >
+                {info.title}
+              </h2>
+              <p
+                className="px-12 pb-8 text-base leading-tight 
+              md:text-xl md:w-9/12 md:m-auto
+              xl:text-3xl "
+              >
+                {info.description}
+              </p>
+              <p
+                className="text-lg px-12 pb-8 mt-8 leading-tight 
+              md:text-2xl md:w-9/12 md:m-auto md:leading-normal
+              xl:text-[30px] "
+              >
+                {info.goals}
+              </p>
+            </div>
+          ))}
+        </div>
+      ))}
+      <div className="flex items-center justify-center mb-16 mt-2.5 py-10">
+        <Border className="flex w-auto h-auto border-[3px] border-pink shadow-xl">
+          <Button className="p-5 font-mystery-mixed text-2xl m-2.5 md:text-3xl md:py-2.5 md:px-8">
+            Entregar proyecto
+          </Button>
+        </Border>
+      </div>
+    </div>
   );
 }
