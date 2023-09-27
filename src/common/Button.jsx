@@ -1,9 +1,18 @@
-export default function Button({ children, className, type }) {
+export default function Button({
+  children,
+  className,
+  type,
+  onClick,
+  ...propButton
+}) {
   return (
     <button
-      className={`bg-black text-white text-2xl p-4 ${
-        type === "rounder" ? "rounded-2xl px-14 py-3" : null
+      onClick={onClick}
+      className={`bg-black text-white ${
+        type === "rounder" ? "rounded-[10px]" : null
       } ${className || ""}`}
+      $
+      {...propButton}
     >
       {children}
     </button>

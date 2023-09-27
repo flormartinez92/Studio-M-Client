@@ -2,9 +2,9 @@ import Border from "./Border";
 import IconButton from "./IconButton";
 import { Clock, Signal, Heart, CartShopPlus } from "./Icons";
 
-export default function CourseSummary({ level, hours, price }) {
+export default function CourseSummary({ level, hours, price, className }) {
   return (
-    <Border className="p-5 flex flex-col justify-center items-center gap-2">
+    <Border className={`p-5 border-[3px] border-pink flex flex-col justify-center items-center gap-2 ${className || "" }`}>
       <div className="flex justify-center items-center">
         <Signal />
         <h6>{level}</h6>
