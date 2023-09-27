@@ -18,10 +18,9 @@ export default function AdminButton({ icon, text, className }) {
           {icon}
         </div>
         <p
-          className="font-ms-gothic text-center  text-[1.6rem] 
-        md:text-[1.1rem] 
-        lg:text-[1.6rem] 
-        xl:text-[1.6rem]"
+          className="font-ms-gothic text-center  text-2xl m-2
+        md:text-lg md:m-1
+        lg:text-2xl"
         >
           {text}
         </p>
