@@ -15,7 +15,7 @@ export default function Navbar() {
   return (
     <>
       {menuOpen ? (
-        <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center duration-700">
+        <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center">
           <div className="flex items-center justify-end">
             <IconButton
               className="cursor-pointer mx-6 mt-6"
@@ -24,12 +24,12 @@ export default function Navbar() {
               <Close width="30" height="30" color="white" />
             </IconButton>
           </div>
-          <div className="flex flex-col items-center justify-center z-10 absolute w-full left-0 py-7 pl-7 transition-all ease-in duration-500">
+          <div className="flex flex-col items-center justify-center z-10 absolute w-full left-0 py-7 pl-7">
             <ul className=" md:z-auto md:static md:w-auto md:py-0 md:pl-0 ">
               <li className="mx-[3rem]">
                 <a
                   href="#"
-                  className="text-[50px] text-white font-mystery-mixed hover:text-cyan-500 duration-500"
+                  className="text-[50px] text-white font-mystery-mixed"
                 >
                   Incio
                 </a>
@@ -37,7 +37,7 @@ export default function Navbar() {
               <li className="mx-[2rem]">
                 <a
                   href="#"
-                  className="text-[50px] text-white font-mystery-mixed hover:text-cyan-500 duration-500"
+                  className="text-[50px] text-white font-mystery-mixed"
                 >
                   Cursos
                 </a>
@@ -45,7 +45,7 @@ export default function Navbar() {
               <li className="">
                 <a
                   href="#"
-                  className="text-[50px] text-white font-mystery-mixed hover:text-cyan-500 duration-500"
+                  className="text-[50px] text-white font-mystery-mixed"
                 >
                   Mi cuenta
                 </a>
@@ -59,14 +59,14 @@ export default function Navbar() {
 
             <div className=" mx-auto  mb-[60px] mt-[4rem] relative">
               <Image
-                src="/img/pink-square.png" //cambiar imagen
+                src="/img/pink-square.png"
                 width={55}
                 height={55}
                 alt="pinkSquare"
                 className="m-auto absolute left-[-1rem] -top-2 "
               />
               <Image
-                src="/img/green-square.png" //cambiar imagen
+                src="/img/green-square.png"
                 width={59}
                 height={59}
                 alt="greenSquare"
@@ -83,9 +83,9 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className=" bg-black p-5 shadow text-white font-mystery-mixed duration-700  md:flex md:items-center md:justify-end">
+        <nav className=" bg-black p-5 shadow text-white font-mystery-mixed md:flex md:items-center md:justify-end">
           <div className="flex justify-between items-center">
-            <span className="text-[35px] font-bold cursor-pointer md:hidden">
+            <span className="text-[35px] cursor-pointer md:hidden">
               Studio by M
             </span>
             <input
@@ -94,7 +94,10 @@ export default function Navbar() {
               className="hidden md:hidden"
             />
             <label htmlFor="menu-toggle" className="md:hidden">
-              <IconButton className="cursor-pointer mx-2 mb-2" onClick={toggleMenu}>
+              <IconButton
+                className="cursor-pointer mx-2 mb-2"
+                onClick={toggleMenu}
+              >
                 <BurgerMenu width="24" height="24" />
               </IconButton>
             </label>
