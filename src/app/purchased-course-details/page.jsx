@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function PurchasedCourseDetails() {
   return (
-    <div
+    <section
       className="text-center font-ms-gothic h-auto py-[30px] 
     md:px-5"
     >
@@ -101,6 +101,6 @@ export default function PurchasedCourseDetails() {
           </Button>
         </Border>
       </div>
-    </div>
+    </section>
   );
 }
