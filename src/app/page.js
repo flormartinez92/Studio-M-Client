@@ -1,11 +1,9 @@
-import Cover from "@/components/Cover";
-import Intro from "@/components/Intro";
+import Courses from "@/components/Courses";
 
 export default function Home() {
   return (
     <main>
-      <Cover />
-      <Intro />
+      <Courses/>
     </main>
   );
 }

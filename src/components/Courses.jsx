@@ -13,7 +13,7 @@ export default function Courses() {
             "bg-white bg-opacity-0 text-black flex flex-row items-center gap-2"
           }
         >
-          A-Z <Vector width={"19"} />
+          <label className="text-black" htmlFor="">A-Z</label> <Vector width={"19"} />
         </Button>
       </div>
       <h2 className="text-4xl md:hidden">Nuestros Cursos</h2>
@@ -22,7 +22,7 @@ export default function Courses() {
         buttonTitle={"Ver Curso"}
         icon={<CartShopSimple width={"16px"} height={"16px"} />}
         img={"/img/indonesiaGrande.png"}
-        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
+        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
         classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
         classNameIconButton={"px-[9.5px] sm:px-[12px] md:hidden"}
@@ -41,7 +41,7 @@ export default function Courses() {
         buttonTitle={"Ver Curso"}
         icon={<CartShopSimple width={"16px"} height={"16px"} />}
         img={"/img/studio.png"}
-        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
+        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
         classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
         classNameIconButton={"px-[9.5px] md:hidden"}
@@ -60,7 +60,7 @@ export default function Courses() {
         buttonTitle={"Ver Curso"}
         icon={<CartShopSimple width={"16px"} height={"16px"} />}
         img={"/img/tirza.png"}
-        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
+        className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
         classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
         classNameIconButton={"px-[9.5px] md:hidden"}
