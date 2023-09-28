@@ -1,3 +1,9 @@
+import Trolley from "@/components/Trolley";
+
 export default function Home() {
-  return <main></main>;
+  return (
+    <main>
+      <Trolley />
+    </main>
+  );
 }
