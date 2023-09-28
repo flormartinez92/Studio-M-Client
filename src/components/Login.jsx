@@ -1,9 +1,10 @@
+import Button from "@/common/Button";
 import Input from "@/common/Input";
 
 export default function Login() {
   return (
     <div className="flex flex-col justify-center items-center bg-[#fff] py-[115px]">
-      <h2 className="font-mystery-mixed text-[35px] min-[320px]:text-[45px] sm:text-[61px] leading-3">
+      <h2 className="font-mystery-mixed text-[35px] min-[320px]:text-[45px] sm:text-[55px] leading-3">
         Iniciar sesión
       </h2>
       <form
@@ -18,13 +19,17 @@ export default function Login() {
           className="
         mb-4 
         w-[100%] 
-        sm:px-3"
+        sm:px-3
+        flex
+        justify-center
+        items-center"
         >
           <Input
             label={"Mail"}
             name={"mail"}
             classNameLabel={"block text-[23px]"}
             type={"email"}
+            className={"w-full sm:max-w-[85%]"}
             classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
             placeholder={"ingresa tu mail"}
           />
@@ -33,13 +38,17 @@ export default function Login() {
           className="
         mb-4 
         w-[100%] 
-        sm:px-3"
+        sm:px-3
+        flex
+        justify-center
+        items-center"
         >
           <Input
             label={"Contraseña"}
             name={"password"}
-            classNameLabel={"block text-[23px]"}
+            classNameLabel={"text-[23px]"}
             type={"password"}
+            className={"w-full sm:max-w-[85%]"}
             classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
             placeholder={"ingresa tu contraseña"}
           />
@@ -52,18 +61,19 @@ export default function Login() {
         items-center 
         mt-[60px]"
         >
-          <button
-            className="
-          bg-black 
+          <Button
+            children={"Confirmar"}
+            className={`bg-black 
           text-white 
           py-[16px] 
           px-[55px] 
           rounded-[5px] 
           leading-3 
-          text-[19px]"
-          >
-            Confirmar
-          </button>
+          text-[19px]
+          block
+          sm:w-[13rem]
+          md:w-[14rem]`}
+          />
         </div>
         <div
           className="
