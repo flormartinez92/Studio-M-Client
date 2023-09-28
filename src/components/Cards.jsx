@@ -39,7 +39,7 @@ export default function Cards({
           className={classNameImg}
         />
         <Border
-          className={`flex justify-between gap-0.5 w-[70%] absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
+          className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
         >
           <Button className={`font-mystery-mixed ${classNameButton}`}>
             {buttonTitle}

@@ -24,9 +24,9 @@ export default function Courses() {
         img={"/img/indonesiaGrande.png"}
         className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
-        classNameButton={"md:hidden"}
-        classNameIconButton={"px-[7.5px] md:hidden"}
-        classNameBorder={"md:hidden"}
+        classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
+        classNameIconButton={"px-[9.5px] sm:px-[12px] md:hidden"}
+        classNameBorder={"sm:h-12 md:hidden"}
         classNameImg={"md:max-h-64 md:max-w-[176px] md:rounded-r-none lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]"}
         newClass={"md:block md:flex md:flex-col md:justify-between md:items-center md:text-xs md:my-1.5 lg:my-2.5 xl:my-3.5"}
         titleResume={"Profundizando en tecnologías y prácticas avanzadas"}
@@ -43,8 +43,8 @@ export default function Courses() {
         img={"/img/studio.png"}
         className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
-        classNameButton={"md:hidden"}
-        classNameIconButton={"px-[7.5px] md:hidden"}
+        classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
+        classNameIconButton={"px-[9.5px] md:hidden"}
         classNameBorder={"md:hidden"}
         classNameImg={"md:max-h-64 md:max-w-[176px] md:rounded-r-none lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]"}
         newClass={"md:block md:flex md:flex-col md:justify-between md:items-center md:text-xs md:my-1.5 lg:my-2.5 xl:my-3.5"}
@@ -62,8 +62,8 @@ export default function Courses() {
         img={"/img/tirza.png"}
         className={"w-[60%] md:w-[80%] md:h-auto md:bg-[#D9D9D9] md:shadow-lg md:transform md:hover:translate-y-[-4px] md:transition-transform rounded-lg"}
         className2={"md:flex md:flex-row font-ms-gothic"}
-        classNameButton={"py-1.5 px-5 md:hidden"}
-        classNameIconButton={"py-2 px-[7.5px] md:hidden"}
+        classNameButton={"whitespace-nowrap w-auto px-4 py-0.5 sm:px-7 sm:py-1 md:hidden"}
+        classNameIconButton={"px-[9.5px] md:hidden"}
         classNameBorder={"md:hidden"}
         classNameImg={"md:max-h-64 md:max-w-[176px] md:rounded-r-none lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]"}
         newClass={"md:block md:flex md:flex-col md:justify-between md:items-center md:text-xs md:my-1.5 lg:my-2.5 xl:my-3.5"}
