@@ -2,13 +2,29 @@ import Button from "./Button";
 
 export default function AdminButton({ icon, text, className }) {
   return (
-    <Button
-      className={`flex flex-col items-center justify-center rounded-xl w-60 h-60 gap-4 ${
-        className || ""
-      }`}
-    >
-      {icon}
-      <p className="font-ms-gothic text-2xl">{text}</p>
-    </Button>
+    <div>
+      <Button
+        className={`flex flex-col items-center justify-center rounded-xl p-[5%] w-[236px] h-[224px] 
+        md:w-[165.2px] md:h-[156.8px]
+        lg:w-[224.2px] lg:h-[212.8px]
+        xl:w-[236px] xl:h-[224px] 
+        xl:p-[1%] ${className || ""}`}
+      >
+        <div
+          className="flex items-center justify-center 
+        md:w-[4.2rem] md:h-[4.2rem]
+        lg:w-[5.6rem] lg:h-[5.6rem]"
+        >
+          {icon}
+        </div>
+        <p
+          className="font-ms-gothic text-center text-2xl m-2
+        md:text-lg md:m-1
+        lg:text-2xl"
+        >
+          {text}
+        </p>
+      </Button>
+    </div>
   );
 }
