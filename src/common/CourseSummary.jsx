@@ -9,19 +9,20 @@ export default function CourseSummary({ level, hours, price, className }) {
         <Signal />
         <h6>{level}</h6>
       </div>
-      <div className="flex justify-center items-center gap-3">
+      <div className="flex justify-center items-center gap-3 md:gap-1">
         <Clock />
         <p>{hours}hs.</p>
       </div>
-      <div className="flex justify-center items-center gap-5">
-        <p>Mi lista</p>
+      <div className="flex justify-center items-center gap-5 md:gap-2">
+        <p className="md:hidden">Mi lista</p>
+        <p className="hidden md:flex">Agregar a lista de deseos</p>
         <IconButton>
           <Heart />
         </IconButton>
       </div>
       <div className="flex justify-center items-center gap-6 font-medium">
-        <h5>${price} ARS</h5>
-        <div className="bg-black p-2 rounded-full">
+        <h5 className="md:hidden">${price} ARS</h5>
+        <div className="bg-[#000] p-2 rounded-full">
           <IconButton>
             <CartShopPlus />
           </IconButton>

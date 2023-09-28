@@ -1,3 +1,9 @@
+import CourseInfo from "@/components/CourseInfo";
+
 export default function Home() {
-  return <main></main>;
+  return (
+  <main>
+    <CourseInfo/>
+  </main>
+  )
 }
