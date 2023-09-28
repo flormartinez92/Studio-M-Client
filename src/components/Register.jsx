@@ -1,3 +1,4 @@
+import Button from "@/common/Button";
 import Input from "@/common/Input";
 import React from "react";
 
@@ -105,18 +106,19 @@ export const Register = () => {
         items-center 
         mt-[60px]"
         >
-          <button
-            className="
-          bg-black 
+          <Button
+            children={"Confirmar"}
+            className={`bg-black 
           text-white 
           py-[18px] 
           px-[54px] 
           rounded-[5px] 
           leading-3 
-          text-[19px]"
-          >
-            Confirmar
-          </button>
+          text-[19px] 
+          block
+          w-[17rem]
+          sm:w-[15rem]`}
+          />
         </div>
       </form>
     </div>
