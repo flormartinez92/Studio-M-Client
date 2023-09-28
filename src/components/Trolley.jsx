@@ -3,70 +3,72 @@ import Cards from "./Cards";
 import Button from "@/common/Button";
 import Image from "next/image";
 
-export default function Trolley() {
+export default function Trolley({ details }) {
   return (
-    <>
-      <div className="bg-white flex flex-col items-center justify-center w-full h-screen md:hidden">
-        <h2 className="text-h2Black font-mystery-mixed text-[38px] mb-12 transform -rotate-2">
-          Detalle de compra
-        </h2>
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center">
+        <div className="mt-12">
+          <h3 className="text-h2Black font-mystery-mixed text-[38px] transform -rotate-2 md:rotate-0 md:text-5xl">
+            Detalle de compra
+          </h3>
+        </div>
+        {/* Contenido para dispositivos móviles */}
         <Cards
           title="Ux Research"
           buttonTitle="$ 10.000"
           img="/img/indonesiaGrande.png"
-          className="mb-8 w-[12rem] h-[15]"
+          className="w-[50%] mt-8 text-1xl md:hidden"
         />
-        <h2 className="text-h2Black font-ms-gothic text-[16px] mb-8">
-          Tengo un cupon de descuento
-        </h2>
-        <div className="w-[15rem] h-[1.3rem] flex items-center justify-between text-h2Black font-mystery-mixed text-[33px] mb-8">
-          <h2>Total:</h2>
-          <h2>$10.000</h2>
+
+        {/* Contenido para dispositivos de escritorio */}
+        <div className="hidden md:flex flex-col w-[80%] mt-12 shadow-xl">
+          <div className="w-full bg-black flex justify-center rounded-t-md">
+            <h3 className="text-white font-mystery-mixed text-2xl">
+              Curso avanzado de Ux Research
+            </h3>
+          </div>
+          <div className="bg-page flex justify-between rounded-b-md">
+            <div className="w-[25%]">
+              <Image
+                src={"/img/indonesiaGrande.png"}
+                width={300}
+                height={300}
+                alt="Picture"
+                className=""
+              />
+            </div>
+            <div className="w-[75%] flex flex-col justify-between">
+              <p className="text-black font-ms-gothic mx-2 text-lg">
+                Profundizando en tecnologias y practicas avanzadas
+              </p>
+              <p className=" text-darkGray font-ms-gothic mx-2 text-sm">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Explicabo ex voluptas iste non, vitae veritatis possimus!
+                Molestias quam dicta natus earum necessitatibus obcaecati
+                doloremque ut aut, nisi perspiciatis, ipsa voluptatibus?
+              </p>
+              <p className="text-black font-ms-gothic flex justify-end mx-2 text-base">
+                $ 10.000 ARS
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-h2Black font-ms-gothic text-[16px] md:text-lg">
+            Tengo un cupón de descuento
+          </h3>
+        </div>
+        <div className=" flex items-center justify-center text-h2Black font-mystery-mixed text-2xl w-[70%] mt-6 md:justify-center md:text-5xl">
+          <h2 className="mx-8">Total:</h2>
+          <h2 className="mx-8">$10.000</h2>
         </div>
         <Button
           children="Confirmar"
           type="rounder"
-          className="w-[14rem] h-[2.8rem] mb-4"
+          className="font-ms-gothic text-[25px] w-[60%] mt-4 py-1 md:w-[25%]"
         />
       </div>
-
-      <div className=" hidden md:block">
-        <div className="bg-white flex flex-col items-center justify-center h-screen">
-          <h2 className="text-h2Black font-mystery-mixed text-[50px] mb-8">
-            Detalle de compra
-          </h2>
-          <div className="flex flex-col items-center w-[66 rem] h-[19rem]">
-            <h2 className="bg-h2Black text-white font-mystery-mixed rounded-t-md w-full">
-              Curso avanzado de Ux Research
-            </h2>
-            <div className="flex items-center mb-6">
-              <div className="">
-              <Image
-                  src={"/img/indonesiaGrande.png"}
-                  width={244}
-                  height={238}
-                  alt="Picture"
-                />
-              </div>
-              <div className="bg-page w-[51rem] h-[15rem] rounded-br-xl">
-                asdasdadadas
-              </div>
-            </div>
-          </div>
-          <h2 className="text-h2Black font-ms-gothic text-[16px] mb-8">
-            Tengo un cupon de descuento
-          </h2>
-          <div className="w-[15rem] h-[1.3rem] flex items-center justify-between text-h2Black font-mystery-mixed text-[33px] mb-8">
-            <h2>Total:</h2>
-            <h2>$10.000</h2>
-          </div>
-          <Button
-            children="Confirmar"
-            type="rounder"
-            className="w-[14rem] h-[2.8rem] mb-4"
-          />
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
