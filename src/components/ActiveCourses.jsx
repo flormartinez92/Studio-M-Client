@@ -73,16 +73,18 @@ export default function ActiveCourses() {
             </tr>
           </tbody>
           <tfoot className="w-full md:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-gray shadow-xl">
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-            <td>Filas por página</td>
-            <td className="flex justify-between mt-3">
-              1 de 10
-              <UilArrow1 color="lightGrey" />
-              <UilArrow2 color="lightGrey" />
-            </td>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td></td>
+              <td>Filas por página</td>
+              <td className="flex justify-between mt-3">
+                1 de 10
+                <UilArrow1 color="lightGrey" />
+                <UilArrow2 color="lightGrey" />
+              </td>
+            </tr>
           </tfoot>
         </table>
       </div>
