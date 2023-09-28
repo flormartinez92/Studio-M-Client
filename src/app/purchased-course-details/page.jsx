@@ -57,8 +57,7 @@ export default function PurchasedCourseDetails() {
                     md:text-xl md:pl-9
                     xl:text-3xl "
                     >
-                      <Link href={"/course"}>
-                        {/* ESTA NO ES LA RUTA CORRECTA PERO HABIA QUE PONER UNA */}
+                      <Link href={"#"}>
                         <li>{`${subtopic.number}. ${subtopic.text}`}</li>
                       </Link>
                     </ul>
