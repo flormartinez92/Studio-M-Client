@@ -1,4 +1,5 @@
 import Button from "@/common/Button";
+import IconButton from "@/common/IconButton";
 import {
   Trash,
   Pencil,
@@ -85,12 +86,12 @@ export default function ActiveCourses() {
           </tfoot>
         </table>
       </div>
-      <div className="flex justify-center mt-10 md:justify-end md:mr-60">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md">
-          <Button className=" bg-darkGreen rounded-md p-1">
-            <Plus className="text-white" width="15" />
-          </Button>
-          <span className="text-white">Crear curso</span>
+      <div className="flex justify-center mt-10 md:justify-end md:mr-24">
+        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-2 md:p-3 md:w-[130px]">
+          <Plus className="text-whiter" width="15" />
+          <span className="text-white items-center flex justify-between">
+            Crear curso
+          </span>
         </Button>
       </div>
     </div>
