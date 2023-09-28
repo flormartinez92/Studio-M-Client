@@ -3,6 +3,7 @@ import IconButton from "./IconButton";
 
 export default function ListItem({
   text,
+  text0,
   text1,
   text2,
   text3,
@@ -28,12 +29,13 @@ export default function ListItem({
       >
         {text}
       </p>
-      <div className="flex justify-center items-center gap-3">
-        <p className={`hidden ${classNameP}`}>{text1}</p>
-        <p className={`hidden ${classNameP}`}>{text2}</p>
-        <p className={`hidden ${classNameP}`}>{text3}</p>
-        <p className={`hidden ${classNameP}`}>{text4}</p>
-        <p className={`hidden ${classNameP}`}>{text5}</p>
+      <div className="flex justify-between gap-3">
+        <p className={`hidden ${classNameP}`}>{text0}</p>
+        <p className={`hidden ${classNameP} ml-40`}>{text1}</p>
+        <p className={`hidden ${classNameP} ml-20`}>{text2}</p>
+        <p className={`hidden ${classNameP} ml-20`}>{text3}</p>
+        <p className={`hidden ${classNameP} ml-20`}>{text4}</p>
+        <p className={`hidden ${classNameP} ml-20`}>{text5}</p>
         <IconButton>{iconOne}</IconButton>
         <IconButton>{iconTwo}</IconButton>
         <IconButton>{iconThree}</IconButton>
