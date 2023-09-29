@@ -23,6 +23,7 @@ export default function MyAccount() {
               width={100}
               height={100}
               className="rounded-full w-[82px] h-[83px]"
+              alt="PhotoUser"
             />
             <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px]">
               <Pencil color="white" width="9px" height="8px" />
