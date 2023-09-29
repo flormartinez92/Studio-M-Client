@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Button from "@/common/Button";
-import { Message } from "../common/Message";
+import { Message } from "../../common/Message";
 import Image from "next/image";
 import { Arrow, BurgerMenu, Check } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 
-export default function CourseSections({numberMessage, titleMessage}) {
+export default function CourseSections() {
   const [completed, setCompleted] = useState(false);
   const handleClick = () => !completed && setCompleted(true);
 
@@ -28,8 +28,8 @@ export default function CourseSections({numberMessage, titleMessage}) {
       </div>
       <div>
         <Message
-          item_num={numberMessage}
-          text={titleMessage}
+          item_num="1"
+          text={"Planificacion y diseño de roadmaps de investigacion efectiva"}
           className={
             "text-white text-2xl w-[90%] bg-no-repeat bg-cover bg-center py-12 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
           }
@@ -42,7 +42,7 @@ export default function CourseSections({numberMessage, titleMessage}) {
             "flex flex-row justify-center items-center w-56 p-2 mb-14 bg-green xl:p-6 xl:px-10 xl:w-60 xl:text-3xl"
           }
         >
-          <Check color={"black"}/>
+          <Check color={"black"} />
         </Button>
       ) : (
         <Button
