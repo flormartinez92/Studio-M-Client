@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "./Cards";
+import Cards from "../../components/Cards";
 import Button from "@/common/Button";
 import Image from "next/image";
 
@@ -64,10 +64,11 @@ export default function Trolley({ details }) {
           <h2 className="mx-8">$10.000</h2>
         </div>
         <Button
-          children="Confirmar"
           type="rounder"
           className="font-ms-gothic text-[25px] w-[60%] mt-4 py-1 md:w-[25%]"
-        />
+        >
+          Confirmar
+        </Button>
       </div>
     </div>
   );
