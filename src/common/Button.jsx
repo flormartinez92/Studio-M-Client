@@ -11,7 +11,6 @@ export default function Button({
       className={`bg-black text-white ${
         type === "rounder" ? "rounded-[10px]" : null
       } ${className || ""}`}
-      $
       {...propButton}
     >
       {children}

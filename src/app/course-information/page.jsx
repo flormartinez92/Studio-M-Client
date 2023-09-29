@@ -3,7 +3,7 @@ import Image from "next/image";
 import CourseSummary from "@/common/CourseSummary";
 import { info } from "./dataCourseInformation";
 
-export default function CourseInfo({}) {
+export default function CourseInformation() {
   return (
     <>
       {info?.map((info) => (
