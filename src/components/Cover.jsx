@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Cover() {
   return (
@@ -15,7 +16,6 @@ export default function Cover() {
               width={270}
               height={140}
               alt="paperDesktopCover"
-              layout="fixed"
               className="absolute"
             />
             <Image
@@ -25,9 +25,11 @@ export default function Cover() {
               alt="starGIF"
               className="relative md:-top-[82px] md:-right-[63px] xl:-top-[135px] xl:-right-[103px]"
             />
-            <h3 className="text-[#000000] font-mystery-mixed text-[30px] xl:text-[50px] relative md:-top-[140px] md:-right-[10px] xl:-top-[230px] xl:-right-[16px] -rotate-6">
-              Ver cursos
-            </h3>
+            <Link href={"#"}>
+              <h3 className="text-[#000000] font-mystery-mixed text-[30px] xl:text-[50px] relative md:-top-[140px] md:-right-[10px] xl:-top-[230px] xl:-right-[16px] -rotate-6">
+                Ver cursos
+              </h3>
+            </Link>
           </div>
         </div>
 
