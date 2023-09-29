@@ -1,7 +1,7 @@
 import CourseInfo from "@/components/CourseInfo";
 import React from "react";
 
-export default function page() {
+export default function CourseInformation() {
   return (
     <CourseInfo
       courseTitle={"Ux research"}
