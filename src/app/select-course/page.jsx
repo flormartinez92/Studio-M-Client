@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Arrow, BurgerMenu, Check } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 
-export default function CourseSections() {
+export default function SelectCourse() {
   const [completed, setCompleted] = useState(false);
   const handleClick = () => !completed && setCompleted(true);
 
