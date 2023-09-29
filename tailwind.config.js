@@ -23,6 +23,10 @@ module.exports = {
       black: "#000000",
       buttonBlack: "#1E1E1E",
       lightGrey: "#D9D9D9",
+      darkGray: "#5C5A5A",
+      h3Black: "#151515",
+      h2Black: "#161616",
+      grey: "#808080"
     },
   },
   plugins: [],
