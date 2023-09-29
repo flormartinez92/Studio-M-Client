@@ -255,6 +255,38 @@ export function CartShopPlus() {
   );
 }
 
+export function UilArrow1({ color }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20"
+      viewBox="0 -960 960 960"
+      width="24"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"
+      />
+    </svg>
+  );
+}
+
+export function UilArrow2({ color }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20"
+      viewBox="0 -960 960 960"
+      width="24"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
+      />
+    </svg>
+  );
+}
+
 export function CartShopSimple({ width, height }) {
   return (
     <svg
