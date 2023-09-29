@@ -1,10 +1,17 @@
-export default function Button({ children, className, type, ...buttonProps }) {
+export default function Button({
+  children,
+  className,
+  type,
+  onClick,
+  ...propButton
+}) {
   return (
     <button
+      onClick={onClick}
       className={`bg-black text-white ${
         type === "rounder" ? "rounded-[10px]" : null
       } ${className || ""}`}
-      {...buttonProps}
+      {...propButton}
     >
       {children}
     </button>
