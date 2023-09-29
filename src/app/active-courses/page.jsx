@@ -17,9 +17,9 @@ export default function ActiveCourses() {
         Cursos activos
       </h2>
       <div className="px-4 font-ms-gothic text-xl md:ml-10 xl:ml-20 md:mr-10 xl:mr-20">
-        <table className="w-full md:table-fixed xl:table-fixed">
+        <table className="w-full xl:table-fixed">
           <thead className="max-sm:hidden">
-            <tr className="w-full md:w-[1211px] h-[48px]  border-b-[0.5px] border-lightGrey md:border-t-[0.5px] md:border-l-[0.5px] md:border-r-[0.5px]">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-t-[0.5px] md:border-l-[0.5px] md:border-r-[0.5px]">
               <td className="p-4">Curso</td>
               <td>Clases</td>
               <td>Alumnos</td>
@@ -29,7 +29,7 @@ export default function ActiveCourses() {
             </tr>
           </thead>
           <tbody>
-            <tr className="w-full md:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]">
               <td className="p-4">UX Writing</td>
               <td className="max-sm:hidden">&nbsp;</td>
               <td className="max-sm:hidden">&nbsp;</td>
@@ -43,7 +43,7 @@ export default function ActiveCourses() {
                 <Trash color="#A31616" />
               </td>
             </tr>
-            <tr className="w-full md:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px] ">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px] ">
               <td className="p-4">UX Research</td>
               <td className="max-sm:hidden">&nbsp;</td>
               <td className="max-sm:hidden">&nbsp;</td>
@@ -57,7 +57,7 @@ export default function ActiveCourses() {
                 <Trash color="#A31616" />
               </td>
             </tr>
-            <tr className="w-full md:w-[1211px] h-[48px] max-sm:shadow-xl  border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px]">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:shadow-xl  border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px]">
               <td className="p-4">UI Design</td>
               <td className="max-sm:hidden">&nbsp;</td>
               <td className="max-sm:hidden">&nbsp;</td>
@@ -72,7 +72,7 @@ export default function ActiveCourses() {
               </td>
             </tr>
           </tbody>
-          <tfoot className="w-full md:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] shadow-xl-left">
+          <tfoot className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] shadow-xl-left">
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
