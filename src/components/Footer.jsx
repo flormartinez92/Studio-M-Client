@@ -2,11 +2,11 @@ export const Footer = () => {
   return (
     <div
       className="
-    bg-[url('/Fondo.png')]
-    md:bg-[url('/Fondo_3.png')] 
+    bg-[url(../../public/img/background.png)]
+    md:bg-[url(../../public/img/background.png)]
     bg-no-repeat 
     w-full 
-    h-full
+    h-screen
     text-center 
     bg-cover 
     bg-center 
@@ -236,7 +236,7 @@ export const Footer = () => {
         <div
           className="
           absolute
-          bg-[url('/Star_blue_1.png')] 
+          bg-[url(../../public/img/Star_blue_1.png)] 
           bg-no-repeat
           w-[67px]
           h-[64px]

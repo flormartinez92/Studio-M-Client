@@ -8,7 +8,7 @@ export default function CourseInformation() {
     <>
       {info?.map((info) => (
         <>
-          <div className="bg-white flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-20">
+          <div className="bg-white flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
             <div className="flex items-center gap-6 md:hidden">
               <h2 className="font-mystery-mixed text-4xl -rotate-3">
                 {info.courseTitle}

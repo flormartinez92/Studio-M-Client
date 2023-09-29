@@ -2,7 +2,7 @@ import Button from "@/common/Button";
 import Input from "@/common/Input";
 import React from "react";
 
-export const Register = () => {
+export default function Register() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
       <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
@@ -124,4 +124,4 @@ export const Register = () => {
       </form>
     </div>
   );
-};
+}

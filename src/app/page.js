@@ -1,4 +1,11 @@
+import Cover from "@/components/Cover";
+import Intro from "@/components/Intro";
 
 export default function Home() {
-  return <main></main>;
+  return (
+    <main>
+      <Cover />
+      <Intro />
+    </main>
+  );
 }

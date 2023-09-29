@@ -12,7 +12,7 @@ import {
 
 export default function ActiveCourses() {
   return (
-    <section>
+    <section className="my-60">
       <h2 className="text-4xl md:text-6xl font-mystery-mixed mt-20 mb-10 md:mb-20 text-center flex justify-center">
         Cursos activos
       </h2>

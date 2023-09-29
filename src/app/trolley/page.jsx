@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Trolley({ details }) {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-20">
       <div className="flex flex-col items-center">
         <div className="mt-12">
           <h3 className="text-h2Black font-mystery-mixed text-[38px] transform -rotate-2 md:rotate-0 md:text-5xl">
