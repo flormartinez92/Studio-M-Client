@@ -26,12 +26,12 @@ export default function SelectCourse() {
           <Arrow color={"black"} />
         </IconButton>
       </div>
-      <div>
+      <div className="w-full">
         <Message
           item_num="1"
           text={"Planificacion y diseño de roadmaps de investigacion efectiva"}
           className={
-            "text-white text-2xl w-[90%] bg-no-repeat bg-cover bg-center py-12 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
+            "text-white text-2xl w-[90%] bg-no-repeat bg-cover bg-center py-14 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
           }
         />
       </div>
