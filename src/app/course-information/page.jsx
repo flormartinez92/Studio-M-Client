@@ -8,7 +8,7 @@ export default function CourseInformation() {
     <>
       {info?.map((info) => (
         <>
-          <div className="bg-white flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
+          <div className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
             <div className="flex items-center gap-6 md:hidden">
               <h2 className="font-mystery-mixed text-4xl -rotate-3">
                 {info.courseTitle}
@@ -53,9 +53,9 @@ export default function CourseInformation() {
                     alt="FOTO"
                   ></Image>
                 </div>
-                <div className="flex flex-col justify-between text-sm w-[80%] mx-4 my-2 lg:text-base lg:mb-0">
+                <div className="flex flex-col justify-between text-sm w-[80%] mx-4 my-2 lg:text-base lg:mb-0 xl:text-lg">
                   <h3>{info.resumeTitle}</h3>
-                  <p className=" max-w-full text-xs text-[#5C5A5A] lg:text-sm">
+                  <p className=" max-w-full text-xs text-[#5C5A5A] lg:text-sm xl:text-base">
                     {info.resume}
                   </p>
                   <p className="flex justify-end">${info.priceCourse} ARS</p>
@@ -83,23 +83,23 @@ export default function CourseInformation() {
             </div>
 
             <div className="hidden md:flex md:flex-col md:font-ms-gothic md:w-[80%]">
-              <h3 className="text-lg font-mystery-mixed my-2">
+              <h3 className="text-lg font-mystery-mixed my-2 lg:text-xl">
                 Modulo 1: {info.titleModule1}
               </h3>
-              <h4 className="mt-2">Tema 1: {info.theme1}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 1: {info.theme1}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element1_1 || ""}</li>
                 <li>2. {info.element1_2 || ""}</li>
                 <li>3. {info.element1_3 || ""}</li>
               </ul>
-              <h4 className="mt-2">Tema 2: {info.theme2}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 2: {info.theme2}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element2_1 || ""}</li>
                 <li>2. {info.element2_2 || ""}</li>
                 <li>3. {info.element2_3 || ""}</li>
               </ul>
-              <h4 className="mt-2">Tema 3: {info.theme3}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 3: {info.theme3}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element3_1 || ""}</li>
                 <li>2. {info.element3_2 || ""}</li>
                 <li>3. {info.element3_3 || ""}</li>
@@ -107,23 +107,23 @@ export default function CourseInformation() {
             </div>
 
             <div className="hidden md:flex md:flex-col md:font-ms-gothic md:w-[80%]">
-              <h3 className="text-lg font-mystery-mixed my-2">
+              <h3 className="text-lg font-mystery-mixed my-2 lg:text-xl">
                 Modulo 2: {info.titleModule2}
               </h3>
-              <h4 className="mt-2">Tema 2: {info.theme2_1}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 2: {info.theme2_1}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element4_1 || ""}</li>
                 <li>2. {info.element4_2 || ""}</li>
                 <li>3. {info.element4_3 || ""}</li>
               </ul>
-              <h4 className="mt-2">Tema 2: {info.theme2_2}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 2: {info.theme2_2}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element5_1 || ""}</li>
                 <li>2. {info.element5_2 || ""}</li>
                 <li>3. {info.element5_3 || ""}</li>
               </ul>
-              <h4 className="mt-2">Tema 3: {info.theme2_3}</h4>
-              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5">
+              <h4 className="mt-2 lg:text-lg">Tema 3: {info.theme2_3}</h4>
+              <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
                 <li>1. {info.element6_1 || ""}</li>
                 <li>2. {info.element6_2 || ""}</li>
                 <li>3. {info.element6_3 || ""}</li>
@@ -131,7 +131,7 @@ export default function CourseInformation() {
             </div>
 
             <div className="w-[80%] text-center justify-between flex flex-col gap-7 mb-10">
-              <h3 className="font-mystery-mixed text-2xl">
+              <h3 className="font-mystery-mixed text-2xl lg:text-3xl">
                 Proyecto Final: {info.projectTitle}
               </h3>
               <p className="font-ms-gothic lg:text-xl">{info.projectResume}</p>
