@@ -13,31 +13,25 @@ export default function Register() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChangeName = (e) => setName(e.target.value);
   const onChangeLastname = (e) => setLastname(e.target.value);
   const onChangeDni = (e) => setDni(e.target.value);
   const onChangeMail = (e) => setMail(e.target.value);
   const onChangePassword = (e) => setPassword(e.target.value);
-
-  const request = async (payload) => {
-    try {
-      await axios.post("http://localhost:8081/api/user/add", payload);
-      router.push("/login");
-    } catch (error) {
-      const { data } = error.response;
-      console.log(data.errors);
-    }
-  };
-
-  const onSubmitForm = (e) => {
+  
+  const onSubmitForm = async (e) => {
     e.preventDefault();
-    request({
+    try {
+      await axios.post("http://localhost:8081/api/user/add", {
       name,
       lastname,
       dni,
       mail,
       password,
     });
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -59,7 +53,7 @@ export default function Register() {
               className={"flex-none"}
               label={"Nombre"}
               value={name}
-              onChange={onChangeName}
+              onChange={(e) => setName(e.target.value)}
               classNameLabel={"block text-[23px]"}
               placeholder={"Ingresa tu nombre"}
               name={"nombre"}
