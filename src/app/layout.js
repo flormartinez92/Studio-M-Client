@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { ReduxProvider } from "@/state/provider";
 
 export const metadata = {
   title: "Studio-M",
@@ -12,9 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar/>
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
