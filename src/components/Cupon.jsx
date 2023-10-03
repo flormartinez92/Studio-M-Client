@@ -21,11 +21,9 @@ export const Cupon = () => {
           name={"Cupon"}
           className="p-2 pl-3 font-ms-gothic outline-none text-[#3f3e3e] mt-[30px] w-[280px]"
         />
-        <Border
-          Button
-          children={"Aplicar Descuento"}
-          className={`mt-[30px] w-[200px] text-center leading-3 block`}
-        />
+        <Border className={`mt-[30px] w-[200px] text-center leading-3 block`}>
+          <Button>Aplicar Descuento</Button>
+        </Border>
       </div>
     </div>
   );

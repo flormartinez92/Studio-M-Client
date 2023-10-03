@@ -1,23 +1,19 @@
+"use client";
+
 import IconButton from "@/common/IconButton";
-import { Arrow, Pencil } from "@/common/Icons";
+import { Arrow, CartShopSimple, Pencil } from "@/common/Icons";
 import Input from "@/common/Input";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import Cards from "./Cards";
 
 export default function MyAccount() {
-  return (
-    <div className="flex flex-col items-center">
-      <div className="bg-lightGrey  rounded-2xl mt-4 shadow-md w-[90%]">
-        <div className="bg-black w-full rounded-t-lg flex justify-center items-center py-3">
-          <h2 className="text-white font-mystery-mixed text-2xl underline decoration-pink text-center">
-            Mis datos
-          </h2>
-          <div className="flex items-center justify-end">
-            <IconButton className="">
-              <Arrow color="white" />
-            </IconButton>
-          </div>
-        </div>
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const pages = [
+    {
+      title: "Mis datos",
+      content: (
         <div className=" mt-6 flex flex-col items-center">
           <div className="relative">
             <Image
@@ -64,6 +60,118 @@ export default function MyAccount() {
             label="DNI"
           />
         </div>
+      ),
+    },
+    {
+      title: "Mis cursos",
+      content: (
+        <div className="flex overflow-x-auto md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UX Research"
+              buttonTitle="Ver curso"
+              img="/img/indonesiaGrande.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+            />
+          </div>
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UX Writing"
+              buttonTitle="Ver curso"
+              img="/img/studio.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+            />
+          </div>
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UI Design"
+              buttonTitle="Ver curso"
+              img="/img/tirza.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Mi lista",
+      content: (
+        <div className="flex overflow-x-auto md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UX Research"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/indonesiaGrande.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+              classNameIconButton="py-1 px-2"
+            />
+          </div>
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UX Writing"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/studio.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+              classNameIconButton="py-1 px-2"
+            />
+          </div>
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Cards
+              title="UI Design"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/tirza.png"
+              className="max-w-[205px]"
+              classNameButton="py-1 px-3"
+              classNameIconButton="py-1 px-2"
+            />
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="bg-lightGrey rounded-2xl mt-4 shadow-xl w-[90%]">
+        <div className="bg-black w-full rounded-t-lg flex justify-between items-center py-3">
+          {currentPage > 0 && (
+            <IconButton
+              className="ml-[16px] rotate-180"
+              onClick={handlePrevPage}
+            >
+              <Arrow color="white" />
+            </IconButton>
+          )}
+          <h2 className="text-white font-mystery-mixed text-2xl underline decoration-pink text-center flex-1 ">
+            {pages[currentPage].title}
+          </h2>
+          {currentPage < pages.length - 1 && (
+            <IconButton className="mr-[16px]" onClick={handleNextPage}>
+              <Arrow color="white" />
+            </IconButton>
+          )}
+        </div>
+        {pages[currentPage].content}
       </div>
     </div>
   );
