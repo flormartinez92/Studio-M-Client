@@ -32,7 +32,6 @@ export default function Login() {
       .then((res) => res.data)
       .then((user) => {
         router.push("/");
-        console.log("Successful login:", user);
       })
       .catch((error) => {
         console.error("Unsuccessful login:", error);
