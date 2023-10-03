@@ -1,14 +1,46 @@
+"use client";
 import Button from "@/common/Button";
 import Input from "@/common/Input";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [dni, setDni] = useState("");
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onChangeLastname = (e) => setLastname(e.target.value);
+  const onChangeDni = (e) => setDni(e.target.value);
+  const onChangeMail = (e) => setMail(e.target.value);
+  const onChangePassword = (e) => setPassword(e.target.value);
+  
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8081/api/user/add", {
+      name,
+      lastname,
+      dni,
+      mail,
+      password,
+    });
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
       <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
         Registro
       </h2>
       <form
+        onSubmit={onSubmitForm}
         className="mt-[50px] 
             w-[80%]
             max-w-[300px] 
@@ -20,6 +52,8 @@ export default function Register() {
             <Input
               className={"flex-none"}
               label={"Nombre"}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               classNameLabel={"block text-[23px]"}
               placeholder={"Ingresa tu nombre"}
               name={"nombre"}
@@ -35,6 +69,8 @@ export default function Register() {
             <Input
               className={"flex-none"}
               label={"Apellido"}
+              value={lastname}
+              onChange={onChangeLastname}
               classNameLabel={"block text-[23px]"}
               name={"apellido"}
               type={"text"}
@@ -53,6 +89,8 @@ export default function Register() {
               className={"flex-none"}
               type={"number"}
               label={"DNI"}
+              value={dni}
+              onChange={onChangeDni}
               classNameLabel={"block text-[23px]"}
               name={"dni"}
               placeholder={"Ingrese su dni"}
@@ -71,6 +109,8 @@ export default function Register() {
               className={"flex-none"}
               type={"email"}
               label={"Mail"}
+              value={mail}
+              onChange={onChangeMail}
               classNameLabel={"block text-[23px]"}
               name={"mail"}
               placeholder={"Ingresa tu mail"}
@@ -87,6 +127,8 @@ export default function Register() {
               className={"flex-none"}
               type={"password"}
               label={"Contraseña"}
+              value={password}
+              onChange={onChangePassword}
               classNameLabel={"block text-[23px]"}
               name={"password"}
               placeholder={"Ingresa tu contraseña"}
