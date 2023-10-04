@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import  { User } from '../../app/services/auth'
+import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
   name: "auth",
@@ -12,5 +11,4 @@ const authSlice = createSlice({
 });
 
 export const { setCredentials } = authSlice.actions;
-
 export default authSlice.reducer;

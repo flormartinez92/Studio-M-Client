@@ -1,23 +1,20 @@
+"use client";
+
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { ReduxProvider } from "@/state/provider";
-
-export const metadata = {
-  title: "Studio-M",
-  description:
-    "Web application that allows the purchase of courses and monitoring of the purchased courses.",
-};
+import { store } from "../state/store";
+import { Provider } from "react-redux";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ReduxProvider>
+        <Provider store={store}>
           <Navbar />
           {children}
           <Footer />
-        </ReduxProvider>
+        </Provider>
       </body>
     </html>
   );

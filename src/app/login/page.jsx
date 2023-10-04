@@ -10,7 +10,6 @@ import { setCredentials } from "../../state/features/authSlice";
 
 export default function Login() {
   const userInfo = useSelector((store) => store.auth);
-  // console.log(userInfo);
   const dispatch = useDispatch();
   const router = useRouter();
   const [emailData, setEmailData] = useState("");
@@ -40,7 +39,6 @@ export default function Login() {
       )
       .then((res) => res.data)
       .then((user) => {
-        console.log(user);
         dispatch(
           setCredentials({
             dni: user.dni,
