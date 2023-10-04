@@ -1,7 +1,7 @@
 "use client";
 
 import IconButton from "@/common/IconButton";
-import { Arrow, CartShopSimple, Pencil } from "@/common/Icons";
+import { Arrow, CartShopSimple, Heart, Pencil } from "@/common/Icons";
 import Input from "@/common/Input";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -14,59 +14,69 @@ export default function MyAccount() {
     {
       title: "Mis datos",
       content: (
-        <div className=" mt-6 flex flex-col items-center">
-          <div className="relative">
+        <div className=" mt-6 flex flex-col items-center md:h-[400px] md:flex-row md:items-start md:mt-12">
+          <div className="relative md:w-1/3 md:mx-4">
             <Image
               src={"/img/usuario.png"}
               width={300}
               height={300}
-              className="rounded-full w-[82px] h-[83px]"
+              className="rounded-full w-[82px] h-[83px] md:w-[150px] md:h-[150px]"
             />
             <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px]">
-              <Pencil color="white" width="9px" height="8px" />
+              <Pencil color="white" width="9" height="8" />
             </IconButton>
           </div>
 
-          <Input
-            name="name"
-            type="text"
-            placeholder="Marcos"
-            className="w-[65%]"
-            classNameLabel="text-[20px]"
-            label="Nombre"
-          />
-          <Input
-            name="lastName"
-            type="text"
-            placeholder="Solis"
-            className="w-[65%]"
-            classNameLabel="text-[20px]"
-            label="Apellido"
-          />
-          <Input
-            name="email"
-            type="text"
-            placeholder="marcos10@gmail.com"
-            className="w-[65%]"
-            classNameLabel="text-[20px]"
-            label="Email"
-          />
-          <Input
-            name="document"
-            type="INT"
-            placeholder="45671231"
-            className="w-[65%] mb-12"
-            classNameLabel="text-[20px]"
-            label="DNI"
-          />
+          <div className="w-[65%] md:w-1/3 md:mx-4">
+            <Input
+              name="name"
+              type="text"
+              placeholder="Marcos"
+              className="w-full"
+              classNameLabel="text-[20px]"
+              label="Nombre"
+            />
+            <Input
+              name="lastName"
+              type="text"
+              placeholder="Solis"
+              className="w-full"
+              classNameLabel="text-[20px]"
+              label="Apellido"
+            />
+          </div>
+
+          <div className="w-[65%] md:w-1/3 md:mx-4">
+            <Input
+              name="email"
+              type="text"
+              placeholder="marcos10@gmail.com"
+              className="w-full"
+              classNameLabel="text-[20px]"
+              label="Email"
+            />
+            <Input
+              name="document"
+              type="INT"
+              placeholder="45671231"
+              className="w-full"
+              classNameLabel="text-[20px]"
+              label="DNI"
+            />
+          </div>
+          <div className="hidden md:flex self-end mb-8">
+            <IconButton className=" bg-black rounded-full w-[27px] h-[26px]">
+              <Pencil color="white" width="15" height="16" />
+            </IconButton>
+          </div>
         </div>
       ),
     },
     {
       title: "Mis cursos",
       content: (
-        <div className="flex overflow-x-auto md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
-          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+        <div className="flex overflow-x-auto h-[483px] md:bg-center md:justify-center items-center">
+          <div className="ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Research"
               buttonTitle="Ver curso"
@@ -75,7 +85,7 @@ export default function MyAccount() {
               classNameButton="py-1 px-3"
             />
           </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div className="ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Writing"
               buttonTitle="Ver curso"
@@ -84,7 +94,7 @@ export default function MyAccount() {
               classNameButton="py-1 px-3"
             />
           </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div className="ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UI Design"
               buttonTitle="Ver curso"
@@ -99,7 +109,7 @@ export default function MyAccount() {
     {
       title: "Mi lista",
       content: (
-        <div className="flex overflow-x-auto md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+        <div className="h-[483px] flex overflow-x-auto md:bg-[length:100%_500px] md:bg-center md:justify-center items-center">
           <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Research"
@@ -107,6 +117,7 @@ export default function MyAccount() {
               icon={<CartShopSimple />}
               img="/img/indonesiaGrande.png"
               className="max-w-[205px]"
+              classNameBorder="w-[140px]"
               classNameButton="py-1 px-3"
               classNameIconButton="py-1 px-2"
             />
@@ -118,6 +129,7 @@ export default function MyAccount() {
               icon={<CartShopSimple />}
               img="/img/studio.png"
               className="max-w-[205px]"
+              classNameBorder="w-[140px]"
               classNameButton="py-1 px-3"
               classNameIconButton="py-1 px-2"
             />
@@ -129,10 +141,21 @@ export default function MyAccount() {
               icon={<CartShopSimple />}
               img="/img/tirza.png"
               className="max-w-[205px]"
+              classNameBorder="w-[140px]"
               classNameButton="py-1 px-3"
               classNameIconButton="py-1 px-2"
             />
           </div>
+        </div>
+      ),
+    },
+    {
+      title: "Mis certificados",
+      content: (
+        <div className="h-[483px]">
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       ),
     },
