@@ -57,6 +57,9 @@ export default function Register() {
       valuePassword.trim() == ""
     ) {
       setmessageAlert("¡Completar todos los campos!");
+      setTimeout(() => {
+        setmessageAlert("");
+      }, 1300);
     } else {
       //Verificacion campos de los mensajes de error
       if (
@@ -67,6 +70,9 @@ export default function Register() {
         MessagePassword
       ) {
         setmessageAlert("¡Verificar campos!");
+        setTimeout(() => {
+          setmessageAlert("");
+        }, 1300);
       } else {
         //Registro de usuario
         try {
@@ -88,6 +94,9 @@ export default function Register() {
           //Uso de las validaciones del back, si el correo esta registrado se le manda un alerta al cliente
           if (data == "Email is already registered") {
             setmessageAlert("El correo ya se encuentra en uso");
+            setTimeout(() => {
+              setmessageAlert("");
+            }, 1300);
           }
         }
       }
