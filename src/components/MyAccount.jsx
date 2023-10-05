@@ -1,7 +1,14 @@
 "use client";
 
 import IconButton from "@/common/IconButton";
-import { Arrow, CartShopSimple, Download, Pencil, Share } from "@/common/Icons";
+import {
+  Arrow,
+  CartShopSimple,
+  Download,
+  Pencil,
+  Save,
+  Share,
+} from "@/common/Icons";
 import Input from "@/common/Input";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -13,20 +20,37 @@ export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("Mis datos");
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [buttonSave, setButtonSave] = useState(false);
+  const [newInputs, setNewInputs] = useState(false);
+
+  const handleClickEdit = () => {
+    setIsEditing(true);
+    setButtonSave(true);
+    setNewInputs(true);
+  };
+
+  const handleClickSave = () => {
+    //esto seria una vez que queres guardar los datos, despues iria la logica
+    setIsEditing(false);
+    setButtonSave(false);
+    setNewInputs(false);
+  };
+
   const pages = [
     {
       title: "Mis datos",
       content: (
-        <div className=" mt-6 flex flex-col items-center md:h-[400px] md:flex-row md:items-start md:mt-12">
+        <div className=" mt-6 flex flex-col items-center md:h-[350px] md:flex-row md:items-start md:mt-12">
           <div className="relative md:w-1/3 md:mx-4">
             <Image
               src={"/img/usuario.png"}
               width={300}
               height={300}
-              className="rounded-full w-[82px] h-[83px] md:w-[150px] md:h-[150px]"
+              className="rounded-full w-[82px] h-[83px] md:w-[155px] md:h-[155px]"
             />
-            <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px]">
-              <Pencil color="white" width="9" height="8" />
+            <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-16 md:-bottom-2">
+              <Pencil color="white" width="12" height="10" />
             </IconButton>
           </div>
 
@@ -47,6 +71,18 @@ export default function MyAccount() {
               classNameLabel="text-[20px]"
               label="Apellido"
             />
+            <>
+              {newInputs && (
+                <Input
+                  name="lastName"
+                  type="password"
+                  placeholder="********"
+                  className="w-full"
+                  classNameLabel="text-[20px]"
+                  label="Nueva contraseña"
+                />
+              )}
+            </>
           </div>
 
           <div className="w-[65%] md:w-1/3 md:mx-4">
@@ -66,10 +102,33 @@ export default function MyAccount() {
               classNameLabel="text-[20px]"
               label="DNI"
             />
+            <>
+              {newInputs && (
+                <Input
+                  name="lastName"
+                  type="password"
+                  placeholder="********"
+                  className="w-full"
+                  classNameLabel="text-[20px]"
+                  label="Confirmar contraseña"
+                />
+              )}
+            </>
           </div>
-          <div className="hidden md:flex self-end mb-8">
-            <IconButton className=" bg-black rounded-full w-[27px] h-[26px]">
-              <Pencil color="white" width="15" height="16" />
+          <div
+            className={`hidden md:flex md:absolute md:bottom-52 md:right-16 ${
+              isEditing ? "editing" : ""
+            }`}
+          >
+            <IconButton
+              className=" bg-black rounded-full w-[27px] h-[26px]"
+              onClick={isEditing ? handleClickSave : handleClickEdit}
+            >
+              {isEditing ? (
+                <Save color="white" />
+              ) : (
+                <Pencil color="white" width="15" height="16" />
+              )}
             </IconButton>
           </div>
         </div>
@@ -78,29 +137,29 @@ export default function MyAccount() {
     {
       title: "Mis cursos",
       content: (
-        <div className="flex overflow-x-auto py-14 md:bg-center md:justify-center items-center">
-          <div className="ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+        <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Research"
-              buttonTitle="Ver curso"
+              buttonTitle="20 %"
               img="/img/indonesiaGrande.png"
               className="max-w-[205px]"
               classNameButton="py-1 px-3"
             />
           </div>
-          <div className="ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Writing"
-              buttonTitle="Ver curso"
+              buttonTitle="50 %"
               img="/img/studio.png"
               className="max-w-[205px]"
               classNameButton="py-1 px-3"
             />
           </div>
-          <div className="ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UI Design"
-              buttonTitle="Ver curso"
+              buttonTitle="80 %"
               img="/img/tirza.png"
               className="max-w-[205px]"
               classNameButton="py-1 px-3"
@@ -112,7 +171,7 @@ export default function MyAccount() {
     {
       title: "Mi lista",
       content: (
-        <div className="py-14 flex overflow-x-auto md:bg-[length:100%_500px] md:bg-center md:justify-center items-center">
+        <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
           <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               title="UX Research"
@@ -121,7 +180,7 @@ export default function MyAccount() {
               img="/img/indonesiaGrande.png"
               className="max-w-[205px]"
               classNameBorder="w-[145px]"
-              classNameButton="py-1 px-3"
+              classNameButton="py-1 px-3 whitespace-nowrap w-auto"
               classNameIconButton="py-1 px-2"
             />
           </div>
@@ -133,7 +192,7 @@ export default function MyAccount() {
               img="/img/studio.png"
               className="max-w-[205px]"
               classNameBorder="w-[145px]"
-              classNameButton="py-1 px-3"
+              classNameButton="py-1 px-3 whitespace-nowrap w-auto"
               classNameIconButton="py-1 px-2"
             />
           </div>
@@ -145,7 +204,7 @@ export default function MyAccount() {
               img="/img/tirza.png"
               className="max-w-[205px]"
               classNameBorder="w-[145px]"
-              classNameButton="py-1 px-3"
+              classNameButton="py-1 px-3 whitespace-nowrap w-auto"
               classNameIconButton="py-1 px-2"
             />
           </div>
@@ -218,18 +277,18 @@ export default function MyAccount() {
                 width={900}
                 height={900}
                 alt="Picture"
-                className="mt-4"
+                className="mt-3"
               />
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                <h2 className="text-3xl font-mystery-mixed">Certificado</h2>
-                <h3 className="text-4xl font-mystery-mixed">Ux Researcher</h3>
+              <div className="absolute pt-8 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                <h2 className="text-2xl font-mystery-mixed">Certificado</h2>
+                <h3 className="text-3xl font-mystery-mixed">Ux Researcher</h3>
                 <p className="text-base font-ms-gothic">Emilia Rodriguez</p>
                 <p className="text-base font-ms-gothic">DNI: 36.363.363</p>
                 <p className="text-sm font-ms-gothic">
                   Ha realizado y completado con éxito su curso en by M Studio,
                   cumpliendo con todos los requisitos académicos exigidos
                 </p>
-                <p className="text-base font-ms-gothic mb-12">03 de Agosto de 2023</p>
+                <p className="text-base font-ms-gothic">03 de Agosto de 2023</p>
               </div>
               <div className="absolute top-16 right-10">
                 <IconButton className="flex flex-col">
@@ -237,10 +296,23 @@ export default function MyAccount() {
                   <Share />
                 </IconButton>
               </div>
-              <div className="absolute bottom-4 left-4 flex">
-                <h3 className=" text-right">Studio by M</h3>
-                <h3 className=" text-">Macarena Bernal</h3>
+              <div className="absolute bottom-20 left-40 flex">
+                <h3 className=" font-mystery-mixed text-xl">Studio by M</h3>
               </div>
+              <div className=" absolute bottom-12 right-44">
+                <h3 className=" font-ms-gothic text-sm text-center">
+                  <span>Macarena</span>
+                  <br />
+                  <span>Bernal</span>
+                </h3>
+              </div>
+              <Image
+                src="/img/firma.png"
+                width={100}
+                height={100}
+                alt="Picture"
+                className="w-[40px] h-[70px] absolute right-48 bottom-24"
+              />
             </div>
           </div>
         </>

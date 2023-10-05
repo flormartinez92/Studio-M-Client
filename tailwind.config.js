@@ -6,6 +6,17 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    extend: {
+      keyframes: {
+        navbar: {
+          "0%": { transform: "translate3d(100%, 0, 0)" },
+          "100%": { transform: "translate3d(0, 0, 0)" },
+        },
+      },
+      animation: {
+        navbar: "navbar .7s"
+      }
+    },
     fontFamily: {
       "mystery-mixed": ["mystery-mixed"],
       "ms-gothic": ["ms-gothic"],
@@ -26,7 +37,7 @@ module.exports = {
       darkGray: "#5C5A5A",
       h3Black: "#151515",
       h2Black: "#161616",
-      grey: "#808080"
+      grey: "#808080",
     },
   },
   plugins: [],
