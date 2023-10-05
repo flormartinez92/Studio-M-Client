@@ -1,10 +1,28 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards";
 import { Arrow, CartShopSimple, Vector } from "@/common/Icons";
 import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
+import axios from "axios";
 
 export default function Courses() {
+  const [cursos, setCursos] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/api/user/allCourses")
+      .then((res) => {
+        const cursosData = res.data;
+        console.log(cursosData);
+        setCursos(cursosData);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los cursos:", error);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col h-auto justify-around items-center font-mystery-mixed gap-16 mt-10 mb-16">
       <div className="hidden md:block md:space-x-2 md:w-[80%]">
@@ -20,6 +38,19 @@ export default function Courses() {
         </Button>
       </div>
       <h2 className="text-4xl md:hidden">Nuestros Cursos</h2>
+
+      {/* 
+      {cursos.map((curso) => (
+        <Cards
+          key={curso._id} // Asegúrate de establecer una clave única para cada tarjeta
+          title={curso.title}
+          buttonTitle={"Ver Curso"}
+          icon={<CartShopSimple width={"16px"} height={"16px"} />}
+          img={curso.img}
+          // Resto de los datos del curso (precio, descripción, nivel, horas, etc.)
+        />
+      ))} */}
+
       <Cards
         title={"UX Research"}
         buttonTitle={"Ver Curso"}
