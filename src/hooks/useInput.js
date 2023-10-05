@@ -30,7 +30,7 @@ function useInput(type) {
         messageError: "*El dni no puede estar vacío",
       },
       {
-        condition: (valor) => /[0-9]/.test(valor),
+        condition: (valor) => /^[0-9]+$/.test(valor),
         messageError: "*El dni solo puede contener numeros",
       },
     ],
