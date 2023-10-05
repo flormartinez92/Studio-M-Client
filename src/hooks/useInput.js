@@ -45,6 +45,12 @@ function useInput(type) {
         messageError: "*El mail debe ser un mail válido",
       },
     ],
+    passwordLogin: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El contraseña no puede estar vacío",
+      },
+    ],
     password: [
       {
         condition: (valor) => valor.trim() !== "",
