@@ -5,8 +5,12 @@ import Input from "@/common/Input";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "../../state/features/authSlice";
 
 export default function Login() {
+  const userInfo = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
   const router = useRouter();
   const [emailData, setEmailData] = useState("");
   const [passwordData, setPasswordData] = useState("");
@@ -25,12 +29,24 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8081/api/user/login", {
-        mail: emailData,
-        password: passwordData,
-      })
+      .post(
+        "http://localhost:8081/api/user/login",
+        {
+          mail: emailData,
+          password: passwordData,
+        },
+        { withCredentials: true }
+      )
       .then((res) => res.data)
       .then((user) => {
+        dispatch(
+          setCredentials({
+            dni: user.dni,
+            name: user.name,
+            lastname: user.lastname,
+            mail: user.mail,
+          })
+        );
         router.push("/");
       })
       .catch((error) => {
