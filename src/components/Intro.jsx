@@ -3,6 +3,7 @@ import Cards from "./Cards";
 import { CartShopSimple, Check } from "@/common/Icons";
 import CheckList from "../common/CheckList";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Intro() {
   return (
@@ -12,37 +13,43 @@ export default function Intro() {
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Cards
-            title="UX Research"
-            buttonTitle="Ver curso"
-            icon={<CartShopSimple />}
-            img="/img/indonesiaGrande.png"
-            className="max-w-[205px]"
-            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-            classNameIconButton="py-2 px-2 flex items-center"
-          />
+          <Link href="/course-information">
+            <Cards
+              title="UX Research"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/indonesiaGrande.png"
+              className="max-w-[205px]"
+              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+              classNameIconButton="py-2 px-2 flex items-center"
+            />
+          </Link>
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Cards
-            title="UX Writing"
-            buttonTitle="Ver curso"
-            icon={<CartShopSimple />}
-            img="/img/studio.png"
-            className="max-w-[205px]"
-            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-            classNameIconButton="py-2 px-2 flex items-center"
-          />
+          <Link href="/course-information">
+            <Cards
+              title="UX Writing"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/studio.png"
+              className="max-w-[205px]"
+              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+              classNameIconButton="py-2 px-2 flex items-center"
+            />
+          </Link>
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Cards
-            title="UI Design"
-            buttonTitle="Ver curso"
-            icon={<CartShopSimple />}
-            img="/img/tirza.png"
-            className="max-w-[205px]"
-            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-            classNameIconButton="py-2 px-2 flex items-center"
-          />
+          <Link href="/course-information">
+            <Cards
+              title="UI Design"
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img="/img/tirza.png"
+              className="max-w-[205px]"
+              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+              classNameIconButton="py-2 px-2 flex items-center"
+            />
+          </Link>
         </div>
       </div>
 
