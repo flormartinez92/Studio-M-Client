@@ -8,7 +8,6 @@ export default function Intro() {
   return (
     <div className="bg-#F5F0F0">
       <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
-
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
@@ -19,8 +18,8 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/indonesiaGrande.png"
             className="max-w-[205px]"
-            classNameButton="py-1 px-3"
-            classNameIconButton="py-1 px-2"
+            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+            classNameIconButton="py-2 px-2 flex items-center"
           />
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
@@ -30,8 +29,8 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/studio.png"
             className="max-w-[205px]"
-            classNameButton="py-1 px-3"
-            classNameIconButton="py-1 px-2"
+            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+            classNameIconButton="py-2 px-2 flex items-center"
           />
         </div>
         <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
@@ -41,8 +40,8 @@ export default function Intro() {
             icon={<CartShopSimple />}
             img="/img/tirza.png"
             className="max-w-[205px]"
-            classNameButton="py-1 px-3"
-            classNameIconButton="py-1 px-2"
+            classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+            classNameIconButton="py-2 px-2 flex items-center"
           />
         </div>
       </div>

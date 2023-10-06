@@ -4,11 +4,16 @@ export const Footer = () => {
       className="
     bg-[url(../../public/img/background.png)]
     md:bg-[url(../../public/img/background.png)]
-    bg-no-repeat 
+    bg-no-repeat
+    
     w-full 
-    h-screen
+    h-full
+    
+    lg:h-[50rem]
+    xl:h-[49rem]
     text-center 
-    bg-cover 
+    bg-cover
+     
     bg-center 
     "
     >
@@ -18,7 +23,8 @@ export const Footer = () => {
         grid
         grid-cols-1 
         md:grid-cols-2
-        md:py-[100px]
+        sm:py-[50px]
+        md:py-[80px]
         lg:py-[130px] 
         max-w-[80rem]
         place-content-center
