@@ -32,6 +32,7 @@ export default function Login() {
       .then((res) => res.data)
       .then((user) => {
         router.push("/");
+        localStorage.setItem("userId", user._id);
       })
       .catch((error) => {
         console.error("Unsuccessful login:", error);

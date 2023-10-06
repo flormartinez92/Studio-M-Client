@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CourseSummary from "@/common/CourseSummary";
 import { info } from "./dataCourseInformation";
+import axios from "axios";
 
 export default function CourseInformation() {
+  const [userCourses, setUserCourses] = useState([]);
+
+  // Realiza la solicitud al servidor para obtener los cursos del usuario
+  useEffect(() => {
+    axios.get("http://localhost:8081/user/allCourses")
+      .then((response) => {
+        setUserCourses(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <>
       {info?.map((info) => (
