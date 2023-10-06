@@ -12,7 +12,7 @@ import {
 import Input from "@/common/Input";
 import Image from "next/image";
 import React, { useState } from "react";
-import Cards from "./Cards";
+import Cards from "../../components/Cards";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 
