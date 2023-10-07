@@ -16,9 +16,9 @@ export default function ResetPassword() {
     confirmPassword: "",
   });
 
-  const handlePasswordChange = async (e) => {
+  const handlePasswordChange = (e) => {
     const { name, value } = e.target;
-    await setPassword((data) => ({
+    setPassword((data) => ({
       ...data,
       [name]: value,
     }));
