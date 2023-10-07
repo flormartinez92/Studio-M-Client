@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../state/features/authSlice";
 import useInput from "@/hooks/useInput";
+import Link from "next/link";
 
 export default function Login() {
   const userInfo = useSelector((store) => store.auth);
@@ -155,6 +156,9 @@ export default function Login() {
               </p>
             )}
           </div>
+          <Link href="/forgot-password" className="underline text-center">
+            Olvidé mi contraseña
+          </Link>
         </div>
 
         <div

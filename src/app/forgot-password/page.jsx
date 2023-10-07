@@ -19,7 +19,7 @@ export default function Forgot() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8081/api/user/forgot", {
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/forgot`, {
         mail: mail,
       })
       .then(() => {
