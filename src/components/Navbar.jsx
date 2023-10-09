@@ -115,7 +115,7 @@ export default function Navbar() {
                 <li className="mx-4">
                   <Link
                     href="/courses"
-                    className="text-[50px] text-white font-mystery-mixed"
+                    className="text-[50px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                   >
                     Cursos
                   </Link>
