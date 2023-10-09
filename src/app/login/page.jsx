@@ -149,7 +149,7 @@ export default function Login() {
             onChange={OnChangePassword}
             onBlur={BlurPassword}
           />
-          <div className="h-[.5rem]">
+          <div className="h-[.5rem] pb-6">
             {MessagePassword && (
               <p className="text-red text-[.9rem] leading-3">
                 {MessagePassword}

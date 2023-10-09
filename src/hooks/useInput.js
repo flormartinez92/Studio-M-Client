@@ -48,13 +48,13 @@ function useInput(type) {
     passwordLogin: [
       {
         condition: (valor) => valor.trim() !== "",
-        messageError: "*El contraseña no puede estar vacío",
+        messageError: "*La contraseña no puede estar vacía",
       },
     ],
     password: [
       {
         condition: (valor) => valor.trim() !== "",
-        messageError: "*El contraseña no puede estar vacío",
+        messageError: "*La contraseña no puede estar vacía",
       },
       {
         condition: (valor) => valor.length >= 8,
