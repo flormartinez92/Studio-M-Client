@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CourseSummary from "@/common/CourseSummary";
@@ -5,24 +7,26 @@ import { info } from "./dataCourseInformation";
 import axios from "axios";
 
 export default function CourseInformation() {
-  const [userCourses, setUserCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
 
-  // Realiza la solicitud al servidor para obtener los cursos del usuario
-  useEffect(() => {
-    axios.get("http://localhost:8081/user/allCourses")
-      .then((response) => {
-        setUserCourses(response.data);
+  useEffect(()=>{
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses`)
+      .then((res)=>{
+        const { courses } = res.data;
+        console.log("==============", courses);
+        setCourses(courses);
       })
-      .catch((error) => {
+      .catch((error)=>{
         console.error(error);
-      });
-  }, []);
+      })
+  }, [])
 
   return (
     <>
-      {info?.map((info) => (
+      {courses?.map((info) => (
         <>
-          <div className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
+          <div key={info._id} className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
             <div className="flex items-center gap-6 md:hidden">
               <h2 className="font-mystery-mixed text-4xl -rotate-3">
                 {info.courseTitle}
@@ -35,7 +39,7 @@ export default function CourseInformation() {
                   alt="FOTO"
                 ></Image>
                 <Image
-                  src={info.imgUrl}
+                  src={info.courseImg_url}
                   width={"69"}
                   height={"69"}
                   alt="FOTO"

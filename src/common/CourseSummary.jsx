@@ -16,6 +16,7 @@ export default function CourseSummary({ level, hours, price, className, courseId
       // await axios.get("http://localhost8081/user/courses")
       await axios.post(`http://localhost:8081/cart/add/${courseId}/${userId}`)
 
+      // console.log(courseId);
       dispatch(addToCart(courseId)); // courseId pendiente
     } catch (error) {
       console.error(error)
