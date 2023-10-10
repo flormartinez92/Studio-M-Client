@@ -13,7 +13,7 @@ export default function CourseSummary({ level, hours, price, className, courseId
 
   const handleAddToCart = async () => {
     try {
-      await axios.post(`http://localhost:8081/cart/add/${courseId}/${userId}`)
+      await axios.post(`http://localhost:8081/api/cart/add/${courseId}/${userId}`)
 
       dispatch(addToCart(courseId));
     } catch (error) {

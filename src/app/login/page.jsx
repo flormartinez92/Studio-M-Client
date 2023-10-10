@@ -38,8 +38,8 @@ export default function Login() {
 
     axios
       .post("http://localhost:8081/api/user/login", {
-        mail: emailData,
-        password: passwordData,
+        mail: valueMail,
+        password: valuePassword,
       })
       .then((res) => res.data)
       .then((user) => {
