@@ -43,7 +43,9 @@ export default function Forgot() {
             .then(() => {
               setMessageAlert("");
               setMessageAlertOk("¡Mail enviado!");
-              router.push("/forgot-password/success");
+              setTimeout(() => {
+                router.push("/forgot-password/success");
+              }, 1300);
             });
         } catch (error) {
           console.error(error);
