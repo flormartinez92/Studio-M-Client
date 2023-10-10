@@ -23,6 +23,15 @@ export default function Courses() {
       });
   }, []);
 
+  function isMd() {
+    return window.innerWidth >= 768;
+  }
+  function newTitle(title) {
+    const titleArray = title.split(" ");
+    const titleLength = titleArray.length;
+    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+  }
+
   return (
     <div className="flex flex-col h-auto justify-around items-center font-mystery-mixed gap-16 mt-10 mb-16">
       <div className="hidden md:block md:space-x-2 md:w-[80%]">
@@ -42,7 +51,7 @@ export default function Courses() {
       {courses.map((course) => (
         <Cards
           key={course._id}
-          title={course.courseTitle}
+          title={isMd() ? newTitle(course.courseTitle) : course.courseTitle}
           buttonTitle={"Ver Curso"}
           icon={<CartShopSimple width={"16px"} height={"16px"} />}
           img={course.courseImg_url}

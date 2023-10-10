@@ -4,55 +4,54 @@ import { CartShopSimple, Check } from "@/common/Icons";
 import CheckList from "../common/CheckList";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Intro() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/api/user/allCourses")
+      .then((res) => {
+        const { courses } = res.data;
+        console.log(courses);
+        setCourses(courses);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los cursos:", error);
+      });
+  }, []);
+
+  function newTitle(title) {
+    const titleArray = title.split(" ");
+    const titleLength = titleArray.length;
+    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+  }
+
   return (
     <div className="bg-#F5F0F0">
       <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
-        <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Link href="/course-information">
-            <Cards
-              title="UX Research"
-              buttonTitle="Ver curso"
-              icon={<CartShopSimple />}
-              img="/img/indonesiaGrande.png"
-              className="max-w-[205px]"
-              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-              classNameIconButton="py-2 px-2 flex items-center"
-            />
-          </Link>
-        </div>
-        <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Link href="/course-information">
-            <Cards
-              title="UX Writing"
-              buttonTitle="Ver curso"
-              icon={<CartShopSimple />}
-              img="/img/studio.png"
-              className="max-w-[205px]"
-              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-              classNameIconButton="py-2 px-2 flex items-center"
-            />
-          </Link>
-        </div>
-        <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-          <Link href="/course-information">
-            <Cards
-              title="UI Design"
-              buttonTitle="Ver curso"
-              icon={<CartShopSimple />}
-              img="/img/tirza.png"
-              className="max-w-[205px]"
-              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-              classNameIconButton="py-2 px-2 flex items-center"
-            />
-          </Link>
-        </div>
+        {courses.slice(0, 3).map((course) => (
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+            <Link href="/course-information">
+              <Cards
+                title={newTitle(course.courseTitle)}
+                buttonTitle="Ver curso"
+                icon={<CartShopSimple />}
+                img={course.courseImg_url}
+                className="max-w-[205px]"
+                classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+                classNameIconButton="py-2 px-2 flex items-center"
+              />
+            </Link>
+          </div>
+        ))}
       </div>
-
       <div className="w-full h-full flex flex-col justify-center">
         <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
           Qué esperar de un curso en by M studio?
