@@ -1,27 +1,43 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CourseSummary from "@/common/CourseSummary";
-import { info } from "./dataCourseInformation";
+import axios from "axios";
 
 export default function CourseInformation() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(()=>{
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses`)
+      .then((res)=>{
+        const { courses } = res.data;
+        console.log("==============", courses);
+        setCourses(courses);
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
+  }, [])
+
   return (
     <>
-      {info?.map((info) => (
-        <>
-          <div className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
+      {courses?.map((info) => (
+          <div key={info._id} className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40">
             <div className="flex items-center gap-6 md:hidden">
               <h2 className="font-mystery-mixed text-4xl -rotate-3">
                 {info.courseTitle}
               </h2>
               <div className="relative">
                 <Image
-                  src={"/svg/paper.svg"}
+                  src={info.courseImg_url}
                   width={"100"}
                   height={"100"}
                   alt="FOTO"
                 ></Image>
                 <Image
-                  src={info.imgUrl}
+                  src={info.courseImg_url}
                   width={"69"}
                   height={"69"}
                   alt="FOTO"
@@ -31,32 +47,32 @@ export default function CourseInformation() {
             </div>
             <div className="flex flex-col justify-between items-center w-[80%] gap-6 md:hidden">
               <h3 className="font-ms-gothic text-xl justify-center text-center">
-                {info.resumeTitle}
+                {info.courseSubtitle}
               </h3>
               <p className="font-ms-gothic text-base justify-center text-center text-[#5C5A5A]">
-                {info.resume}
+                {info.courseDescription}
               </p>
             </div>
 
             <div className="hidden md:flex md:flex-col md:w-[80%] md:items-center rounded-lg">
               <div className="flex justify-center rounded-t-lg text-2xl py-2 md:bg-[#1E1E1E] w-full md:font-medium">
                 <h3 className="md:font-mystery-mixed md:text-[#fff] lg:text-3xl">
-                  {info.titleCard}
+                  {info.courseTitle}
                 </h3>
               </div>
               <div className="font-ms-gothic rounded-b-lg bg-lightGrey flex flex-row">
                 <div className="md:max-h-64 md:max-w-[176px] md:rounded-r-none lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]">
                   <Image
-                    src={info.imgUrl2}
+                    src={info.courseImg_url}
                     width={"500"}
                     height={"500"}
                     alt="FOTO"
                   ></Image>
                 </div>
                 <div className="flex flex-col justify-between text-sm w-[80%] mx-4 my-2 lg:text-base lg:mb-0 xl:text-lg">
-                  <h3>{info.resumeTitle}</h3>
+                  <h3>{info.courseSubtitle}</h3>
                   <p className=" max-w-full text-xs text-[#5C5A5A] lg:text-sm xl:text-base">
-                    {info.resume}
+                    {info.courseDescription}
                   </p>
                   <p className="flex justify-end">${info.priceCourse} ARS</p>
                 </div>
@@ -132,11 +148,12 @@ export default function CourseInformation() {
 
             <div className="w-[80%] text-center justify-between flex flex-col gap-7 mb-10">
               <h3 className="font-mystery-mixed text-2xl lg:text-3xl">
-                Proyecto Final: {info.projectTitle}
+                Proyecto Final: {info.projects}
               </h3>
-              <p className="font-ms-gothic lg:text-xl">{info.projectResume}</p>
+              <p className="font-ms-gothic lg:text-xl">{info.projectsDescription}</p>
             </div>
             <CourseSummary
+              courseId={info._id}
               level={info.levelCourse}
               hours={info.hoursCourse}
               price={info.priceCourse}
@@ -145,7 +162,6 @@ export default function CourseInformation() {
               }
             />
           </div>
-        </>
       ))}
     </>
   );

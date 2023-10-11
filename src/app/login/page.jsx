@@ -35,6 +35,20 @@ export default function Login() {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+
+    axios
+      .post("http://localhost:8081/api/user/login", {
+        mail: valueMail,
+        password: valuePassword,
+      })
+      .then((res) => res.data)
+      .then((user) => {
+        router.push("/");
+        localStorage.setItem("userId", user._id);
+      })
+      .catch((error) => {
+        console.error("Unsuccessful login:", error);
+      });
     //Verificacion campos de los input
     if (valueMail.trim() == "" || valuePassword.trim() == "") {
       setmessageAlert("¡Completar todos los campos!");

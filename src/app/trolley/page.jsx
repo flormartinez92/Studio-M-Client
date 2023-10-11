@@ -2,6 +2,8 @@ import React from "react";
 import Cards from "../../components/Cards";
 import Button from "@/common/Button";
 import Image from "next/image";
+import IconButton from "@/common/IconButton";
+import { Close } from "@/common/Icons";
 
 export default function Trolley({ details }) {
   return (
@@ -22,10 +24,11 @@ export default function Trolley({ details }) {
 
         {/* Contenido para dispositivos de escritorio */}
         <div className="hidden md:flex flex-col w-[80%] mt-12 shadow-xl">
-          <div className="w-full bg-black flex justify-center rounded-t-md">
-            <h3 className="text-white font-mystery-mixed text-2xl">
+          <div className="w-full bg-black flex justify-between items-center rounded-t-md">
+            <h3 className="flex-1 m-0 text-center text-white font-mystery-mixed text-2xl">
               Curso avanzado de Ux Research
             </h3>
+            <IconButton className={"p-1"}><Close color={"white"}/></IconButton>
           </div>
           <div className="bg-page flex justify-between rounded-b-md">
             <div className="w-[25%]">
