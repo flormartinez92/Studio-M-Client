@@ -10,8 +10,6 @@ export default function CourseInformation({ params }) {
   const courseId = params["course-id"];
   let num = 0;
 
-  const reset = (number)=> number = 0;
-
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses/${courseId}`)
@@ -25,7 +23,7 @@ export default function CourseInformation({ params }) {
       });
   }, [courseId]);
 
-  console.log(course.modules);
+  console.log(course);
   return (
     <>
       <div
