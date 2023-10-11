@@ -1,10 +1,15 @@
+"use client";
+
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import { BurgerDots } from "@/common/Icons";
 import fakeDataCourseDetails from "./fakeDataCourseDetails";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function PurchasedCourseDetails() {
+  const [courseDetails, setCourseDetails] = useState();
+
   return (
     <section
       className="text-center font-ms-gothic h-auto py-[30px] 
@@ -18,8 +23,8 @@ export default function PurchasedCourseDetails() {
         <BurgerDots />
         <h2
           className="text-base absolute left-12
-        md:text-xl md:left-[6.25rem] md:top-[1.625rem]
-        xl:text-[27px] xl:left-[110px] xl:top-[35px]"
+        md:text-xl md:left-[6.25rem] md:top-[8.875rem]
+        xl:text-[1.688rem] xl:left-[6.875rem] xl:top-[9.375rem]"
         >
           Secciones del curso
         </h2>
