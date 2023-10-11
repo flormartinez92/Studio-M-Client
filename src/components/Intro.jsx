@@ -7,9 +7,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useParams } from "next/navigation";
 
 export default function Intro() {
   const [courses, setCourses] = useState([]);
+  const courseId = useParams["course-id"];
 
   useEffect(() => {
     axios
@@ -38,7 +40,7 @@ export default function Intro() {
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         {courses.slice(0, 3).map((course) => (
           <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Link href="/course-information">
+            <Link href={`/courses/${courseId}`}>
               <Cards
                 title={newTitle(course.courseTitle)}
                 buttonTitle="Ver curso"

@@ -10,7 +10,7 @@ export default function CourseInformation({ params }) {
   const courseId = params["course-id"];
   let num = 0;
 
-  const reset = (number)=> number = 0;
+  const reset = (number) => (number = 0);
 
   useEffect(() => {
     axios
@@ -26,29 +26,48 @@ export default function CourseInformation({ params }) {
   }, [courseId]);
 
   console.log(course.modules);
+
+  function isMd() {
+    return window.innerWidth >= 768;
+  }
+
+  function newTitle(title) {
+    if (title) {
+      const titleArray = title.split(" ");
+      const titleLength = titleArray.length;
+      if (titleLength >= 2) {
+        return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+      } else {
+        return title;
+      }
+    } else {
+      return "";
+    }
+  }
+
   return (
     <>
       <div
         key={course._id}
         className="bg-[#fff] flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-40"
       >
-        <div className="flex items-center gap-6 md:hidden">
+        <div className="flex items-center gap-6 sm:ml-2 md:hidden">
           <h2 className="font-mystery-mixed text-4xl -rotate-3">
-            {course.courseTitle}
+            {isMd() ? course.courseTitle : newTitle(course.courseTitle)}
           </h2>
           <div className="relative">
             <Image
               src={course.courseImg_url}
-              width={"100"}
-              height={"100"}
+              width={"150"}
+              height={"150"}
               alt="FOTO"
             ></Image>
             <Image
               src={course.courseImg_url}
-              width={"69"}
-              height={"69"}
+              width={"200"}
+              height={"200"}
               alt="FOTO"
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="bg-contain bg-center bg-no-repeat absolute top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             ></Image>
           </div>
         </div>
@@ -86,15 +105,21 @@ export default function CourseInformation({ params }) {
           </div>
         </div>
 
-        <div className="font-ms-gothic w-[80%] md:hidden">
-          <h3 className="text-lg">Modulo 1:</h3>
-          <h4 className="text-lg">{course.titleModule1}</h4>
-          <ul className="text-[#5C5A5A] text-base flex flex-col my-2 gap-4">
-            <li>Tema 1: {course.theme1}</li>
-            <li>Tema 2: {course.theme2}</li>
-            <li>Tema 3: {course.theme3}</li>
-          </ul>
-        </div>
+        {course.modules?.map((module) => (
+          <div
+            key={module.moduleName}
+            className="font-ms-gothic w-[80%] md:hidden"
+          >
+            <h3 className="text-lg">Modulo 1: {module.moduleName}</h3>
+            {module.topics?.map((topic) => (
+              <div key={topic.topicName}>
+                <ul className="text-[#5C5A5A] text-base flex flex-col my-2 gap-4">
+                  <li>Tema 1: {topic.topicName}</li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))}
 
         {course.modules?.map((module) => (
           <div
