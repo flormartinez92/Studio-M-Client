@@ -11,16 +11,60 @@ export default function Register() {
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const [campos, setCampos] = useState([
-    { moduleName: "", topicName: "", classesName: "", info: useInput("name") },
+    { moduleName: "", topicName: "", classesName: "" },
   ]);
 
   const {
-    OnChange: OnChangeName,
-    value: valueName,
-    blur: BlurName,
-    focus: FocusName,
-    message: MessageName,
-  } = useInput("name");
+    OnChange: OnChangeTitle,
+    value: valueTitle,
+    blur: BlurTitle,
+    focus: FocusTitle,
+    message: MessageTitle,
+  } = useInput("course");
+  const {
+    OnChange: OnChangeSubtitle,
+    value: valueSubtitle,
+    blur: BlurSubtitle,
+    focus: FocusSubtitle,
+    message: MessageSubtitle,
+  } = useInput("course");
+
+  const {
+    OnChange: OnChangeDescription,
+    value: valueDescription,
+    blur: BlurDescription,
+    focus: FocusDescription,
+    message: MessageDescription,
+  } = useInput("course");
+
+  const {
+    OnChange: OnChangeImage,
+    value: valueImage,
+    blur: BlurImage,
+    focus: FocusImage,
+    message: MessageImage,
+  } = useInput("course");
+  const {
+    OnChange: OnChangeNameProject,
+    value: valueNameProject,
+    blur: BlurNameProject,
+    focus: FocusNameProject,
+    message: MessageNameProject,
+  } = useInput("course");
+  const {
+    OnChange: OnChangeDescriptionProject,
+    value: valueDescriptionProject,
+    blur: BlurDescriptionProject,
+    focus: FocusDescriptionProject,
+    message: MessageDescriptionProject,
+  } = useInput("course");
+  const {
+    OnChange: OnChangeMessageProject,
+    value: valueMessageProject,
+    blur: BlurMessageProject,
+    focus: FocusMessageProject,
+    message: MessageProject,
+  } = useInput("course");
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -56,10 +100,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Titulo"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueTitle}
+            onChange={OnChangeTitle}
+            onBlur={BlurTitle}
+            onFocus={FocusTitle}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -73,10 +117,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Sub-titulo"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueSubtitle}
+            onChange={OnChangeSubtitle}
+            onBlur={BlurSubtitle}
+            onFocus={FocusSubtitle}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -90,10 +134,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Descripcion"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueDescription}
+            onChange={OnChangeDescription}
+            onBlur={BlurDescription}
+            onFocus={FocusDescription}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -108,10 +152,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Url_Imagen"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueImage}
+            onChange={OnChangeImage}
+            onBlur={BlurImage}
+            onFocus={FocusImage}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -136,8 +180,6 @@ export default function Register() {
                     label={"Nombre de modulo"}
                     value={campos.nombre}
                     onChange={(e) => handleInputChange(i, e)}
-                    onBlur={BlurName}
-                    onFocus={FocusName}
                     classNameLabel={"block text-[23px]"}
                     placeholder={"Ingresa tu nombre"}
                     name={"nombre"}
@@ -151,10 +193,6 @@ export default function Register() {
                   <Input
                     className={"flex-none"}
                     label={"Nombre del tema"}
-                    value={valueName}
-                    onChange={OnChangeName}
-                    onBlur={BlurName}
-                    onFocus={FocusName}
                     classNameLabel={"block text-[23px]"}
                     placeholder={"Ingresa tu nombre"}
                     name={"nombre"}
@@ -168,10 +206,6 @@ export default function Register() {
                   <Input
                     className={"flex-none"}
                     label={"clases"}
-                    value={valueName}
-                    onChange={OnChangeName}
-                    onBlur={BlurName}
-                    onFocus={FocusName}
                     classNameLabel={"block text-[23px]"}
                     placeholder={"Ingresa tu nombre"}
                     name={"nombre"}
@@ -182,6 +216,9 @@ export default function Register() {
                 rounded-[3px]   
                 bg-black/20`}
                   />
+                  {[1, 2, 3, 4].map((e, i) => {
+                    return <div key={i}>{e}</div>;
+                  })}
                 </div>
               ))}
             </div>
@@ -189,10 +226,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Nombre del proyecto"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueNameProject}
+            onChange={OnChangeNameProject}
+            onBlur={BlurNameProject}
+            onFocus={FocusNameProject}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -206,10 +243,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Descripcion del proyecto"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueDescriptionProject}
+            onChange={OnChangeDescriptionProject}
+            onBlur={BlurDescriptionProject}
+            onFocus={FocusDescriptionProject}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}
@@ -223,10 +260,10 @@ export default function Register() {
           <Input
             className={"flex-none"}
             label={"Mensaje curso completado"}
-            value={valueName}
-            onChange={OnChangeName}
-            onBlur={BlurName}
-            onFocus={FocusName}
+            value={valueMessageProject}
+            onChange={OnChangeMessageProject}
+            onBlur={BlurMessageProject}
+            onFocus={FocusMessageProject}
             classNameLabel={"block text-[23px]"}
             placeholder={"Ingresa tu nombre"}
             name={"nombre"}

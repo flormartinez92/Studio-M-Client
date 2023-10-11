@@ -51,6 +51,12 @@ function useInput(type) {
         messageError: "*La contraseña no puede estar vacía",
       },
     ],
+    course: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El nombre no puede estar vacío",
+      },
+    ],
     password: [
       {
         condition: (valor) => valor.trim() !== "",
