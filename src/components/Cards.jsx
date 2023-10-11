@@ -5,6 +5,8 @@ import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
 import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/state/features/cartSlice";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
@@ -28,6 +30,19 @@ export default function Cards({
   wishes,
   id,
 }) {
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
+
+  const handleAddToCart = async () => {
+    try {
+      await axios.post(`http://localhost:8081/api/cart/add/${id}/${userId}`);
+
+      dispatch(addToCart(id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const router = useRouter();
 
   const handleClick = async (courseId) => {
@@ -85,6 +100,7 @@ export default function Cards({
               </IconButton>{" "}
             </p>
             <IconButton
+              onClick={handleAddToCart}
               children={<CartShopPlus />}
               className={"bg-black h-8 w-8 rounded-2xl"}
             />

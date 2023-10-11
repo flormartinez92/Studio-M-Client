@@ -10,8 +10,6 @@ export default function CourseInformation({ params }) {
   const courseId = params["course-id"];
   let num = 0;
 
-  const reset = (number) => (number = 0);
-
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses/${courseId}`)
@@ -144,43 +142,6 @@ export default function CourseInformation({ params }) {
             ))}
           </div>
         ))}
-
-        {/* <h4 className="mt-2 lg:text-lg">Tema 2: {course.theme2}</h4>
-          <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-            <li>1. {course.element2_1 || ""}</li>
-            <li>2. {course.element2_2 || ""}</li>
-            <li>3. {course.element2_3 || ""}</li>
-          </ul>
-          <h4 className="mt-2 lg:text-lg">Tema 3: {course.theme3}</h4>
-          <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-            <li>1. {course.element3_1 || ""}</li>
-            <li>2. {course.element3_2 || ""}</li>
-            <li>3. {course.element3_3 || ""}</li>
-          </ul> */}
-
-        {/* <div className="hidden md:flex md:flex-col md:font-ms-gothic md:w-[80%]">
-          <h3 className="text-lg font-mystery-mixed my-2 lg:text-xl">
-            Modulo 2: {course.titleModule2}
-          </h3>
-          <h4 className="mt-2 lg:text-lg">Tema 2: {course.theme2_1}</h4>
-          <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-            <li>1. {course.element4_1 || ""}</li>
-            <li>2. {course.element4_2 || ""}</li>
-            <li>3. {course.element4_3 || ""}</li>
-          </ul>
-          <h4 className="mt-2 lg:text-lg">Tema 2: {course.theme2_2}</h4>
-          <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-            <li>1. {course.element5_1 || ""}</li>
-            <li>2. {course.element5_2 || ""}</li>
-            <li>3. {course.element5_3 || ""}</li>
-          </ul>
-          <h4 className="mt-2 lg:text-lg">Tema 3: {course.theme2_3}</h4>
-          <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-            <li>1. {course.element6_1 || ""}</li>
-            <li>2. {course.element6_2 || ""}</li>
-            <li>3. {course.element6_3 || ""}</li>
-          </ul>
-        </div> */}
 
         <div className="w-[80%] text-center justify-between flex flex-col gap-7 mb-10">
           <h3 className="font-mystery-mixed text-2xl lg:text-3xl">
