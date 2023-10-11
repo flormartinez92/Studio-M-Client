@@ -16,10 +16,10 @@ export default function UpdateCoupon({ couponId, couponData, onCouponUpdate }) {
         `${process.env.NEXT_PUBLIC_API_URL}/api/course/updateCoupon/${couponId}`,
         updateCoupon
       );
-      console.log(response.data);
-      //onCouponUpdate(response.data)
+     
+      onCouponUpdate(response.data)
     } catch (error) {
-      console.error("Error al actulizar el cupon", error);
+      console.error("error updating coupon", error);
     }
   };
 

@@ -15,11 +15,16 @@ export default function ActiveCoupons() {
   };
 
   const handleAddCoupon = (newCoupon) => {
-    console.log(newCoupon);
     setCoupons(newCoupon);
+    setShowCouponForm(false);
   };
 
-  // const handleDeleteCoupon = () => {};
+  // const handleDeleteCoupon = (deleteCouponId) => {
+  //   const couponRemoved = coupons.filter((coupon) => {
+  //     coupon.id !== deleteCouponId;
+  //   });
+  //   setCoupons(couponRemoved);
+  // };
 
   // const handleEditCoupon = (editCoupon) => {
   //   const updateCoupon = coupons.filter((coupon) => {
@@ -47,7 +52,7 @@ export default function ActiveCoupons() {
           </thead>
           <tbody>
             <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">123CDF</td>
+              <td className="p-4">123TTT</td>
               <td className="max-sm:hidden">&nbsp;</td>
               <td className="max-sm:hidden">&nbsp;</td>
               <td>

@@ -21,13 +21,14 @@ export default function AddCoupon({ onCouponAdd }) {
 
     try {
       // Enviar los datos del cupón al servidor usando axios
+
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/course/addCoupon`,
+        "http://localhost:8081/api/course/addCoupon",
         couponData
       );
-      console.log(response.data);
 
       onCouponAdd(response.data); //crear cupon
+      alert("cupon creado exitosamente");
     } catch (error) {
       console.error("error creating coupon", error);
     }
@@ -35,7 +36,7 @@ export default function AddCoupon({ onCouponAdd }) {
 
   return (
     <div className="flex items-center justify-center mt-4">
-      <form className="w-[65%]" onSubmit={handleSubmitAdd} >
+      <form className="w-[65%]" onSubmit={handleSubmitAdd}>
         <Input
           name="couponCode"
           type="code"
@@ -71,10 +72,13 @@ export default function AddCoupon({ onCouponAdd }) {
           className="w-full"
           classNameLabel="text-[20px]"
           label="Descuento"
-          value={couponData.discountCoupon}
+          value={parseInt(couponData.discountCoupon)}
           onChange={handleInputChange}
         />
-        <Button type="submit" className="w-[25%] rounded bg-darkGreen mt-4 flex justify-center">
+        <Button
+          type="submit"
+          className="w-[25%] rounded bg-darkGreen mt-4 flex justify-center"
+        >
           Confirmar
         </Button>
       </form>
