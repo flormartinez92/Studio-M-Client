@@ -67,7 +67,7 @@ export default function Courses() {
           classNameIconButton={"px-[9.5px] sm:px-[12px] md:hidden"}
           classNameBorder={"sm:h-12 md:hidden"}
           classNameImg={
-            "md:max-h-64 md:max-w-[176px] md:rounded-r-none lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]"
+            "md:max-h-64 md:max-w-[176px] md:rounded-bl-lg lg:max-h-72 lg:max-w-[208px] xl:h-[15rem] xl:max-w-[15rem]"
           }
           newClass={
             "md:block md:flex md:flex-col md:justify-between md:items-center md:text-xs md:my-1.5 lg:my-2.5 xl:my-3.5"
