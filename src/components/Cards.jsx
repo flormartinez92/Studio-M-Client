@@ -6,8 +6,9 @@ import IconButton from "@/common/IconButton";
 import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { addToCart } from "@/state/features/cartSlice";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Cards({
   title,
@@ -28,22 +29,26 @@ export default function Cards({
   hours,
   wishes,
   id,
-  courseId
 }) {
-
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
 
   const handleAddToCart = async () => {
     try {
-      await axios.post(
-        `http://localhost:8081/api/cart/add/${id}/${userId}`
-      );
+      await axios.post(`http://localhost:8081/api/cart/add/${id}/${userId}`);
 
       dispatch(addToCart(id));
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const router = useRouter();
+
+  const handleClick = async (courseId) => {
+    axios
+      .get(`http://localhost:8081/api/user/allCourses/${courseId}`)
+      .then(() => router.push(`/courses/${courseId}`));
   };
 
   return (
@@ -65,7 +70,10 @@ export default function Cards({
         <Border
           className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
         >
-          <Button className={`font-mystery-mixed ${classNameButton}`}>
+          <Button
+            onClick={() => handleClick(id)}
+            className={`font-mystery-mixed ${classNameButton}`}
+          >
             {buttonTitle}
           </Button>
           <Button className={`${classNameIconButton}`}>{icon}</Button>
