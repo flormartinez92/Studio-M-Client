@@ -9,7 +9,6 @@ import axios from "axios";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
-
   useEffect(() => {
     axios
       .get("http://localhost:8081/api/user/allCourses")
@@ -31,7 +30,7 @@ export default function Courses() {
     const titleLength = titleArray.length;
     return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
   }
-
+  
   return (
     <div className="flex flex-col h-auto justify-around items-center font-mystery-mixed gap-16 mt-10 mb-16">
       <div className="hidden md:block md:space-x-2 md:w-[80%]">
@@ -52,6 +51,7 @@ export default function Courses() {
         <Cards
           key={course._id}
           title={isMd() ? newTitle(course.courseTitle) : course.courseTitle}
+          id={course._id}
           buttonTitle={"Ver Curso"}
           icon={<CartShopSimple width={"16px"} height={"16px"} />}
           img={course.courseImg_url}

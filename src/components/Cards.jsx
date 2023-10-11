@@ -4,8 +4,7 @@ import Button from "@/common/Button";
 import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
 import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
-import { useEffect } from "react";
-import { useState } from "react";
+import Link from "next/link";
 
 export default function Cards({
   title,
@@ -25,22 +24,15 @@ export default function Cards({
   level,
   hours,
   wishes,
+  id
 }) {
-  // const [myTitle, setMytitle] = useState([]);
-  // // const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
-  // useEffect(() => {
-  //   const titleArray = title.split(" ");
-  //   const titleLength = titleArray.length;
-  //   const newTitle =
-  //     titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
-  //   setMytitle(newTitle);
-  // }, [title, setMytitle]);
-
   return (
     <div className={`w-80 relative ${className || ""}`}>
-      <h2 className="text-3xl text-white bg-black font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
-        {title}
-      </h2>
+      <Link href={`/courses/${id}`}>
+        <h2 className="text-3xl text-white bg-black font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
+          {title}
+        </h2>
+      </Link>
 
       <div className={`${className2}`}>
         <Image
