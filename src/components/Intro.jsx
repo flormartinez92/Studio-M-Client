@@ -16,7 +16,6 @@ export default function Intro() {
       .get("http://localhost:8081/api/user/allCourses")
       .then((res) => {
         const { courses } = res.data;
-        console.log(courses);
         setCourses(courses);
       })
       .catch((error) => {
@@ -29,7 +28,7 @@ export default function Intro() {
     const titleLength = titleArray.length;
     return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
   }
-
+  console.log("AAAAAAAAA", courses);
   return (
     <div className="bg-#F5F0F0">
       <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
@@ -38,17 +37,16 @@ export default function Intro() {
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         {courses.slice(0, 3).map((course) => (
           <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Link href="/course-information">
-              <Cards
-                title={newTitle(course.courseTitle)}
-                buttonTitle="Ver curso"
-                icon={<CartShopSimple />}
-                img={course.courseImg_url}
-                className="max-w-[205px]"
-                classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
-                classNameIconButton="py-2 px-2 flex items-center"
-              />
-            </Link>
+            <Cards
+              id={course._id}
+              title={newTitle(course.courseTitle)}
+              buttonTitle="Ver curso"
+              icon={<CartShopSimple />}
+              img={course.courseImg_url}
+              className="max-w-[205px]"
+              classNameButton="py-2 px-3 whitespace-nowrap flex items-center"
+              classNameIconButton="py-2 px-2 flex items-center"
+            />
           </div>
         ))}
       </div>

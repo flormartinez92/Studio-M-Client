@@ -5,6 +5,8 @@ import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
 import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Cards({
   title,
@@ -24,8 +26,16 @@ export default function Cards({
   level,
   hours,
   wishes,
-  id
+  id,
 }) {
+  const router = useRouter();
+
+  const handleClick = async (courseId) => {
+    axios
+      .get(`http://localhost:8081/api/user/allCourses/${courseId}`)
+      .then(() => router.push(`/courses/${courseId}`));
+  };
+
   return (
     <div className={`w-80 relative ${className || ""}`}>
       <Link href={`/courses/${id}`}>
@@ -45,7 +55,10 @@ export default function Cards({
         <Border
           className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
         >
-          <Button className={`font-mystery-mixed ${classNameButton}`}>
+          <Button
+            onClick={() => handleClick(id)}
+            className={`font-mystery-mixed ${classNameButton}`}
+          >
             {buttonTitle}
           </Button>
           <Button className={`${classNameIconButton}`}>{icon}</Button>
