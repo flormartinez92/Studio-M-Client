@@ -25,8 +25,6 @@ export default function CourseInformation({ params }) {
       });
   }, [courseId]);
 
-  console.log(course.modules);
-
   function isMd() {
     return window.innerWidth >= 768;
   }
@@ -57,17 +55,17 @@ export default function CourseInformation({ params }) {
           </h2>
           <div className="relative">
             <Image
-              src={course.courseImg_url}
-              width={"150"}
-              height={"150"}
+              src={"/img/papersmall.png"}
+              width={"100"}
+              height={"100"}
               alt="FOTO"
             ></Image>
             <Image
               src={course.courseImg_url}
-              width={"200"}
-              height={"200"}
+              width={"69"}
+              height={"69"}
               alt="FOTO"
-              className="bg-contain bg-center bg-no-repeat absolute top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="h-full max-h-[69px] absolute top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             ></Image>
           </div>
         </div>
@@ -93,6 +91,7 @@ export default function CourseInformation({ params }) {
                 width={"500"}
                 height={"500"}
                 alt="FOTO"
+                className={"h-full rounded-bl-lg"}
               ></Image>
             </div>
             <div className="flex flex-col justify-between text-sm w-[80%] mx-4 my-2 lg:text-base lg:mb-0 xl:text-lg">

@@ -14,7 +14,6 @@ export default function Courses() {
       .get("http://localhost:8081/api/user/allCourses")
       .then((res) => {
         const { courses } = res.data;
-        console.log(courses);
         setCourses(courses);
       })
       .catch((error) => {
