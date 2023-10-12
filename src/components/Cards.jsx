@@ -55,12 +55,9 @@ export default function Cards({
 
   return (
     <div className={`w-80 relative ${className || ""}`}>
-      <Link href={`/courses/${id}`}>
-        <h2 className="text-3xl text-white bg-black font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
-          {title}
-        </h2>
-      </Link>
-
+      <h2 className="text-3xl text-white bg-black font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
+        {title}
+      </h2>
       <div className={`${className2}`}>
         <Image
           src={img}
