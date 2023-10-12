@@ -10,9 +10,9 @@ export default function Register() {
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
-  const [campos, setCampos] = useState([
-    { moduleName: "", topicName: "", classesName: "" },
-  ]);
+  const [campos, setCampos] = useState([{ moduleName: "", topicName: "" }]);
+  const [classes, setClasses] = useState({});
+  const [topics, setTopics] = useState({});
 
   const {
     OnChange: OnChangeTitle,
@@ -68,21 +68,61 @@ export default function Register() {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-
+    console.log(classes);
     console.log(campos);
+    console.log(topics);
+    /* const newArr = [];
+    campos.forEach(({ moduleName, topicName }) => {
+      newArr.push({ moduleName, topics: [{ topicName, classes: [] }] });
+      //console.log(e);
+    });
+    console.log(newArr);
+
+    console.log(valueTitle);
+    console.log(valueSubtitle);
+    console.log(valueDescription);
+    console.log(valueImage);
+    console.log(valueNameProject);
+    console.log(valueDescriptionProject);
+    console.log(valueMessageProject); */
   };
   const agregarCampo = () => {
-    setCampos([...campos, { nombre: "", tema: "", classes: "" }]);
+    setCampos([...campos, { moduleName: "", topicName: "" }]);
+  };
+  const agregarTema = (i, y) => {
+    console.log(i);
+    console.log(y);
+    /* if (!topics[i]) topics[i] = [];
+    const objs = { ...topics };
+    objs[i].push({ topicName: "", classes: [] });
+    setTopics(objs); */
+  };
+
+  const agregarClasse = (i) => {
+    //console.log(i);
+
+    if (!classes[i]) classes[i] = [];
+    /* console.log(i);
+    console.log(classes[i]); */
+    const objs = { ...classes };
+    objs[i].push({ classeDescription: "" });
+    setClasses(objs);
+    //setClasses()
+    //setClasses([...classes, { classeDescription: "" }]);
   };
   const handleInputChange = (i, e) => {
     const nuevosCampos = [...campos];
     nuevosCampos[i][e.target.name] = e.target.value;
     setCampos(nuevosCampos);
   };
+  const handleInputChangeClasse = (i, e, y) => {
+    const class_module = [...classes[y]];
+    class_module[i][e.target.name] = e.target.value;
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
-      <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
+      <h2 className="font-mystery-mixed w-full h-auto text-[2.3rem] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3 text-center">
         Agregar Curso
       </h2>
       <form
@@ -104,8 +144,8 @@ export default function Register() {
             onChange={OnChangeTitle}
             onBlur={BlurTitle}
             onFocus={FocusTitle}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa titulo del curso"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -121,8 +161,8 @@ export default function Register() {
             onChange={OnChangeSubtitle}
             onBlur={BlurSubtitle}
             onFocus={FocusSubtitle}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa Subtitulo del curso"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -138,8 +178,8 @@ export default function Register() {
             onChange={OnChangeDescription}
             onBlur={BlurDescription}
             onFocus={FocusDescription}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa descripcion del curso"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -156,8 +196,8 @@ export default function Register() {
             onChange={OnChangeImage}
             onBlur={BlurImage}
             onFocus={FocusImage}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa link de la imagen"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -167,22 +207,27 @@ export default function Register() {
               bg-black/20`}
           />
           <div className="flex flex-col justify-center items-center w-[100%]">
-            <div className="flex flex-row justify-around items-center w-full h-auto">
-              <h2 className="text-[2.3rem]" onClick={agregarCampo}>
-                +
-              </h2>
+            <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+              <div className="text-[30px]">+</div>
+              <div
+                className="text-[18px] font-ms-gothic"
+                onClick={agregarCampo}
+              >
+                Agregar modulo
+              </div>
             </div>
-            <div className="flex flex-col w-[100%] h-[18.71rem] overflow-y-scroll">
+            {/* h-[18.71rem] overflow-y-scroll */}
+            <div className="flex flex-col w-[100%] h-auto gap-y-4 ">
               {campos.map((e, i) => (
-                <div className="w-[100%] bg-page/25 p-4" key={i}>
+                <div className="w-[100%] bg-page/25 p-4 " key={i}>
                   <Input
                     className={"flex-none"}
                     label={"Nombre de modulo"}
-                    value={campos.nombre}
-                    onChange={(e) => handleInputChange(i, e)}
-                    classNameLabel={"block text-[23px]"}
-                    placeholder={"Ingresa tu nombre"}
-                    name={"nombre"}
+                    value={campos.moduleName}
+                    onChange={(x) => handleInputChange(i, x)}
+                    classNameLabel={"block text-[1.21rem]"}
+                    placeholder={"Ingresa nombre del modulo"}
+                    name={"moduleName"}
                     classNameInput={`p-[5px] 
                 outline-none 
                 w-[100%]
@@ -190,35 +235,62 @@ export default function Register() {
                 rounded-[3px]   
                 bg-black/20`}
                   />
+
                   <Input
                     className={"flex-none"}
                     label={"Nombre del tema"}
-                    classNameLabel={"block text-[23px]"}
-                    placeholder={"Ingresa tu nombre"}
-                    name={"nombre"}
+                    value={campos.topicName}
+                    onChange={(x) => handleInputChange(i, x)}
+                    classNameLabel={"block text-[1.21rem]"}
+                    placeholder={"Ingresa nombre del tema"}
+                    name={"topicName"}
                     classNameInput={`p-[5px] 
-                outline-none 
-                w-[100%]
-                h-[40px] 
-                rounded-[3px]   
-                bg-black/20`}
+                    outline-none 
+                    w-[100%]
+                    h-[40px]
+                    rounded-[3px]
+                    bg-black/20`}
                   />
-                  <Input
-                    className={"flex-none"}
-                    label={"clases"}
-                    classNameLabel={"block text-[23px]"}
-                    placeholder={"Ingresa tu nombre"}
-                    name={"nombre"}
-                    classNameInput={`p-[5px] 
-                outline-none 
-                w-[100%]
-                h-[40px] 
-                rounded-[3px]   
-                bg-black/20`}
-                  />
-                  {[1, 2, 3, 4].map((e, i) => {
-                    return <div key={i}>{e}</div>;
+
+                  {classes[i]?.map((e, y) => {
+                    return (
+                      <div key={y}>
+                        <Input
+                          className={"flex-none"}
+                          label={`Clase ${y + 1}`}
+                          //value={classes[i][y].classeDescription}
+                          onChange={(x) => handleInputChangeClasse(y, x, i)}
+                          classNameLabel={"block text-[1.21rem]"}
+                          placeholder={"Ingresa informacion de la clase"}
+                          name={"classeDescription"}
+                          classNameInput={`p-[5px] 
+                            outline-none 
+                            w-[100%]
+                            h-[40px] 
+                            rounded-[3px]   
+                            bg-black/20`}
+                        />
+                        <div
+                          className="flex flex-row justify-center items-center w-full h-auto cursor-pointer"
+                          onClick={() => agregarTema(i, y)}
+                        >
+                          <div className="text-[30px]">+</div>
+                          <div className="text-[18px] font-ms-gothic">
+                            Agregar tema
+                          </div>
+                        </div>
+                      </div>
+                    );
                   })}
+                  <div className="flex flex-row justify-center items-center w-full h-auto py-4 leading-3">
+                    <div className="text-[30px]">+</div>
+                    <div
+                      className="text-[18px] font-ms-gothic"
+                      onClick={() => agregarClasse(i)}
+                    >
+                      Agregar clase
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -230,8 +302,8 @@ export default function Register() {
             onChange={OnChangeNameProject}
             onBlur={BlurNameProject}
             onFocus={FocusNameProject}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa nombre del proyecto"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -247,8 +319,8 @@ export default function Register() {
             onChange={OnChangeDescriptionProject}
             onBlur={BlurDescriptionProject}
             onFocus={FocusDescriptionProject}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa descripcion del proyecto"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
@@ -264,8 +336,8 @@ export default function Register() {
             onChange={OnChangeMessageProject}
             onBlur={BlurMessageProject}
             onFocus={FocusMessageProject}
-            classNameLabel={"block text-[23px]"}
-            placeholder={"Ingresa tu nombre"}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa mensaje"}
             name={"nombre"}
             classNameInput={`p-[5px] 
               outline-none 
