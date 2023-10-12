@@ -4,23 +4,10 @@ import Button from "@/common/Button";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// import prubea from "../../../public/img/Group29.png";
-// import prubea2 from "../../../public/img/ux-indonesia-unsplash.png";
 
 export default function PurchasedCourseResume({ params }) {
   const courseId = params["purchased-course-resume"];
   const [courseResume, setCourseResume] = useState({});
-  console.log(courseId);
-  // const courseResumeFake = [
-  //   {
-  //     name: "UX RESEARCH",
-  //     subtitle: "Profundizando en tecnologias y practicas avanzadas",
-  //     description:
-  //       "Esta especialización en UX Research está diseñada para aquellos que desean profundizar en las metodologías y prácticas avanzadas de investigación de experiencia de usuario. A lo largo de esta especialización, te sumergirás en una serie de temas clave que te permitirán convertirte en un experto en la investigación de usuarios y en la creación de soluciones basadas en insights sólidos.",
-  //     imgMobile: prubea,
-  //     imgDesktop: prubea2,
-  //   },
-  // ];
 
   function newTitle(title) {
     const titleArray = title.split(" ");
