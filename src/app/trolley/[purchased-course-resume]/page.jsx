@@ -9,12 +9,6 @@ export default function PurchasedCourseResume({ params }) {
   const courseId = params["purchased-course-resume"];
   const [courseResume, setCourseResume] = useState({});
 
-  function newTitle(title) {
-    const titleArray = title.split(" ");
-    const titleLength = titleArray.length;
-    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
-  }
-
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses/${courseId}`)
@@ -22,7 +16,11 @@ export default function PurchasedCourseResume({ params }) {
       .catch((error) => console.error(error));
   }, [courseId]);
 
-  console.log(courseResume);
+  function newTitle(title) {
+    const titleArray = title.split(" ");
+    const titleLength = titleArray.length;
+    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+  }
 
   return (
     <section className="flex flex-col justify-center items-center my-11">
