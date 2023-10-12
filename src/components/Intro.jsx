@@ -28,7 +28,6 @@ export default function Intro() {
     const titleLength = titleArray.length;
     return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
   }
-  console.log("AAAAAAAAA", courses);
   return (
     <div className="bg-#F5F0F0">
       <h2 className="text-5xl text-left font-mystery-mixed mb-20 ml-10 mt-20 md:ml-20 -rotate-3">
@@ -36,7 +35,7 @@ export default function Intro() {
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         {courses.slice(0, 3).map((course) => (
-          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div key={course._id} className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
             <Cards
               id={course._id}
               title={newTitle(course.courseTitle)}

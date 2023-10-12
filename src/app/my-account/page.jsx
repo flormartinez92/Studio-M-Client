@@ -50,15 +50,15 @@ export default function MyAccount() {
     {
       title: "Mis datos",
       content: (
-        <div className=" mt-6 flex flex-col items-center md:h-[350px] md:flex-row md:items-start md:mt-12">
-          <div className="relative md:w-1/3 md:mx-4">
+        <div className=" mt-6 flex flex-col items-center md:h-[350px] md:flex-row md:justify-between md:items-start md:mt-12">
+          <div className="flex flex-row justify-between md:mx-4">
             <Image
               src={"/img/usuario.png"}
               width={300}
               height={300}
               className="rounded-full w-[82px] h-[83px] md:w-[155px] md:h-[155px]"
             />
-            <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-16 md:-bottom-2">
+            <IconButton className="bottom-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-16 md:-bottom-2">
               <Pencil color="white" width="12" height="10" />
             </IconButton>
           </div>
