@@ -10,7 +10,6 @@ import axios from "axios";
 
 export default function PurchasedCourseDetails({ params }) {
   const courseId = params["purchased-course-details"];
-  console.log("PARAMS--->", courseId);
   const [courseDetails, setCourseDetails] = useState({});
 
   useEffect(() => {
@@ -19,8 +18,6 @@ export default function PurchasedCourseDetails({ params }) {
       .then((res) => setCourseDetails(res.data.course))
       .catch((error) => console.error(error));
   }, [courseId]);
-
-  console.log("Coursedetails--->", courseDetails.modules);
 
   return (
     <section
