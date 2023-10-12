@@ -97,7 +97,7 @@ export default function CourseInformation({ params }) {
               <p className=" max-w-full text-xs text-[#5C5A5A] lg:text-sm xl:text-base">
                 {course.courseDescription}
               </p>
-              <p className="flex justify-end">${course.priceCourse} ARS</p>
+              <p className="flex justify-end">${course.coursePrice} ARS</p>
             </div>
           </div>
         </div>
@@ -122,22 +122,24 @@ export default function CourseInformation({ params }) {
           </div>
         ))}
 
-        {course.modules?.map((module) => (
+        {course.modules?.map((module, index) => (
           <div
             key={module.moduleName}
             className="hidden md:flex md:flex-col md:font-ms-gothic md:w-[80%]"
           >
             <h3 className="text-lg font-mystery-mixed my-2 lg:text-xl">
-              Modulo 1: {module.moduleName}
+              Modulo {index + 1}: {module.moduleName}
             </h3>
-            {module.topics?.map((topic) => (
+            {module.topics?.map((topic, index) => (
               <div key={topic.topicName}>
-                <h4 className="mt-2 lg:text-lg">Tema 1: {topic.topicName}</h4>
+                <h4 className="mt-2 lg:text-lg">
+                  Tema {index + 1}: {topic.topicName}
+                </h4>
                 <ul className="text-[#5C5A5A] text-sm flex flex-col my-1.5 lg:text-base">
-                  {topic.classes?.map((clase) => (
+                  {topic.classes?.map((clase, index) => (
                     <div>
                       <li>
-                        {(num += 1)}. {clase.classInfo || ""}
+                        {index + 1}. {clase.classInfo || ""}
                       </li>
                     </div>
                   ))}
@@ -159,7 +161,7 @@ export default function CourseInformation({ params }) {
           courseId={course._id}
           level={course.levelCourse}
           hours={course.hoursCourse}
-          price={course.priceCourse}
+          price={course.coursePrice}
           className={
             "w-[59%] h-[195px] md:flex md:flex-row md:w-[75%] md:gap-0 md:justify-around md:h-24 md:font-ms-gothic md:text-base"
           }
