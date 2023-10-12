@@ -16,6 +16,7 @@ import Cards from "../../components/Cards";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import axios from "axios";
+import Link from "next/link";
 
 export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -149,13 +150,15 @@ export default function MyAccount() {
           <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
             {userCourses?.map((userCourse) => (
               <div key={userCourse._id} className="mr-4">
-                <Cards
-                  title={newTitle(userCourse.courseTitle)}
-                  buttonTitle="20 %"
-                  img={userCourse.courseImg_url}
-                  className="max-w-[205px]"
-                  classNameButton="py-1 px-3"
-                />
+                <Link href={`/my-account/${userCourse._id}`}>
+                  <Cards
+                    title={newTitle(userCourse.courseTitle)}
+                    buttonTitle="20 %"
+                    img={userCourse.courseImg_url}
+                    className="max-w-[205px]"
+                    classNameButton="py-1 px-3"
+                  />
+                </Link>
               </div>
             ))}
           </div>
