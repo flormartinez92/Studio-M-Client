@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import Cards from "../../components/Cards";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
+import axios from "axios";
+import Link from "next/link";
 
 export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,6 +25,7 @@ export default function MyAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [buttonSave, setButtonSave] = useState(false);
   const [newInputs, setNewInputs] = useState(false);
+  const [userCourses, setUserCourses] = useState([]);
 
   const handleClickEdit = () => {
     setIsEditing(true);
@@ -36,6 +39,12 @@ export default function MyAccount() {
     setButtonSave(false);
     setNewInputs(false);
   };
+
+  function newTitle(title) {
+    const titleArray = title.split(" ");
+    const titleLength = titleArray.length;
+    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+  }
 
   const pages = [
     {
@@ -138,32 +147,20 @@ export default function MyAccount() {
       title: "Mis cursos",
       content: (
         <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
-          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UX Research"
-              buttonTitle="20 %"
-              img="/img/indonesiaGrande.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
-          </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UX Writing"
-              buttonTitle="50 %"
-              img="/img/studio.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
-          </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UI Design"
-              buttonTitle="80 %"
-              img="/img/tirza.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
+            {userCourses?.map((userCourse) => (
+              <div key={userCourse._id} className="mr-4">
+                <Link href={`/my-account/${userCourse._id}`}>
+                  <Cards
+                    title={newTitle(userCourse.courseTitle)}
+                    buttonTitle="20 %"
+                    img={userCourse.courseImg_url}
+                    className="max-w-[205px]"
+                    classNameButton="py-1 px-3"
+                  />
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       ),
@@ -332,14 +329,29 @@ export default function MyAccount() {
     }
   };
 
-  const handleTitle = (title) => {
-    setCurrentTitle(title);
+  const handleTitle = async (title) => {
+    const userId = localStorage.getItem("userId");
+
+    if (title === "Mis cursos") {
+      try {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}/purchasedCourse`
+          )
+          .then((res) => setUserCourses(res.data));
+        setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setCurrentTitle(title);
+    }
   };
 
   return (
     <>
       {/*modo mobile*/}
-      <div className="flex flex-col items-center md:hidden">
+      <div className="flex flex-col h-screen items-center md:hidden">
         <div className="bg-lightGrey rounded-2xl mt-4 shadow-xl w-[90%]">
           <div className="bg-black w-full rounded-t-lg flex justify-between items-center py-3">
             {currentPage > 0 && (
@@ -364,7 +376,7 @@ export default function MyAccount() {
       </div>
 
       {/* Modo escritorio */}
-      <div className="hidden md:flex md:flex-col md:items-center">
+      <div className="hidden h-screen md:flex md:flex-col md:items-center">
         <div className="bg-page rounded-2xl mt-4 shadow-xl w-[90%]">
           <div className="bg-black w-full rounded-t-lg py-3 flex items-center">
             {pages.map((page, index) => (

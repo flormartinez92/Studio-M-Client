@@ -102,16 +102,20 @@ export default function CourseInformation({ params }) {
           </div>
         </div>
 
-        {course.modules?.map((module) => (
+        {course.modules?.map((module, index) => (
           <div
             key={module.moduleName}
             className="font-ms-gothic w-[80%] md:hidden"
           >
-            <h3 className="text-lg">Modulo 1: {module.moduleName}</h3>
-            {module.topics?.map((topic) => (
+            <h3 className="text-lg">
+              Modulo {index + 1}: {module.moduleName}
+            </h3>
+            {module.topics?.map((topic, index) => (
               <div key={topic.topicName}>
                 <ul className="text-[#5C5A5A] text-base flex flex-col my-2 gap-4">
-                  <li>Tema 1: {topic.topicName}</li>
+                  <li>
+                    Tema {index + 1}: {topic.topicName}
+                  </li>
                 </ul>
               </div>
             ))}
