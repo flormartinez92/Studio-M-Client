@@ -11,7 +11,7 @@ import {
 } from "@/common/Icons";
 import Input from "@/common/Input";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Cards from "../../components/Cards";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
@@ -26,6 +26,7 @@ export default function MyAccount() {
   const [buttonSave, setButtonSave] = useState(false);
   const [newInputs, setNewInputs] = useState(false);
   const [userCourses, setUserCourses] = useState([]);
+  const [userData, setUserData] = useState({});
 
   const handleClickEdit = () => {
     setIsEditing(true);
@@ -54,8 +55,8 @@ export default function MyAccount() {
           <div className="flex flex-row justify-between md:mx-4">
             <Image
               src={"/img/usuario.png"}
-              width={300}
-              height={300}
+              width={100}
+              height={100}
               className="rounded-full w-[82px] h-[83px] md:w-[155px] md:h-[155px]"
             />
             <IconButton className="bottom-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-16 md:-bottom-2">
@@ -67,7 +68,7 @@ export default function MyAccount() {
             <Input
               name="name"
               type="text"
-              placeholder="Marcos"
+              value={userData.name}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Nombre"
@@ -75,7 +76,7 @@ export default function MyAccount() {
             <Input
               name="lastName"
               type="text"
-              placeholder="Solis"
+              value={userData.lastname}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Apellido"
@@ -98,7 +99,7 @@ export default function MyAccount() {
             <Input
               name="email"
               type="text"
-              placeholder="marcos10@gmail.com"
+              value={userData.mail}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Email"
@@ -106,7 +107,7 @@ export default function MyAccount() {
             <Input
               name="document"
               type="INT"
-              placeholder="45671231"
+              value={userData.dni}
               className="w-full"
               classNameLabel="text-[20px]"
               label="DNI"
@@ -339,6 +340,15 @@ export default function MyAccount() {
             `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}/purchasedCourse`
           )
           .then((res) => setUserCourses(res.data));
+        setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (title === "Mis datos") {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
+          .then((res) => setUserData(res.data));
         setCurrentTitle(title);
       } catch (error) {
         console.error(error);
