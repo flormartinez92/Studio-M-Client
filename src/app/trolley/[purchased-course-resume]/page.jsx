@@ -17,9 +17,12 @@ export default function PurchasedCourseResume({ params }) {
   }, [courseId]);
 
   function newTitle(title) {
-    const titleArray = title.split(" ");
-    const titleLength = titleArray.length;
-    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+    if (title) {
+      const titleArray = title.split(" ");
+      const titleLength = titleArray.length;
+      return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+    }
+    return;
   }
 
   return (
