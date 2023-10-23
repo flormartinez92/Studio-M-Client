@@ -35,7 +35,10 @@ export default function Intro() {
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         {courses.slice(0, 3).map((course) => (
-          <div key={course._id} className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div
+            key={course._id}
+            className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6"
+          >
             <Cards
               id={course._id}
               title={newTitle(course.courseTitle)}
@@ -56,7 +59,7 @@ export default function Intro() {
         <div className="md:text-4xl mb:gap-3 flex flex-col items-center justify-center w-[90%] md:ml-40 md:mb-20">
           <CheckList
             text="Aprende a tu ritmo y de manera asincrónica"
-            className="p-0.5 border-pink mr-5"
+            className="p-[20rem] border-pink mr-5"
             icon={<Check />}
           />
           <CheckList
