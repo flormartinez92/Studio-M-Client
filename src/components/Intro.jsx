@@ -35,7 +35,10 @@ export default function Intro() {
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         {courses.slice(0, 3).map((course) => (
-          <div key={course._id} className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
+          <div
+            key={course._id}
+            className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6"
+          >
             <Cards
               id={course._id}
               title={newTitle(course.courseTitle)}
@@ -77,7 +80,7 @@ export default function Intro() {
         </div>
       </div>
 
-      <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+      <div className="md:flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
         <div className="flex flex-col items-center w-100% relative mt-10 mb-20">
           <div className="md:hidden block">
             <Image
@@ -87,14 +90,14 @@ export default function Intro() {
               alt="Picture"
             />
           </div>
-          <p className="text-5xl md:text-8xl whitespace-nowrap font-mystery-mixed absolute top-10 md:top-auto">
+          <p className="text-5xl md:text-8xl whitespace-nowrap font-mystery-mixed absolute top-20 md:top-auto">
             By M Studio
           </p>
-          <p className="text-3xl md:text-6xl whitespace-nowrap font-mystery-mixed absolute top-28 md:top-30">
+          <p className="text-3xl md:text-6xl whitespace-nowrap font-mystery-mixed absolute top-36 md:top-28">
             Cuenta con el apoyo de
           </p>
 
-          <div className="md:flex md:justify-center md:top-auto ">
+          <div className="md:flex md:justify-center items-center md:top-auto ">
             <Image
               src="/img/image1.png"
               width={178}
@@ -107,7 +110,7 @@ export default function Intro() {
               width={116}
               height={134}
               alt="Picture"
-              className="md:w-32 md:mt-40"
+              className="md:w-32 md:mt-40 ml-10"
             />
           </div>
         </div>
@@ -115,3 +118,5 @@ export default function Intro() {
     </div>
   );
 }
+
+// flex overflow-x-auto
