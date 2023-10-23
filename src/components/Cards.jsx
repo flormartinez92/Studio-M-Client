@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -6,7 +6,6 @@ import Button from "@/common/Button";
 import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
 import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/state/features/cartSlice";
 import { useRouter } from "next/navigation";
@@ -37,7 +36,9 @@ export default function Cards({
 
   const handleAddToCart = async () => {
     try {
-      await axios.post(`http://localhost:8081/api/cart/add/${id}/${userId}`);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add/${id}/${userId}`
+      );
 
       dispatch(addToCart(id));
     } catch (error) {
@@ -49,7 +50,7 @@ export default function Cards({
 
   const handleClick = async (courseId) => {
     axios
-      .get(`http://localhost:8081/api/user/allCourses/${courseId}`)
+      .get(`http://localhost:8081/api/course/all-courses/${courseId}`)
       .then(() => router.push(`/courses/${courseId}`));
   };
 
