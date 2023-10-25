@@ -19,7 +19,7 @@ export default function ActiveCourses() {
       <div className="flex justify-center px-4 font-ms-gothic text-xl md:ml-10 xl:ml-10 md:mr-10 xl:mr-10">
         <table className="w-full xl:table-fixed">
           <thead className="max-sm:hidden">
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px] text-[#757575] rounded-lg border-separate border-tools-table-outline border-1 border">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px] text-[#757575]">
               <td className="p-4">Curso</td>
               <td>Clases</td>
               <td>Alumnos</td>
