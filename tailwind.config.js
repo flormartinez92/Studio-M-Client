@@ -14,8 +14,11 @@ module.exports = {
         },
       },
       animation: {
-        navbar: "navbar .7s"
-      }
+        navbar: "navbar .7s",
+      },
+    },
+    backgroundPosition: {
+      "left-bottom-2": "center bottom .2rem",
     },
     fontFamily: {
       "mystery-mixed": ["mystery-mixed"],
@@ -40,5 +43,5 @@ module.exports = {
       grey: "#808080",
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };
