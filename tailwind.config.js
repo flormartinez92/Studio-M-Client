@@ -14,8 +14,8 @@ module.exports = {
         },
       },
       animation: {
-        navbar: "navbar .7s"
-      }
+        navbar: "navbar .7s",
+      },
     },
     fontFamily: {
       "mystery-mixed": ["mystery-mixed"],
@@ -28,7 +28,7 @@ module.exports = {
       darkGreen: "#389817",
       blue: "#1BBEE2",
       purple: "#9747FF",
-      red: "#A31616",
+      red: "#ff0000",
       white: "#F5F0F0",
       letterWhite: "#F5F0F0",
       black: "#000000",

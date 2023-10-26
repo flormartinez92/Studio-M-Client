@@ -111,10 +111,10 @@ export default function Login() {
           <Input
             label={"Mail"}
             name={"mail"}
-            classNameLabel={"block text-[23px]"}
+            classNameLabel={"block text-[30px]"}
             type={"text"}
             className={"w-full sm:max-w-[85%]"}
-            classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
+            classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20`}
             placeholder={"ingresa tu mail"}
             onFocus={FocusMail}
             value={valueMail}
@@ -139,10 +139,10 @@ export default function Login() {
           <Input
             label={"Contraseña"}
             name={"password"}
-            classNameLabel={"text-[23px]"}
+            classNameLabel={"text-[30px]"}
             type={"password"}
             className={"w-full sm:max-w-[85%]"}
-            classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
+            classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20`}
             placeholder={"ingresa tu contraseña"}
             value={valuePassword}
             onFocus={FocusPassword}
@@ -171,7 +171,9 @@ export default function Login() {
         >
           <div className="h-[.5rem] mb-[1.2rem]">
             {messageAlert ? (
-              <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
+              <p className="text-[#ff0000] text-[1rem] leading-3">
+                {messageAlert}
+              </p>
             ) : (
               <p className="text-darkGreen text-[1rem] leading-3">
                 {messageAlertOk}
