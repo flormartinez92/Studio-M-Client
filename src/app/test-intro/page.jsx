@@ -41,7 +41,11 @@ export default function Intro_test() {
     <div className="flex flex-col justify-center items-center w-full h-auto">
       <div className="w-full my-10">
         <div className="flex flex-col justify-center items-center">
-          <h2 className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[1.9rem] min-[500px]:text-[2.1rem] md:text-[2.3rem] lg:text-[3rem] text-center md:text-start w-[70%] leading-8 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16">
+          <h2
+            className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[1.9rem] 
+          min-[500px]:text-[2.1rem] md:text-[2.3rem] lg:text-[3rem] text-center md:text-start w-[70%] 
+          leading-8 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16 min-[1500px]:text-[60px]"
+          >
             ¿Qué vas a aprender hoy?
           </h2>
           <div className="w-full flex justify-center items-start">
@@ -56,20 +60,32 @@ export default function Intro_test() {
                 />
                 <div className="absolute w-full inset-0 flex justify-center items-center">
                   <div
-                    className="select-none flex w-[24rem] md:h-[13.5rem] min-[990px]:h-[14rem] min-[1000px]:h-[15.5rem]  lg:w-[35rem] xl:w-[54rem] 
+                    className="select-none flex w-[24rem] md:h-[13.5rem] min-[990px]:h-[14rem] 
+                    min-[1000px]:h-[15.5rem] 
+                    min-[1300px]:h-[22.5rem]
+
+
+                    lg:w-[63%]  lg:max-w-[770px] 
+                    min-[1500px]:w-[83%]  min-[1500px]:max-w-[1050px]
+                    min-[1500px]:ml-[3rem]
+                    lg:justify-start lg:items-center  
                     overflow-x-scroll 
-                    scrollbar-thin   
+                    scrollbar-none   
                     scrollbar-thumb-page 
                     scrollbar-track-buttonBlack/50
-                    mb-5 lg:mb-8"
+                    mb-5 lg:mb-8
+                    min-[1300px]:gap-x-[5rem]"
                     ref={ContainerScroll_1}
                     onMouseDown={DownScroll_1}
                     onMouseMove={MoveScroll_1}
                     onMouseUp={MouseUpScroll_1}
                     onMouseLeave={LeaveScroll_1}
                   >
-                    <div className="w-[17rem] min-w-[16rem] h-auto  flex flex-col justify-center items-center ">
-                      <div className="bg-black w-[78%] min-[1000px]:w-[80%] text-white h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
+                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
+                      <div
+                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
+                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
+                      >
                         <h1>UX Research</h1>
                       </div>
                       <div className="relative w-full flex justify-center items-center">
@@ -77,27 +93,87 @@ export default function Intro_test() {
                           src={"/img/ux-indonesia-unsplash.png"}
                           width={400}
                           height={800}
-                          className="w-[78%] h-[10rem] min-[1000px]:h-[12rem] min-[1000px]:w-[80%] rounded-b-[.6rem]"
+                          className="w-[78%] h-[10rem] 
+                          min-[1000px]:h-[12rem] 
+                          min-[1000px]:w-[80%]
+                          min-[1300px]:h-[16rem]
+                          min-[1300px]:w-full 
+                          rounded-b-[.6rem]"
                           alt="indonesia"
                         />
-                        <div className="absolute inset-0 flex justify-center items-center mb-2">
-                          <Border
-                            className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                          >
-                            <Button
-                              className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                            >
-                              {"Ver curso"}
-                            </Button>
-                            <Button className={`py-2 px-2 flex items-center`}>
-                              {<CartShopSimple />}
-                            </Button>
-                          </Border>
+                        <div className="absolute inset-0 flex justify-center items-end mb-2">
+                          <div className="w-full group flex justify-center items-end h-auto">
+                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
+                              <Border
+                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
+                              >
+                                <Button
+                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
+                                  min-[1300px]:px-6 px-3 whitespace-nowrap
+                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                >
+                                  {"Ver curso"}
+                                </Button>
+                                <Button
+                                  className={`py-2 px-2 flex items-center`}
+                                >
+                                  {<CartShopSimple />}
+                                </Button>
+                              </Border>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="w-[17rem] min-w-[16rem] h-auto  flex flex-col justify-center items-center">
-                      <div className="bg-black w-[78%] min-[1000px]:w-[80%] text-white h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
+                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
+                      <div
+                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
+                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
+                      >
+                        <h1>UX Research</h1>
+                      </div>
+                      <div className="relative w-full flex justify-center items-center">
+                        <Image
+                          src={"/img/ux-indonesia-unsplash.png"}
+                          width={400}
+                          height={800}
+                          className="w-[78%] h-[10rem] 
+                          min-[1000px]:h-[12rem] 
+                          min-[1000px]:w-[80%]
+                          min-[1300px]:h-[16rem]
+                          min-[1300px]:w-full 
+                          rounded-b-[.6rem]"
+                          alt="indonesia"
+                        />
+                        <div className="absolute inset-0 flex justify-center items-end mb-2">
+                          <div className="w-full group flex justify-center items-end h-auto">
+                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
+                              <Border
+                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
+                              >
+                                <Button
+                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
+                                  min-[1300px]:px-6 px-3 whitespace-nowrap
+                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                >
+                                  {"Ver curso"}
+                                </Button>
+                                <Button
+                                  className={`py-2 px-2 flex items-center`}
+                                >
+                                  {<CartShopSimple />}
+                                </Button>
+                              </Border>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
+                      <div
+                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
+                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
+                      >
                         <h1>UX Writing</h1>
                       </div>
                       <div className="relative w-full flex justify-center items-center">
@@ -105,27 +181,43 @@ export default function Intro_test() {
                           src={"/img/studio.png"}
                           width={400}
                           height={800}
-                          className="w-[78%] h-[10rem] min-[1000px]:h-[12rem] min-[1000px]:w-[80%] rounded-b-[.6rem]"
-                          alt="tirza"
+                          className="w-[78%] h-[10rem] 
+                          min-[1000px]:h-[12rem] 
+                          min-[1000px]:w-[80%]
+                          min-[1300px]:h-[16rem]
+                          min-[1300px]:w-full 
+                          rounded-b-[.6rem]"
+                          alt="indonesia"
                         />
-                        <div className="absolute inset-0 flex justify-center items-center mb-2">
-                          <Border
-                            className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                          >
-                            <Button
-                              className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                            >
-                              {"Ver curso"}
-                            </Button>
-                            <Button className={`py-2 px-2 flex items-center`}>
-                              {<CartShopSimple />}
-                            </Button>
-                          </Border>
+                        <div className="absolute inset-0 flex justify-center items-end mb-2">
+                          <div className="w-full group flex justify-center items-end h-auto">
+                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
+                              <Border
+                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
+                              >
+                                <Button
+                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
+                                  min-[1300px]:px-6 px-3 whitespace-nowrap
+                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                >
+                                  {"Ver curso"}
+                                </Button>
+                                <Button
+                                  className={`py-2 px-2 flex items-center`}
+                                >
+                                  {<CartShopSimple />}
+                                </Button>
+                              </Border>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div className="w-[17rem] min-w-[16rem] h-auto flex flex-col justify-center items-center">
-                      <div className="bg-black w-[78%] min-[1000px]:w-[80%] text-white h-10 flex flex-col justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
+                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
+                      <div
+                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
+                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
+                      >
                         <h1>Ui Design</h1>
                       </div>
                       <div className="relative w-full flex justify-center items-center">
@@ -133,50 +225,35 @@ export default function Intro_test() {
                           src={"/img/tirza.png"}
                           width={400}
                           height={800}
-                          className="w-[78%] h-[10rem] min-[1000px]:h-[12rem] min-[1000px]:w-[80%] rounded-b-[.6rem]"
-                          alt="studio"
-                        />
-                        <div className="absolute inset-0 flex justify-center items-center mb-2">
-                          <Border
-                            className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                          >
-                            <Button
-                              className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                            >
-                              {"Ver curso"}
-                            </Button>
-                            <Button className={`py-2 px-2 flex items-center`}>
-                              {<CartShopSimple />}
-                            </Button>
-                          </Border>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[17rem] min-w-[16rem] h-auto flex flex-col justify-center items-center">
-                      <div className="bg-black w-[78%] min-[1000px]:w-[80%] text-white h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
-                        <h1>UX Research</h1>
-                      </div>
-                      <div className="relative w-full flex justify-center items-center">
-                        <Image
-                          src={"/img/ux-indonesia-unsplash.png"}
-                          width={400}
-                          height={800}
-                          className="w-[78%] h-[10rem] min-[1000px]:h-[12rem] min-[1000px]:w-[80%] rounded-b-[.6rem]"
+                          className="w-[78%] h-[10rem] 
+                          min-[1000px]:h-[12rem] 
+                          min-[1000px]:w-[80%]
+                          min-[1300px]:h-[16rem]
+                          min-[1300px]:w-full 
+                          rounded-b-[.6rem]"
                           alt="indonesia"
                         />
-                        <div className="absolute inset-0 flex justify-center items-center mb-2">
-                          <Border
-                            className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                          >
-                            <Button
-                              className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                            >
-                              {"Ver curso"}
-                            </Button>
-                            <Button className={`py-2 px-2 flex items-center`}>
-                              {<CartShopSimple />}
-                            </Button>
-                          </Border>
+                        <div className="absolute inset-0 flex justify-center items-end mb-2">
+                          <div className="w-full group flex justify-center items-end h-auto">
+                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
+                              <Border
+                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
+                              >
+                                <Button
+                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
+                                  min-[1300px]:px-6 px-3 whitespace-nowrap
+                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                >
+                                  {"Ver curso"}
+                                </Button>
+                                <Button
+                                  className={`py-2 px-2 flex items-center`}
+                                >
+                                  {<CartShopSimple />}
+                                </Button>
+                              </Border>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -196,7 +273,7 @@ export default function Intro_test() {
             gap-x-4
             md:hidden        
             overflow-x-scroll 
-            scrollbar-thin   
+            scrollbar-none   
           scrollbar-thumb-page 
           scrollbar-track-buttonBlack/50
                     mb-5 lg:mb-8"
@@ -294,25 +371,26 @@ export default function Intro_test() {
           </div>
         </div>
       </div>
-      <div className="w-full h-auto px-6 mt-2 flex flex-col justify-center items-center max-w-[1100px]">
+      <div className="w-full h-auto px-6 mt-2 flex flex-col justify-center items-center max-w-[1100px] min-[1500px]:max-w-[1400px] ">
         <div className="w-full flex justify-start sm:justify-center">
           <h2
             className="font-mystery-mixed text-start sm:text-start
             min-[500px]:pl-[2rem] sm:mr-[5rem] md:mr-0
           text-[1.5rem] min-[580px]:text-[1.9rem] w-[70%] leading-7 mb-4 -rotate-2 ml-[.4rem] 
           pb-10 pt-5  lg:pr-[8rem]   
-          sm:w-[100%]  md:text-[1.79rem] min-[840px]:text-[2rem] min-[917px]:text-[2.2rem] min-[1000px]:text-[2.7rem] lg:w-[100%]"
+          sm:w-[100%]  md:text-[1.79rem] min-[840px]:text-[2rem] 
+          min-[917px]:text-[2.2rem] min-[1000px]:text-[2.7rem] min-[1500px]:text-[60px] lg:w-[100%]"
           >
             ¿Qué esperar de un curso en by m studio?
           </h2>
         </div>
-        <div className="flex flex-col gap-y-4 mb-14 mt-7 text-[15px] items-start">
+        <div className="flex flex-col gap-y-4 mb-14 mt-10 min-[1500px]:mt-[5rem] text-[15px] items-start">
           <div>
             <CheckList
               text="Aprende a tu ritmo y de manera asincrónica"
               className="p-0.5 border-pink mr-2"
               classNameDiv={
-                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] items-center leading-3"
+                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] min-[1500px]:text-[2.2rem] items-center leading-3"
               }
               icon={<Check />}
             />
@@ -322,7 +400,7 @@ export default function Intro_test() {
               text="Accede a contenido actualizado"
               className="p-0.5 border-green mr-2"
               classNameDiv={
-                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem]  items-center leading-3"
+                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] min-[1500px]:text-[2.2rem]  items-center leading-3"
               }
               icon={<Check />}
             />
@@ -332,7 +410,7 @@ export default function Intro_test() {
               text="Accede y conecta con una comunidad de trainees"
               className="p-0.5 border-blue mr-2"
               classNameDiv={
-                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] items-center leading-3"
+                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] min-[1500px]:text-[2.2rem] items-center leading-3"
               }
               icon={<Check />}
             />
@@ -342,7 +420,7 @@ export default function Intro_test() {
               text="Obtén tu certificado al finalizar"
               className="p-0.5 border-pink mr-2"
               classNameDiv={
-                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] items-center leading-3"
+                "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] min-[1500px]:text-[2.2rem] items-center leading-3"
               }
               icon={<Check />}
             />
@@ -358,14 +436,14 @@ export default function Intro_test() {
           alt="paper_fondo"
         />
         <div className="absolute h-auto inset-0 text-black flex flex-col items-center justify-center">
-          <h2 className="font-mystery-mixed text-[2.4rem] min-[400px]:text-[3.2rem] min-[500px]:text-[3.9rem] -translate-y-[19px] leading-10 lg:text-[5.2rem] xl:text-[6rem] lg:leading-[5.5rem]">
+          <h2 className="font-mystery-mixed text-[2.4rem] min-[400px]:text-[3.2rem] min-[500px]:text-[3.9rem] -translate-y-[19px] leading-10 lg:text-[5.2rem] xl:text-[6rem] lg:leading-[5.7rem] min-[1500px]:leading-[7rem]">
             Studio By M
           </h2>
           <h2 className="font-mystery-mixed text-[1.2rem] min-[400px]:text-[1.65rem] min-[500px]:text-[2rem] md:text-[1.9rem] lg:text-[3.2rem] xl:text-[3.5rem] pb-[2px] leading-5 lg:leading-3">
             Cuenta con el apoyo de
           </h2>
           <div className="relative mb-[4rem] hidden md:block translate-y-[2.6rem]">
-            <div className="flex w-full items-end gap-x-7">
+            <div className="flex w-full items-end gap-x-7 min-[1500px]:mt-4">
               <Image
                 src={"/img/image1.png"}
                 width={200}
