@@ -61,8 +61,8 @@ export default function MyAccount() {
   return (
     <>
       {/*modo mobile*/}
-      <div className="flex flex-col h-screen items-center md:hidden">
-        <div className="bg-[#D9D9D9] rounded-xl mt-10 w-[90%]" style={{ boxShadow: '0px 5px 6px -2px rgba(0,0,0,0.40)' }}>
+      <div className="flex flex-col items-center md:hidden">
+        <div className="bg-[#D9D9D9] mb-28 rounded-xl mt-10 w-[90%]" style={{ boxShadow: '0px 5px 6px -2px rgba(0,0,0,0.40)' }}>
           <div className="bg-[#1E1E1E] w-full rounded-t-xl flex justify-between items-center py-3">
             {currentPage > 0 && (
               <IconButton

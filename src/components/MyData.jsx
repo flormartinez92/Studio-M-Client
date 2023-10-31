@@ -13,7 +13,7 @@ const MyData = () => {
 
   return (
     //Contenedor
-    <div className="mt-7 mb-11 flex flex-col items-center md:h-80 md:flex-row md:justify-between md:items-start md:mt-12">
+    <div className="mt-7 relative flex flex-col items-center md:h-80 md:flex-row md:justify-between md:items-start md:mt-12">
       {/*Imagen e Icono*/}
       <div className="flex flex-row mb-1 justify-between md:mx-4 md:mr-6">
         <Image
@@ -33,7 +33,7 @@ const MyData = () => {
         </div>
       </div>
       {/*Inputs*/}
-      <div className="w-[60%] md:w-1/3 md:mx-4">
+      <div className="w-[60%] mb-11 md:w-1/3 md:mx-4">
         <Input
           name="name"
           type="text"
@@ -96,9 +96,9 @@ const MyData = () => {
       </div>
       {/* Icono cambio de contraseña */}
       {/*ANTES LA LINEA DE ABAJO ESTABA ASI NO SE PORQUE:  <div className={`flex ${changePassword ? "editing" : ""}`}>*/}
-      <div className={"flex"}>
+      <div className={"absolute bottom-0 right-0 mr-[5%] mb-[4.5%]"}>
         <IconButton
-          className=" bg-[#1E1E1E] absolute bottom-0 right-0 mr-[8%] rounded-full w-6 h-6"
+          className="bg-[#1E1E1E] rounded-full w-6 h-6"
           style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
           onClick={handleClickEdit}
         >
