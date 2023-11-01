@@ -86,16 +86,16 @@ export default function MyAccount() {
       </div>
 
       {/* Modo escritorio */}
-      <div className="hidden h-screen md:flex md:flex-col md:items-center">
-        <div className="bg-page rounded-2xl mt-4 shadow-xl w-[90%]">
-          <div className="bg-black w-full rounded-t-lg py-3 flex items-center">
+      <div className="hidden md:flex md:flex-col md:items-center">
+        <div className="bg-[#D9D9D9] rounded-xl mt-10 mb-48 w-[90%]" style={{ boxShadow: '0px 5px 6px -2px rgba(0,0,0,0.40)' }}>
+          <div className="bg-[#1E1E1E] w-full rounded-t-lg py-3 flex items-center px-4">
             {pages.map((page, index) => (
               <Button
                 key={index}
                 onClick={() => handleTitle(page.title)}
                 className="w-full"
               >
-                <h2 className="text-white font-mystery-mixed text-2xl hover:underline hover:decoration-pink mx-2">
+                <h2 className="text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 hover:underline hover:decoration-pink hover:decoration-[1.5px]" style={{ textUnderlineOffset: "6px" }}>
                   {page.title}
                 </h2>
               </Button>
