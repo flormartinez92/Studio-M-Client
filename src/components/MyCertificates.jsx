@@ -71,18 +71,18 @@ const MyCertificates = () => {
           />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[70%]"> {/*pt-8 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center */}
             <div className="flex flex-col align-center items-center my-2 gap-y-1">
-              <h2 className="text-[20px] font-mystery-mixed mb-1">Certificado</h2>
-              <h3 className="text-2xl font-mystery-mixed">Ux Researcher</h3>
-              <p className="text-sm font-ms-gothic">Emilia Rodriguez</p>
-              <p className="text-sm font-ms-gothic">DNI: 36.363.363</p>
-              <p className="text-sm font-ms-gothic mb-2 mt-2">
+              <h2 className="text-[20px] font-mystery-mixed mb-1 lg:text-[24px] xl:text-[27px]">Certificado</h2>
+              <h3 className="text-2xl font-mystery-mixed lg:text-3xl xl:text-4xl">Ux Researcher</h3>
+              <p className="text-sm font-ms-gothic lg:text-base xl:text-lg">Emilia Rodriguez</p>
+              <p className="text-sm font-ms-gothic lg:text-base xl:text-lg">DNI: 36.363.363</p>
+              <p className="text-sm font-ms-gothic mb-2 mt-2 lg:text-base xl:text-lg">
                 Ha realizado y completado con éxito su curso en by M Studio, <br/>
                 cumpliendo con todos los requisitos académicos exigidos
               </p>
-              <p className="text-sm font-ms-gothic">03 de Agosto de 2023</p>
+              <p className="text-sm font-ms-gothic lg:text-base xl:text-lg">03 de Agosto de 2023</p>
               <div className="flex flex-row justify-around align-center items-center w-full">
                 <div>
-                  <h3 className=" font-mystery-mixed text-[18px]">Studio by M</h3>
+                  <h3 className=" font-mystery-mixed text-[18px] lg:text-[22px] xl:text-[25px]">Studio by M</h3>
                 </div>
                 <div className="flex flex-col items-center align-center">
                   <Image
@@ -90,10 +90,10 @@ const MyCertificates = () => {
                     width={100}
                     height={100}
                     alt="Signature"
-                    className="w-[35px] h-[60px]"
+                    className="w-[35px] h-[60px] lg:w-[39px] lg:h-[64px] xl:w-[42px] xl:h-[67px]"
                   />
                   <div className="">
-                    <h4 className=" font-ms-gothic text-xs text-center">
+                    <h4 className=" font-ms-gothic text-xs text-center lg:text-sm xl:text-base">
                       Macarena <br/>
                       Bernal
                     </h4>
