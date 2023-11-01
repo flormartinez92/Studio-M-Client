@@ -86,17 +86,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-[#fff] py-[115px]">
-      <h2 className="font-mystery-mixed text-[35px] min-[320px]:text-[45px] sm:text-[55px] leading-3">
+    <div className="flex flex-col justify-center items-center bg-[#fff] w-full h-full py-[115px]">
+      <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
         Iniciar sesión
       </h2>
       <form
         onSubmit={onSubmitForm}
         className="
-            mt-[50px] 
-            w-[80%] 
-            min-[450px]:max-w-[350px]
-            sm:max-w-[450px] 
+        mt-[50px] 
+        w-[80%]
+        min-[450px]:max-w-[350px]
+        sm:max-w-[450px]
+        md:flex md:flex-col md:items-center
             "
       >
         <div
@@ -104,9 +105,9 @@ export default function Login() {
         mb-4 
         w-[100%] 
         sm:px-3
+        flex justify-start items-center
         flex-col
-        justify-center
-        items-center"
+        "
         >
           <Input
             label={"Mail"}
@@ -132,9 +133,9 @@ export default function Login() {
         mb-4 
         w-[100%] 
         sm:px-3
+        flex justify-start items-center
         flex-col
-        justify-center
-        items-center"
+        "
         >
           <Input
             label={"Contraseña"}
@@ -149,6 +150,7 @@ export default function Login() {
             onChange={OnChangePassword}
             onBlur={BlurPassword}
           />
+
           <div className="h-[.5rem] pb-6">
             {MessagePassword && (
               <p className="text-red text-[.9rem] leading-3">
