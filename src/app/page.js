@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import CardsDesktop from "@/components/CardsDesktop";
+import { CartShopPlusBgBlack } from "@/common/Icons";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -31,7 +33,23 @@ export default function Home() {
   return (
     <main>
       <Cover />
-      <Intro />
+      {/* <Intro /> */}
+      <CardsDesktop
+        courseTitle={"Curso Avanzado de UX Research"}
+        courseImg_url={
+          "https://webimages.mongodb.com/_com_assets/cms/kuzt9r42or1fxvlq2-Meta_Generic.png"
+        }
+        courseSubtitle={"Profundizando en Metodologías y Prácticas Avanzadas"}
+        courseDescription={
+          "Esta especialización en UX Research está diseñada para aquellos que desean profundizar en las metodologías y prácticas avanzadas de investigación de experiencia de usuario. A lo largo de esta especialización, te sumergirás en una serie de temas clave que te permitirán convertirte en un experto en la investigación de usuarios y en la creación de soluciones basadas en insights sólidos."
+        }
+        coursePrice="10.000"
+        courseDuration="30hs."
+        courseLevel="Intermedio"
+        courseFavorite="Agregar a la lista de deseos"
+        courseFavoriteClasses="text-[1.4375rem]"
+        // cartShopPlusBgBlack={<CartShopPlusBgBlack />}
+      />
     </main>
   );
 }

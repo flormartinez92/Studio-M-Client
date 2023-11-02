@@ -27,12 +27,14 @@ export default function Trolley() {
       .then(() => router.push("/"));
   };
 
-  const handleRemove = (courseId)=> {
+  const handleRemove = (courseId) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${userId}`)
-      .then(()=> router.push("/trolley"))
-      .catch((error)=> console.error(error))
-  }
+      .delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${userId}`
+      )
+      .then(() => router.push("/trolley"))
+      .catch((error) => console.error(error));
+  };
   return (
     <div className="flex flex-col items-center mb-20">
       <div className="flex flex-col items-center">
@@ -63,7 +65,10 @@ export default function Trolley() {
               <h3 className="flex-1 m-0 text-center text-white font-mystery-mixed text-2xl">
                 {course.courseTitle}
               </h3>
-              <IconButton onClick={()=> handleRemove(course._id)} className={"p-1"}>
+              <IconButton
+                onClick={() => handleRemove(course._id)}
+                className={"p-1"}
+              >
                 <Close color={"white"} />
               </IconButton>
             </div>
