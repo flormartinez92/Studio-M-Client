@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
 import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
 import { Arrow } from "@/common/Icons";
@@ -13,9 +12,6 @@ import MyCertificates from "@/components/MyCertificates";
 export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("Mis datos");
-
-  // const [userCourses, setUserCourses] = useState([]);
-  // const [userData, setUserData] = useState({});
 
   //Arreglo de las 4 secciones a mostrar
   const pages = [
@@ -30,32 +26,9 @@ export default function MyAccount() {
   const handleNextPage = () => currentPage < (pages.length - 1) && setCurrentPage(currentPage + 1)
 
   //Hace los pedidos para traer la informacion de las secciones
-  const handleTitle = async (title) => {
-    const userId = localStorage.getItem("userId");
-
-    if (title === "Mis cursos") {
-      try {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}/purchasedCourse`
-          )
-          .then((res) => setUserCourses(res.data));
-        setCurrentTitle(title);
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (title === "Mis datos") {
-      try {
-        await axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
-          .then((res) => setUserData(res.data));
-        setCurrentTitle(title);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      setCurrentTitle(title);
-    }
+  const handleTitle = (title) => {
+    // const userId = localStorage.getItem("userId");
+   setCurrentTitle(title)
   };
 
   return (
@@ -92,7 +65,7 @@ export default function MyAccount() {
             {pages.map((page, index) => (
               <Button
                 key={index}
-                onClick={() => handleTitle(page.title)}
+                // onClick={() => handleTitle(page.title)}
                 className="w-full"
               >
                 <h2 className="text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 hover:underline hover:decoration-pink hover:decoration-[1.5px]" style={{ textUnderlineOffset: "6px" }}>

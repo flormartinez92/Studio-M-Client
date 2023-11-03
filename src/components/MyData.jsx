@@ -1,12 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import IconButton from "@/common/IconButton";
 import { Pencil, Save } from "@/common/Icons";
 import Input from "@/common/Input";
+import axios from "axios";
 
 const MyData = () => {
-  const [changePassword, setChangePassword] = useState(false)
-  //userData
+  const [changePassword, setChangePassword] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "",
+    lastname: "",
+    mail: "",
+    dni: "",
+  });
+  const userId = localStorage.getItem("userId");
+  console.log("USER IDDDDDD", userId);
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
+        .then((res) => setUserData(res.data));
+      //setCurrentTitle(title);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [userId]);
+
+  //Manejador de cambio para los campos de entrada
+  const handleInputChange = (e)=> {
+    const {name, value} = e.target;
+    setUserData({...userData, [name]: value})
+  }
 
   //Manejador de click
   const handleClickEdit = () => setChangePassword(!changePassword);
@@ -37,7 +62,8 @@ const MyData = () => {
         <Input
           name="name"
           type="text"
-          // value={userData.name}
+          value={userData.name}
+          onChange={handleInputChange}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -46,7 +72,8 @@ const MyData = () => {
         <Input
           name="lastName"
           type="text"
-          // value={userData.lastname}
+          value={userData.lastname}
+          onChange={handleInputChange}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -55,7 +82,8 @@ const MyData = () => {
         <Input
           name="email"
           type="text"
-          // value={userData.mail}
+          value={userData.mail}
+          onChange={handleInputChange}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -64,7 +92,8 @@ const MyData = () => {
         <Input
           name="document"
           type="INT"
-          // value={userData.dni}
+          value={userData.dni}
+          onChange={handleInputChange}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -95,8 +124,11 @@ const MyData = () => {
         )}
       </div>
       {/* Icono cambio de contraseña */}
-      {/*ANTES LA LINEA DE ABAJO ESTABA ASI NO SE PORQUE:  <div className={`flex ${changePassword ? "editing" : ""}`}>*/}
-      <div className={"absolute bottom-0 right-0 mr-[5%] mb-[4.5%] md:mr-[4%] md:mb-[3.5%]"}>
+      <div
+        className={
+          "absolute bottom-0 right-0 mr-[5%] mb-[4.5%] md:mr-[4%] md:mb-[3.5%]"
+        }
+      >
         <IconButton
           className="bg-[#1E1E1E] rounded-full w-6 h-6"
           style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
@@ -114,3 +146,16 @@ const MyData = () => {
 };
 
 export default MyData;
+
+// if (title === "Mis datos") {
+//   try {
+//     await axios
+//       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
+//       .then((res) => setUserData(res.data));
+//     setCurrentTitle(title);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// } else {
+//   setCurrentTitle(title);
+// }
