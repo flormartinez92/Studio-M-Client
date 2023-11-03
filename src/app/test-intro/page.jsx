@@ -3,7 +3,7 @@
 import Button from "@/common/Button";
 import Input from "@/common/Input";
 /* import { useState } from "react"; */
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,33 @@ import Border from "@/common/Border";
 import inputScroll from "@/hooks/useScroll";
 
 export default function Intro_test() {
+  const [value, setValue] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/course/all-courses"
+      );
+      console.log(response.data);
+      const courses = response.data.map(
+        ({ _id, courseTitle, courseImg_url }) => ({
+          _id,
+          courseTitle,
+          courseImg_url,
+        })
+      );
+      setValue(courses);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onclickBtn = (e) => {
+    console.log(e);
+  };
   const {
     containerRef: ContainerScroll_1,
     handleMouseDown: DownScroll_1,
@@ -48,6 +75,7 @@ export default function Intro_test() {
           >
             ¿Qué vas a aprender hoy?
           </h2>
+
           <div className="w-full flex justify-center items-start">
             <div className="w-full hidden md:block">
               <div className="relative flex justify-center items-center">
@@ -63,8 +91,6 @@ export default function Intro_test() {
                     className="select-none flex w-[24rem] md:h-[13.5rem] min-[990px]:h-[14rem] 
                     min-[1000px]:h-[15.5rem] 
                     min-[1300px]:h-[22.5rem]
-
-
                     lg:w-[63%]  lg:max-w-[770px] 
                     min-[1500px]:w-[83%]  min-[1500px]:max-w-[1050px]
                     min-[1500px]:ml-[3rem]
@@ -81,182 +107,60 @@ export default function Intro_test() {
                     onMouseUp={MouseUpScroll_1}
                     onMouseLeave={LeaveScroll_1}
                   >
-                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
-                      <div
-                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
+                    {value.map((item, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center"
+                        >
+                          <div
+                            className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
                       flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
-                      >
-                        <h1>UX Research</h1>
-                      </div>
-                      <div className="relative w-full flex justify-center items-center">
-                        <Image
-                          src={"/img/ux-indonesia-unsplash.png"}
-                          width={400}
-                          height={800}
-                          className="w-[78%] h-[10rem] 
+                          >
+                            <h1>UX Research</h1>
+                          </div>
+                          <div className="relative w-full flex justify-center items-center">
+                            <Image
+                              src={item.courseImg_url}
+                              width={400}
+                              height={800}
+                              className="w-[78%] h-[10rem] 
                           min-[1000px]:h-[12rem] 
                           min-[1000px]:w-[80%]
                           min-[1300px]:h-[16rem]
                           min-[1300px]:w-full 
                           rounded-b-[.6rem]"
-                          alt="indonesia"
-                        />
-                        <div className="absolute inset-0 flex justify-center items-end mb-2">
-                          <div className="w-full group flex justify-center items-end h-auto">
-                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
-                              <Border
-                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
-                              >
-                                <Button
-                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
+                              alt="indonesia"
+                            />
+                            <div className="absolute inset-0 flex justify-center items-end mb-2">
+                              <div className="w-full group flex justify-center items-end h-auto">
+                                <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
+                                  <Border
+                                    className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
+                                  >
+                                    <Link href={`/courses/${item._id}`}>
+                                      <Button
+                                        className={`font-mystery-mixed py-2 md:h-[2.3rem] lg:h-[2.6rem] min-[1300px]:h-[2.9rem] min-[1300px]:py-4
                                   min-[1300px]:px-6 px-3 whitespace-nowrap
                                   flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
-                                >
-                                  {"Ver curso"}
-                                </Button>
-                                <Button
-                                  className={`py-2 px-2 flex items-center`}
-                                >
-                                  {<CartShopSimple />}
-                                </Button>
-                              </Border>
+                                        onClick={() => onclickBtn(item._id)}
+                                      >
+                                        {"Ver curso"}
+                                      </Button>
+                                    </Link>
+                                    <Button
+                                      className={`py-2 px-2 flex items-center`}
+                                    >
+                                      {<CartShopSimple />}
+                                    </Button>
+                                  </Border>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
-                      <div
-                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
-                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
-                      >
-                        <h1>UX Research</h1>
-                      </div>
-                      <div className="relative w-full flex justify-center items-center">
-                        <Image
-                          src={"/img/ux-indonesia-unsplash.png"}
-                          width={400}
-                          height={800}
-                          className="w-[78%] h-[10rem] 
-                          min-[1000px]:h-[12rem] 
-                          min-[1000px]:w-[80%]
-                          min-[1300px]:h-[16rem]
-                          min-[1300px]:w-full 
-                          rounded-b-[.6rem]"
-                          alt="indonesia"
-                        />
-                        <div className="absolute inset-0 flex justify-center items-end mb-2">
-                          <div className="w-full group flex justify-center items-end h-auto">
-                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
-                              <Border
-                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
-                              >
-                                <Button
-                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
-                                  min-[1300px]:px-6 px-3 whitespace-nowrap
-                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
-                                >
-                                  {"Ver curso"}
-                                </Button>
-                                <Button
-                                  className={`py-2 px-2 flex items-center`}
-                                >
-                                  {<CartShopSimple />}
-                                </Button>
-                              </Border>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
-                      <div
-                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
-                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
-                      >
-                        <h1>UX Writing</h1>
-                      </div>
-                      <div className="relative w-full flex justify-center items-center">
-                        <Image
-                          src={"/img/studio.png"}
-                          width={400}
-                          height={800}
-                          className="w-[78%] h-[10rem] 
-                          min-[1000px]:h-[12rem] 
-                          min-[1000px]:w-[80%]
-                          min-[1300px]:h-[16rem]
-                          min-[1300px]:w-full 
-                          rounded-b-[.6rem]"
-                          alt="indonesia"
-                        />
-                        <div className="absolute inset-0 flex justify-center items-end mb-2">
-                          <div className="w-full group flex justify-center items-end h-auto">
-                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
-                              <Border
-                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
-                              >
-                                <Button
-                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
-                                  min-[1300px]:px-6 px-3 whitespace-nowrap
-                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
-                                >
-                                  {"Ver curso"}
-                                </Button>
-                                <Button
-                                  className={`py-2 px-2 flex items-center`}
-                                >
-                                  {<CartShopSimple />}
-                                </Button>
-                              </Border>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[17rem] min-w-[16rem] min-[1300px]:min-w-[17.4rem] h-auto  flex flex-col justify-center items-center">
-                      <div
-                        className="bg-black w-[78%] min-[1000px]:w-[80%] min-[1300px]:w-full text-white h-10 min-[1300px]:h-14 
-                      flex justify-center items-center font-mystery-mixed text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
-                      >
-                        <h1>Ui Design</h1>
-                      </div>
-                      <div className="relative w-full flex justify-center items-center">
-                        <Image
-                          src={"/img/tirza.png"}
-                          width={400}
-                          height={800}
-                          className="w-[78%] h-[10rem] 
-                          min-[1000px]:h-[12rem] 
-                          min-[1000px]:w-[80%]
-                          min-[1300px]:h-[16rem]
-                          min-[1300px]:w-full 
-                          rounded-b-[.6rem]"
-                          alt="indonesia"
-                        />
-                        <div className="absolute inset-0 flex justify-center items-end mb-2">
-                          <div className="w-full group flex justify-center items-end h-auto">
-                            <div className="transition-transform duration-700 transform-gpu scale-[1] group-hover:scale-[1.15]">
-                              <Border
-                                className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1`}
-                              >
-                                <Button
-                                  className={`font-mystery-mixed py-2 min-[1300px]:py-4
-                                  min-[1300px]:px-6 px-3 whitespace-nowrap
-                                  flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
-                                >
-                                  {"Ver curso"}
-                                </Button>
-                                <Button
-                                  className={`py-2 px-2 flex items-center`}
-                                >
-                                  {<CartShopSimple />}
-                                </Button>
-                              </Border>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      );
+                    })}
                   </div>
 
                   {/* ACA VA EL CAROUSEL */}
@@ -283,91 +187,38 @@ export default function Intro_test() {
             onMouseUp={MouseUpScroll_2}
             onMouseLeave={LeaveScroll_2}
           >
-            <div className=" w-[13rem] h-[15rem] min-w-[13rem]">
-              <div className="bg-black text-white w-full h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
-                <h1>UX Research</h1>
-              </div>
-              <div className="relative">
-                <Image
-                  src={"/img/ux-indonesia-unsplash.png"}
-                  width={400}
-                  height={800}
-                  className="w-full  h-[12rem] rounded-b-[.6rem]"
-                  alt="indonesia"
-                />
-                <div className="absolute inset-0 flex justify-center items-center mb-2">
-                  <Border
-                    className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                  >
-                    <Button
-                      className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                    >
-                      {"Ver curso"}
-                    </Button>
-                    <Button className={`py-2 px-2 flex items-center`}>
-                      {<CartShopSimple />}
-                    </Button>
-                  </Border>
+            {value.map((item, i) => {
+              return (
+                <div className=" w-[13rem] h-[15rem] min-w-[13rem]" key={i}>
+                  <div className="bg-black text-white w-full h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
+                    <h1>UX Research</h1>
+                  </div>
+                  <div className="relative">
+                    <Image
+                      src={item.courseImg_url}
+                      width={400}
+                      height={800}
+                      className="w-full  h-[12rem] rounded-b-[.6rem]"
+                      alt="indonesia"
+                    />
+                    <div className="absolute inset-0 flex justify-center items-center mb-2">
+                      <Border
+                        className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
+                      >
+                        <Button
+                          className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
+                        >
+                          {"Ver curso"}
+                        </Button>
+                        <Button className={`py-2 px-2 flex items-center`}>
+                          {<CartShopSimple />}
+                        </Button>
+                      </Border>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div className=" w-[13rem] h-[15rem] min-w-[13rem]">
-              <div className="bg-black text-white w-full h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
-                <h1>UX Writing</h1>
-              </div>
-              <div className="relative">
-                <Image
-                  src={"/img/studio.png"}
-                  width={400}
-                  height={800}
-                  className="w-full  h-[12rem] rounded-b-[.6rem]"
-                  alt="indonesia"
-                />
-                <div className="absolute inset-0 flex justify-center items-center mb-2">
-                  <Border
-                    className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                  >
-                    <Button
-                      className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                    >
-                      {"Ver curso"}
-                    </Button>
-                    <Button className={`py-2 px-2 flex items-center`}>
-                      {<CartShopSimple />}
-                    </Button>
-                  </Border>
-                </div>
-              </div>
-            </div>
-            <div className=" w-[13rem] h-[15rem] min-w-[13rem]">
-              <div className="bg-black text-white w-full h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
-                <h1>Ui Design</h1>
-              </div>
-              <div className="relative">
-                <Image
-                  src={"/img/tirza.png"}
-                  width={400}
-                  height={800}
-                  className="w-full  h-[12rem] rounded-b-[.6rem]"
-                  alt="indonesia"
-                />
-                <div className="absolute inset-0 flex justify-center items-center mb-2">
-                  <Border
-                    className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
-                  >
-                    <Button
-                      className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                    >
-                      {"Ver curso"}
-                    </Button>
-                    <Button className={`py-2 px-2 flex items-center`}>
-                      {<CartShopSimple />}
-                    </Button>
-                  </Border>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
