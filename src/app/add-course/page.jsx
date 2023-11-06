@@ -117,7 +117,7 @@ export default function Register() {
     /* console.log(i);
     console.log(classes[i]); */
     const objs = { ...classes };
-    objs[i][x].push("CLASE");
+    objs[i][x].push(["Nombre de la clase", "Url del video"]);
     setClasses(objs);
     //setClasses()
     //setClasses([...classes, { classeDescription: "" }]);
@@ -230,7 +230,7 @@ export default function Register() {
             </div>
             <div className="flex flex-col w-[100%] h-auto gap-y-4">
               {campos.map((e, i) => (
-                <div className="w-[100%] bg-page/25 p-4" key={i}>
+                <div className="w-[100%] bg-purple/50 py-4" key={i}>
                   <Input
                     className={"flex-none"}
                     label={"Nombre de modulo"}
@@ -257,8 +257,23 @@ export default function Register() {
                   </div>
                   {topics[i]?.map((x, c) => {
                     return (
-                      <div key={c}>
-                        <div className="mt-7 bg-pink">{JSON.stringify(x)}</div>
+                      <div key={c} className="">
+                        <div className="mt-7">
+                          <Input
+                            className={"flex-none"}
+                            label={"Nombre del tema"}
+                            value={campos.moduleName}
+                            classNameLabel={"block text-[1.21rem]"}
+                            placeholder={"Ingresa nombre del modulo"}
+                            name={"moduleName"}
+                            classNameInput={`p-[5px] 
+                                        outline-none 
+                                        w-[100%]
+                                        h-[40px] 
+                                        rounded-[3px]   
+                                        bg-black/20`}
+                          />
+                        </div>
                         <div className="flex flex-row justify-center items-center w-full h-auto py-1">
                           <div className="text-[30px]">+</div>
                           <div
@@ -271,7 +286,71 @@ export default function Register() {
                         {classes[i] &&
                           classes[i][c] &&
                           classes[i][c].map((item, p) => {
-                            return <div key={p}>{JSON.stringify(item)}</div>;
+                            const [name_classe, video_url] = item;
+                            return (
+                              <div key={p} className="">
+                                <Input
+                                  className={"flex-none"}
+                                  label={name_classe}
+                                  value={campos.moduleName}
+                                  classNameLabel={"block text-[1.21rem]"}
+                                  placeholder={"Ingresa nombre del modulo"}
+                                  name={"moduleName"}
+                                  classNameInput={`p-[5px] 
+                                        outline-none 
+                                        w-[100%]
+                                        h-[40px] 
+                                        rounded-[3px]   
+                                        bg-black/20`}
+                                />
+                                <Input
+                                  className={"flex-none"}
+                                  label={video_url}
+                                  value={campos.moduleName}
+                                  classNameLabel={"block text-[1.21rem]"}
+                                  placeholder={"Ingresa nombre del modulo"}
+                                  name={"moduleName"}
+                                  classNameInput={`p-[5px] 
+                                        outline-none 
+                                        w-[100%]
+                                        h-[40px] 
+                                        rounded-[3px]   
+                                        bg-black/20`}
+                                />
+                                {/* {name_classe}
+                                {video_url} */}
+                              </div>
+                            );
+                            /* return (
+                              <div className="bg-purple mb-2" key={p}>
+                                {item.map((ds, r) => {
+                                  return (
+                                    <div key={r}>
+                                      <Input
+                                        className={"flex-none"}
+                                        label={"Nombre de modulo"}
+                                        value={campos.moduleName}
+                                        
+                                        classNameLabel={"block text-[1.21rem]"}
+                                        placeholder={
+                                          "Ingresa nombre del modulo"
+                                        }
+                                        name={"moduleName"}
+                                        classNameInput={`p-[5px] 
+                                        outline-none 
+                                        w-[100%]
+                                        h-[40px] 
+                                        rounded-[3px]   
+                                        bg-black/20`}
+                                      />
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            ); */
+                            /* return item.map((ds, r) => (
+                              <div key={r}>{JSON.stringify(ds)}</div>
+                            )); */
                           })}
                       </div>
                     );
