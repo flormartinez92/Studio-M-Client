@@ -11,9 +11,9 @@ export default function Courses() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8081/api/user/allCourses")
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`)
       .then((res) => {
-        const { courses } = res.data;
+        const courses = res.data;
         setCourses(courses);
       })
       .catch((error) => {

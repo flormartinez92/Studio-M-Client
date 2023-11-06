@@ -12,9 +12,11 @@ export default function CourseInformation({ params }) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/allCourses/${courseId}`)
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${courseId}`
+      )
       .then((res) => {
-        const { course } = res.data;
+        const course = res.data;
 
         setCourse(course);
       })
@@ -49,7 +51,7 @@ export default function CourseInformation({ params }) {
       >
         <div className="flex items-center gap-6 sm:ml-2 md:hidden">
           <h2 className="font-mystery-mixed text-4xl -rotate-3">
-            {isMd() ? course.courseTitle : newTitle(course.courseTitle)}
+            {isMd() ? course?.courseTitle : newTitle(course?.courseTitle)}
           </h2>
           <div className="relative">
             <Image
