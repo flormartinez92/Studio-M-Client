@@ -17,6 +17,9 @@ module.exports = {
         navbar: "navbar .7s",
       },
     },
+    backgroundPosition: {
+      "left-bottom-2": "center bottom .2rem",
+    },
     fontFamily: {
       "mystery-mixed": ["mystery-mixed"],
       "ms-gothic": ["ms-gothic"],
@@ -40,5 +43,5 @@ module.exports = {
       grey: "#808080",
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };
