@@ -68,6 +68,7 @@ export default function Login() {
                   name: user.name,
                   lastname: user.lastname,
                   mail: user.mail,
+                  id: user._id,
                 })
               );
               setmessageAlert("");
