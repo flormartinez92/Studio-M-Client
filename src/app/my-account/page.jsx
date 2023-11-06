@@ -38,10 +38,10 @@ export default function MyAccount() {
           <div className="bg-[#1E1E1E] w-full rounded-t-xl flex justify-between items-center py-3">
             {currentPage > 0 && (
               <IconButton
-                className="ml-[16px] rotate-180"
+                className="absolute left-0 ml-[10%] rotate-180"
                 onClick={handlePrevPage}
               >
-                <Arrow color="white" />
+                <Arrow color="white"/>
               </IconButton>
             )}
             <h2 className="text-white font-mystery-mixed text-2xl underline decoration-pink text-center flex-1" style={{ textUnderlineOffset: "6px" }} >

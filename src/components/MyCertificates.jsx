@@ -1,24 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useSelector } from "react-redux";
 import Image from "next/image";
+import axios from "axios"
+import { Download, Share } from "@/common/Icons";
 import Border from "@/common/Border";
 import IconButton from "@/common/IconButton";
-import { Download, Share } from "@/common/Icons";
-//import axios from "axios"
 
 const MyCertificates = () => {
-  //info dinamica (no datos harcodeados)
-  // const { user } = useSelector((store) => store.auth);
-  // const [userCertificates, setUserCertificates] = useState([]);
+  const { user } = useSelector((store) => store.auth);
+  const [userCertificates, setUserCertificates] = useState([]);
 
-  // useEffect( async() => {
-  //   try {
-  //     await axios
-  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${user?.id}`)
-  //     .then((res) => console.log(res.data))
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }, [user?.id])
+  useEffect(() => {
+    if (user?.id) {
+      try {
+        axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${user?.id}`)
+          .then((res) => setUserCertificates(res.data));
+          //setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [user?.id]);
 
   return (
     <>
@@ -84,20 +87,35 @@ const MyCertificates = () => {
             alt="Picture"
             className="mt-3"
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[70%]"> {/*pt-8 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[70%]">
+            {" "}
+            {/*pt-8 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center */}
             <div className="flex flex-col align-center items-center my-2 gap-y-1">
-              <h2 className="text-[20px] font-mystery-mixed mb-1 lg:text-[24px]">Certificado</h2>
-              <h3 className="text-2xl font-mystery-mixed lg:text-3xl">Ux Researcher</h3>
-              <p className="text-sm font-ms-gothic lg:text-base">Emilia Rodriguez</p>
-              <p className="text-sm font-ms-gothic lg:text-base">DNI: 36.363.363</p>
+              <h2 className="text-[20px] font-mystery-mixed mb-1 lg:text-[24px]">
+                Certificado
+              </h2>
+              <h3 className="text-2xl font-mystery-mixed lg:text-3xl">
+                Ux Researcher
+              </h3>
+              <p className="text-sm font-ms-gothic lg:text-base">
+                Emilia Rodriguez
+              </p>
+              <p className="text-sm font-ms-gothic lg:text-base">
+                DNI: 36.363.363
+              </p>
               <p className="text-sm font-ms-gothic mb-2 mt-2 lg:text-base">
-                Ha realizado y completado con éxito su curso en by M Studio, <br/>
+                Ha realizado y completado con éxito su curso en by M Studio,{" "}
+                <br />
                 cumpliendo con todos los requisitos académicos exigidos
               </p>
-              <p className="text-sm font-ms-gothic lg:text-base">03 de Agosto de 2023</p>
+              <p className="text-sm font-ms-gothic lg:text-base">
+                03 de Agosto de 2023
+              </p>
               <div className="flex flex-row justify-around align-center items-center w-full">
                 <div>
-                  <h3 className=" font-mystery-mixed text-[18px] lg:text-[22px]">Studio by M</h3>
+                  <h3 className=" font-mystery-mixed text-[18px] lg:text-[22px]">
+                    Studio by M
+                  </h3>
                 </div>
                 <div className="flex flex-col items-center align-center">
                   <Image
@@ -109,7 +127,7 @@ const MyCertificates = () => {
                   />
                   <div className="">
                     <h4 className=" font-ms-gothic text-xs text-center lg:text-sm ">
-                      Macarena <br/>
+                      Macarena <br />
                       Bernal
                     </h4>
                   </div>

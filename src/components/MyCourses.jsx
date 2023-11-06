@@ -14,6 +14,7 @@ const MyCourses = () => {
         axios
           .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${user?.id}`)
           .then((res) => setUserCourses(res.data));
+          //setCurrentTitle(title);
       } catch (error) {
         console.error(error);
       }
