@@ -3,9 +3,22 @@ import Image from "next/image";
 import Border from "@/common/Border";
 import IconButton from "@/common/IconButton";
 import { Download, Share } from "@/common/Icons";
+//import axios from "axios"
 
 const MyCertificates = () => {
   //info dinamica (no datos harcodeados)
+  // const { user } = useSelector((store) => store.auth);
+  // const [userCertificates, setUserCertificates] = useState([]);
+
+  // useEffect( async() => {
+  //   try {
+  //     await axios
+  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${user?.id}`)
+  //     .then((res) => console.log(res.data))
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }, [user?.id])
 
   return (
     <>

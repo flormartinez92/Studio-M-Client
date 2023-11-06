@@ -4,6 +4,7 @@ import IconButton from "@/common/IconButton";
 import { Pencil, Save } from "@/common/Icons";
 import Input from "@/common/Input";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const MyData = () => {
   const [changePassword, setChangePassword] = useState(false);
@@ -13,25 +14,26 @@ const MyData = () => {
     mail: "",
     dni: "",
   });
-  const userId = localStorage.getItem("userId");
-  console.log("USER IDDDDDD", userId);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
-        .then((res) => setUserData(res.data));
-      //setCurrentTitle(title);
-    } catch (error) {
-      console.error(error);
+    if (user?.id) {
+      try {
+        axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${user?.id}`)
+          .then((res) => setUserData(res.data));
+        //setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, [userId]);
+  }, [user?.id]);
 
   //Manejador de cambio para los campos de entrada
-  const handleInputChange = (e)=> {
-    const {name, value} = e.target;
-    setUserData({...userData, [name]: value})
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
 
   //Manejador de click
   const handleClickEdit = () => setChangePassword(!changePassword);

@@ -16,7 +16,7 @@ export default function MyAccount() {
   //Arreglo de las 4 secciones a mostrar
   const pages = [
     { key: "mydata", title: "Mis datos", content: <MyData/> },
-    { key: "mycourses", title: "Mis cursos", content: <MyCourses/> },
+    { key: "mycourses", title: "Mis cursos", content: <MyCourses title="Mis cursos"/> },
     { key: "mylist", title: "Mi lista", content: <MyList/> },
     { key: "mycertificates", title: "Mis certificados", content: <MyCertificates/> },
   ];
@@ -26,10 +26,9 @@ export default function MyAccount() {
   const handleNextPage = () => currentPage < (pages.length - 1) && setCurrentPage(currentPage + 1)
 
   //Hace los pedidos para traer la informacion de las secciones
-  const handleTitle = (title) => {
-    // const userId = localStorage.getItem("userId");
-   setCurrentTitle(title)
-  };
+  // const handleTitle = (title) => {
+  //  setCurrentTitle(title)
+  // };
 
   return (
     <>
