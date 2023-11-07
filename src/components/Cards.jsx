@@ -56,7 +56,7 @@ export default function Cards({
 
   return (
     <div className={`w-80 relative ${className || ""}`}>
-      <h2 className="text-3xl text-white bg-black font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
+      <h2 className="text-3xl text-white bg-[#181818] font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg">
         {title}
       </h2>
       <div className={`${className2}`}>
@@ -102,7 +102,7 @@ export default function Cards({
             <IconButton
               onClick={handleAddToCart}
               children={<CartShopPlus />}
-              className={"bg-black h-8 w-8 rounded-2xl"}
+              className={"bg-[#181818] h-8 w-8 rounded-2xl"}
             />
           </div>
         </div>

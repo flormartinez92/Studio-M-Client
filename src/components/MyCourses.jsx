@@ -31,8 +31,10 @@ const MyCourses = () => {
                 title={userCourse.courseInfo.courseTitle.slice(0,10)}
                 buttonTitle={userCourse.progress + "%"}
                 img={userCourse.courseInfo.courseImg_url}
-                className="max-w-[205px]"
+                className="min-w-[13rem] max-w-[13rem] h-[15rem] max-h-[15rem]"
                 classNameButton="py-1 px-3"
+                classNameImg="h-full"
+                
               />
             </Link>
           </div>
