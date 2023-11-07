@@ -5,10 +5,10 @@ import React from "react";
 export default function CardsDesktop(props) {
   return (
     <section className="flex flex-col justify-center items-center my-11">
-      <div className="hidden lg:block w-[85%] my-11 drop-shadow-lg rounded-xl max-w-7xl">
+      <div className="hidden lg:block w-[85%] my-11 drop-shadow-lg rounded-xl max-w-7xl ">
         <div className="bg-buttonBlack flex justify-center items-center font-mystery-mixed text-4xl text-white rounded-t-xl">
           <h3 className={`py-5 tracking-wider ${props.courseTitleClasses}`}>
-            {props.courseTitle}
+            {props.courseLongTitle}
           </h3>
         </div>
 
@@ -24,9 +24,14 @@ export default function CardsDesktop(props) {
           {/* Aca si estoy en la vista donde estan todos los detalles, se muestra esto */}
           {props.cartShopPlusBgBlack ? (
             <div className="bg-lightGrey rounded-br-lg p-10 ">
-              <h4 className="font-ms-gothic text-3xl text-h3Black">
-                {props.courseSubtitle}
-              </h4>
+              <div className="flex flex-row justify-between items-center text-[1.813rem] text-h3Black">
+                <h4 className="font-ms-gothic ">{props.courseSubtitle}</h4>
+
+                <p className={`font-mystery-mixed ${props.coursePriceClasses}`}>
+                  ${props.coursePrice} ARS
+                </p>
+              </div>
+
               <p className="font-ms-gothic text-xl text-darkGray leading-tight mt-4">
                 {props.courseDescription}
               </p>
@@ -48,15 +53,13 @@ export default function CardsDesktop(props) {
                     </p>
                   </div>
                 ) : null}
-                {props.courseFavorite ? (
-                  <div className="flex items-center space-x-3">
-                    <p className={`${props.courseFavoriteClasses}`}>
-                      {props.courseFavorite}
-                    </p>
-                    <Heart />
-                  </div>
-                ) : null}
-                {props.coursePrice ? (
+                <div className="flex items-center space-x-3">
+                  <p className={`${props.courseFavoriteClasses}`}>
+                    Agregar a la lista de deseos
+                  </p>
+                  <Heart />
+                </div>
+                {props.cartShopPlusBgBlack ? (
                   <div className="flex space-x-3">
                     <p className={`${props.cartShopPlusBgBlackClasses}`}>
                       {props.cartShopPlusBgBlack}
@@ -73,10 +76,7 @@ export default function CardsDesktop(props) {
               <p className="font-ms-gothic text-xl text-darkGray leading-tight mt-4">
                 {props.courseDescription}
               </p>
-              <div>{props.cartShopPlusBgBlack}</div>
-              {!props.courseLevel &&
-              !props.courseDuration &&
-              !props.courseFavorite ? (
+              {!props.courseLevel && !props.courseDuration ? (
                 <div className="flex justify-end items-end pt-14 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
                   {props.coursePrice ? (
                     <div className="flex space-x-3">
@@ -104,14 +104,12 @@ export default function CardsDesktop(props) {
                       </p>
                     </div>
                   ) : null}
-                  {props.courseFavorite ? (
-                    <div className="flex items-center space-x-3">
-                      <p className={`${props.courseFavoriteClasses}`}>
-                        {props.courseFavorite}
-                      </p>
-                      <Heart />
-                    </div>
-                  ) : null}
+                  <div className="flex items-center space-x-3">
+                    <p className={`${props.courseFavoriteClasses}`}>
+                      Agregar a la lista de deseos
+                    </p>
+                    <Heart />
+                  </div>
                   {props.coursePrice ? (
                     <div className="flex  space-x-3">
                       <p className={`${props.coursePriceClasses}`}>
