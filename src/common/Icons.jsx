@@ -134,13 +134,24 @@ export function Plus({ width, height, color }) {
       xmlns="http://www.w3.org/2000/svg"
       width={width || "20"}
       height={height || "20"}
-      viewBox="0 0 12 12"
+      viewBox="0 0 24 24"
     >
       <path
         fill={color || "currentColor"}
-        d="M6.5 1.75a.75.75 0 0 0-1.5 0V5H1.75a.75.75 0 0 0 0 1.5H5v3.25a.75.75 0 0 0 1.5 0V6.5h3.25a.75.75 0 0 0 0-1.5H6.5V1.75Z"
+        d="M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4z"
       />
     </svg>
+    // <svg
+    //   xmlns="http://www.w3.org/2000/svg"
+    //   width={width || "20"}
+    //   height={height || "20"}
+    //   viewBox="0 0 12 12"
+    // >
+    //   <path
+    //     fill={color || "currentColor"}
+    //     d="M6.5 1.75a.75.75 0 0 0-1.5 0V5H1.75a.75.75 0 0 0 0 1.5H5v3.25a.75.75 0 0 0 1.5 0V6.5h3.25a.75.75 0 0 0 0-1.5H6.5V1.75Z"
+    //   />
+    // </svg>
   );
 }
 
@@ -180,12 +191,12 @@ export function ArrowReload({ width, height, color }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width || "20"}
-      height={height || "20"}
+      width={width || "24"}
+      height={height || "24"}
       viewBox="0 0 24 24"
     >
       <path
-        fill={color || "currentColor"}
+        fill="none"
         stroke={color || "currentColor"}
         stroke-linecap="round"
         stroke-linejoin="round"

@@ -12,14 +12,14 @@ import {
 
 export default function ActiveCourses() {
   return (
-    <section className="my-60">
-      <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-20 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
+    <section className="my-20 mb-60">
+      <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
         Cursos activos
       </h2>
-      <div className="px-4 font-ms-gothic text-xl md:ml-10 xl:ml-20 md:mr-10 xl:mr-20">
+      <div className="flex justify-center px-4 font-ms-gothic text-xl md:ml-10 xl:ml-10 md:mr-10 xl:mr-10">
         <table className="w-full xl:table-fixed">
           <thead className="max-sm:hidden">
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-t-[0.5px] md:border-l-[0.5px] md:border-r-[0.5px]">
+            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px] text-[#757575]">
               <td className="p-4">Curso</td>
               <td>Clases</td>
               <td>Alumnos</td>
@@ -72,7 +72,7 @@ export default function ActiveCourses() {
               </td>
             </tr>
           </tbody>
-          <tfoot className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] shadow-xl-left">
+          <tfoot className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px]">
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -89,9 +89,9 @@ export default function ActiveCourses() {
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-2 md:p-3 md:w-[130px]">
-          <Plus className="text-whiter" width="15" />
-          <span className="text-white items-center flex justify-between">
+        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
+          <Plus className="" width="25" />
+          <span className="text-white items-center flex justify-between md:ml-2">
             Crear curso
           </span>
         </Button>

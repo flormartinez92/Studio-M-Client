@@ -13,18 +13,20 @@ export default function CardsDesktop(props) {
         </div>
 
         <div className="flex">
-          <Image
-            width={280}
-            height={255}
-            src={props.courseImg_url}
-            alt="Imagen Curso"
-            className="rounded-bl-lg drop-shadow-lg"
-          />
+          <div className="w-full">
+            <Image
+              width={280}
+              height={255}
+              src={props.courseImg_url}
+              alt="Imagen Curso"
+              className="rounded-bl-lg drop-shadow-lg w-[100%] h-[100%] object-cover"
+            />
+          </div>
 
           {/* Aca si estoy en la vista donde estan todos los detalles, se muestra esto */}
           {props.cartShopPlusBgBlack ? (
-            <div className="bg-lightGrey rounded-br-lg p-10 ">
-              <div className="flex flex-row justify-between items-center text-[1.813rem] text-h3Black">
+            <div className="bg-lightGrey rounded-br-lg p-10">
+              <div className="flex flex-row justify-between  tracking-tight items-center text-[1.813rem] text-h3Black">
                 <h4 className="font-ms-gothic ">{props.courseSubtitle}</h4>
 
                 <p className={`font-mystery-mixed ${props.coursePriceClasses}`}>
@@ -32,11 +34,11 @@ export default function CardsDesktop(props) {
                 </p>
               </div>
 
-              <p className="font-ms-gothic text-xl text-darkGray leading-tight mt-4">
+              <p className="font-ms-gothic tracking-tight text-xl text-darkGray leading-tight mt-4">
                 {props.courseDescription}
               </p>
 
-              <div className="flex  justify-between items-center pt-14 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
+              <div className="flex  justify-between items-center pt-8 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
                 {props.courseLevel ? (
                   <div className="flex items-center space-x-2">
                     <Signal width={50} height={50} />
@@ -73,7 +75,7 @@ export default function CardsDesktop(props) {
               <h4 className="font-ms-gothic text-3xl text-h3Black">
                 {props.courseSubtitle}
               </h4>
-              <p className="font-ms-gothic text-xl text-darkGray leading-tight mt-4">
+              <p className="font-ms-gothic tracking-tight text-xl text-darkGray leading-tight mt-4">
                 {props.courseDescription}
               </p>
               {!props.courseLevel && !props.courseDuration ? (
