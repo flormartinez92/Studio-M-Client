@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function PurchasedCourseResume({ params }) {
   const courseId = params["purchased-course-resume"];
+  console.log("courseId--->", courseId);
   const [courseResume, setCourseResume] = useState({});
 
   useEffect(() => {
