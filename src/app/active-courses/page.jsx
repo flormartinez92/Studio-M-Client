@@ -23,9 +23,7 @@ export default function ActiveCourses() {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`)
       .then((res) => {
-        const courses = res.data.map((course) => {
-          return { ...course, bloq: true };
-        });
+        const courses = res.data;
         setCourses(courses);
       })
       .catch((error) => {
@@ -37,15 +35,22 @@ export default function ActiveCourses() {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
       .then((res) => {
-        const users = res.data.map((user) => {
-          return { ...user };
-        });
+        const users = res.data;
         setUsers(users);
       })
       .catch((error) => {
         console.error("Error getting Users:", error);
       });
   }, []);
+
+  const calculateTotalUsersPerCourse = (courseId) => {
+    return users.reduce((total, user) => {
+      const matchingCourses = user.course.filter(
+        (course) => course.courseId === courseId
+      );
+      return total + matchingCourses.length;
+    }, 0);
+  };
 
   return (
     <section className="my-20 mb-60">
@@ -79,7 +84,9 @@ export default function ActiveCourses() {
                     return totalClasses + moduleClasses;
                   }, 0)}
                 </td>
-                <td className="max-sm:hidden">&nbsp;</td>
+                <td className="max-sm:hidden">
+                  {calculateTotalUsersPerCourse(course._id)}
+                </td>
                 <td>
                   <button>
                     <Plus color="#4FE21B" />
@@ -91,12 +98,12 @@ export default function ActiveCourses() {
                   </button>
                 </td>
                 <td>
-                  {course.bloq && (
+                  {course.status && (
                     <button>
                       <Trash color="#A31616" />
                     </button>
                   )}
-                  {!course.bloq && (
+                  {!course.status && (
                     <button>
                       <ArrowReload color="#E21B7B" />
                     </button>
