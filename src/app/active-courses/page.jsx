@@ -17,6 +17,7 @@ import { useEffect } from "react";
 
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios
@@ -29,6 +30,20 @@ export default function ActiveCourses() {
       })
       .catch((error) => {
         console.error("Error getting courses:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
+      .then((res) => {
+        const users = res.data.map((user) => {
+          return { ...user };
+        });
+        setUsers(users);
+      })
+      .catch((error) => {
+        console.error("Error getting Users:", error);
       });
   }, []);
 
