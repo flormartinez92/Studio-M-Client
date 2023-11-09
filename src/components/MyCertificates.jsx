@@ -22,12 +22,14 @@ const MyCertificates = () => {
       }
     }
   }, [user?.id]);
+  console.log(userCertificates);
 
   return (
     <>
       {/*modo mobile*/}
       <div className=" py-12 md:hidden">
-        <div className="flex justify-center py-4">
+        {userCertificates?.map((userCertificate) => (
+        <div className="flex justify-center py-4" key={userCertificate}>
           <Border className="border-pink border-2 w-[80%]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-pink">
@@ -43,7 +45,8 @@ const MyCertificates = () => {
             </div>
           </Border>
         </div>
-        <div className="flex justify-center py-4">
+        ))}
+        {/* <div className="flex justify-center py-4">
           <Border className="border-blue border-2 w-[80%]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-blue">
@@ -74,7 +77,7 @@ const MyCertificates = () => {
               </div>
             </div>
           </Border>
-        </div>
+        </div> */}
       </div>
 
       {/*modo desktop*/}

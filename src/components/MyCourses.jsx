@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 const MyCourses = () => {
   const [userCourses, setUserCourses] = useState([]);
   const { user } = useSelector((store) => store.auth);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     if (user?.id) {
@@ -21,6 +22,8 @@ const MyCourses = () => {
     }
   }, [user?.id]);
 
+  //CAMBIAR TITULO CUANDO SE CAMBIEN LOS MODELOS Y TENGA TITULO CORTO
+
   return (
     <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
       <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
@@ -28,7 +31,7 @@ const MyCourses = () => {
           <div key={userCourse.courseInfo._id} className="mr-4">
             <Link href={`/my-account/${userCourse.courseInfo._id}`}>
               <Cards
-                title={userCourse.courseInfo.courseTitle.slice(0,10)}
+                title={userCourse.courseInfo.courseShortTitle}
                 buttonTitle={userCourse.progress + "%"}
                 img={userCourse.courseInfo.courseImg_url}
                 className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem]"

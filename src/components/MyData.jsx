@@ -4,7 +4,10 @@ import IconButton from "@/common/IconButton";
 import { Pencil, Save } from "@/common/Icons";
 import Input from "@/common/Input";
 import axios from "axios";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
+// require("dotenv").config();
+// const jwt = require("jsonwebtoken");
+// const secretKey = process.env.JWT_SECRET;
 
 const MyData = () => {
   const [changePassword, setChangePassword] = useState(false);
@@ -14,20 +17,31 @@ const MyData = () => {
     mail: "",
     dni: "",
   });
-  const { user } = useSelector((store) => store.auth);
+  //const { user } = useSelector((store) => store.auth);
+  const userToken = sessionStorage.getItem("token");
+  //const token = document.cookie.split("; ").find(cookie => cookie.startsWith("token=")).split("=")[1];
+  console.log("SESSION STORAGE----", userToken);
+  // try {
+  //   const userQ = jwt.verify(token, secretKey);
+  //   console.log("USUARIO FINAL------", userQ);
+  // } catch (error) {
+  // console.error("error decoding token",error);  
+  // }
 
   useEffect(() => {
-    if (user?.id) {
-      try {
-        axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${user?.id}`)
-          .then((res) => setUserData(res.data));
-        //setCurrentTitle(title);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, [user?.id]);
+  //   if (user?.id) {
+  //     try {
+  //       axios
+  //         .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${user?.id}`)
+  //         .then((res) => setUserData(res.data));
+  //       //setCurrentTitle(title);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  }, []);
+
+  console.log("USER DATAAAAA", userData);
 
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {

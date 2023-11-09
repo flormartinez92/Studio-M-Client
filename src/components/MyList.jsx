@@ -25,10 +25,10 @@ const MyList = () => {
   return (
     <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
       <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-        {userFavorites?.map((userFavorite) => (
-          <div key={userFavorite._id}>
+        {userFavorites.courseId?.map((userFavorite) => (
+          <div key={userFavorite}>
             <Cards
-              title="UX Research"
+              title={userFavorite.courseShortTitle}
               buttonTitle="Ver curso"
               icon={<CartShopSimple />}
               img="/img/indonesiaGrande.png"
