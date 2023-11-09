@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import IconButton from "@/common/IconButton";
-import { Pencil, Save } from "@/common/Icons";
-import Input from "@/common/Input";
 import axios from "axios";
-//import { useSelector } from "react-redux";
-// require("dotenv").config();
-// const jwt = require("jsonwebtoken");
-// const secretKey = process.env.JWT_SECRET;
+import { jwtDecode } from "jwt-decode";
+import { Pencil, Save } from "@/common/Icons";
+import IconButton from "@/common/IconButton";
+import Input from "@/common/Input";
 
 const MyData = () => {
+  //Estados para cambio de password y datos de usuario.
   const [changePassword, setChangePassword] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
@@ -17,31 +15,23 @@ const MyData = () => {
     mail: "",
     dni: "",
   });
-  //const { user } = useSelector((store) => store.auth);
+  //Token para la informacion de usuario.
   const userToken = sessionStorage.getItem("token");
-  //const token = document.cookie.split("; ").find(cookie => cookie.startsWith("token=")).split("=")[1];
-  console.log("SESSION STORAGE----", userToken);
-  // try {
-  //   const userQ = jwt.verify(token, secretKey);
-  //   console.log("USUARIO FINAL------", userQ);
-  // } catch (error) {
-  // console.error("error decoding token",error);  
-  // }
+  const decodedToken = jwtDecode(userToken);
 
+  //Pedido al back para los datos de usuario (el token tambien los trae).
   useEffect(() => {
-  //   if (user?.id) {
-  //     try {
-  //       axios
-  //         .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${user?.id}`)
-  //         .then((res) => setUserData(res.data));
-  //       //setCurrentTitle(title);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
+    if (decodedToken._id) {
+      try {
+        axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`)
+          .then((res) => setUserData(res.data));
+        //setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }, []);
-
-  console.log("USER DATAAAAA", userData);
 
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {
