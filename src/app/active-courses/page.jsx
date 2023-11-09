@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Button from "@/common/Button";
 
@@ -9,8 +11,47 @@ import {
   UilArrow1,
   UilArrow2,
 } from "@/common/Icons";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function ActiveCourses() {
+  const [courses, setCourses] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`)
+      .then((res) => {
+        const courses = res.data;
+        setCourses(courses);
+      })
+      .catch((error) => {
+        console.error("Error getting courses:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
+      .then((res) => {
+        const users = res.data;
+        setUsers(users);
+      })
+      .catch((error) => {
+        console.error("Error getting Users:", error);
+      });
+  }, []);
+
+  const calculateTotalUsersPerCourse = (courseId) => {
+    return users.reduce((total, user) => {
+      const matchingCourses = user.course.filter(
+        (course) => course.courseId === courseId
+      );
+      return total + matchingCourses.length;
+    }, 0);
+  };
+
   return (
     <section className="my-20 mb-60">
       <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
@@ -29,48 +70,47 @@ export default function ActiveCourses() {
             </tr>
           </thead>
           <tbody>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">UX Writing</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <Plus color="#4FE21B" />
-              </td>
-              <td>
-                <Pencil color="#1BBEE2" />
-              </td>
-              <td>
-                <Trash color="#A31616" />
-              </td>
-            </tr>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px] ">
-              <td className="p-4">UX Research</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <Plus color="#4FE21B" />
-              </td>
-              <td>
-                <Pencil color="#1BBEE2" />
-              </td>
-              <td>
-                <Trash color="#A31616" />
-              </td>
-            </tr>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:shadow-xl  border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">UI Design</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <Plus color="#4FE21B" />
-              </td>
-              <td>
-                <Pencil color="#1BBEE2" />
-              </td>
-              <td>
-                <ArrowReload color="#E21B7B" />
-              </td>
-            </tr>
+            {courses.map((course) => (
+              <tr
+                key={course._id}
+                className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]"
+              >
+                <td className="p-4">{course.courseShortTitle}</td>
+                <td className="max-sm:hidden">
+                  {course.modules.reduce((totalClasses, module) => {
+                    const moduleClasses = module.topics.reduce((acc, topic) => {
+                      return acc + topic.classes.length;
+                    }, 0);
+                    return totalClasses + moduleClasses;
+                  }, 0)}
+                </td>
+                <td className="max-sm:hidden">
+                  {calculateTotalUsersPerCourse(course._id)}
+                </td>
+                <td>
+                  <button>
+                    <Plus color="#4FE21B" />
+                  </button>
+                </td>
+                <td>
+                  <button>
+                    <Pencil color="#1BBEE2" />
+                  </button>
+                </td>
+                <td>
+                  {course.status && (
+                    <button>
+                      <Trash color="#A31616" />
+                    </button>
+                  )}
+                  {!course.status && (
+                    <button>
+                      <ArrowReload color="#E21B7B" />
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
           <tfoot className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px]">
             <tr>
