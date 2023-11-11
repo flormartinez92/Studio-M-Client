@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useInput from "@/hooks/useInput";
+import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function Register() {
   const [classes, setClasses] = useState({});
   const [items, setItems] = useState({});
   const [topics, setTopics] = useState({});
+  const [selectedOption, setSelectedOption] = useState("");
 
   const {
     OnChange: OnChangeTitleLong,
@@ -40,21 +42,21 @@ export default function Register() {
     blur: BlurTitleLong,
     focus: FocusTitleLong,
     message: MessageTitleLong,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeTitleShort,
     value: valueTitleShort,
     blur: BlurTitleShort,
     focus: FocusTitleShort,
     message: MessageTitleShort,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeSubtitle,
     value: valueSubtitle,
     blur: BlurSubtitle,
     focus: FocusSubtitle,
     message: MessageSubtitle,
-  } = useInput("course");
+  } = useInput("course_add");
 
   const {
     OnChange: OnChangeDescription,
@@ -62,28 +64,28 @@ export default function Register() {
     blur: BlurDescription,
     focus: FocusDescription,
     message: MessageDescription,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangePrice,
     value: valuePrice,
     blur: BlurPrice,
     focus: FocusPrice,
     message: MessagePrice,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeCourseLevel,
     value: valueCourseLevel,
     blur: BlurCourseLevel,
     focus: FocusCourseLevel,
     message: MessageCourseLevel,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeCourseDuration,
     value: valueCourseDuration,
     blur: BlurCourseDuration,
     focus: FocusCourseDuration,
     message: MessageCourseDuration,
-  } = useInput("course");
+  } = useInput("course_add");
 
   const {
     OnChange: OnChangeImage,
@@ -91,76 +93,49 @@ export default function Register() {
     blur: BlurImage,
     focus: FocusImage,
     message: MessageImage,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeProjectsTitle,
     value: valueProjectsTitle,
     blur: BlurProjectsTitle,
     focus: FocusProjectsTitle,
     message: MessageProjectsTitle,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeProjectsDescription,
     value: valueProjectsDescription,
     blur: BlurProjectsDescription,
     focus: FocusProjectsDescription,
     message: MessageProjectsDescription,
-  } = useInput("course");
+  } = useInput("course_add");
   const {
     OnChange: OnChangeProjectAim,
     value: valueProjectAim,
     blur: BlurProjectAim,
     focus: FocusProjectAim,
     message: MessageProjectAim,
-  } = useInput("course");
-  const feikdata = [
-    {
-      moduleName: "modulo 1",
-      topics: [
-        { topicName: "tema 1", classes: [{ nameClass: "", url_video: "" }] },
-        { topicName: "tema 2", classes: [{ nameClass: "", url_video: "" }] },
-      ],
-    },
-    {
-      moduleName: "modulo 2",
-      topics: [
-        { topicName: "tema 3", classes: [{ nameClass: "", url_video: "" }] },
-        { topicName: "tema 4", classes: [{ nameClass: "", url_video: "" }] },
-      ],
-    },
-  ];
-
-  const data = { 0: [{}, {}], 1: [] };
+  } = useInput("course_add");
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+    if (!file) return;
     const formData = new FormData();
     formData.append("archivo", file);
-    console.log(campos);
-    console.log(classes);
-    const sd = campos.map((idem, i) => {
-      console.log(idem);
-      const depured = idem.topics.forEach((r, t) => {
-        //idem.topics[t].classes = classes[i][t];
-        console.log(classes[i][t]);
-        idem.topics[t].classes.push(...classes[i][t]);
-        //return classes[i][t];
+
+    const arrData = campos.map((idem, i) => {
+      idem.topics.forEach((r, t) => {
+        console.log(!!classes[i]);
+        //Condicion si la iteracion de classes es undefined
+        if (!!classes[i]) {
+          classes[i][t].forEach((b, n) => {
+            idem.topics[t].classes[n] = b;
+          });
+        }
       });
       return idem;
-      //console.log(classes[i]);
     });
-    console.log(sd);
-    /*  const newsd = campos.map((idem, i) => {
-      idem.topics = classes[i];
-      return idem;
-      console.log(idem.topics);
-      console.log(classes[i]);
-    }); */
+    console.log(arrData);
 
-    const properties = Object.keys(classes);
-    properties.forEach((x) => {
-      //console.log(classes[x]);
-    });
     const data = {
       courseLongTitle: valueTitleLong,
       courseShortTitle: valueTitleShort,
@@ -176,23 +151,13 @@ export default function Register() {
       modules: campos,
     };
 
-    /* console.log(campos);
-    console.log(classes);
-  
-    console.log(valueTitleLong);
-    console.log(valueTitleShort);
-    console.log(valueSubtitle);
-    console.log(valueDescription);
-    console.log(valuePrice);
-    console.log(valueCourseLevel);
-    console.log(valueCourseDuration);
-    console.log(valueImage);
-    console.log(valueProjectsTitle);
-    console.log(valueProjectsDescription);
-    console.log(valueProjectAim); */
-    /* try {
+    try {
+      const resp2 = await axios.post(
+        "http://localhost:8081/api/adminCourse/add",
+        data
+      );
       const resp = await axios.put(
-        "http://localhost:8081/api/adminCourse/updateImg/6549369425edcecc35118f94",
+        `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
         formData,
         {
           headers: {
@@ -201,15 +166,9 @@ export default function Register() {
         }
       );
       console.log(resp);
-    } catch (err) {
-      console.log(err);
-    } */
-    /* console.log(campos);
-    console.log(classes);
-
-    const obj = { ...raiz };
-    obj.courseLongTitle = valueTitle;
-    setRaiz(obj); */
+    } catch (error) {
+      console.log(error);
+    }
   };
   const agregarCampo = () => {
     setCampos([
@@ -237,7 +196,7 @@ export default function Register() {
     if (!classes[i][x]) classes[i][x] = [];
 
     const objs = { ...classes };
-    objs[i][x].push({ url_video: "", nameClass: "" });
+    objs[i][x].push({ video_url: "", classInfo: "" });
     setClasses(objs);
   };
   const handleInputChange = (i, e) => {
@@ -248,13 +207,17 @@ export default function Register() {
 
   const handleInputChangeClasse = (e, i, c, p) => {
     const objs = { ...classes };
-    classes[i][c][p].nameClass = e.target.value;
+    classes[i][c][p].classInfo = e.target.value;
     setClasses(objs);
   };
   const handleInputChangeUrlVideo = (e, i, c, p) => {
     const objs = { ...classes };
-    classes[i][c][p].url_video = e.target.value;
+    classes[i][c][p].video_url = e.target.value;
     setClasses(objs);
+  };
+  const handleSelectDificultad = (e) => {
+    console.log(e.target.value);
+    setSelectedOption(e.target.value);
   };
 
   const handleInputChangeTopic = (e, i, c) => {
@@ -273,98 +236,134 @@ export default function Register() {
     //console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   };
+  const [value, setValue] = useState("");
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    console.log("Archivo seleccionado:", file);
+    //console.log(file);
+    setFile(file);
+    setValue(file.name);
+    // Puedes realizar otras acciones aquí, como cargar el archivo o procesarlo de alguna manera
+  };
+
+  const handleDivClick = () => {
+    // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
+    Register.click();
+  };
+
+  const [fields, setFields] = useState([]);
+  const addFields = () => {
+    setFields((prevFields) => [
+      ...prevFields,
+      {
+        id: Date.now(),
+        inputProps: useInput(`course_add_${prevFields.length}`),
+      },
+    ]);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
       <h2 className="font-mystery-mixed w-full h-auto text-[2.3rem] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3 text-center">
         Agregar Curso
       </h2>
+
       {/* {JSON.stringify(raiz)} */}
       <form
         onSubmit={onSubmitForm}
-        className="mt-[50px] 
+        className="
+            mt-[50px] 
             w-[80%]
-            max-w-[300px] 
-            sm:max-w-[650px]
+            max-w-[400px] 
+            sm:max-w-[850px]
             flex
             flex-col
-            items-center
+            justify-center
             "
       >
-        <div className="w-[100%] sm:w-[60%]">
-          <Input
-            className={"flex-none"}
-            label={"Titulo largo"}
-            value={valueTitleLong}
-            onChange={OnChangeTitleLong}
-            onBlur={BlurTitleLong}
-            onFocus={FocusTitleLong}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa titulo del curso"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
+        <div className="w-auto">
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Titulo largo"}
+                value={valueTitleLong}
+                onChange={OnChangeTitleLong}
+                onBlur={BlurTitleLong}
+                onFocus={FocusTitleLong}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa titulo largo del curso"}
+                name={"nombre"}
+                classNameInput={`
+                p-[5px] 
+                outline-none 
+                w-[100%]
+                h-[40px] 
+                rounded-[3px]   
+                bg-black/20`}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageTitleLong && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageTitleLong}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Titulo corto"}
+                value={valueTitleShort}
+                onChange={OnChangeTitleShort}
+                onBlur={BlurTitleShort}
+                onFocus={FocusTitleShort}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa titulo corto del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-          />
-          <Input
-            className={"flex-none"}
-            label={"Titulo largo"}
-            type={"file"}
-            accept="image/*"
-            /* value={valueTitleLong}
-            onChange={OnChangeTitleLong} */
-            onChange={handleInputFile}
-            onBlur={BlurTitleLong}
-            onFocus={FocusTitleLong}
-            classNameLabel={"block text-[1.21rem]"}
-            name={"archivo"}
-            classNameInput={`p-[5px] 
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageTitleShort && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageTitleShort}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Sub-titulo"}
+                value={valueSubtitle}
+                onChange={OnChangeSubtitle}
+                onBlur={BlurSubtitle}
+                onFocus={FocusSubtitle}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa Subtitulo del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
-              bg-black/20
-              
-              `}
-          />
+              bg-black/20`}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageSubtitle && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageSubtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
 
-          <Input
-            className={"flex-none"}
-            label={"Titulo corto"}
-            value={valueTitleShort}
-            onChange={OnChangeTitleShort}
-            onBlur={BlurTitleShort}
-            onFocus={FocusTitleShort}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa titulo del curso"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
-              outline-none 
-              w-[100%]
-              h-[40px] 
-              rounded-[3px]   
-              bg-black/20`}
-          />
-          <Input
-            className={"flex-none"}
-            label={"Sub-titulo"}
-            value={valueSubtitle}
-            onChange={OnChangeSubtitle}
-            onBlur={BlurSubtitle}
-            onFocus={FocusSubtitle}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa Subtitulo del curso"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
-              outline-none 
-              w-[100%]
-              h-[40px] 
-              rounded-[3px]   
-              bg-black/20`}
-          />
           <Input
             className={"flex-none"}
             label={"Descripcion"}
@@ -383,74 +382,153 @@ export default function Register() {
               bg-black/20
               text-start`}
           />
-          <Input
-            className={"flex-none"}
-            label={"Precio"}
-            value={valuePrice}
-            onChange={OnChangePrice}
-            onBlur={BlurPrice}
-            onFocus={FocusPrice}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa link de la imagen"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
+          <div className="h-[.5rem] mb-2">
+            {MessageDescription && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageDescription}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className="w-full basis-[50%]">
+              <Input
+                className={"flex-none"}
+                label={"Precio"}
+                value={valuePrice}
+                onChange={OnChangePrice}
+                onBlur={BlurPrice}
+                onFocus={FocusPrice}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa precio del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-          />
-          <Input
-            className={"flex-none"}
-            label={"Dificultad del curso"}
-            value={valueCourseLevel}
-            onChange={OnChangeCourseLevel}
-            onBlur={BlurCourseLevel}
-            onFocus={FocusCourseLevel}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa link de la imagen"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessagePrice && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessagePrice}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="w-full basis-[50%]">
+              <div className="flex flex-col my-2 ">
+                <label
+                  htmlFor="select_level"
+                  className="block text-[1.21rem] font-mystery-mixed mb-1"
+                >
+                  Dificultad del curso
+                </label>
+                <select
+                  id="select_level"
+                  className="w-full p-2   pl-3 font-ms-gothic outline-none bg-black/20 text-[15px] appearance-none h-[40px] 
+                  rounded-[3px]"
+                  value={valueCourseLevel}
+                  onChange={OnChangeCourseLevel}
+                  style={{
+                    backgroundColor: "lightgray", // Cambia el color de fondo de la opción seleccionada
+                  }}
+                >
+                  <option disabled className="text-[15px]">
+                    Selecciona una dificultad
+                  </option>
+                  <option value="Facil" className="bg-black/20 text-[15px]">
+                    Facil
+                  </option>
+                  <option
+                    value="Intermedio"
+                    className="bg-black/20 text-[15px]"
+                  >
+                    Intermedio
+                  </option>
+                  <option value="Dificil" className="bg-black/20 text-[15px]">
+                    Dificil
+                  </option>
+                </select>
+              </div>
+              <div className="h-[.5rem] mb-2">
+                {MessageCourseLevel && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageCourseLevel}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className="w-full basis-[50%]">
+              <div className="flex flex-col justify-center">
+                <p className="block text-[1.21rem] font-mystery-mixed mb-1">
+                  Carga de Imagen
+                </p>
+                <div
+                  className="border h-[40px] bg-buttonBlack p-4 cursor-pointer flex gap-x-5 text-letterWhite justify-center items-center "
+                  onClick={handleDivClick}
+                >
+                  <h1>Selecciona un archivo</h1>
+
+                  <h1>
+                    {value == "" ? (
+                      <Image
+                        src={"/svg/bx-file-blank.svg"}
+                        width={24}
+                        height={24}
+                        className=""
+                        alt="SVG Icon"
+                      />
+                    ) : (
+                      value
+                    )}
+                  </h1>
+
+                  <input
+                    type="file"
+                    ref={(input) => (Register = input)} // Ref para acceder al input de tipo file
+                    className="hidden" // Ocultar el input, ya que haremos clic en él programáticamente
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
+              <div className="h-[.5rem] mb-2">
+                {MessageImage && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageImage}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="w-full basis-[50%] ">
+              <Input
+                className={"flex-none"}
+                label={"Duracion del curso"}
+                value={valueCourseDuration}
+                onChange={OnChangeCourseDuration}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa la duración del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-          />
-          <Input
-            className={"flex-none"}
-            label={"Duracion del curso"}
-            value={valueCourseDuration}
-            onChange={OnChangeCourseDuration}
-            onBlur={BlurCourseDuration}
-            onFocus={FocusCourseDuration}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa link de la imagen"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
-              outline-none 
-              w-[100%]
-              h-[40px] 
-              rounded-[3px]   
-              bg-black/20`}
-          />
-          <Input
-            className={"flex-none"}
-            label={"Url_Imagen"}
-            value={valueImage}
-            onChange={OnChangeImage}
-            onBlur={BlurImage}
-            onFocus={FocusImage}
-            classNameLabel={"block text-[1.21rem]"}
-            placeholder={"Ingresa link de la imagen"}
-            name={"nombre"}
-            classNameInput={`p-[5px] 
-              outline-none 
-              w-[100%]
-              h-[40px] 
-              rounded-[3px]   
-              bg-black/20`}
-          />
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageCourseDuration && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageCourseDuration}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* MODULOS */}
           <div className="flex flex-col justify-center items-center w-[100%]">
             <div className="flex flex-row justify-center items-center w-full h-auto py-1">
               <div className="text-[30px]">+</div>
@@ -462,223 +540,120 @@ export default function Register() {
               </div>
             </div>
             <div className="flex flex-col w-[100%] h-auto gap-y-4">
-              {campos.map((e, i) => (
-                <div className="w-[100%] bg-buttonBlack/5 py-4" key={i}>
-                  <Input
-                    className={"flex-none"}
-                    label={"Nombre de modulo"}
-                    value={campos.moduleName}
-                    onChange={(x) => handleInputChange(i, x)}
-                    classNameLabel={"block text-[1.21rem]"}
-                    placeholder={"Ingresa nombre del modulo"}
-                    name={"moduleName"}
-                    classNameInput={`p-[5px] 
-                outline-none 
-                w-[100%]
-                h-[40px] 
-                rounded-[3px]   
-                bg-black/20`}
-                  />
-                  <div className="flex flex-row justify-center items-center w-full h-auto py-1">
-                    <div className="text-[30px]">+</div>
-                    <div
-                      className="text-[18px] font-ms-gothic"
-                      onClick={() => agregarTema(i)}
-                    >
-                      Agregar tema
-                    </div>
-                  </div>
-                  {topics[i]?.map((x, c) => {
-                    return (
-                      <div key={c} className="">
-                        <div className="mt-7">
-                          <Input
-                            className={"flex-none"}
-                            label={"Nombre del tema"}
-                            value={
-                              campos[i]["topics"][c]?.topicName
-                                ? campos[i]["topics"][c]?.topicName
-                                : ""
-                            }
-                            onChange={(e) => handleInputChangeTopic(e, i, c)}
-                            classNameLabel={"block text-[1.21rem]"}
-                            placeholder={"Ingresa nombre del modulo"}
-                            name={"moduleName"}
-                            classNameInput={`p-[5px] 
-                                        outline-none 
-                                        w-[100%]
-                                        h-[40px] 
-                                        rounded-[3px]   
-                                        bg-black/20`}
-                          />
-                        </div>
-                        <div className="flex flex-row justify-center items-center w-full h-auto py-1">
-                          <div className="text-[30px]">+</div>
-                          <div
-                            className="text-[18px] font-ms-gothic"
-                            onClick={() => agregarClasse(i, c)}
-                          >
-                            Agregar clase
-                          </div>
-                        </div>
-                        {classes[i] &&
-                          classes[i][c] &&
-                          classes[i][c].map((item, p) => {
-                            return (
-                              <div key={p} className="">
-                                <Input
-                                  className={"flex-none"}
-                                  label={"Nombre de la clase"}
-                                  value={classes[i][c][p].nameClass}
-                                  onChange={(e) =>
-                                    handleInputChangeClasse(e, i, c, p)
-                                  }
-                                  classNameLabel={"block text-[1.21rem]"}
-                                  placeholder={"Ingresa nombre del modulo"}
-                                  name={"moduleName"}
-                                  classNameInput={`p-[5px] 
-                                        outline-none 
-                                        w-[100%]
-                                        h-[40px] 
-                                        rounded-[3px]   
-                                        bg-black/20`}
-                                />
-                                <Input
-                                  className={"flex-none"}
-                                  label={"Url Video"}
-                                  value={classes[i][c][p].url_video}
-                                  onChange={(e) =>
-                                    handleInputChangeUrlVideo(e, i, c, p)
-                                  }
-                                  classNameLabel={"block text-[1.21rem]"}
-                                  placeholder={"Ingresa nombre del modulo"}
-                                  name={"moduleName"}
-                                  classNameInput={`p-[5px] 
-                                        outline-none 
-                                        w-[100%]
-                                        h-[40px] 
-                                        rounded-[3px]   
-                                        bg-black/20`}
-                                />
-                                {/* {name_classe}
-                                {video_url} */}
-                              </div>
-                            );
-                            /* return (
-                              <div className="bg-purple mb-2" key={p}>
-                                {item.map((ds, r) => {
-                                  return (
-                                    <div key={r}>
-                                      <Input
-                                        className={"flex-none"}
-                                        label={"Nombre de modulo"}
-                                        value={campos.moduleName}
-                                        
-                                        classNameLabel={"block text-[1.21rem]"}
-                                        placeholder={
-                                          "Ingresa nombre del modulo"
-                                        }
-                                        name={"moduleName"}
-                                        classNameInput={`p-[5px] 
-                                        outline-none 
-                                        w-[100%]
-                                        h-[40px] 
-                                        rounded-[3px]   
-                                        bg-black/20`}
-                                      />
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            ); */
-                            /* return item.map((ds, r) => (
-                              <div key={r}>{JSON.stringify(ds)}</div>
-                            )); */
-                          })}
+              {campos.map((e, i) => {
+                //console.log(`course_add_${i}`);
+
+                return (
+                  <div className="w-[100%]  py-4" key={i}>
+                    <Input
+                      className={"flex-none"}
+                      label={"Nombre de modulo"}
+                      value={campos.moduleName}
+                      onBlur={BlurCourseDuration}
+                      onFocus={FocusCourseDuration}
+                      onChange={(x) => handleInputChange(i, x)}
+                      classNameLabel={"block text-[1.21rem]"}
+                      placeholder={"Ingresa nombre del modulo"}
+                      name={"moduleName"}
+                      classNameInput={`p-[5px] 
+                  outline-none 
+                  w-[100%]
+                  h-[40px] 
+                  rounded-[3px]   
+                  bg-black/20`}
+                    />
+
+                    <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+                      <div className="text-[30px]">+</div>
+                      <div
+                        className="text-[18px] font-ms-gothic"
+                        onClick={() => agregarTema(i)}
+                      >
+                        Agregar tema
                       </div>
-                    );
-                  })}
-                </div>
-              ))}
+                    </div>
+                    {topics[i]?.map((x, c) => {
+                      return (
+                        <div key={c} className="">
+                          <div className="mt-7">
+                            <Input
+                              className={"flex-none"}
+                              label={"Nombre del tema"}
+                              value={
+                                campos[i]["topics"][c]?.topicName
+                                  ? campos[i]["topics"][c]?.topicName
+                                  : ""
+                              }
+                              onChange={(e) => handleInputChangeTopic(e, i, c)}
+                              classNameLabel={"block text-[1.21rem]"}
+                              placeholder={"Ingresa nombre del tema"}
+                              name={"moduleName"}
+                              classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                            />
+                          </div>
+                          <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+                            <div className="text-[30px]">+</div>
+                            <div
+                              className="text-[18px] font-ms-gothic"
+                              onClick={() => agregarClasse(i, c)}
+                            >
+                              Agregar clase
+                            </div>
+                          </div>
+                          {classes[i] &&
+                            classes[i][c] &&
+                            classes[i][c].map((item, p) => {
+                              return (
+                                <div key={p} className="">
+                                  <Input
+                                    className={"flex-none"}
+                                    label={"Nombre de la clase"}
+                                    value={classes[i][c][p].classInfo}
+                                    onChange={(e) =>
+                                      handleInputChangeClasse(e, i, c, p)
+                                    }
+                                    classNameLabel={"block text-[1.21rem]"}
+                                    placeholder={"Ingresa nombre de la clase"}
+                                    name={"moduleName"}
+                                    classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                                  />
+                                  <Input
+                                    className={"flex-none"}
+                                    label={"Url Video"}
+                                    value={classes[i][c][p].video_url}
+                                    onChange={(e) =>
+                                      handleInputChangeUrlVideo(e, i, c, p)
+                                    }
+                                    classNameLabel={"block text-[1.21rem]"}
+                                    placeholder={"Ingresa el url del video"}
+                                    name={"moduleName"}
+                                    classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                                  />
+                                </div>
+                              );
+                            })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
-            {/* h-[18.71rem] overflow-y-scroll */}
-            {/*  <div className="flex flex-col w-[100%] h-auto gap-y-4 ">
-              {campos.map((e, i) => (
-                <div className="w-[100%] bg-page/25 p-4 " key={i}>
-                  <Input
-                    className={"flex-none"}
-                    label={"Nombre de modulo"}
-                    value={campos.moduleName}
-                    onChange={(x) => handleInputChange(i, x)}
-                    classNameLabel={"block text-[1.21rem]"}
-                    placeholder={"Ingresa nombre del modulo"}
-                    name={"moduleName"}
-                    classNameInput={`p-[5px] 
-                outline-none 
-                w-[100%]
-                h-[40px] 
-                rounded-[3px]   
-                bg-black/20`}
-                  />
-
-                  <Input
-                    className={"flex-none"}
-                    label={"Nombre del tema"}
-                    value={campos.topicName}
-                    onChange={(x) => handleInputChange(i, x)}
-                    classNameLabel={"block text-[1.21rem]"}
-                    placeholder={"Ingresa nombre del tema"}
-                    name={"topicName"}
-                    classNameInput={`p-[5px] 
-                    outline-none 
-                    w-[100%]
-                    h-[40px]
-                    rounded-[3px]
-                    bg-black/20`}
-                  />
-
-                  {classes[i]?.map((e, y) => {
-                    return (
-                      <div key={y}>
-                        <Input
-                          className={"flex-none"}
-                          label={`Clase ${y + 1}`}
-                          //value={classes[i][y].classeDescription}
-                          onChange={(x) => handleInputChangeClasse(y, x, i)}
-                          classNameLabel={"block text-[1.21rem]"}
-                          placeholder={"Ingresa informacion de la clase"}
-                          name={"classeDescription"}
-                          classNameInput={`p-[5px] 
-                            outline-none 
-                            w-[100%]
-                            h-[40px] 
-                            rounded-[3px]   
-                            bg-black/20`}
-                        />
-                        <div
-                          className="flex flex-row justify-center items-center w-full h-auto cursor-pointer"
-                          onClick={() => agregarTema(i, y)}
-                        >
-                          <div className="text-[30px]">+</div>
-                          <div className="text-[18px] font-ms-gothic">
-                            Agregar tema
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                  <div className="flex flex-row justify-center items-center w-full h-auto py-4 leading-3">
-                    <div className="text-[30px]">+</div>
-                    <div
-                      className="text-[18px] font-ms-gothic"
-                      onClick={() => agregarClasse(i)}
-                    >
-                      Agregar clase
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div> */}
           </div>
           <Input
             className={"flex-none"}
@@ -697,6 +672,14 @@ export default function Register() {
               rounded-[3px]   
               bg-black/20`}
           />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectsTitle && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectsTitle}
+              </p>
+            )}
+          </div>
+
           <Input
             className={"flex-none"}
             label={"Descripcion del proyecto"}
@@ -714,6 +697,13 @@ export default function Register() {
               rounded-[3px]   
               bg-black/20`}
           />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectsDescription && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectsDescription}
+              </p>
+            )}
+          </div>
           <Input
             className={"flex-none"}
             label={"Mensaje curso completado"}
@@ -731,9 +721,17 @@ export default function Register() {
               rounded-[3px]   
               bg-black/20`}
           />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectAim && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectAim}
+              </p>
+            )}
+          </div>
         </div>
-        <Button
-          className={`bg-black 
+        <div className="w-full flex justify-center">
+          <Button
+            className={`bg-black 
           text-white 
           py-[18px] 
           px-[54px] 
@@ -743,10 +741,11 @@ export default function Register() {
           block
           w-[100%]
           mt-[2rem]
-          sm:w-[15rem]`}
-        >
-          Confirmar
-        </Button>
+          sm:w-[20rem]`}
+          >
+            Confirmar
+          </Button>
+        </div>
       </form>
     </div>
   );

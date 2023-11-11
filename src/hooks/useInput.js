@@ -1,9 +1,16 @@
 import { useState } from "react";
 
 function useInput(type) {
+  console.log(type);
   const [value, setValue] = useState("");
   const OnChange = (e) => setValue(e.target.value);
   const validations_types = {
+    course_add: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El campo no puede estar vacío",
+      },
+    ],
     name: [
       {
         condition: (valor) => valor.trim() !== "",
@@ -86,6 +93,7 @@ function useInput(type) {
   const blur = () => {
     let msj = "";
     const validation = validations_types[type];
+    if (!validation) return "nada";
     for (const key in validation) {
       const { messageError, condition } = validation[key];
       if (!condition(value)) {
