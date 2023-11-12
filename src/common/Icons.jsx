@@ -22,8 +22,8 @@ export function Clock({ width, height }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width || "1em"}
-      height={height || "1em"}
+      width={width || "20"}
+      height={height || "20"}
       viewBox="0 0 24 24"
     >
       <path
@@ -227,8 +227,8 @@ export function BurgerMenu({ width, height, color }) {
 export function Heart({ width, height }) {
   return (
     <svg
-      width={width || "1em"}
-      height={height || "1em"}
+      width={width || "20"}
+      height={height || "20"}
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -379,9 +379,10 @@ export function BurgerDots({ width, height, color }) {
   );
 }
 
-export function Vector({ width, height, color }) {
+export function Vector({ width, height, color, onClick }) {
   return (
     <svg
+      onClick={onClick}
       width={width || "35"}
       height={height || "21"}
       viewBox="0 0 35 21"
@@ -449,11 +450,11 @@ export function Save({ width, height, color }) {
   );
 }
 
-export function CartShopPlusBgBlack() {
+export function CartShopPlusBgBlack({ width, height }) {
   return (
     <svg
-      width="69"
-      height="69"
+      width={width || "69"}
+      height={height || "69"}
       viewBox="0 0 69 69"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
