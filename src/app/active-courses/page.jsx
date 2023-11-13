@@ -18,12 +18,14 @@ import { useEffect } from "react";
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
   const [users, setUsers] = useState([]);
+  const [state, setState] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`)
       .then((res) => {
         const courses = res.data;
+        console.log(courses);
         setCourses(courses);
       })
       .catch((error) => {
@@ -31,12 +33,33 @@ export default function ActiveCourses() {
       });
   }, []);
 
-  const handleStatusToggle = (courseId) => {
-    setCourses((prevCourses) =>
-      prevCourses.map((course) =>
-        course._id === courseId ? { ...course, status: !course.status } : course
-      )
-    );
+  const toggleStatus = async (courseId, courseStatus) => {
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/enable-disable/${courseId}`,
+        { status: courseStatus }
+      );
+      const courses = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`
+      );
+      setCourses(courses.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleStatusToggle = async (courseId) => {
+    try {
+      const oneCourse = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${courseId}`
+      );
+      if (oneCourse.data.status) {
+        toggleStatus(courseId, false);
+      } else {
+        toggleStatus(courseId, true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -106,7 +129,10 @@ export default function ActiveCourses() {
                   </button>
                 </td>
                 <td className="p-4">
-                  <button onClick={() => handleStatusToggle(course._id)}>
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => handleStatusToggle(course._id)}
+                  >
                     {course.status ? (
                       <Trash color="#A31616" />
                     ) : (
@@ -125,8 +151,7 @@ export default function ActiveCourses() {
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp;
-                {/* 1 de 3 */}
+                &nbsp; 1 de 3
                 <UilArrow1 color="lightGrey" />
                 <UilArrow2 color="lightGrey" />
               </td>
