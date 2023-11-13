@@ -8,8 +8,11 @@ export default function CardsDesktop(props) {
 
   return (
     <section className="flex flex-col justify-center items-center py-4">
-      <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-7xl ">
-        <div className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl">
+      <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-7xl">
+        <div
+          className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl cursor-pointer"
+          onClick={props.handleViewCoursesClick}
+        >
           <h3 className={`tracking-widest ${props.courseTitleClasses}`}>
             {isWideScreen
               ? props.courseLongTitle
@@ -86,7 +89,7 @@ export default function CardsDesktop(props) {
                   />
                 </div>
                 {props.cartShopPlusBgBlack ? (
-                  <div className="flex space-x-3">
+                  <div className="flex space-x-3 cursor-pointer">
                     <div>{props.cartShopPlusBgBlack}</div>
                   </div>
                 ) : null}

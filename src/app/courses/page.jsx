@@ -88,8 +88,8 @@ export default function Courses() {
           .map((course) => (
             <>
               <CardsDesktop
-                // handleViewCoursesClick={() => alert("click en carDesktop")}
-                // handleCartClick={() => alert("click en CART")}
+                key={course._id}
+                handleViewCoursesClick={() => handleViewCourseClick(course._id)}
                 courseTitleClasses="text-2xl leading-loose min-[1024px]:text-3xl min-[1024px]:py-2"
                 courseLongTitle={course.courseLongTitle}
                 courseImg_url={course.courseImg_url}

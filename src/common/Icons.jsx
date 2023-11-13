@@ -450,11 +450,12 @@ export function Save({ width, height, color }) {
   );
 }
 
-export function CartShopPlusBgBlack({ width, height }) {
+export function CartShopPlusBgBlack({ width, height, onClick }) {
   return (
     <svg
       width={width || "69"}
       height={height || "69"}
+      onClick={onClick}
       viewBox="0 0 69 69"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
