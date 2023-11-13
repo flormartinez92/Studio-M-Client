@@ -2,25 +2,23 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cards from "./Cards";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
-const MyCourses = () => {
+const MyCourses = ({ decodedToken }) => {
+  //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
-  const { user } = useSelector((store) => store.auth);
-  // const dispatch = useDispatch();
 
+  //Pedido al back para traer los cursos de un usuario
   useEffect(() => {
-    if (user?.id) {
+    if (decodedToken._id) {
       try {
         axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${user?.id}`)
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${decodedToken._id}`)
           .then((res) => setUserCourses(res.data));
-          //setCurrentTitle(title);
       } catch (error) {
         console.error(error);
       }
     }
-  }, [user?.id]);
+  }, []);
 
   //CAMBIAR TITULO CUANDO SE CAMBIEN LOS MODELOS Y TENGA TITULO CORTO
 

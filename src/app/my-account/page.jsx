@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
 import { Arrow } from "@/common/Icons";
@@ -13,12 +14,16 @@ export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("Mis datos");
 
+  //Token para la informacion de usuario.
+  const userToken = sessionStorage.getItem("token");
+  const decodedToken = jwtDecode(userToken);
+  
   //Arreglo de las 4 secciones a mostrar
   const pages = [
-    { key: "mydata", title: "Mis datos", content: <MyData/> },
-    { key: "mycourses", title: "Mis cursos", content: <MyCourses title="Mis cursos"/> },
-    { key: "mylist", title: "Mi lista", content: <MyList/> },
-    { key: "mycertificates", title: "Mis certificados", content: <MyCertificates/> },
+    { key: "mydata", title: "Mis datos", content: <MyData decodedToken={decodedToken}/> },
+    { key: "mycourses", title: "Mis cursos", content: <MyCourses decodedToken={decodedToken} title="Mis cursos"/> },
+    { key: "mylist", title: "Mi lista", content: <MyList decodedToken={decodedToken}/> },
+    { key: "mycertificates", title: "Mis certificados", content: <MyCertificates decodedToken={decodedToken}/> },
   ];
 
   //Manejadores de paginas (siguiente y previa)
@@ -26,9 +31,7 @@ export default function MyAccount() {
   const handleNextPage = () => currentPage < (pages.length - 1) && setCurrentPage(currentPage + 1)
 
   //Hace los pedidos para traer la informacion de las secciones
-  // const handleTitle = (title) => {
-  //  setCurrentTitle(title)
-  // };
+  const handleTitle = (title) => setCurrentTitle(title)
 
   return (
     <>
@@ -64,7 +67,7 @@ export default function MyAccount() {
             {pages.map((page, index) => (
               <Button
                 key={index}
-                // onClick={() => handleTitle(page.title)}
+                 onClick={() => handleTitle(page.title)}
                 className="w-full"
               >
                 <h2 className="text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 hover:underline hover:decoration-pink hover:decoration-[1.5px]" style={{ textUnderlineOffset: "6px" }}>

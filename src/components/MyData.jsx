@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { Pencil, Save } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 import Input from "@/common/Input";
 
-const MyData = () => {
+const MyData = ({ decodedToken }) => {
   //Estados para cambio de password y datos de usuario.
   const [changePassword, setChangePassword] = useState(false);
   const [userData, setUserData] = useState({
@@ -15,9 +14,6 @@ const MyData = () => {
     mail: "",
     dni: "",
   });
-  //Token para la informacion de usuario.
-  const userToken = sessionStorage.getItem("token");
-  const decodedToken = jwtDecode(userToken);
 
   //Pedido al back para los datos de usuario (el token tambien los trae).
   useEffect(() => {
@@ -26,12 +22,25 @@ const MyData = () => {
         axios
           .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`)
           .then((res) => setUserData(res.data));
-        //setCurrentTitle(title);
       } catch (error) {
         console.error(error);
       }
     }
   }, []);
+
+  //Pedido al back para cambiar la contraseña
+  const handlePassword = ({ firstPassword, secondPassword}) => {
+    axios
+      .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateUserPassword/${decodedToken._id}`, {firstPassword, secondPassword})
+      // .then((res)=> )
+  }
+  //Pedido al back para cambiar la imagen
+  const handleEditImg = ({img}) => {
+    axios
+    .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {img})
+    //.then((res) => res.data);
+    // userData.profileImg = data.img;
+  }
 
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {

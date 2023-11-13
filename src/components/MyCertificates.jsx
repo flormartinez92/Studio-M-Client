@@ -1,40 +1,38 @@
 import React, {useEffect, useState} from "react";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import Image from "next/image";
 import axios from "axios"
 import { Download, Share } from "@/common/Icons";
 import Border from "@/common/Border";
 import IconButton from "@/common/IconButton";
 
-const MyCertificates = () => {
-  const { user } = useSelector((store) => store.auth);
+const MyCertificates = ({decodedToken}) => {
+  //const { user } = useSelector((store) => store.auth);
   const [userCertificates, setUserCertificates] = useState([]);
 
   useEffect(() => {
-    if (user?.id) {
+    if (decodedToken._id) {
       try {
         axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${user?.id}`)
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${decodedToken._id}`)
           .then((res) => setUserCertificates(res.data));
-          //setCurrentTitle(title);
       } catch (error) {
         console.error(error);
       }
     }
-  }, [user?.id]);
-  console.log(userCertificates);
+  }, []);
 
   return (
     <>
       {/*modo mobile*/}
       <div className=" py-12 md:hidden">
         {userCertificates?.map((userCertificate) => (
-        <div className="flex justify-center py-4" key={userCertificate}>
+        <div className="flex justify-center py-4" key={userCertificate.id}>
           <Border className="border-pink border-2 w-[80%]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-pink">
-                <h2 className=" font-mystery-mixed text-3xl">Ux Research</h2>
-                <h3 className=" font-ms-gothic text-sm">03/08/23</h3>
+                <h2 className=" font-mystery-mixed text-3xl">{userCertificate.courseTitle}</h2>
+                <h3 className=" font-ms-gothic text-sm">{userCertificate.createdAt}</h3>
               </div>
               <div className="w-[30%] flex justify-center">
                 <IconButton className="flex flex-col">
@@ -46,43 +44,13 @@ const MyCertificates = () => {
           </Border>
         </div>
         ))}
-        {/* <div className="flex justify-center py-4">
-          <Border className="border-blue border-2 w-[80%]">
-            <div className="flex items-center w-full">
-              <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-blue">
-                <h2 className=" font-mystery-mixed text-3xl">Ux Writing</h2>
-                <h3 className=" font-ms-gothic text-sm">03/08/23</h3>
-              </div>
-              <div className="w-[30%] flex justify-center">
-                <IconButton className="flex flex-col">
-                  <Download />
-                  <Share />
-                </IconButton>
-              </div>
-            </div>
-          </Border>
-        </div>
-        <div className="flex justify-center py-4">
-          <Border className="border-green border-2 w-[80%]">
-            <div className="flex items-center w-full">
-              <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-green">
-                <h2 className=" font-mystery-mixed text-3xl">Ux Desing</h2>
-                <h3 className=" font-ms-gothic text-sm">03/08/23</h3>
-              </div>
-              <div className="w-[30%] flex justify-center">
-                <IconButton className="flex flex-col">
-                  <Download />
-                  <Share />
-                </IconButton>
-              </div>
-            </div>
-          </Border>
-        </div> */}
       </div>
 
       {/*modo desktop*/}
       <div className="hidden md:flex md:justify-center">
-        <div className="relative">
+        {userCertificates?.map((userCertificate) => (
+
+        <div className="relative" key={userCertificate.id}>
           <Image
             src="/img/paper-background.png"
             width={900}
@@ -98,21 +66,19 @@ const MyCertificates = () => {
                 Certificado
               </h2>
               <h3 className="text-2xl font-mystery-mixed lg:text-3xl">
-                Ux Researcher
+                {userCertificate.courseTitle}
               </h3>
               <p className="text-sm font-ms-gothic lg:text-base">
-                Emilia Rodriguez
+                {userCertificate.name + userCertificate.lastname}
               </p>
               <p className="text-sm font-ms-gothic lg:text-base">
-                DNI: 36.363.363
+                {userCertificate.dni}
               </p>
               <p className="text-sm font-ms-gothic mb-2 mt-2 lg:text-base">
-                Ha realizado y completado con éxito su curso en by M Studio,{" "}
-                <br />
-                cumpliendo con todos los requisitos académicos exigidos
+               {userCertificate.description}
               </p>
               <p className="text-sm font-ms-gothic lg:text-base">
-                03 de Agosto de 2023
+                {userCertificate.createdAt}
               </p>
               <div className="flex flex-row justify-around align-center items-center w-full">
                 <div>
@@ -145,6 +111,7 @@ const MyCertificates = () => {
             </IconButton>
           </div>
         </div>
+        ))}
       </div>
     </>
   );
