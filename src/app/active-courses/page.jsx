@@ -31,6 +31,14 @@ export default function ActiveCourses() {
       });
   }, []);
 
+  const handleStatusToggle = (courseId) => {
+    setCourses((prevCourses) =>
+      prevCourses.map((course) =>
+        course._id === courseId ? { ...course, status: !course.status } : course
+      )
+    );
+  };
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
@@ -57,15 +65,15 @@ export default function ActiveCourses() {
       <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
         Cursos activos
       </h2>
-      <div className="flex justify-center px-4 font-ms-gothic text-xl md:ml-10 xl:ml-10 md:mr-10 xl:mr-10">
+      <div className="flex justify-center px-4 font-ms-gothic md:ml-10 xl:ml-10 md:mr-10 xl:mr-10 ">
         <table className="w-full xl:table-fixed">
           <thead className="max-sm:hidden">
-            <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px] rounded-t-lg text-[#757575]">
+            <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
               <td className="p-4">Curso</td>
-              <td>Clases</td>
-              <td className="sm:p-4 md:p-0">Alumnos</td>
-              <td className="sm:p-4 md:p-0">Agregar</td>
-              <td className="sm:p-4 md:p-0">Editar</td>
+              <td className="sm:pr-10 md:pr-10">Clases</td>
+              <td className="sm:pr-10 md:pr-10">Alumnos</td>
+              <td className="sm:pr-10 md:pr-10">Agregar</td>
+              <td className="sm:pr-10 md:pr-10">Editar</td>
               <td>Bloquear/Habilitar</td>
             </tr>
           </thead>
@@ -73,7 +81,7 @@ export default function ActiveCourses() {
             {courses.map((course) => (
               <tr
                 key={course._id}
-                className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px] "
+                className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{course.courseShortTitle}</td>
                 <td className="max-sm:hidden p-4">
@@ -92,27 +100,24 @@ export default function ActiveCourses() {
                     <Plus color="#4FE21B" />
                   </button>
                 </td>
-                <td className="p-4">
+                <td className="p-2">
                   <button>
                     <Pencil color="#1BBEE2" />
                   </button>
                 </td>
                 <td className="p-4">
-                  {course.status && (
-                    <button>
+                  <button onClick={() => handleStatusToggle(course._id)}>
+                    {course.status ? (
                       <Trash color="#A31616" />
-                    </button>
-                  )}
-                  {!course.status && (
-                    <button>
+                    ) : (
                       <ArrowReload color="#E21B7B" />
-                    </button>
-                  )}
+                    )}
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
-          <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px]">
+          <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
