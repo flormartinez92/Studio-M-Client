@@ -13,6 +13,9 @@ const MyData = ({ decodedToken }) => {
     lastname: "",
     mail: "",
     dni: "",
+    firstPassword: "",
+    secondPassword: "",
+    profileImg: "",
   });
 
   //Pedido al back para los datos de usuario (el token tambien los trae).
@@ -20,7 +23,9 @@ const MyData = ({ decodedToken }) => {
     if (decodedToken._id) {
       try {
         axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`)
+          .get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`
+          )
           .then((res) => setUserData(res.data));
       } catch (error) {
         console.error(error);
@@ -28,19 +33,22 @@ const MyData = ({ decodedToken }) => {
     }
   }, []);
 
-  //Pedido al back para cambiar la contraseña
-  const handlePassword = ({ firstPassword, secondPassword}) => {
-    axios
-      .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateUserPassword/${decodedToken._id}`, {firstPassword, secondPassword})
-      // .then((res)=> )
-  }
   //Pedido al back para cambiar la imagen
-  const handleEditImg = ({img}) => {
-    axios
-    .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {img})
-    //.then((res) => res.data);
-    // userData.profileImg = data.img;
-  }
+  const handleImage = () => {
+    return (
+      axios
+        .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, { mail: userData.mail})
+        .then((res) => setUserData({...userData, profileImg: res.data.img}))
+        .catch((error)=> console.error(error))
+      // userData.profileImg = data.img;
+    )
+  };
+
+  //Pedido al back para cambiar la contraseña
+  const handlePassword = ({ firstPassword, secondPassword }) => {
+    axios.put(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/user/updatePassword/${decodedToken._id}`, { firstPassword: userData.firstPassword, secondPassword: userData.secondPassword })
+  };
 
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {
@@ -48,8 +56,13 @@ const MyData = ({ decodedToken }) => {
     setUserData({ ...userData, [name]: value });
   };
 
-  //Manejador de click
-  const handleClickEdit = () => setChangePassword(!changePassword);
+  //Manejador de click de contraseña
+  const handleClickEdit = () => {
+    if(changePassword) {
+      handlePassword()
+    }
+    setChangePassword(!changePassword);
+  }
 
   return (
     //Contenedor
@@ -67,6 +80,7 @@ const MyData = ({ decodedToken }) => {
           <IconButton
             className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]"
             style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
+            onClick={handleImage}
           >
             <Pencil color="white" width="12" height="10" />
           </IconButton>
@@ -120,6 +134,8 @@ const MyData = ({ decodedToken }) => {
             <Input
               name="NewPassword"
               type="password"
+              value={userData.firstPassword}
+              onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
@@ -129,6 +145,8 @@ const MyData = ({ decodedToken }) => {
             <Input
               name="ConfirmPassword"
               type="password"
+              value={userData.secondPassword}
+              onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
@@ -161,16 +179,3 @@ const MyData = ({ decodedToken }) => {
 };
 
 export default MyData;
-
-// if (title === "Mis datos") {
-//   try {
-//     await axios
-//       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
-//       .then((res) => setUserData(res.data));
-//     setCurrentTitle(title);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// } else {
-//   setCurrentTitle(title);
-// }
