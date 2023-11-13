@@ -20,11 +20,13 @@ export default function AdminPanel() {
         text={"Usuarios activos"}
         className={"bg-blue"}
       />
-      <AdminButton
-        icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
-        text={"Cursos activos"}
-        className={"bg-darkGreen"}
-      />
+      <Link href="/active-courses">
+        <AdminButton
+          icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
+          text={"Cursos activos"}
+          className={"bg-darkGreen"}
+        />
+      </Link>
       <Link href="/active-coupons">
         <AdminButton
           icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
