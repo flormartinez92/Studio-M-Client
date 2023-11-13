@@ -35,12 +35,12 @@ export default function ActiveCoupons() {
   //   setCoupons(couponRemoved);
   // };
 
-  const handleEditCoupon = (editCoupon) => {
-    const updateCoupon = coupons.filter((coupon) => {
-      coupon.id === editCoupon.id ? editCoupon : coupon;
-    });
-    setCoupons(updateCoupon);
-  };
+  // const handleEditCoupon = (editCoupon) => {
+  //   const updateCoupon = coupons.filter((coupon) => {
+  //     coupon.id === editCoupon.id ? editCoupon : coupon;
+  //   });
+  //   setCoupons(updateCoupon);
+  // };
 
   useEffect(() => {
     axios
@@ -86,7 +86,6 @@ export default function ActiveCoupons() {
               >
                 <td className="p-4">{coupon.couponCode}</td>
                 <td>&nbsp;</td>
-
                 <td className="p-2">
                   <button>
                     <Pencil color="#1BBEE2" />
