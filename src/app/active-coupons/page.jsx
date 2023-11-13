@@ -17,23 +17,23 @@ import { useEffect } from "react";
 
 export default function ActiveCoupons() {
   const [coupons, setCoupons] = useState([]);
-  const [showCouponForm, setShowCouponForm] = useState(false);
+  // const [showCouponForm, setShowCouponForm] = useState(false);
 
-  const openForm = () => {
-    setShowCouponForm(true);
-  };
+  // const openForm = () => {
+  //   setShowCouponForm(true);
+  // };
 
-  const handleAddCoupon = (newCoupon) => {
-    setCoupons(newCoupon);
-    setShowCouponForm(false);
-  };
+  // const handleAddCoupon = (newCoupon) => {
+  //   setCoupons(newCoupon);
+  //   setShowCouponForm(false);
+  // };
 
-  const handleDeleteCoupon = (deleteCouponId) => {
-    const couponRemoved = coupons.filter((coupon) => {
-      coupon.id !== deleteCouponId;
-    });
-    setCoupons(couponRemoved);
-  };
+  // const handleDeleteCoupon = (deleteCouponId) => {
+  //   const couponRemoved = coupons.filter((coupon) => {
+  //     coupon.id !== deleteCouponId;
+  //   });
+  //   setCoupons(couponRemoved);
+  // };
 
   const handleEditCoupon = (editCoupon) => {
     const updateCoupon = coupons.filter((coupon) => {
@@ -62,27 +62,6 @@ export default function ActiveCoupons() {
       )
     );
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
-  //     .then((res) => {
-  //       const users = res.data;
-  //       setUsers(users);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting Users:", error);
-  //     });
-  // }, []);
-
-  // const calculateTotalUsersPerCourse = (courseId) => {
-  //   return users.reduce((total, user) => {
-  //     const matchingCourses = user.course.filter(
-  //       (course) => course.courseId === courseId
-  //     );
-  //     return total + matchingCourses.length;
-  //   }, 0);
-  // };
 
   return (
     <section className="my-20 mb-60">
@@ -131,8 +110,7 @@ export default function ActiveCoupons() {
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp;
-                {/* 1 de 3 */}
+                &nbsp; 1 de 3
                 <UilArrow1 color="lightGrey" />
                 <UilArrow2 color="lightGrey" />
               </td>
