@@ -1,13 +1,22 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
 import Button from "@/common/Button";
 
-import { Trash, Pencil, Plus, UilArrow1, UilArrow2 } from "@/common/Icons";
-import IconButton from "@/common/IconButton";
-import AddCoupon from "./AddCoupon";
+import {
+  Trash,
+  Pencil,
+  Plus,
+  ArrowReload,
+  UilArrow1,
+  UilArrow2,
+} from "@/common/Icons";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function ActiveCoupons() {
-  const [coupons, setCoupons] = useState(null);
+  const [coupons, setCoupons] = useState([]);
   const [showCouponForm, setShowCouponForm] = useState(false);
 
   const openForm = () => {
@@ -19,108 +28,111 @@ export default function ActiveCoupons() {
     setShowCouponForm(false);
   };
 
-  // const handleDeleteCoupon = (deleteCouponId) => {
-  //   const couponRemoved = coupons.filter((coupon) => {
-  //     coupon.id !== deleteCouponId;
-  //   });
-  //   setCoupons(couponRemoved);
-  // };
+  const handleDeleteCoupon = (deleteCouponId) => {
+    const couponRemoved = coupons.filter((coupon) => {
+      coupon.id !== deleteCouponId;
+    });
+    setCoupons(couponRemoved);
+  };
 
-  // const handleEditCoupon = (editCoupon) => {
-  //   const updateCoupon = coupons.filter((coupon) => {
-  //     coupon.id === editCoupon.id ? editCoupon : coupon;
-  //   });
-  //   setCoupons(updateCoupon);
+  const handleEditCoupon = (editCoupon) => {
+    const updateCoupon = coupons.filter((coupon) => {
+      coupon.id === editCoupon.id ? editCoupon : coupon;
+    });
+    setCoupons(updateCoupon);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons`)
+      .then((res) => {
+        const coupons = res.data;
+        console.log(coupons);
+        setCoupons(coupons);
+      })
+      .catch((error) => {
+        console.error("Error getting coupons:", error);
+      });
+  }, []);
+
+  const handleStatusToggle = (couponId) => {
+    setCoupons((prevCoupon) =>
+      prevCoupon.map((coupon) =>
+        coupon._id === couponId ? { ...coupon, status: !coupon.status } : coupon
+      )
+    );
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
+  //     .then((res) => {
+  //       const users = res.data;
+  //       setUsers(users);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting Users:", error);
+  //     });
+  // }, []);
+
+  // const calculateTotalUsersPerCourse = (courseId) => {
+  //   return users.reduce((total, user) => {
+  //     const matchingCourses = user.course.filter(
+  //       (course) => course.courseId === courseId
+  //     );
+  //     return total + matchingCourses.length;
+  //   }, 0);
   // };
 
   return (
-    <section className="my-60">
-      <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-20 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
-        Cupones Activos
+    <section className="my-20 mb-60">
+      <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
+        Cupones activos
       </h2>
-      <div className="px-4 font-ms-gothic text-xl md:ml-10 xl:ml-20 md:mr-10 xl:mr-20">
+      <div className="flex justify-center px-4 font-ms-gothic md:ml-10 xl:ml-10 md:mr-10 xl:mr-10 ">
         <table className="w-full xl:table-fixed">
           <thead className="max-sm:hidden">
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-t-[0.5px] md:border-l-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">Cupon</td>
-              <td></td>
-              <td></td>
-              <td>Activar</td>
-              <td>Editar</td>
-              <td>Desactivar/Eliminar</td>
+            <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
+              <td className="p-4">Cupón</td>
+              <td>&nbsp;</td>
+              <td className="sm:pr-10 md:pr-10">Editar</td>
+              <td className="sm:pr-10 md:pr-10">Bloquear/Habilitar</td>
             </tr>
           </thead>
           <tbody>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey border-t-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">123TTT</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <IconButton>
-                  <Plus color="#4FE21B" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Pencil color="#1BBEE2" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Trash color="#A31616" />
-                </IconButton>
-              </td>
-            </tr>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] border-b-[0.5px] border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px] ">
-              <td className="p-4">1234AB</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <IconButton>
-                  <Plus color="#4FE21B" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Pencil color="#1BBEE2" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Trash color="#A31616" />
-                </IconButton>
-              </td>
-            </tr>
-            <tr className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:shadow-xl  border-lightGrey md:border-l-[0.5px] md:border-r-[0.5px]">
-              <td className="p-4">546MSN</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td className="max-sm:hidden">&nbsp;</td>
-              <td>
-                <IconButton>
-                  <Plus color="#4FE21B" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Pencil color="#1BBEE2" />
-                </IconButton>
-              </td>
-              <td>
-                <IconButton>
-                  <Trash color="#A31616" />
-                </IconButton>
-              </td>
-            </tr>
+            {coupons.map((coupon) => (
+              <tr
+                key={coupon._id}
+                className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
+              >
+                <td className="p-4">{coupon.couponCode}</td>
+                <td>&nbsp;</td>
+
+                <td className="p-2">
+                  <button>
+                    <Pencil color="#1BBEE2" />
+                  </button>
+                </td>
+                <td className="p-4">
+                  <button onClick={() => handleStatusToggle(coupon._id)}>
+                    {coupon.status ? (
+                      <Trash color="#A31616" />
+                    ) : (
+                      <ArrowReload color="#E21B7B" />
+                    )}
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
-          <tfoot className="w-full md:w-[768px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] shadow-xl-left">
+          <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
             <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                1 de 3
+                &nbsp;
+                {/* 1 de 3 */}
                 <UilArrow1 color="lightGrey" />
                 <UilArrow2 color="lightGrey" />
               </td>
@@ -129,18 +141,13 @@ export default function ActiveCoupons() {
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button
-          className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-2 md:p-3 md:w-[130px]"
-          onClick={openForm}
-        >
-          <Plus className="text-whiter" width="15" />
-          <span className="text-white items-center flex justify-between">
-            Crear cupon
+        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
+          <Plus className="" width="25" />
+          <span className="text-white items-center flex md:ml-1">
+            Crear cupón
           </span>
         </Button>
       </div>
-
-      {showCouponForm && <AddCoupon onCouponAdd={handleAddCoupon} />}
     </section>
   );
 }
