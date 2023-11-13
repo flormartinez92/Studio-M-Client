@@ -8,7 +8,7 @@ export default function CardsDesktop(props) {
 
   return (
     <section className="flex flex-col justify-center items-center py-4">
-      <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-7xl">
+      <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-6xl">
         <div
           className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl cursor-pointer"
           onClick={props.handleViewCoursesClick}
@@ -38,7 +38,7 @@ export default function CardsDesktop(props) {
           {/* Aca si estoy en la vista donde estan todos los detalles, se muestra esto */}
           {props.cartShopPlusBgBlack ? (
             <div className="bg-lightGrey rounded-br-lg p-6">
-              <div className="flex flex-row justify-between  tracking-tight items-center text-h3Black">
+              <div className="flex flex-row justify-between  gap-x-4 tracking-tight items-center text-h3Black">
                 <h4 className={`font-ms-gothic ${props.courseSubtitleClasses}`}>
                   {props.courseSubtitle}
                 </h4>
