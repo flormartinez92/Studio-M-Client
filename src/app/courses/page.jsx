@@ -46,6 +46,7 @@ export default function Courses() {
       <div className="md:hidden flex flex-col justify-center p-3 items-center">
         {courses?.map((course) => (
           <Cards
+            key={courses._id}
             title={course.courseShortTitle}
             className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem]"
             img={course.courseImg_url}
@@ -63,7 +64,7 @@ export default function Courses() {
       {/* Aca arranca la CardDesktop */}
       <div className="hidden md:block flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center pt-14 pb-6">
-          <div className="flex flex-row items-center justify-start w-[90%] max-w-7xl">
+          <div className="flex flex-row items-center justify-start w-[90%] max-w-6xl">
             <label className=" text-black font-mystery-mixed pr-5 text-xl min-[1024px]:text-2xl">
               A-Z
             </label>
