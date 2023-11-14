@@ -16,7 +16,7 @@ export default function CardsDesktop(props) {
           <h3 className={`tracking-widest ${props.courseTitleClasses}`}>
             {isWideScreen
               ? props.courseLongTitle
-              : props.courseLongTitle.length > 47
+              : props.courseLongTitle?.length > 47
               ? `${props.courseLongTitle.slice(0, 47)}...`
               : props.courseLongTitle}
           </h3>
@@ -96,7 +96,7 @@ export default function CardsDesktop(props) {
               </div>
             </div>
           ) : (
-            <div className="bg-lightGrey rounded-br-lg p-10 ">
+            <div className="bg-lightGrey rounded-br-lg p-6 ">
               <h4 className={`font-ms-gothic ${props.courseSubtitleClasses}`}>
                 {props.courseSubtitle}
               </h4>
@@ -106,16 +106,16 @@ export default function CardsDesktop(props) {
                 {props.courseDescription}
               </p>
               {!props.courseLevel && !props.courseDuration ? (
-                <div className="flex justify-end items-end pt-14 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
+                <div className="flex justify-end items-end pt-8 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
                   {props.coursePrice ? (
                     <div className="flex space-x-3">
                       <p
-                        className={`font-mystery-mixed ${props.coursePriceClasses}`}
+                        className={`font-ms-gothic ${props.coursePriceClasses}`}
                       >
                         $
                         {Number(props.coursePrice)
                           .toLocaleString()
-                          .replace(",", ".")}
+                          .replace(",", ".")}{" "}
                         ARS
                       </p>
                     </div>
