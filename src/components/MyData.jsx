@@ -34,20 +34,33 @@ const MyData = ({ decodedToken }) => {
   }, []);
 
   //Pedido al back para cambiar la imagen
-  const handleImage = () => {
-    return (
-      axios
-        .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, { mail: userData.mail})
-        .then((res) => setUserData({...userData, profileImg: res.data.img}))
-        .catch((error)=> console.error(error))
+  const handleImage = async () => {
+    try {
+      await axios
+        .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {
+          mail: userData.mail,
+        })
+        .then((res) => setUserData({ ...userData, profileImg: res.data.img }))
+        .catch((error) => console.error(error));
       // userData.profileImg = data.img;
-    )
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   //Pedido al back para cambiar la contraseña
-  const handlePassword = ({ firstPassword, secondPassword }) => {
-    axios.put(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/user/updatePassword/${decodedToken._id}`, { firstPassword: userData.firstPassword, secondPassword: userData.secondPassword })
+  const handlePassword = async ({ firstPassword, secondPassword }) => {
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/updatePassword/${decodedToken._id}`,
+        {
+          firstPassword: userData.firstPassword,
+          secondPassword: userData.secondPassword,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   //Manejador de cambio para los campos de entrada
@@ -58,11 +71,14 @@ const MyData = ({ decodedToken }) => {
 
   //Manejador de click de contraseña
   const handleClickEdit = () => {
-    if(changePassword) {
-      handlePassword()
+    if (changePassword) {
+      handlePassword({
+        firstPassword: userData.firstPassword,
+        secondPassword: userData.secondPassword,
+      });
     }
     setChangePassword(!changePassword);
-  }
+  };
 
   return (
     //Contenedor
