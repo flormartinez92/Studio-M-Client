@@ -43,7 +43,6 @@ export default function ActiveUsers() {
             <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
               <td className="p-4">Nombre completo</td>
               <td>&nbsp;</td>
-              <td>&nbsp;</td>
               <td className="sm:pr-10 md:pr-10">Documento</td>
               <td>&nbsp;</td>
               <td className="sm:pr-10 md:pr-10">Cursos comprados</td>
@@ -57,10 +56,9 @@ export default function ActiveUsers() {
               >
                 <td className="p-4">{user.name}</td>
                 <td>&nbsp;</td>
+                <td className="p-1">{user.dni}</td>
                 <td>&nbsp;</td>
-                <td className="max-sm:hidden p-4">{user.dni}</td>
-                <td>&nbsp;</td>
-                <td className="max-sm:hidden p-5">
+                <td className="pl-10">
                   {calculateTotalUsersPerCourse(user._id)}
                 </td>
                 {/* <td className="p-4">
