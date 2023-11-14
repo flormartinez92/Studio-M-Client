@@ -35,6 +35,7 @@ export default function Register() {
   const [items, setItems] = useState({});
   const [topics, setTopics] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
+  const [value, setValue] = useState("");
 
   const {
     OnChange: OnChangeTitleLong,
@@ -42,6 +43,7 @@ export default function Register() {
     blur: BlurTitleLong,
     focus: FocusTitleLong,
     message: MessageTitleLong,
+    setValue: setValueData1,
   } = useInput("course_add");
   const {
     OnChange: OnChangeTitleShort,
@@ -49,6 +51,7 @@ export default function Register() {
     blur: BlurTitleShort,
     focus: FocusTitleShort,
     message: MessageTitleShort,
+    setValue: setValueData2,
   } = useInput("course_add");
   const {
     OnChange: OnChangeSubtitle,
@@ -56,6 +59,7 @@ export default function Register() {
     blur: BlurSubtitle,
     focus: FocusSubtitle,
     message: MessageSubtitle,
+    setValue: setValueData3,
   } = useInput("course_add");
 
   const {
@@ -64,6 +68,7 @@ export default function Register() {
     blur: BlurDescription,
     focus: FocusDescription,
     message: MessageDescription,
+    setValue: setValueData4,
   } = useInput("course_add");
   const {
     OnChange: OnChangePrice,
@@ -71,6 +76,7 @@ export default function Register() {
     blur: BlurPrice,
     focus: FocusPrice,
     message: MessagePrice,
+    setValue: setValueData5,
   } = useInput("course_add");
   const {
     OnChange: OnChangeCourseLevel,
@@ -85,6 +91,7 @@ export default function Register() {
     blur: BlurCourseDuration,
     focus: FocusCourseDuration,
     message: MessageCourseDuration,
+    setValue: setValueData6,
   } = useInput("course_add");
 
   const {
@@ -100,6 +107,7 @@ export default function Register() {
     blur: BlurProjectsTitle,
     focus: FocusProjectsTitle,
     message: MessageProjectsTitle,
+    setValue: setValueData7,
   } = useInput("course_add");
   const {
     OnChange: OnChangeProjectsDescription,
@@ -107,6 +115,7 @@ export default function Register() {
     blur: BlurProjectsDescription,
     focus: FocusProjectsDescription,
     message: MessageProjectsDescription,
+    setValue: setValueData8,
   } = useInput("course_add");
   const {
     OnChange: OnChangeProjectAim,
@@ -114,10 +123,29 @@ export default function Register() {
     blur: BlurProjectAim,
     focus: FocusProjectAim,
     message: MessageProjectAim,
+    setValue: setValueData9,
   } = useInput("course_add");
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+    if (
+      !valueTitleLong ||
+      !valueTitleShort ||
+      !valueSubtitle ||
+      !valueDescription ||
+      !valuePrice ||
+      !valueCourseLevel ||
+      !valueCourseDuration ||
+      !valueProjectsTitle ||
+      !valueProjectsDescription ||
+      !valueProjectAim
+    ) {
+      setmessageAlert("Falta completar campos");
+      setTimeout(() => {
+        setmessageAlert("");
+      }, 2000);
+    }
+
     if (!file) return;
     const formData = new FormData();
     formData.append("archivo", file);
@@ -134,7 +162,7 @@ export default function Register() {
       });
       return idem;
     });
-    console.log(arrData);
+    //console.log(arrData);
 
     const data = {
       courseLongTitle: valueTitleLong,
@@ -165,6 +193,20 @@ export default function Register() {
           },
         }
       );
+      setValueData1("");
+      setValueData2("");
+      setValueData3("");
+      setValueData4("");
+      setValueData5("");
+      setValueData6("");
+      setValueData7("");
+      setValueData8("");
+      setValueData9("");
+      setmessageAlertOk("Curso agregado!");
+      setTimeout(() => {
+        setmessageAlertOk("");
+      }, 2000);
+
       console.log(resp);
     } catch (error) {
       console.log(error);
@@ -178,7 +220,7 @@ export default function Register() {
         topics: [{ topicName: "", classes: [] }],
       },
     ]);
-    console.log(campos);
+    //console.log(campos);
   };
   const agregarTema = (i, y) => {
     console.log("agregando tema al modulo " + i);
@@ -215,10 +257,6 @@ export default function Register() {
     classes[i][c][p].video_url = e.target.value;
     setClasses(objs);
   };
-  const handleSelectDificultad = (e) => {
-    console.log(e.target.value);
-    setSelectedOption(e.target.value);
-  };
 
   const handleInputChangeTopic = (e, i, c) => {
     if (!campos[i]["topics"][c])
@@ -232,11 +270,7 @@ export default function Register() {
     topic_name[i]["topics"][c].topicName = e.target.value;
     setCampos(topic_name);
   };
-  const handleInputFile = (e) => {
-    //console.log(e.target.files[0]);
-    setFile(e.target.files[0]);
-  };
-  const [value, setValue] = useState("");
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     console.log("Archivo seleccionado:", file);
@@ -249,17 +283,6 @@ export default function Register() {
   const handleDivClick = () => {
     // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
     Register.click();
-  };
-
-  const [fields, setFields] = useState([]);
-  const addFields = () => {
-    setFields((prevFields) => [
-      ...prevFields,
-      {
-        id: Date.now(),
-        inputProps: useInput(`course_add_${prevFields.length}`),
-      },
-    ]);
   };
 
   return (
@@ -416,6 +439,7 @@ export default function Register() {
                 )}
               </div>
             </div>
+
             <div className="w-full basis-[50%]">
               <div className="flex flex-col my-2 ">
                 <label
@@ -508,6 +532,8 @@ export default function Register() {
                 label={"Duracion del curso"}
                 value={valueCourseDuration}
                 onChange={OnChangeCourseDuration}
+                onBlur={BlurCourseDuration}
+                onFocus={FocusCourseDuration}
                 classNameLabel={"block text-[1.21rem]"}
                 placeholder={"Ingresa la duración del curso"}
                 name={"nombre"}
@@ -549,8 +575,6 @@ export default function Register() {
                       className={"flex-none"}
                       label={"Nombre de modulo"}
                       value={campos.moduleName}
-                      onBlur={BlurCourseDuration}
-                      onFocus={FocusCourseDuration}
                       onChange={(x) => handleInputChange(i, x)}
                       classNameLabel={"block text-[1.21rem]"}
                       placeholder={"Ingresa nombre del modulo"}
@@ -729,7 +753,16 @@ export default function Register() {
             )}
           </div>
         </div>
-        <div className="w-full flex justify-center">
+        <div className="w-full flex flex-col justify-center items-center">
+          <div className="h-[.5rem] mt-3">
+            {messageAlert ? (
+              <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
+            ) : (
+              <p className="text-darkGreen text-[1rem] leading-3">
+                {messageAlertOk}
+              </p>
+            )}
+          </div>
           <Button
             className={`bg-black 
           text-white 

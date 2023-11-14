@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 function useInput(type) {
-  console.log(type);
   const [value, setValue] = useState("");
   const OnChange = (e) => setValue(e.target.value);
   const validations_types = {
@@ -109,7 +108,7 @@ function useInput(type) {
     setMessage("");
   };
 
-  return { message, blur, focus, OnChange, value };
+  return { message, blur, focus, OnChange, value, setValue };
 }
 
 export default useInput;
