@@ -39,7 +39,7 @@ export default function Cover() {
               className="relative md:-top-[5.125rem] md:-right-[3.94rem] 
               xl:-top-[8.125rem] xl:-right-[6.25rem]"
             />
-            <Link href={"/active-courses"}>
+            <Link href={"/courses"}>
               <h3
                 className="text-[#000000] font-mystery-mixed text-3xl relative -rotate-6
               md:-top-[8.75rem] md:-right-[0.625rem]

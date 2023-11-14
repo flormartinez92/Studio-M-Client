@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AdminButton from "../../common/AdminButton";
 import { DashIcons, MenuBook, Percent, User } from "@/common/Icons";
 
@@ -19,16 +20,20 @@ export default function AdminPanel() {
         text={"Usuarios activos"}
         className={"bg-blue"}
       />
-      <AdminButton
-        icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
-        text={"Cursos activos"}
-        className={"bg-darkGreen"}
-      />
-      <AdminButton
-        icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
-        text={"Cupones de descuento activos"}
-        className={"bg-purple"}
-      />
+      <Link href="/active-courses">
+        <AdminButton
+          icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
+          text={"Cursos activos"}
+          className={"bg-darkGreen"}
+        />
+      </Link>
+      <Link href="/active-coupons">
+        <AdminButton
+          icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
+          text={"Cupones de descuento activos"}
+          className={"bg-purple"}
+        />
+      </Link>
     </div>
   );
 }

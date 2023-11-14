@@ -11,10 +11,12 @@ import {
 } from "@/common/Icons";
 import Input from "@/common/Input";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Cards from "../../components/Cards";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
+import axios from "axios";
+import Link from "next/link";
 
 export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,6 +25,8 @@ export default function MyAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [buttonSave, setButtonSave] = useState(false);
   const [newInputs, setNewInputs] = useState(false);
+  const [userCourses, setUserCourses] = useState([]);
+  const [userData, setUserData] = useState({});
 
   const handleClickEdit = () => {
     setIsEditing(true);
@@ -37,28 +41,36 @@ export default function MyAccount() {
     setNewInputs(false);
   };
 
+  function newTitle(title) {
+    const titleArray = title.split(" ");
+    const titleLength = titleArray.length;
+    return titleArray[titleLength - 2] + " " + titleArray[titleLength - 1];
+  }
+
   const pages = [
     {
       title: "Mis datos",
       content: (
-        <div className=" mt-6 flex flex-col items-center md:h-[350px] md:flex-row md:items-start md:mt-12">
-          <div className="relative md:w-1/3 md:mx-4">
+        <div className=" mt-6 flex flex-col items-center md:h-80 md:flex-row md:justify-between md:items-start md:mt-12">
+          <div className="flex flex-row justify-between md:mx-4 md:mr-6">
             <Image
               src={"/img/usuario.png"}
-              width={300}
-              height={300}
+              width={100}
+              height={100}
               className="rounded-full w-[82px] h-[83px] md:w-[155px] md:h-[155px]"
             />
-            <IconButton className="absolute right-2 bottom-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-16 md:-bottom-2">
-              <Pencil color="white" width="12" height="10" />
-            </IconButton>
+            <div className="relative">
+              <IconButton className="absolute bottom-0 right-0 bg-black rounded-full w-[18px] h-[17px] md:w-[24px] md:h-[22px] md:right-0 md:bottom-0">
+                <Pencil color="white" width="12" height="10" />
+              </IconButton>
+            </div>
           </div>
 
           <div className="w-[65%] md:w-1/3 md:mx-4">
             <Input
               name="name"
               type="text"
-              placeholder="Marcos"
+              value={userData.name}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Nombre"
@@ -66,7 +78,7 @@ export default function MyAccount() {
             <Input
               name="lastName"
               type="text"
-              placeholder="Solis"
+              value={userData.lastname}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Apellido"
@@ -85,11 +97,11 @@ export default function MyAccount() {
             </>
           </div>
 
-          <div className="w-[65%] md:w-1/3 md:mx-4">
+          <div className="w-[65%] md:w-1/3 md:mx-4 md:mr-14">
             <Input
               name="email"
               type="text"
-              placeholder="marcos10@gmail.com"
+              value={userData.mail}
               className="w-full"
               classNameLabel="text-[20px]"
               label="Email"
@@ -97,7 +109,7 @@ export default function MyAccount() {
             <Input
               name="document"
               type="INT"
-              placeholder="45671231"
+              value={userData.dni}
               className="w-full"
               classNameLabel="text-[20px]"
               label="DNI"
@@ -138,32 +150,20 @@ export default function MyAccount() {
       title: "Mis cursos",
       content: (
         <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
-          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UX Research"
-              buttonTitle="20 %"
-              img="/img/indonesiaGrande.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
-          </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UX Writing"
-              buttonTitle="50 %"
-              img="/img/studio.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
-          </div>
-          <div className="w-70 ml-4 mr-4 md:w-72 md:ml-6 md:mr-6">
-            <Cards
-              title="UI Design"
-              buttonTitle="80 %"
-              img="/img/tirza.png"
-              className="max-w-[205px]"
-              classNameButton="py-1 px-3"
-            />
+          <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
+            {userCourses?.map((userCourse) => (
+              <div key={userCourse._id} className="mr-4">
+                <Link href={`/my-account/${userCourse._id}`}>
+                  <Cards
+                    title={newTitle(userCourse.courseTitle)}
+                    buttonTitle="20 %"
+                    img={userCourse.courseImg_url}
+                    className="max-w-[205px]"
+                    classNameButton="py-1 px-3"
+                  />
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       ),
@@ -332,14 +332,38 @@ export default function MyAccount() {
     }
   };
 
-  const handleTitle = (title) => {
-    setCurrentTitle(title);
+  const handleTitle = async (title) => {
+    const userId = localStorage.getItem("userId");
+
+    if (title === "Mis cursos") {
+      try {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}/purchasedCourse`
+          )
+          .then((res) => setUserCourses(res.data));
+        setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (title === "Mis datos") {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`)
+          .then((res) => setUserData(res.data));
+        setCurrentTitle(title);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setCurrentTitle(title);
+    }
   };
 
   return (
     <>
       {/*modo mobile*/}
-      <div className="flex flex-col items-center md:hidden">
+      <div className="flex flex-col h-screen items-center md:hidden">
         <div className="bg-lightGrey rounded-2xl mt-4 shadow-xl w-[90%]">
           <div className="bg-black w-full rounded-t-lg flex justify-between items-center py-3">
             {currentPage > 0 && (
@@ -364,7 +388,7 @@ export default function MyAccount() {
       </div>
 
       {/* Modo escritorio */}
-      <div className="hidden md:flex md:flex-col md:items-center">
+      <div className="hidden h-screen md:flex md:flex-col md:items-center">
         <div className="bg-page rounded-2xl mt-4 shadow-xl w-[90%]">
           <div className="bg-black w-full rounded-t-lg py-3 flex items-center">
             {pages.map((page, index) => (

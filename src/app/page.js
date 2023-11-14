@@ -24,7 +24,7 @@ export default function Home() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, []);
 
