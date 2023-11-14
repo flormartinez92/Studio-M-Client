@@ -41,7 +41,6 @@ export default function ActiveCoupons() {
   //   });
   //   setCoupons(updateCoupon);
   // };
-
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons`)
@@ -55,12 +54,33 @@ export default function ActiveCoupons() {
       });
   }, []);
 
-  const handleStatusToggle = (couponId) => {
-    setCoupons((prevCoupon) =>
-      prevCoupon.map((coupon) =>
-        coupon._id === couponId ? { ...coupon, status: !coupon.status } : coupon
-      )
-    );
+  const toggleStatus = async (couponId, couponStatus) => {
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/enable-disable/${couponId}`,
+        { status: couponStatus }
+      );
+      const coupons = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons`
+      );
+      setCoupons(coupons.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleStatusToggle = async (couponId) => {
+    try {
+      const oneCoupon = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${couponId}` // ver ruta
+      );
+      if (oneCoupon.data.status) {
+        toggleStatus(couponId, false);
+      } else {
+        toggleStatus(couponId, true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -73,7 +93,7 @@ export default function ActiveCoupons() {
           <thead className="max-sm:hidden">
             <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
               <td className="p-4">Cupón</td>
-              <td>&nbsp;</td>
+              <td className="sm:pr-10 md:pr-10">% de descuento</td>
               <td className="sm:pr-10 md:pr-10">Editar</td>
               <td className="sm:pr-10 md:pr-10">Bloquear/Habilitar</td>
             </tr>
@@ -85,7 +105,7 @@ export default function ActiveCoupons() {
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{coupon.couponCode}</td>
-                <td>&nbsp;</td>
+                <td className="p-4">{coupon.discountCoupon}</td>
                 <td className="p-2">
                   <button>
                     <Pencil color="#1BBEE2" />

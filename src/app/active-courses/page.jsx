@@ -18,7 +18,6 @@ import { useEffect } from "react";
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
   const [users, setUsers] = useState([]);
-  const [state, setState] = useState(true);
 
   useEffect(() => {
     axios
