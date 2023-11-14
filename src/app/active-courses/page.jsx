@@ -24,7 +24,6 @@ export default function ActiveCourses() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`)
       .then((res) => {
         const courses = res.data;
-        console.log(courses);
         setCourses(courses);
       })
       .catch((error) => {

@@ -15,11 +15,13 @@ export default function AdminPanel() {
         text={"10 proyectos para corregir"}
         className={"bg-pink"}
       />
-      <AdminButton
-        icon={<User width={"5.62rem"} height={"5.62rem"} />}
-        text={"Usuarios activos"}
-        className={"bg-blue"}
-      />
+      <Link href="/active-users">
+        <AdminButton
+          icon={<User width={"5.62rem"} height={"5.62rem"} />}
+          text={"Usuarios activos"}
+          className={"bg-blue"}
+        />
+      </Link>
       <Link href="/active-courses">
         <AdminButton
           icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
