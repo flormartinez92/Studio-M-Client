@@ -4,6 +4,12 @@ function useInput(type) {
   const [value, setValue] = useState("");
   const OnChange = (e) => setValue(e.target.value);
   const validations_types = {
+    course_add: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El campo no puede estar vacío",
+      },
+    ],
     name: [
       {
         condition: (valor) => valor.trim() !== "",
@@ -51,6 +57,12 @@ function useInput(type) {
         messageError: "*La contraseña no puede estar vacía",
       },
     ],
+    course: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El nombre no puede estar vacío",
+      },
+    ],
     password: [
       {
         condition: (valor) => valor.trim() !== "",
@@ -80,6 +92,7 @@ function useInput(type) {
   const blur = () => {
     let msj = "";
     const validation = validations_types[type];
+    if (!validation) return "nada";
     for (const key in validation) {
       const { messageError, condition } = validation[key];
       if (!condition(value)) {
@@ -95,7 +108,7 @@ function useInput(type) {
     setMessage("");
   };
 
-  return { message, blur, focus, OnChange, value };
+  return { message, blur, focus, OnChange, value, setValue };
 }
 
 export default useInput;
