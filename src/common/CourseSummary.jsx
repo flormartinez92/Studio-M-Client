@@ -12,22 +12,23 @@ export default function CourseSummary({
   hours,
   price,
   className,
+  handleAddToCart,
   courseId,
 }) {
-  const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId");
+  // const dispatch = useDispatch();
+  // const userId = localStorage.getItem("userId");
 
-  const handleAddToCart = async () => {
-    try {
-      await axios.post(
-        `http://localhost:8081/api/cart/add/${courseId}/${userId}`
-      );
+  // const handleAddToCart = async () => {
+  //   try {
+  //     await axios.post(
+  //       `http://localhost:8081/api/cart/add/${courseId}/${userId}`
+  //     );
 
-      dispatch(addToCart(courseId));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     dispatch(addToCart(courseId));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <Border
