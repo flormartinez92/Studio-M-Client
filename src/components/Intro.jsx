@@ -346,6 +346,7 @@ const [courses, setCourses] = useState([]);
     axios
       .get("http://localhost:8081/api/course/all-courses")
       .then((res) => {
+
         const courses = res.data;
         setCourses(courses);
       })
@@ -366,7 +367,9 @@ return
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+
         {courses?.slice(0, 3).map((course) => (
+
           <div
             key={course._id}
             className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6"

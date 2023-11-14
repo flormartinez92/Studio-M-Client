@@ -11,7 +11,8 @@ import useInput from "@/hooks/useInput";
 import Link from "next/link";
 
 export default function Login() {
-  const userInfo = useSelector((store) => store.auth);
+  const { user } = useSelector((store) => store.auth);
+  console.log(user?.mail);
   const dispatch = useDispatch();
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");
