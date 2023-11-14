@@ -13,8 +13,8 @@ const MyData = ({ decodedToken }) => {
     lastname: "",
     mail: "",
     dni: "",
-    firstPassword: "",
-    secondPassword: "",
+    firstpassword: "",
+    secondpassword: "",
     profileImg: "",
   });
 
@@ -26,7 +26,7 @@ const MyData = ({ decodedToken }) => {
           .get(
             `${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`
           )
-          .then((res) => setUserData(res.data));
+          .then((res) => setUserData({...res.data, firstpassword: "", secondpassword: ""}));
       } catch (error) {
         console.error(error);
       }
@@ -49,13 +49,13 @@ const MyData = ({ decodedToken }) => {
   };
 
   //Pedido al back para cambiar la contraseña
-  const handlePassword = async ({ firstPassword, secondPassword }) => {
+  const handlePassword = async ({ firstpassword, secondpassword }) => {
     try {
       await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/user/updatePassword/${decodedToken._id}`,
         {
-          firstPassword: userData.firstPassword,
-          secondPassword: userData.secondPassword,
+          firstpassword,
+          secondpassword,
         }
       );
     } catch (error) {
@@ -73,8 +73,8 @@ const MyData = ({ decodedToken }) => {
   const handleClickEdit = () => {
     if (changePassword) {
       handlePassword({
-        firstPassword: userData.firstPassword,
-        secondPassword: userData.secondPassword,
+        firstpassword: userData.firstpassword,
+        secondpassword: userData.secondpassword
       });
     }
     setChangePassword(!changePassword);
@@ -148,9 +148,9 @@ const MyData = ({ decodedToken }) => {
         {changePassword && (
           <>
             <Input
-              name="NewPassword"
+              name="firstpassword"
               type="password"
-              value={userData.firstPassword}
+              value={userData.firstpassword}
               onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
@@ -159,9 +159,9 @@ const MyData = ({ decodedToken }) => {
               label="Nueva contraseña"
             />
             <Input
-              name="ConfirmPassword"
+              name="secondpassword"
               type="password"
-              value={userData.secondPassword}
+              value={userData.secondpassword}
               onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
