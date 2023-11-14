@@ -9,13 +9,25 @@ import { useEffect } from "react";
 
 export default function ActiveUsers() {
   const [users, setUsers] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`)
+      .then((res) => {
+        const courses = res.data;
+        setCourses(courses);
+      })
+      .catch((error) => {
+        console.error("Error getting courses:", error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
       .then((res) => {
         const users = res.data;
-        console.log(users);
         setUsers(users);
       })
       .catch((error) => {
@@ -23,13 +35,18 @@ export default function ActiveUsers() {
       });
   }, []);
 
-  const calculateTotalUsersPerCourse = (courseId) => {
-    return users.reduce((total, user) => {
-      const matchingCourses = user.course.filter(
-        (course) => course.courseId === courseId
-      );
-      return total + matchingCourses.length;
-    }, 0);
+  const calculateTotalUsersPerCourse = (userId) => {
+    const user = users.find((user) => user._id === userId);
+    if (!user) {
+      return "";
+    }
+    const courseNames = user.course.map((course) => {
+      const matchingCourse = courses.find((c) => c._id === course.courseId);
+      return matchingCourse
+        ? matchingCourse.courseShortTitle
+        : "Course not found";
+    });
+    return courseNames.join(", ");
   };
 
   return (
@@ -56,33 +73,13 @@ export default function ActiveUsers() {
               >
                 <td className="p-4">{user.name}</td>
                 <td>&nbsp;</td>
-                <td className="p-1">{user.dni}</td>
+                <td className="p-1">
+                  {user.dni.toLocaleString().replace(/,/g, ".")}
+                </td>
                 <td>&nbsp;</td>
-                <td className="pl-10">
-                  {calculateTotalUsersPerCourse(user._id)}
-                </td>
-                {/* <td className="p-4">
-                  <button>
-                    <Plus color="#4FE21B" />
-                  </button>
-                </td>
                 <td className="p-2">
-                  <button>
-                    <Pencil color="#1BBEE2" />
-                  </button>
+                  <ul>{calculateTotalUsersPerCourse(user._id)}</ul>
                 </td>
-                <td className="p-4">
-                  <button
-                    className="cursor-pointer"
-                    onClick={() => handleStatusToggle(course._id)}
-                  >
-                    {course.status ? (
-                      <Trash color="#A31616" />
-                    ) : (
-                      <ArrowReload color="#E21B7B" />
-                    )}
-                  </button>
-                </td> */}
               </tr>
             ))}
           </tbody>
@@ -91,7 +88,6 @@ export default function ActiveUsers() {
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
                 &nbsp; 1 de 3
@@ -102,14 +98,6 @@ export default function ActiveUsers() {
           </tfoot>
         </table>
       </div>
-      {/* <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
-          <Plus className="" width="25" />
-          <span className="text-white items-center flex justify-between md:ml-2">
-            Agregar usuario
-          </span>
-        </Button>
-      </div> */}
     </section>
   );
 }
