@@ -17,36 +17,12 @@ import { useEffect } from "react";
 
 export default function ActiveCoupons() {
   const [coupons, setCoupons] = useState([]);
-  // const [showCouponForm, setShowCouponForm] = useState(false);
 
-  // const openForm = () => {
-  //   setShowCouponForm(true);
-  // };
-
-  // const handleAddCoupon = (newCoupon) => {
-  //   setCoupons(newCoupon);
-  //   setShowCouponForm(false);
-  // };
-
-  // const handleDeleteCoupon = (deleteCouponId) => {
-  //   const couponRemoved = coupons.filter((coupon) => {
-  //     coupon.id !== deleteCouponId;
-  //   });
-  //   setCoupons(couponRemoved);
-  // };
-
-  // const handleEditCoupon = (editCoupon) => {
-  //   const updateCoupon = coupons.filter((coupon) => {
-  //     coupon.id === editCoupon.id ? editCoupon : coupon;
-  //   });
-  //   setCoupons(updateCoupon);
-  // };
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons`)
       .then((res) => {
         const coupons = res.data;
-        console.log(coupons);
         setCoupons(coupons);
       })
       .catch((error) => {
@@ -71,7 +47,7 @@ export default function ActiveCoupons() {
   const handleStatusToggle = async (couponId) => {
     try {
       const oneCoupon = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${couponId}` // ver ruta
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons/${couponId}`
       );
       if (oneCoupon.data.status) {
         toggleStatus(couponId, false);
@@ -93,7 +69,7 @@ export default function ActiveCoupons() {
           <thead className="max-sm:hidden">
             <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
               <td className="p-4">Cupón</td>
-              <td className="sm:pr-10 md:pr-10">% de descuento</td>
+              <td className="sm:pr-10 md:pr-10">Descuento %</td>
               <td className="sm:pr-10 md:pr-10">Editar</td>
               <td className="sm:pr-10 md:pr-10">Bloquear/Habilitar</td>
             </tr>
