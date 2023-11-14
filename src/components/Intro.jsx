@@ -13,12 +13,14 @@ import Button from "@/common/Button";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
+  const [numCart, setNumCart] = useState();
+  const [user, setUser] = useState();
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "http://localhost:8081/api/course/all-courses"
       );
-      //console.log(response.data);
+
       const courses = response.data.map(
         ({ _id, courseTitle, courseImg_url }) => ({
           _id,
@@ -32,8 +34,48 @@ export default function Intro() {
     }
   };
 
+  const cartUser = async () => {
+    try {
+      const responseUser = await axios.get(
+        "http://localhost:8081/api/user/me",
+        {
+          withCredentials: true,
+        }
+      );
+      setUser(responseUser.data);
+      const responseCart = await axios.get(
+        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+      );
+
+      setNumCart(responseCart.data.length);
+
+      //console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const addCourseCart = async (id_curse) => {
+    console.log(id_curse);
+    console.log(user._id);
+    try {
+      const responseAddCart = await axios.post(
+        "http://localhost:8081/api/cart/add",
+        {
+          courseId: id_curse,
+          userId: user._id,
+        }
+      );
+      console.log(responseAddCart.data.courseId);
+
+      setNumCart(responseAddCart.data.courseId.length);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    cartUser();
   }, []);
   const onclickBtn = (e) => {
     console.log(e);
@@ -52,6 +94,7 @@ export default function Intro() {
     handleMouseMove: MoveScroll_2,
     handleMouseUp: MouseUpScroll_2,
   } = inputScroll();
+
   return (
     <div className="flex flex-col justify-center items-center w-full h-auto">
       <div className="w-full my-10">
@@ -63,6 +106,7 @@ export default function Intro() {
             max-w-[1350px] 
             leading-8 min-[500px]:leading-10 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16 min-[1500px]:text-[60px] mb-5"
           >
+            {numCart}
             ¿Qué vas a aprender hoy?
           </h2>
 
@@ -143,6 +187,7 @@ export default function Intro() {
                                     </Link>
                                     <Button
                                       className={`py-2 px-2 flex items-center`}
+                                      onClick={() => addCourseCart(item._id)}
                                     >
                                       {<CartShopSimple />}
                                     </Button>
