@@ -55,17 +55,17 @@ export default function Intro() {
     }
   };
   const addCourseCart = async (id_curse) => {
-    console.log(id_curse);
-    console.log(user._id);
     try {
+      const { data } = await axios.get("http://localhost:8081/api/user/me", {
+        withCredentials: true,
+      });
       const responseAddCart = await axios.post(
         "http://localhost:8081/api/cart/add",
         {
           courseId: id_curse,
-          userId: user._id,
+          userId: data._id,
         }
       );
-      console.log(responseAddCart.data.courseId);
 
       setNumCart(responseAddCart.data.courseId.length);
     } catch (error) {
