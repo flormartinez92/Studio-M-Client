@@ -59,7 +59,8 @@ export default function Intro() {
           {/*  */}
           <h2
             className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[2rem] 
-            min-[500px]:text-[2.4rem] md:text-[2.3rem] lg:text-[3rem] text-start md:text-start w-[60%] md:w-[70%] 
+            min-[500px]:text-[2.4rem] md:text-[2.3rem] lg:text-[3rem] text-start md:text-start w-[60%] md:w-[70%]
+            max-w-[1350px] 
             leading-8 min-[500px]:leading-10 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16 min-[1500px]:text-[60px] mb-5"
           >
             ¿Qué vas a aprender hoy?
@@ -72,7 +73,7 @@ export default function Intro() {
                   src={"/img/paper.png"}
                   width={400}
                   height={800}
-                  className="w-full max-w-[90%] h-full"
+                  className="w-full max-w-[1350px] h-full"
                   alt="paper_fondo"
                 />
                 <div className="absolute w-full inset-0 flex justify-center items-center">
@@ -133,8 +134,8 @@ export default function Intro() {
                                     <Link href={`/courses/${item._id}`}>
                                       <Button
                                         className={`font-mystery-mixed py-2 md:h-[2.3rem] lg:h-[2.6rem] min-[1300px]:h-[2.9rem] min-[1300px]:py-4
-                              min-[1300px]:px-6 px-3 whitespace-nowrap
-                              flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                        min-[1300px]:px-6 px-3 whitespace-nowrap
+                                        flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
                                         onClick={() => onclickBtn(item._id)}
                                       >
                                         {"Ver curso"}
@@ -275,7 +276,7 @@ export default function Intro() {
           src={"/img/paper.png"}
           width={200}
           height={200}
-          className="w-full max-w-[90%] h-full"
+          className="w-full max-w-[1350px] h-full"
           alt="paper_fondo"
         />
         <div className="absolute h-auto inset-0 text-black flex flex-col items-center justify-center">
