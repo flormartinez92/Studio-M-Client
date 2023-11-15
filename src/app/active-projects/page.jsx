@@ -37,7 +37,7 @@ export default function ActiveProjects() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/approved/${proyectId}`,
         { status: projectStatus }
       );
-      const coupons = await axios.get(
+      const projects = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`
       );
       setProjects(projects.data);
@@ -49,7 +49,7 @@ export default function ActiveProjects() {
   const handleStatusToggle = async (proyectId) => {
     try {
       const oneProject = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${proyectId}` // ver ruta
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${proyectId}`
       );
       if (oneProject.data.status) {
         toggleStatus(proyectId, false);
@@ -85,7 +85,7 @@ export default function ActiveProjects() {
               >
                 <td className="p-4">{project.name + " " + project.lastname}</td>
                 <td className="max-sm:hidden">{project.courseShortTitle}</td>
-                <td className="max-sm:hidden pl-10">
+                <td className="pl-10">
                   <button>
                     <Link color="#E21B7B" />
                   </button>
@@ -96,7 +96,7 @@ export default function ActiveProjects() {
                   </button>
                 </td>
                 <td className="p-4">
-                  <button onClick={() => handleStatusToggle(project.userId)}>
+                  <button onClick={() => handleStatusToggle(project._id)}>
                     {project.status ? (
                       <Check color="#A31616" />
                     ) : (
