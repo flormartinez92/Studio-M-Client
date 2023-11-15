@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
@@ -158,12 +159,14 @@ export default function ActiveCourses() {
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
-          <Plus className="" width="25" />
-          <span className="text-white items-center flex justify-between md:ml-2">
-            Crear curso
-          </span>
-        </Button>
+        <Link href="/add-course">
+          <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
+            <Plus className="" width="25" />
+            <span className="text-white items-center flex justify-between md:ml-2">
+              Crear curso
+            </span>
+          </Button>
+        </Link>
       </div>
     </section>
   );
