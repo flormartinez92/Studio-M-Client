@@ -34,12 +34,12 @@ export function Clock({ width, height }) {
   );
 }
 
-export function Check({ color }) {
+export function Check({ color, width, height }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="30"
+      width={width || "30"}
+      height={height || "30"}
       viewBox="0 0 24 24"
     >
       <g fill="none" fillRule="evenodd">
@@ -49,6 +49,42 @@ export function Check({ color }) {
           d="M19.495 3.133a1 1 0 0 1 1.352.308l.99 1.51a1 1 0 0 1-.155 1.28l-.003.004l-.014.013l-.057.053l-.225.215a83.86 83.86 0 0 0-3.62 3.736c-2.197 2.416-4.806 5.578-6.562 8.646c-.49.856-1.687 1.04-2.397.301l-6.485-6.738a1 1 0 0 1 .051-1.436l1.96-1.768A1 1 0 0 1 5.6 9.2l3.309 2.481c5.168-5.097 8.1-7.053 10.586-8.548Z"
         />
       </g>
+    </svg>
+  );
+}
+
+export function BoxCheck({ color, width, height }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "30"}
+      height={height || "30"}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5H5v14Z"
+      />
+    </svg>
+  );
+}
+
+export function Link({ color, width, height }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "20"}
+      height={height || "20"}
+      viewBox="0 0 16 12"
+    >
+      <path
+        fill="currentColor"
+        d="M4.12 11c-.84 0-1.62-.32-2.2-.91a3.111 3.111 0 0 1 0-4.4l2.77-2.77a3.12 3.12 0 0 1 4.4 0a3.102 3.102 0 0 1 0 4.4c-.2.2-.51.2-.71 0c-.2-.2-.2-.51 0-.71c.82-.82.82-2.16 0-2.99c-.83-.83-2.17-.83-2.99 0L2.62 6.39c-.82.82-.83 2.16 0 2.99c.4.4.92.63 1.5.62c.56 0 1.09-.22 1.49-.62c.2-.2.51-.2.71 0c.2.2.2.51 0 .71c-.59.59-1.37.91-2.2.91Z"
+      />
+      <path
+        fill={color || "currentColor"}
+        d="M9.14 9.97c-.83 0-1.62-.32-2.2-.91a3.111 3.111 0 0 1 0-4.4c.2-.2.51-.19.71 0c.2.2.19.51 0 .71c-.82.82-.83 2.16 0 2.99c.4.4.95.63 1.5.62c.56 0 1.09-.22 1.49-.62l2.75-2.75c.4-.4.62-.93.62-1.49s-.22-1.1-.62-1.49c-.83-.83-2.17-.83-2.99 0c-.2.2-.51.19-.71 0c-.2-.2-.19-.51 0-.71a3.12 3.12 0 0 1 4.4 0c.59.59.91 1.37.91 2.2s-.32 1.61-.91 2.2l-2.75 2.75c-.59.59-1.37.91-2.2.91Z"
+      />
     </svg>
   );
 }
@@ -141,17 +177,6 @@ export function Plus({ width, height, color }) {
         d="M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4z"
       />
     </svg>
-    // <svg
-    //   xmlns="http://www.w3.org/2000/svg"
-    //   width={width || "20"}
-    //   height={height || "20"}
-    //   viewBox="0 0 12 12"
-    // >
-    //   <path
-    //     fill={color || "currentColor"}
-    //     d="M6.5 1.75a.75.75 0 0 0-1.5 0V5H1.75a.75.75 0 0 0 0 1.5H5v3.25a.75.75 0 0 0 1.5 0V6.5h3.25a.75.75 0 0 0 0-1.5H6.5V1.75Z"
-    //   />
-    // </svg>
   );
 }
 

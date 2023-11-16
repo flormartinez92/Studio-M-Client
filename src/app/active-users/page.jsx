@@ -28,6 +28,7 @@ export default function ActiveUsers() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
       .then((res) => {
         const users = res.data;
+        console.log(users);
         setUsers(users);
       })
       .catch((error) => {
@@ -71,7 +72,7 @@ export default function ActiveUsers() {
                 key={user._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
-                <td className="p-4">{user.name}</td>
+                <td className="p-4">{user.name + " " + user.lastname}</td>
                 <td>&nbsp;</td>
                 <td className="p-1">
                   {user.dni.toLocaleString().replace(/,/g, ".")}

@@ -10,11 +10,13 @@ export default function AdminPanel() {
     lg:flex-row lg:gap-6
     xl:flex-row xl:gap-16 xl:pb-[17%]"
     >
-      <AdminButton
-        icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
-        text={"10 proyectos para corregir"}
-        className={"bg-pink"}
-      />
+      <Link href="/active-projects">
+        <AdminButton
+          icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
+          text={"10 proyectos para corregir"}
+          className={"bg-pink"}
+        />
+      </Link>
       <Link href="/active-users">
         <AdminButton
           icon={<User width={"5.62rem"} height={"5.62rem"} />}
