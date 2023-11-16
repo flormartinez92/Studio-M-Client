@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Button from "@/common/Button";
 
 import {
   BoxCheck,
@@ -23,7 +22,6 @@ export default function ActiveProjects() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`)
       .then((res) => {
         const projects = res.data;
-        console.log(projects);
         setProjects(projects);
       })
       .catch((error) => {
@@ -31,11 +29,15 @@ export default function ActiveProjects() {
       });
   }, []);
 
-  const toggleStatus = async (proyectId, projectStatus) => {
+  const toggleStatus = async (projectId, projectStatus, oneProject) => {
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/approved/${proyectId}`,
-        { status: projectStatus }
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/approved/${projectId}`,
+        {
+          status: projectStatus,
+          userId: oneProject.userId,
+          courseId: oneProject.courseId,
+        }
       );
       const projects = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`
@@ -46,15 +48,33 @@ export default function ActiveProjects() {
     }
   };
 
-  const handleStatusToggle = async (proyectId) => {
+  const handleStatusToggle = async (projectId) => {
     try {
       const oneProject = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${proyectId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${projectId}`
       );
-      if (oneProject.data.status) {
-        toggleStatus(proyectId, false);
+      const newStatus = !oneProject.data.status;
+      toggleStatus(projectId, newStatus, oneProject.data);
+      setTimeout(() => {
+        setProjects((prevProjects) =>
+          prevProjects.map((project) =>
+            project.projectId === projectId
+              ? { ...project, status: newStatus }
+              : project
+          )
+        );
+      }, 500);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClick = (url) => {
+    try {
+      if (url) {
+        window.open(url, "_blank");
       } else {
-        toggleStatus(proyectId, true);
+        console.warn("La URL está vacía");
       }
     } catch (error) {
       console.error(error);
@@ -78,7 +98,7 @@ export default function ActiveProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects.map((project) => (
+            {projects?.map((project) => (
               <tr
                 key={project.userId}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -86,7 +106,7 @@ export default function ActiveProjects() {
                 <td className="p-4">{project.name + " " + project.lastname}</td>
                 <td className="max-sm:hidden">{project.courseShortTitle}</td>
                 <td className="pl-10">
-                  <button>
+                  <button onClick={() => handleClick(project.project_url)}>
                     <Link color="#E21B7B" />
                   </button>
                 </td>
@@ -96,7 +116,7 @@ export default function ActiveProjects() {
                   </button>
                 </td>
                 <td className="p-4">
-                  <button onClick={() => handleStatusToggle(project._id)}>
+                  <button onClick={() => handleStatusToggle(project.projectId)}>
                     {project.status ? (
                       <Check color="#A31616" />
                     ) : (
@@ -121,14 +141,6 @@ export default function ActiveProjects() {
           </tfoot>
         </table>
       </div>
-      {/* <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
-          <Plus className="" width="25" />
-          <span className="text-white items-center flex md:ml-1">
-            Crear cupón
-          </span>
-        </Button>
-      </div> */}
     </section>
   );
 }
