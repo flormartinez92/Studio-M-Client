@@ -46,7 +46,7 @@ export default function Courses() {
       <div className="md:hidden flex flex-col justify-center p-3 items-center">
         {courses?.map((course) => (
           <Cards
-            key={courses._id}
+            key={course._id}
             title={course.courseShortTitle}
             className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem]"
             img={course.courseImg_url}
@@ -87,39 +87,37 @@ export default function Courses() {
               : b.courseLongTitle.localeCompare(a.courseLongTitle)
           )
           .map((course) => (
-            <>
-              <CardsDesktop
-                key={course._id}
-                handleViewCoursesClick={() => handleViewCourseClick(course._id)}
-                courseTitleClasses="text-2xl leading-loose min-[1024px]:text-3xl min-[1024px]:py-2"
-                courseLongTitle={course.courseLongTitle}
-                courseImg_url={course.courseImg_url}
-                cartShopPlusBgBlack={
-                  <CartShopPlusBgBlack
-                    width={isLgBreakpoint ? "57px" : "45px"}
-                    height={isLgBreakpoint ? "57px" : "45px"}
-                    onClick={() => alert("click en CART")}
-                  />
-                }
-                courseSubtitle={course.courseSubtitle}
-                courseSubtitleClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
-                coursePrice={course.coursePrice}
-                coursePriceClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
-                courseDescription={course.courseDescription}
-                courseDescriptionClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-                courseLevel={course.courseLevel}
-                courseLevelClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-                courseDuration={course.courseDuration}
-                courseDurationClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-                clockWidth={isLgBreakpoint ? "25px" : "16px"}
-                clockHeight={isLgBreakpoint ? "25px" : "16px"}
-                courseFavoriteClasses="text-[0.8rem] tracking-tight min-[1024px]:text-[1.02rem]"
-                heartWidth={isLgBreakpoint ? "25px" : "16px"}
-                heartHeight={isLgBreakpoint ? "25px" : "16px"}
-                signaltWidth={isLgBreakpoint ? "50px" : "25px"}
-                signalHeight={isLgBreakpoint ? "50px" : "25px"}
-              />
-            </>
+            <CardsDesktop
+              key={course._id}
+              handleViewCoursesClick={() => handleViewCourseClick(course._id)}
+              courseTitleClasses="text-2xl leading-loose min-[1024px]:text-3xl min-[1024px]:py-2"
+              courseLongTitle={course.courseLongTitle}
+              courseImg_url={course.courseImg_url && course.courseImg_url}
+              cartShopPlusBgBlack={
+                <CartShopPlusBgBlack
+                  width={isLgBreakpoint ? "57px" : "45px"}
+                  height={isLgBreakpoint ? "57px" : "45px"}
+                  onClick={() => alert("click en CART")}
+                />
+              }
+              courseSubtitle={course.courseSubtitle}
+              courseSubtitleClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
+              coursePrice={course.coursePrice}
+              coursePriceClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
+              courseDescription={course.courseDescription}
+              courseDescriptionClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
+              courseLevel={course.courseLevel}
+              courseLevelClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
+              courseDuration={course.courseDuration}
+              courseDurationClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
+              clockWidth={isLgBreakpoint ? "25px" : "16px"}
+              clockHeight={isLgBreakpoint ? "25px" : "16px"}
+              courseFavoriteClasses="text-[0.8rem] tracking-tight min-[1024px]:text-[1.02rem]"
+              heartWidth={isLgBreakpoint ? "25px" : "16px"}
+              heartHeight={isLgBreakpoint ? "25px" : "16px"}
+              signaltWidth={isLgBreakpoint ? "50px" : "25px"}
+              signalHeight={isLgBreakpoint ? "50px" : "25px"}
+            />
           ))}
       </div>
     </section>
