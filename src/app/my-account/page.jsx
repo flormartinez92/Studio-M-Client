@@ -68,9 +68,9 @@ export default function MyAccount() {
               <Button
                 key={index}
                  onClick={() => handleTitle(page.title)}
-                className="w-full"
+                className={`w-full `}
               >
-                <h2 className="text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 hover:underline hover:decoration-pink hover:decoration-[1.5px]" style={{ textUnderlineOffset: "6px" }}>
+                <h2 className={`text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 ${currentTitle === page.title ? "underline decoration-pink decoration-[1.5px]" : "hover:underline hover:decoration-pink hover:decoration-[1.5px]"}`} style={{ textUnderlineOffset: "6px" }}>
                   {page.title}
                 </h2>
               </Button>

@@ -9,8 +9,12 @@ const MyCertificates = ({decodedToken}) => {
   const [userCertificates, setUserCertificates] = useState([]);
 
   //funcion para cuando se genere un certificado vaya cambiando el color
-  const randomColor = ["border-pink", "border-blue", "border-green"];
-  
+  // const generateRandomColor = () => {
+  //   let colors = ["border-pink", "border-blue", "border-green"];
+  //   let randomColor = colors[Math.floor(Math.random() * 2)];
+  //   return randomColor
+  // }
+
 
   useEffect(() => {
     if (decodedToken._id) {
@@ -30,7 +34,7 @@ const MyCertificates = ({decodedToken}) => {
       <div className=" py-12 md:hidden">
         {userCertificates?.map((userCertificate) => (
         <div className="flex justify-center py-4" key={userCertificate.id}>
-          <Border className="border-pink border-2 max-w-[300px]">
+          <Border className="border-pink border-2 w-[70%] max-w-[19rem]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-pink">
                 <h2 className=" font-mystery-mixed text-3xl">{userCertificate.courseTitle}</h2>

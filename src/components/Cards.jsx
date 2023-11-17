@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import { addToCart } from "@/state/features/cartSlice";
@@ -54,7 +54,7 @@ export default function Cards({
     }
   };
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleClick = async (courseId) => {
     axios
