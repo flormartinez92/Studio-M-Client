@@ -8,6 +8,10 @@ import IconButton from "@/common/IconButton";
 const MyCertificates = ({decodedToken}) => {
   const [userCertificates, setUserCertificates] = useState([]);
 
+  //funcion para cuando se genere un certificado vaya cambiando el color
+  const randomColor = ["border-pink", "border-blue", "border-green"];
+  
+
   useEffect(() => {
     if (decodedToken._id) {
       try {

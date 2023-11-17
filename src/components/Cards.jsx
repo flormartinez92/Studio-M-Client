@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import { addToCart } from "@/state/features/cartSlice";
 import Button from "@/common/Button";
 import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
-import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
+// import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
 
 export default function Cards({
   title,
@@ -24,24 +24,25 @@ export default function Cards({
   className,
   className2,
   classNameButton,
-  classNameDivButton,
+  // classNameDivButton,
   classNameIconButton,
   classNameBorder,
-  newClass,
-  titleResume,
-  price,
-  resume,
-  level,
-  hours,
-  wishes,
-  id,
+  // newClass,
+  // titleResume,
+  // price,
+  // resume,
+  // level,
+  // hours,
+  // wishes,
+  courseId,
 }) {
   const dispatch = useDispatch();
   //Token para la informacion de usuario.
   const userToken = sessionStorage.getItem("token");
   const decodedToken = jwtDecode(userToken);
 
-  const handleAddToCart = async () => {
+  //Pedido al back para agregar al carrito
+  const handleAddToCart = async (courseId) => {
     try {
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add/${courseId}/${decodedToken._id}`
@@ -114,13 +115,13 @@ export default function Cards({
           >
             <Button
               // onClick={handleViewCoursesClick}
-              onClick={() => handleClick(id)}
+              onClick={() => handleClick(courseId)}
               className={`font-mystery-mixed bg-[#181717] ${classNameButton}`}
             >
               {buttonTitle}
             </Button>
             <Button
-              onClick={handleCartClick}
+              onClick={() => handleAddToCart(courseId)}
               className={`${classNameIconButton}`}
             >
               {icon}

@@ -39,7 +39,6 @@ const MyList = ({ decodedToken }) => {
               classNameImg="h-[12rem] object-cover rounded-b-lg"
               className2="h-full"
               classNameIconButton="py-1 px-2"
-              // courseId={}
             />
           </div>
         ))}
