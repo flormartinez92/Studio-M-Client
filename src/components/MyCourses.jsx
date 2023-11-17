@@ -20,8 +20,6 @@ const MyCourses = ({ decodedToken }) => {
     }
   }, []);
 
-  //CAMBIAR TITULO CUANDO SE CAMBIEN LOS MODELOS Y TENGA TITULO CORTO
-
   return (
     <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
       <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">

@@ -59,7 +59,7 @@ export default function Cards({
       .then(() => router.push(`/courses/${courseId}`));
   };
 
-  //EStados y pedidos para favoritos
+  //Estados y pedidos para favoritos
   const [isFavorite, setIsFavorite] = useState(true)
 
   //Lo agrega

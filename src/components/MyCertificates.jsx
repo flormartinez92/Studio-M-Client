@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-//import { useSelector } from "react-redux";
 import Image from "next/image";
 import axios from "axios"
 import { Download, Share } from "@/common/Icons";
@@ -7,7 +6,6 @@ import Border from "@/common/Border";
 import IconButton from "@/common/IconButton";
 
 const MyCertificates = ({decodedToken}) => {
-  //const { user } = useSelector((store) => store.auth);
   const [userCertificates, setUserCertificates] = useState([]);
 
   useEffect(() => {
@@ -28,11 +26,11 @@ const MyCertificates = ({decodedToken}) => {
       <div className=" py-12 md:hidden">
         {userCertificates?.map((userCertificate) => (
         <div className="flex justify-center py-4" key={userCertificate.id}>
-          <Border className="border-pink border-2 w-[80%]">
+          <Border className="border-pink border-2 max-w-[300px]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-pink">
                 <h2 className=" font-mystery-mixed text-3xl">{userCertificate.courseTitle}</h2>
-                <h3 className=" font-ms-gothic text-sm">{userCertificate.createdAt}</h3>
+                <h3 className=" font-ms-gothic text-sm">{userCertificate.createdAt.slice(0, 10)}</h3>
               </div>
               <div className="w-[30%] flex justify-center">
                 <IconButton className="flex flex-col">
@@ -47,7 +45,7 @@ const MyCertificates = ({decodedToken}) => {
       </div>
 
       {/*modo desktop*/}
-      <div className="hidden md:flex md:justify-center">
+      <div className="hidden md:flex md:flex-col md:justify-center">
         {userCertificates?.map((userCertificate) => (
 
         <div className="relative" key={userCertificate.id}>
@@ -78,7 +76,7 @@ const MyCertificates = ({decodedToken}) => {
                {userCertificate.description}
               </p>
               <p className="text-sm font-ms-gothic lg:text-base">
-                {userCertificate.createdAt}
+                {userCertificate.createdAt.slice(0, 10)}
               </p>
               <div className="flex flex-row justify-around align-center items-center w-full">
                 <div>

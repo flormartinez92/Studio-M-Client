@@ -4,10 +4,12 @@ import axios from "axios";
 import { Pencil, Save } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 import Input from "@/common/Input";
+import useInput from "@/hooks/useInput";
 
 const MyData = ({ decodedToken }) => {
   //Estados para cambio de password y datos de usuario.
   const [changePassword, setChangePassword] = useState(false);
+  const [messageAlert, setmessageAlert] = useState("");
   const [userData, setUserData] = useState({
     name: "",
     lastname: "",
@@ -17,6 +19,14 @@ const MyData = ({ decodedToken }) => {
     secondpassword: "",
     profileImg: "",
   });
+
+  const {
+    OnChange: OnChangePassword,
+    value: valuePassword,
+    blur: BlurPassword,
+    focus: FocusPassword,
+    message: MessagePassword,
+  } = useInput("passwordLogin");
 
   //Pedido al back para los datos de usuario (el token tambien los trae).
   useEffect(() => {
@@ -66,11 +76,23 @@ const MyData = ({ decodedToken }) => {
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    switch(name){
+      case "firstpassword": 
+        OnChangePassword(value);
+        break;
+      case "secondpassword":
+        OnChangePassword(value);
+        break;
+      default:
+        break;
+    }
     setUserData({ ...userData, [name]: value });
   };
 
   //Manejador de click de contraseña
-  const handleClickEdit = () => {
+  const handleClickEdit = (e) => {
+    e.preventDefault();
+
     if (changePassword) {
       handlePassword({
         firstpassword: userData.firstpassword,
@@ -78,6 +100,20 @@ const MyData = ({ decodedToken }) => {
       });
     }
     setChangePassword(!changePassword);
+
+    if(valuePassword.trim() == ""){
+      setmessageAlert("¡Completar todos los campos!");
+      setTimeout(() => {
+        setmessageAlert("");
+      }, 800);
+    }else {
+      if(MessagePassword){
+        setmessageAlert("¡Verificar campos!");
+        setTimeout(() => {
+          setmessageAlert("");
+        }, 800);
+      }
+    }
   };
 
   return (
@@ -150,25 +186,34 @@ const MyData = ({ decodedToken }) => {
             <Input
               name="firstpassword"
               type="password"
-              value={userData.firstpassword}
+              value={valuePassword}
               onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
               classNameLabel="text-[20px]"
               label="Nueva contraseña"
+              onFocus={FocusPassword}
+              onBlur={BlurPassword}
             />
             <Input
               name="secondpassword"
               type="password"
-              value={userData.secondpassword}
+              value={valuePassword}
               onChange={handleInputChange}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
               classNameLabel="text-[20px]"
               label="Confirmar contraseña"
+              onFocus={FocusPassword}
+              onBlur={BlurPassword}
             />
+            <div className="h-[.5rem] pb-6">
+              {MessagePassword && (
+                <p className="text-red text-[.9rem] leading-3">{MessagePassword}</p>
+              )}
+            </div>
           </>
         )}
       </div>
