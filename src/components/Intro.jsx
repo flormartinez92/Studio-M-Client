@@ -13,12 +13,14 @@ import Button from "@/common/Button";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
+  const [numCart, setNumCart] = useState();
+  const [user, setUser] = useState();
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "http://localhost:8081/api/course/all-courses"
       );
-      //console.log(response.data);
+
       const courses = response.data.map(
         ({ _id, courseTitle, courseImg_url }) => ({
           _id,
@@ -32,8 +34,48 @@ export default function Intro() {
     }
   };
 
+  const cartUser = async () => {
+    try {
+      const responseUser = await axios.get(
+        "http://localhost:8081/api/user/me",
+        {
+          withCredentials: true,
+        }
+      );
+      setUser(responseUser.data);
+      const responseCart = await axios.get(
+        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+      );
+
+      setNumCart(responseCart.data.length);
+
+      //console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const addCourseCart = async (id_curse) => {
+    try {
+      const { data } = await axios.get("http://localhost:8081/api/user/me", {
+        withCredentials: true,
+      });
+      const responseAddCart = await axios.post(
+        "http://localhost:8081/api/cart/add",
+        {
+          courseId: id_curse,
+          userId: data._id,
+        }
+      );
+
+      setNumCart(responseAddCart.data.courseId.length);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    cartUser();
   }, []);
   const onclickBtn = (e) => {
     console.log(e);
@@ -52,6 +94,7 @@ export default function Intro() {
     handleMouseMove: MoveScroll_2,
     handleMouseUp: MouseUpScroll_2,
   } = inputScroll();
+
   return (
     <div className="flex flex-col justify-center items-center w-full h-auto">
       <div className="w-full my-10">
@@ -59,9 +102,11 @@ export default function Intro() {
           {/*  */}
           <h2
             className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[2rem] 
-            min-[500px]:text-[2.4rem] md:text-[2.3rem] lg:text-[3rem] text-start md:text-start w-[60%] md:w-[70%] 
+            min-[500px]:text-[2.4rem] md:text-[2.3rem] lg:text-[3rem] text-start md:text-start w-[60%] md:w-[70%]
+            max-w-[1350px] 
             leading-8 min-[500px]:leading-10 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16 min-[1500px]:text-[60px] mb-5"
           >
+            {numCart}
             ¿Qué vas a aprender hoy?
           </h2>
 
@@ -72,7 +117,7 @@ export default function Intro() {
                   src={"/img/paper.png"}
                   width={400}
                   height={800}
-                  className="w-full max-w-[90%] h-full"
+                  className="w-full max-w-[1350px] h-full"
                   alt="paper_fondo"
                 />
                 <div className="absolute w-full inset-0 flex justify-center items-center">
@@ -133,8 +178,8 @@ export default function Intro() {
                                     <Link href={`/courses/${item._id}`}>
                                       <Button
                                         className={`font-mystery-mixed py-2 md:h-[2.3rem] lg:h-[2.6rem] min-[1300px]:h-[2.9rem] min-[1300px]:py-4
-                              min-[1300px]:px-6 px-3 whitespace-nowrap
-                              flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
+                                        min-[1300px]:px-6 px-3 whitespace-nowrap
+                                        flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
                                         onClick={() => onclickBtn(item._id)}
                                       >
                                         {"Ver curso"}
@@ -142,6 +187,7 @@ export default function Intro() {
                                     </Link>
                                     <Button
                                       className={`py-2 px-2 flex items-center`}
+                                      onClick={() => addCourseCart(item._id)}
                                     >
                                       {<CartShopSimple />}
                                     </Button>
@@ -275,7 +321,7 @@ export default function Intro() {
           src={"/img/paper.png"}
           width={200}
           height={200}
-          className="w-full max-w-[90%] h-full"
+          className="w-full max-w-[1350px] h-full"
           alt="paper_fondo"
         />
         <div className="absolute h-auto inset-0 text-black flex flex-col items-center justify-center">
@@ -345,6 +391,7 @@ const [courses, setCourses] = useState([]);
     axios
       .get("http://localhost:8081/api/course/all-courses")
       .then((res) => {
+
         const courses = res.data;
         setCourses(courses);
       })
@@ -365,7 +412,9 @@ return
         Qué vas a aprender hoy?
       </h2>
       <div className="flex overflow-x-auto md:bg-[url('/img/paper-desktop-cover.png')] md:bg-[length:100%_500px] md:bg-center md:h-[500px] md:justify-center items-center mb:justify-start">
+
         {courses?.slice(0, 3).map((course) => (
+
           <div
             key={course._id}
             className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6"

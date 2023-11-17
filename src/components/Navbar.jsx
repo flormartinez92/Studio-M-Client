@@ -1,19 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import IconButton from "@/common/IconButton";
 import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [numCart, setNumCart] = useState();
   const [title, setTitle] = useState("");
 
   //condicion para que cuando este en la home no muestre el titulo studio by m
   const pathname = usePathname();
   const titleShouldDisplay = pathname !== "/";
+
+  const cartUser = async () => {
+    try {
+      const responseUser = await axios.get(
+        "http://localhost:8081/api/user/me",
+        {
+          withCredentials: true,
+        }
+      );
+
+      const responseCart = await axios.get(
+        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+      );
+
+      setNumCart(responseCart.data.length);
+
+      //console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    cartUser();
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -26,6 +53,8 @@ export default function Navbar() {
 
   return (
     <>
+      {numCart}
+
       {menuOpen ? (
         <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center animate-navbar">
           <div className="flex items-center justify-end">
