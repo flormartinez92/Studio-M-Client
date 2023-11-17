@@ -10,21 +10,27 @@ export default function AdminPanel() {
     lg:flex-row lg:gap-6
     xl:flex-row xl:gap-16 xl:pb-[17%]"
     >
-      <AdminButton
-        icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
-        text={"10 proyectos para corregir"}
-        className={"bg-pink"}
-      />
-      <AdminButton
-        icon={<User width={"5.62rem"} height={"5.62rem"} />}
-        text={"Usuarios activos"}
-        className={"bg-blue"}
-      />
-      <AdminButton
-        icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
-        text={"Cursos activos"}
-        className={"bg-darkGreen"}
-      />
+      <Link href="/active-projects">
+        <AdminButton
+          icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
+          text={"10 proyectos para corregir"}
+          className={"bg-pink"}
+        />
+      </Link>
+      <Link href="/active-users">
+        <AdminButton
+          icon={<User width={"5.62rem"} height={"5.62rem"} />}
+          text={"Usuarios activos"}
+          className={"bg-blue"}
+        />
+      </Link>
+      <Link href="/active-courses">
+        <AdminButton
+          icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
+          text={"Cursos activos"}
+          className={"bg-darkGreen"}
+        />
+      </Link>
       <Link href="/active-coupons">
         <AdminButton
           icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
