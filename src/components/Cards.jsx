@@ -37,6 +37,7 @@ export default function Cards({
   courseId,
 }) {
   const dispatch = useDispatch();
+  console.log("courseId--->", courseId);
   //Token para la informacion de usuario.
   const userToken = sessionStorage.getItem("token");
   const decodedToken = jwtDecode(userToken);
@@ -44,9 +45,10 @@ export default function Cards({
   //Pedido al back para agregar al carrito
   const handleAddToCart = async (courseId) => {
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add/${courseId}/${decodedToken._id}`
-      );
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
+        courseId,
+        userId: decodedToken._id,
+      });
 
       dispatch(addToCart(courseId));
     } catch (error) {
@@ -63,31 +65,33 @@ export default function Cards({
   };
 
   //Estados y pedidos para favoritos
-  const [isFavorite, setIsFavorite] = useState(true)
+  const [isFavorite, setIsFavorite] = useState(true);
 
   //Lo agrega
   const handleAddFavorites = async () => {
     try {
-      await axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${decodedToken._id}`)
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${decodedToken._id}`
+      );
 
-        setIsFavorite(!isFavorite);
+      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   //Lo elimina
-  const handleDeleteFavorites = async ()=> {
+  const handleDeleteFavorites = async () => {
     try {
-      await axios
-        .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${decodedToken._id}`)
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${decodedToken._id}`
+      );
 
-        setIsFavorite(!isFavorite);
+      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className={`w-80 relative ${className || ""}`}>
@@ -106,27 +110,30 @@ export default function Cards({
           alt="Picture"
           className={`${classNameImg}`}
         />
-        <IconButton className="absolute right-3 top-14" onClick={isFavorite ? handleDeleteFavorites : handleAddFavorites}>
+        <IconButton
+          className="absolute right-3 top-14"
+          onClick={isFavorite ? handleDeleteFavorites : handleAddFavorites}
+        >
           {isFavorite ? iconFavorite : iconFavorite2}
         </IconButton>
         {/* <div className={`${classNameDivButton}`}> */}
-          <Border
-            className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
+        <Border
+          className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
+        >
+          <Button
+            // onClick={handleViewCoursesClick}
+            onClick={() => handleClick(courseId)}
+            className={`font-mystery-mixed bg-[#181717] ${classNameButton}`}
           >
-            <Button
-              // onClick={handleViewCoursesClick}
-              onClick={() => handleClick(courseId)}
-              className={`font-mystery-mixed bg-[#181717] ${classNameButton}`}
-            >
-              {buttonTitle}
-            </Button>
-            <Button
-              onClick={() => handleAddToCart(courseId)}
-              className={`${classNameIconButton}`}
-            >
-              {icon}
-            </Button>
-          </Border>
+            {buttonTitle}
+          </Button>
+          <Button
+            onClick={() => handleAddToCart(courseId)}
+            className={`${classNameIconButton}`}
+          >
+            {icon}
+          </Button>
+        </Border>
         {/* </div> */}
         {/* <div className={`hidden ${newClass}`}>
           <div className="flex flex-row justify-between w-[90%] font-medium md:text-sm lg:text-base xl:text-lg">
