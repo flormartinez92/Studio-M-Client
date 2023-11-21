@@ -14,9 +14,9 @@ export default function SelectCourse() {
   return (
     <div className="bg-white bg-opacity-0 flex flex-col justify-between h-auto items-center gap-8">
       <div className="flex flex-row w-[90%] items-center justify-between mt-4">
-        <div className="flex flex-row justify-between gap-6 text-base">
+        <div className="flex flex-row justify-between items-center gap-2 text-base">
           <IconButton className={""}>
-            <BurgerMenu2 width="30" height="20" color={"black"} />
+            <BurgerMenu2 width="30" height="30" color={"black"} />
           </IconButton>
           <h2 className="font-ms-gothic text-base items-center">
             Secciones del curso
@@ -41,16 +41,16 @@ export default function SelectCourse() {
         <Button
           type={"rounder"}
           className={
-            "flex flex-row justify-center items-center w-56 p-2 mb-14 bg-green xl:p-6 xl:px-10 xl:w-60 xl:text-3xl"
+            "flex flex-row justify-center items-center w-40 p-2 mb-14 bg-green xl:p-2 xl:px-10 xl:w-80 xl:text-3xl"
           }
         >
-          <Check color={"black"} width={"80"} />
+          <Check color={"black"} width={"50"} height={"50"} />
         </Button>
       ) : (
         <Button
           type={"rounder"}
           className={
-            "flex flex-row justify-between items-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-4 xl:px-10 xl:w-60 xl:text-3xl"
+            "flex flex-row justify-between items-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl"
           }
           onClick={handleClick}
         >
