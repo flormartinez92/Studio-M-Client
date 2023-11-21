@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import IconButton from "@/common/IconButton";
 import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
 import axios from "axios";
@@ -10,6 +11,11 @@ import React, { useEffect, useState } from "react";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [numCart, setNumCart] = useState();
+  const [title, setTitle] = useState("");
+
+  //condicion para que cuando este en la home no muestre el titulo studio by m
+  const pathname = usePathname();
+  const titleShouldDisplay = pathname !== "/";
 
   const cartUser = async () => {
     try {
@@ -40,6 +46,11 @@ export default function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
+  const handleClick = (title) => {
+    setTitle(title);
+    setMenuOpen(false);
+  };
+
   return (
     <>
       {numCart}
@@ -48,7 +59,7 @@ export default function Navbar() {
         <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center animate-navbar">
           <div className="flex items-center justify-end">
             <IconButton
-              className="cursor-pointer mx-6 mt-6"
+              className="cursor-pointer mx-10 mt-6"
               onClick={toggleMenu}
             >
               <Close width="30" height="30" color="white" />
@@ -60,6 +71,7 @@ export default function Navbar() {
                 <Link
                   href="/"
                   className="text-[50px] text-white font-mystery-mixed"
+                  onClick={handleClick}
                 >
                   Inicio
                 </Link>
@@ -68,6 +80,7 @@ export default function Navbar() {
                 <Link
                   href="/courses"
                   className="text-[50px] text-white font-mystery-mixed"
+                  onClick={handleClick}
                 >
                   Cursos
                 </Link>
@@ -76,14 +89,21 @@ export default function Navbar() {
                 <Link
                   href="/my-account"
                   className="text-[50px] text-white font-mystery-mixed"
+                  onClick={handleClick}
                 >
                   Mi cuenta
                 </Link>
               </li>
               <li className="mx-[4.5rem]">
-                <IconButton>
-                  <CartShopSimple width="43" height="40" />
-                </IconButton>
+                <Link
+                  href="/trolley"
+                  className="text-[50px] text-white font-mystery-mixed"
+                  onClick={handleClick}
+                >
+                  <IconButton>
+                    <CartShopSimple width="43" height="40" />
+                  </IconButton>
+                </Link>
               </li>
             </ul>
 
@@ -113,21 +133,23 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className=" bg-black p-5 shadow text-white font-mystery-mixed md:flex md:items-center md:justify-end">
+        <nav className=" bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center p-10 md:p-5 shadow text-white font-mystery-mixed md:flex md:items-center md:justify-end">
           <div className="flex justify-between items-center">
-            <span className="text-[35px] cursor-pointer md:hidden">
-              Studio by M
-            </span>
+            {titleShouldDisplay && (
+              <span className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden">
+                Studio by M
+              </span>
+            )}
             <input
               type="checkbox"
               id="menu-toggle"
               className="hidden md:hidden"
             />
-            <label htmlFor="menu-toggle" className="md:hidden">
-              <IconButton
-                className="cursor-pointer mx-2 mb-2"
-                onClick={toggleMenu}
-              >
+            <label
+              htmlFor="menu-toggle"
+              className="absolute right-0 mr-[8%] md:hidden"
+            >
+              <IconButton className="cursor-pointer" onClick={toggleMenu}>
                 <BurgerMenu width="24" height="24" />
               </IconButton>
             </label>
@@ -144,7 +166,7 @@ export default function Navbar() {
                 <li className="mx-4">
                   <Link
                     href="/courses"
-                    className="text-[50px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                   >
                     Cursos
                   </Link>
