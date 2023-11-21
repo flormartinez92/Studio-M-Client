@@ -47,6 +47,7 @@ export default function Courses() {
         {courses?.map((course) => (
           <Cards
             key={course._id}
+            courseId={course._id}
             title={course.courseShortTitle}
             className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem]"
             img={course.courseImg_url}
@@ -54,7 +55,7 @@ export default function Courses() {
             classNameBorder="h-[52px] flex-row justify-between items-center w-[170px] top-[182px]"
             classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
             buttonTitle="Ver curso"
-            handleViewCoursesClick={() => handleViewCourseClick(course._id)}
+            // handleViewCoursesClick={() => handleViewCourseClick(course._id)}
             classNameIconButton="h-[90%] pl-[15px] pr-[15px] pb-3 pt-3 bg-[#181717]"
             icon={<CartShopSimple width={"16px"} height={"16px"} />}
           />

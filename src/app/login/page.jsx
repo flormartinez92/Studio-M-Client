@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Login() {
   const { user } = useSelector((store) => store.auth);
-  console.log(user?.mail);
+  // console.log(user);
   const dispatch = useDispatch();
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");
@@ -62,14 +62,15 @@ export default function Login() {
               { withCredentials: true }
             )
             .then((res) => res.data)
-            .then((user) => {
+            .then((data) => {
+              sessionStorage.setItem("token", data.token);
               dispatch(
                 setCredentials({
-                  dni: user.dni,
-                  name: user.name,
-                  lastname: user.lastname,
-                  mail: user.mail,
-                  id: user._id,
+                  dni: data.user.dni,
+                  name: data.user.name,
+                  lastname: data.user.lastname,
+                  mail: data.user.mail,
+                  id: data.user._id,
                 })
               );
               setmessageAlert("");

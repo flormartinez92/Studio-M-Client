@@ -248,7 +248,6 @@ export function BurgerMenu({ width, height, color }) {
     </svg>
   );
 }
-
 export function BurgerMenu2({ width, height, color }) {
   return (
     <svg
@@ -540,14 +539,45 @@ export function Save({ width, height, color }) {
     >
       <path
         fill={color || "currentColor"}
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="m13.353 1.146l1.5 1.5L15 3v11.5l-.5.5h-13l-.5-.5v-13l.5-.5H13l.353.146zM2 2v12h12V3.208L12.793 2H11v4H4V2H2zm6 0v3h2V2H8z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
     </svg>
   );
 }
 
+export function Heart({ width, height, color }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "17"}
+      height={height || "17"}
+      viewBox="0 0 710 780"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="M651 55q29 27 44 61t15 71t-13 71t-42 63L371 605q-7 7-16 7t-17-7L54 321q-27-28-40-63T1 187t14-71t42.5-61T121 17t70-11t70 16t61 42l33 33l33-33q27-27 61-42t70-16t70 11t62 38z"
+      />
+    </svg>
+  );
+}
+
+export function LineHeart({ width, height, color }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "17"}
+      height={height || "17"}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="m12.1 18.55l-.1.1l-.11-.1C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5c1.54 0 3.04 1 3.57 2.36h1.86C13.46 6 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5c0 2.89-3.14 5.74-7.9 10.05M16.5 3c-1.74 0-3.41.81-4.5 2.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5c0 3.77 3.4 6.86 8.55 11.53L12 21.35l1.45-1.32C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3Z"
+      />
+    </svg>
+  );
+}
 export function CartShopPlusBgBlack({ width, height, onClick }) {
   return (
     <svg
