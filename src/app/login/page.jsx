@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Login() {
   const { user } = useSelector((store) => store.auth);
-  console.log(user?.mail);
+  // console.log(user);
   const dispatch = useDispatch();
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");

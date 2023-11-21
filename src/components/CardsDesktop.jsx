@@ -102,7 +102,11 @@ export default function CardsDesktop({
                   <p className={`${courseFavoriteClasses}`}>
                     Agregar a la lista de deseos
                   </p>
-                  <Heart width={`${heartWidth}`} height={`${heartHeight}`} />
+                  <Heart
+                    width={`${heartWidth}`}
+                    height={`${heartHeight}`}
+                    color={"#A31616"}
+                  />
                 </div>
                 {cartShopPlusBgBlack ? (
                   <div className="flex space-x-3 cursor-pointer">
