@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import IconButton from "@/common/IconButton";
 import { Arrow, ArrowBack, BurgerMenu2, Check } from "@/common/Icons";
 import Button from "@/common/Button";
@@ -10,15 +11,19 @@ import Image from "next/image";
 import { Message } from "@/common/Message";
 
 export default function SelectCourse({ params }) {
-  const { userId, courseId, classId } = params["select-course"];
+  const courseId = params["purchased-course-details"];
+  const classId = params["select-course"];
   const [completed, setCompleted] = useState(false);
   const [courses, setCourses] = useState([]);
+
   const handleClick = () => !completed && setCompleted(true);
+  const userToken = sessionStorage.getItem("token");
+  const { _id } = jwtDecode(userToken);
 
   useEffect(() => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseClass/${userId}/${courseId}/${classId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseClass/${_id}/${courseId}/${classId}`
       )
       .then((res) => {
         const courseClass = res.data;
@@ -26,7 +31,7 @@ export default function SelectCourse({ params }) {
         setCourses(courseClass);
       })
       .catch((error) => {
-        console.error("Error getting classes:", error);
+        console.error("Error getting courses:", error);
       });
   }, []);
 
@@ -48,22 +53,14 @@ export default function SelectCourse({ params }) {
         </IconButton>
       </div>
       <div className="w-full">
-        {/* {courses.map((course) =>
-          course.modules.map((module) =>
-            module.topics.map((topic) =>
-              topic.classes.map((clase, claseIndex) => ( */}
         <Message
-          // key={clase._id}
+          key={courses.classId}
           item_num="1"
-          text="hola"
+          text={courses.classInfo}
           className={
             "text-white text-2xl w-[90%] bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center py-14 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
           }
         />
-        {/* ))
-            )
-          )
-        )} */}
       </div>
       {completed ? (
         <Button
