@@ -15,6 +15,7 @@ export default function SelectCourse({ params }) {
   const classId = params["select-course"];
   const [completed, setCompleted] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [currentClassIndex, setCurrentClassIndex] = useState(0);
 
   const handleClick = () => !completed && setCompleted(true);
   const userToken = sessionStorage.getItem("token");
@@ -34,6 +35,34 @@ export default function SelectCourse({ params }) {
         console.error("Error getting courses:", error);
       });
   }, []);
+
+  // const goToNextClass = () => {
+  //   if (currentClassIndex < getTotalClasses() - 1) {
+  //     setCurrentClassIndex(currentClassIndex + 1);
+  //   }
+  // };
+
+  // const goToPrevClass = () => {
+  //   if (currentClassIndex > 0) {
+  //     setCurrentClassIndex(currentClassIndex - 1);
+  //   }
+  // };
+
+  // const getTotalClasses = () => {
+  //   return courses.length;
+  // };
+
+  // const getCurrentClass = () => {
+  //   if (
+  //     courses.length === 0 ||
+  //     currentClassIndex < 0 ||
+  //     currentClassIndex >= courses.length
+  //   ) {
+  //     return null; // Manejar el caso cuando no hay clases o el índice está fuera de rango
+  //   }
+
+  //   return courses[currentClassIndex];
+  // };
 
   return (
     <div className="bg-white bg-opacity-0 flex flex-col justify-between h-auto items-center gap-8">
