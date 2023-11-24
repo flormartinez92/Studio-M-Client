@@ -131,8 +131,7 @@ export default function Intro() {
                     lg:justify-start lg:items-center  
                     overflow-x-scroll 
                     scrollbar-none   
-                  scrollbar-thumb-page 
-                  scrollbar-track-buttonBlack/50
+                  
                     mb-5 lg:mb-8
                     min-[1300px]:gap-x-[5rem]"
                     ref={ContainerScroll_1}
@@ -216,8 +215,7 @@ export default function Intro() {
         md:hidden        
         overflow-x-scroll 
         scrollbar-none   
-      scrollbar-thumb-page 
-      scrollbar-track-buttonBlack/50
+      
                 mb-5 lg:mb-8"
             ref={ContainerScroll_2}
             onMouseDown={DownScroll_2}
