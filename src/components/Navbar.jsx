@@ -53,8 +53,6 @@ export default function Navbar() {
 
   return (
     <>
-      {numCart}
-
       {menuOpen ? (
         <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center animate-navbar">
           <div className="flex items-center justify-end">

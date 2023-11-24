@@ -1,6 +1,7 @@
 export const Footer = () => {
   return (
     <div
+      id="Footer"
       className="
     bg-[url(../../public/img/background.png)]
     md:bg-[url(../../public/img/background.png)]
