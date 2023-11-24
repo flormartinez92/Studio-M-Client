@@ -27,17 +27,9 @@ export default function Cards({
   // classNameDivButton,
   classNameIconButton,
   classNameBorder,
-  // newClass,
-  // titleResume,
-  // price,
-  // resume,
-  // level,
-  // hours,
-  // wishes,
   courseId,
 }) {
   const dispatch = useDispatch();
-  console.log("courseId--->", courseId);
   //Token para la informacion de usuario.
   const userToken = sessionStorage.getItem("token");
   const decodedToken = jwtDecode(userToken);
@@ -135,34 +127,6 @@ export default function Cards({
           </Button>
         </Border>
         {/* </div> */}
-        {/* <div className={`hidden ${newClass}`}>
-          <div className="flex flex-row justify-between w-[90%] font-medium md:text-sm lg:text-base xl:text-lg">
-            <h3>{titleResume}</h3>
-            <p>${price} ARS</p>
-          </div>
-          <p className="w-[90%] text-[#5C5A5A] md:text-[10px] lg:text-[12px] xl:text-[14px]">
-            {resume}
-          </p>
-          <div className="flex flex-row justify-between items-center w-[90%] lg:text-sm xl:text-base">
-            <p className="flex flex-row justify-between items-center">
-              <Signal /> {level}
-            </p>
-            <p className="flex flex-row justify-between items-center gap-1">
-              <Clock /> {hours}hs.
-            </p>
-            <p className="flex flex-row justify-between items-center gap-2">
-              {wishes}{" "}
-              <IconButton>
-                <Heart />
-              </IconButton>{" "}
-            </p>
-            <IconButton
-              onClick={handleAddToCart}
-              children={<CartShopPlus />}
-              className={"bg-[#181818] h-8 w-8 rounded-2xl"}
-            />
-          </div>
-        </div> */}
       </div>
     </div>
   );

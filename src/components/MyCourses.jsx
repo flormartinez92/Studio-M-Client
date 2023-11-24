@@ -2,17 +2,28 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cards from "./Cards";
 import axios from "axios";
+import inputScroll from "@/hooks/useScroll";
 
 const MyCourses = ({ decodedToken }) => {
   //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
+
+  const {
+    containerRef: ContainerScroll_1,
+    handleMouseDown: DownScroll_1,
+    handleMouseLeave: LeaveScroll_1,
+    handleMouseMove: MoveScroll_1,
+    handleMouseUp: MouseUpScroll_1,
+  } = inputScroll();
 
   //Pedido al back para traer los cursos de un usuario
   useEffect(() => {
     if (decodedToken._id) {
       try {
         axios
-          .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${decodedToken._id}`)
+          .get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${decodedToken._id}`
+          )
           .then((res) => setUserCourses(res.data));
       } catch (error) {
         console.error(error);
@@ -21,8 +32,15 @@ const MyCourses = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
-      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none">
+      <div
+        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
+        ref={ContainerScroll_1}
+        onMouseDown={DownScroll_1}
+        onMouseMove={MoveScroll_1}
+        onMouseUp={MouseUpScroll_1}
+        onMouseLeave={LeaveScroll_1}
+      >
         {userCourses?.map((userCourse) => (
           <div key={userCourse.courseInfo._id} className="mr-4">
             <Link href={`/my-account/${userCourse.courseInfo._id}`}>

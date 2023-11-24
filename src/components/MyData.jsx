@@ -28,6 +28,14 @@ const MyData = ({ decodedToken }) => {
     message: MessagePassword,
   } = useInput("passwordLogin");
 
+  const {
+    OnChange: OnChangePassword2,
+    value: valuePassword2,
+    blur: BlurPassword2,
+    focus: FocusPassword2,
+    message: MessagePassword2,
+  } = useInput("passwordLogin");
+
   //Pedido al back para los datos de usuario (el token tambien los trae).
   useEffect(() => {
     if (decodedToken._id) {
@@ -76,6 +84,15 @@ const MyData = ({ decodedToken }) => {
   //Manejador de cambio para los campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    setUserData({ ...userData, [name]: value });
+  };
+
+  //Manejador de click de contraseña
+  const handleClickEdit = (e) => {
+    e.preventDefault();
+
+    const { name, value } = e.target;
     switch(name){
       case "firstpassword": 
         OnChangePassword(value);
@@ -87,11 +104,6 @@ const MyData = ({ decodedToken }) => {
         break;
     }
     setUserData({ ...userData, [name]: value });
-  };
-
-  //Manejador de click de contraseña
-  const handleClickEdit = (e) => {
-    e.preventDefault();
 
     if (changePassword) {
       handlePassword({
@@ -187,7 +199,7 @@ const MyData = ({ decodedToken }) => {
               name="firstpassword"
               type="password"
               value={valuePassword}
-              onChange={handleInputChange}
+              onChange={OnChangePassword}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
@@ -200,7 +212,7 @@ const MyData = ({ decodedToken }) => {
               name="secondpassword"
               type="password"
               value={valuePassword}
-              onChange={handleInputChange}
+              onChange={OnChangePassword2}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
