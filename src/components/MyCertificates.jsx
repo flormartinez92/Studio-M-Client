@@ -53,10 +53,10 @@ const MyCertificates = ({decodedToken}) => {
       </div>
 
       {/*modo desktop*/}
-      <div className="hidden md:flex md:flex-col md:justify-center">
-        {userCertificates?.map((userCertificate) => (
+      <div className="hidden md:flex md:flex-col md:justify-center items-center">
+        {userCertificates?.map((userCertificate, index) => (
 
-        <div className="relative" key={userCertificate.id}>
+        <div className="relative" key={index}>
           <Image
             src="/img/paper-background.png"
             width={900}
@@ -81,7 +81,7 @@ const MyCertificates = ({decodedToken}) => {
                 {userCertificate.dni}
               </p>
               <p className="text-sm font-ms-gothic mb-2 mt-2 lg:text-base">
-               {userCertificate.description}
+                {userCertificate.description}
               </p>
               <p className="text-sm font-ms-gothic lg:text-base">
                 {userCertificate.createdAt.slice(0, 10)}
