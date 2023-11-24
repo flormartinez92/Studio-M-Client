@@ -5,7 +5,7 @@ export default function Cover() {
   return (
     <section className="bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center">
       <div
-        className=" h-1/2 flex flex-col
+        className="border-solid border-t border-h2Black h-1/2 flex flex-col
       md:h-screen md:px-7 md:flex-row md:pb-24"
       >
         <div

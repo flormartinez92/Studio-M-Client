@@ -3,7 +3,30 @@ import Image from "next/image";
 import React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
 
-export default function CardsDesktop(props) {
+export default function CardsDesktop({
+  handleViewCoursesClick,
+  courseTitleClasses,
+  courseLongTitle,
+  courseImg_url,
+  cartShopPlusBgBlack,
+  courseSubtitleClasses,
+  courseSubtitle,
+  coursePriceClasses,
+  coursePrice,
+  courseDescriptionClasses,
+  courseDescription,
+  courseLevel,
+  courseDuration,
+  signaltWidth,
+  signalHeight,
+  courseLevelClasses,
+  clockWidth,
+  clockHeight,
+  courseDurationClasses,
+  courseFavoriteClasses,
+  heartWidth,
+  heartHeight,
+}) {
   const isWideScreen = useMediaQuery("(min-width: 1300px)");
 
   return (
@@ -11,111 +34,104 @@ export default function CardsDesktop(props) {
       <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-6xl">
         <div
           className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl cursor-pointer"
-          onClick={props.handleViewCoursesClick}
+          onClick={handleViewCoursesClick}
         >
-          <h3 className={`tracking-widest ${props.courseTitleClasses}`}>
+          <h3 className={`tracking-widest ${courseTitleClasses}`}>
             {isWideScreen
-              ? props.courseLongTitle
-              : props.courseLongTitle?.length > 47
-              ? `${props.courseLongTitle.slice(0, 47)}...`
-              : props.courseLongTitle}
+              ? courseLongTitle
+              : courseLongTitle?.length > 47
+              ? `${courseLongTitle.slice(0, 47)}...`
+              : courseLongTitle}
           </h3>
         </div>
 
         <div className="col-span-1">
           <div className="w-full h-full">
-            <Image
-              width={280}
-              height={255}
-              src={props.courseImg_url}
-              alt="Imagen Curso"
-              className="rounded-bl-lg drop-shadow-lg w-[100%] h-[100%] object-cover"
-            />
+            {courseImg_url && (
+              <Image
+                width={280}
+                height={255}
+                src={courseImg_url}
+                alt="Imagen Curso"
+                className="rounded-bl-lg drop-shadow-lg w-[100%] h-[100%] object-cover"
+              />
+            )}
           </div>
         </div>
 
         <div className="col-span-3">
           {/* Aca si estoy en la vista donde estan todos los detalles, se muestra esto */}
-          {props.cartShopPlusBgBlack ? (
+          {cartShopPlusBgBlack ? (
             <div className="bg-lightGrey rounded-br-lg p-6">
               <div className="flex flex-row justify-between  gap-x-4 tracking-tight items-center text-h3Black">
-                <h4 className={`font-ms-gothic ${props.courseSubtitleClasses}`}>
-                  {props.courseSubtitle}
+                <h4 className={`font-ms-gothic ${courseSubtitleClasses}`}>
+                  {courseSubtitle}
                 </h4>
 
-                <p className={`font-mystery-mixed ${props.coursePriceClasses}`}>
-                  $
-                  {Number(props.coursePrice).toLocaleString().replace(",", ".")}
+                <p className={`font-mystery-mixed ${coursePriceClasses}`}>
+                  ${Number(coursePrice).toLocaleString().replace(",", ".")}
                   ARS
                 </p>
               </div>
 
               <p
-                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${props.courseDescriptionClasses}`}
+                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${courseDescriptionClasses}`}
               >
-                {props.courseDescription}
+                {courseDescription}
               </p>
 
               <div className="flex  justify-between items-center pt-8 font-ms-gothic text-h3Black leading-tight">
-                {props.courseLevel ? (
+                {courseLevel ? (
                   <div className="flex items-center space-x-2">
                     <Signal
-                      width={`${props.signaltWidth}`}
-                      height={`${props.signalHeight}`}
+                      width={`${signaltWidth}`}
+                      height={`${signalHeight}`}
                     />
-                    <p className={`${props.courseLevelClasses}`}>
-                      {props.courseLevel}
-                    </p>
+                    <p className={`${courseLevelClasses}`}>{courseLevel}</p>
                   </div>
                 ) : null}
-                {props.courseDuration ? (
+                {courseDuration ? (
                   <div className="flex items-center space-x-4">
-                    <Clock
-                      width={`${props.clockWidth}`}
-                      height={`${props.clockHeight}`}
-                    />
-                    <p className={`${props.courseDurationClasses}`}>
-                      {props.courseDuration}
+                    <Clock width={`${clockWidth}`} height={`${clockHeight}`} />
+                    <p className={`${courseDurationClasses}`}>
+                      {courseDuration}
                     </p>
                   </div>
                 ) : null}
                 <div className="flex items-center space-x-3">
-                  <p className={`${props.courseFavoriteClasses}`}>
+                  <p className={`${courseFavoriteClasses}`}>
                     Agregar a la lista de deseos
                   </p>
                   <Heart
-                    width={`${props.heartWidth}`}
-                    height={`${props.heartHeight}`}
+                    width={`${heartWidth}`}
+                    height={`${heartHeight}`}
+                    color={"#A31616"}
                   />
                 </div>
-                {props.cartShopPlusBgBlack ? (
+                {cartShopPlusBgBlack ? (
                   <div className="flex space-x-3 cursor-pointer">
-                    <div>{props.cartShopPlusBgBlack}</div>
+                    <div>{cartShopPlusBgBlack}</div>
                   </div>
                 ) : null}
               </div>
             </div>
           ) : (
             <div className="bg-lightGrey rounded-br-lg p-6 ">
-              <h4 className={`font-ms-gothic ${props.courseSubtitleClasses}`}>
-                {props.courseSubtitle}
+              <h4 className={`font-ms-gothic ${courseSubtitleClasses}`}>
+                {courseSubtitle}
               </h4>
               <p
-                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${props.courseDescriptionClasses}`}
+                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${courseDescriptionClasses}`}
               >
-                {props.courseDescription}
+                {courseDescription}
               </p>
-              {!props.courseLevel && !props.courseDuration ? (
+              {!courseLevel && !courseDuration ? (
                 <div className="flex justify-end items-end pt-8 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
-                  {props.coursePrice ? (
+                  {coursePrice ? (
                     <div className="flex space-x-3">
-                      <p
-                        className={`font-ms-gothic ${props.coursePriceClasses}`}
-                      >
+                      <p className={`font-ms-gothic ${coursePriceClasses}`}>
                         $
-                        {Number(props.coursePrice)
-                          .toLocaleString()
-                          .replace(",", ".")}{" "}
+                        {Number(coursePrice).toLocaleString().replace(",", ".")}{" "}
                         ARS
                       </p>
                     </div>
@@ -123,44 +139,37 @@ export default function CardsDesktop(props) {
                 </div>
               ) : (
                 <div className="flex  justify-between items-center pt-14 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
-                  {props.courseLevel ? (
+                  {courseLevel ? (
                     <div className="flex items-center space-x-2">
                       <Signal
-                        width={`${props.signaltWidth}`}
-                        height={`${props.signalHeight}`}
+                        width={`${signaltWidth}`}
+                        height={`${signalHeight}`}
                       />
-                      <p className={`${props.courseLevelClasses}`}>
-                        {props.courseLevel}
-                      </p>
+                      <p className={`${courseLevelClasses}`}>{courseLevel}</p>
                     </div>
                   ) : null}
-                  {props.courseDuration ? (
+                  {courseDuration ? (
                     <div className="flex items-center space-x-4">
                       <Clock
-                        width={`${props.clockWidth}`}
-                        height={`${props.clockHeight}`}
+                        width={`${clockWidth}`}
+                        height={`${clockHeight}`}
                       />
-                      <p className={`${props.courseDurationClasses}`}>
-                        {props.courseDuration}
+                      <p className={`${courseDurationClasses}`}>
+                        {courseDuration}
                       </p>
                     </div>
                   ) : null}
                   <div className="flex items-center space-x-3">
-                    <p className={`${props.courseFavoriteClasses}`}>
+                    <p className={`${courseFavoriteClasses}`}>
                       Agregar a la lista de deseos
                     </p>
-                    <Heart
-                      width={`${props.heartWidth}`}
-                      height={`${props.heartHeight}`}
-                    />
+                    <Heart width={`${heartWidth}`} height={`${heartHeight}`} />
                   </div>
-                  {props.coursePrice ? (
+                  {coursePrice ? (
                     <div className="flex  space-x-3">
-                      <p className={`${props.coursePriceClasses}`}>
+                      <p className={`${coursePriceClasses}`}>
                         $
-                        {Number(props.coursePrice)
-                          .toLocaleString()
-                          .replace(",", ".")}
+                        {Number(coursePrice).toLocaleString().replace(",", ".")}
                         ARS
                       </p>
                     </div>
