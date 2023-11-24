@@ -12,6 +12,7 @@ import {
   Close,
   FullHeart,
   Heart,
+  LineHeart,
   Signal,
 } from "@/common/Icons";
 import axios from "axios";
@@ -170,7 +171,7 @@ export default function Trolley() {
                                   )
                                 }
                               >
-                                <FullHeart height={25} width={25} />
+                                <Heart height={25} width={25} />
                               </div>
                             ) : (
                               <div
@@ -181,7 +182,8 @@ export default function Trolley() {
                                   )
                                 }
                               >
-                                <Heart height={25} width={25} />
+                                <LineHeart height={25} width={25} />
+                                {/* <Heart height={25} width={25} /> */}
                               </div>
                             )}
                           </div>
