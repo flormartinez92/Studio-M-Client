@@ -28,71 +28,12 @@ export default function SelectCourse({ params }) {
       )
       .then((res) => {
         const courseClass = res.data;
-        console.log(courseClass);
         setCourses(courseClass);
       })
       .catch((error) => {
         console.error("Error getting courses:", error);
       });
   }, [_id, courseId, classId]);
-
-  // const goToNextClass = () => {
-  //   const totalClasses = getTotalClasses();
-  //   if (currentClassIndex < totalClasses - 1) {
-  //     setCurrentClassIndex(currentClassIndex + 1);
-  //     updateCourses(currentClassIndex + 1);
-  //   }
-  // };
-
-  // const goToPrevClass = () => {
-  //   if (currentClassIndex > 0) {
-  //     setCurrentClassIndex(currentClassIndex - 1);
-  //     updateCourses(currentClassIndex - 1);
-  //   }
-  // };
-
-  // const updateCourses = (index) => {
-  //   const currentClassKey = Object.keys(courses)[index];
-  //   const currentClassId = courses[currentClassKey]._id;
-
-  //   axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseClass/${_id}/${courseId}/${classId}`
-  //     )
-  //     .then((res) => {
-  //       const updatedCourseClass = res.data;
-  //       setCourses((prevCourses) => {
-  //         const updatedCourses = { ...prevCourses };
-  //         updatedCourses[currentClassKey] = updatedCourseClass;
-  //         return updatedCourses;
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error updating course:", error);
-  //     });
-  // };
-
-  // const getTotalClasses = () => {
-  //   return Object.keys(courses).length;
-  // };
-
-  // const getCurrentClass = () => {
-  //   const totalClasses = getTotalClasses();
-
-  //   if (
-  //     totalClasses === 0 ||
-  //     currentClassIndex < 0 ||
-  //     currentClassIndex >= totalClasses
-  //   ) {
-  //     return null;
-  //   }
-
-  //   const keys = Object.keys(courses);
-  //   const currentClassKey = keys[currentClassIndex];
-  //   return courses[currentClassKey];
-  // };
-
-  // const currentClass = getCurrentClass();
 
   return (
     <div className="bg-white bg-opacity-0 flex flex-col justify-between h-auto items-center gap-8">
@@ -107,11 +48,9 @@ export default function SelectCourse({ params }) {
         </div>
         <div className="flex flex-row gap-4">
           <IconButton>
-            {/* <IconButton onClick={goToPrevClass}> */}
             <ArrowBack color={"black"} />
           </IconButton>
           <IconButton>
-            {/* <IconButton onClick={goToNextClass}> */}
             <Arrow color={"black"} />
           </IconButton>
         </div>
