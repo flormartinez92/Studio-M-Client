@@ -8,7 +8,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`bg-black text-white ${
+      className={`bg-buttonBlack text-white ${
         type === "rounder" ? "rounded-[10px]" : null
       } ${className || ""}`}
       {...propButton}
