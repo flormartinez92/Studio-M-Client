@@ -32,9 +32,9 @@ const MyCourses = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none justify-around">
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none">
       <div
-        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row justify-around"
+        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
         ref={ContainerScroll_1}
         onMouseDown={DownScroll_1}
         onMouseMove={MoveScroll_1}
