@@ -7,6 +7,8 @@ import Input from "@/common/Input";
 import Cards from "@/components/Cards";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
 
 export default function trolleyDetails() {
@@ -18,11 +20,22 @@ export default function trolleyDetails() {
 
   const modalRef = useRef();
   const [user, setUser] = useState({});
+  const router = useRouter();
 
-  const handleCheck = () => {
-    console.log(trolley);
-    /* if (!trolley) return; */
-    if (cartAmount.totalDiscount == 0) {
+  const handleCheck = async () => {
+    console.log(user);
+    try {
+      const responseCart = await axios.post(
+        `http://localhost:8081/api/cart/confirmBuy/${user._id}`
+      );
+      console.log(responseCart);
+      router.push("/");
+    } catch (err) {
+      console.error(err);
+    }
+
+    //http://localhost:8081/api/cart/confirmBuy/65538c7afc108110ec0e0273
+    /* if (cartAmount.totalDiscount == 0) {
       console.log(
         "No hay descuento aplicado, el precio real es",
         cartAmount.totalAmount
@@ -34,7 +47,7 @@ export default function trolleyDetails() {
       if (totalDiscount !== cartAmount.totalDiscount) return;
       console.log("Hay descuento, el precio real es", totalDiscount);
     }
-    console.log(cartAmount);
+    console.log(cartAmount); */
   };
   const handleAddCoupon = async () => {
     if (!coupon) return;
