@@ -37,7 +37,7 @@ const MyCertificates = ({decodedToken}) => {
           <Border className="border-pink border-2 w-[70%] max-w-[19rem]">
             <div className="flex items-center w-full">
               <div className="w-[70%] flex flex-col items-center border-r-2 border-solid border-pink">
-                <h2 className=" font-mystery-mixed text-3xl">{userCertificate.courseTitle}</h2>
+                <h2 className=" font-mystery-mixed text-3xl">{userCertificate.courseShortTitle}</h2>
                 <h3 className=" font-ms-gothic text-sm">{userCertificate.createdAt.slice(0, 10)}</h3>
               </div>
               <div className="w-[30%] flex justify-center">
