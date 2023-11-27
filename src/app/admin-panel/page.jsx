@@ -1,8 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import AdminButton from "../../common/AdminButton";
 import { DashIcons, MenuBook, Percent, User } from "@/common/Icons";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function AdminPanel() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`)
+      .then((res) => {
+        const projects = res.data;
+        console.log(projects);
+        setProjects(projects);
+      })
+      .catch((error) => {
+        console.error("Error getting Projects:", error);
+      });
+  }, []);
+
+  const totalProyectos = projects.reduce((total, project) => total + 1, 0);
+
   return (
     <div
       className="flex flex-col gap-12 items-center justify-center my-16
@@ -13,7 +34,7 @@ export default function AdminPanel() {
       <Link href="/active-projects">
         <AdminButton
           icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
-          text={"10 proyectos para corregir"}
+          text={`${totalProyectos} proyectos para corregir`}
           className={"bg-pink"}
         />
       </Link>
