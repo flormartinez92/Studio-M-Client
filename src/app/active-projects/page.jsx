@@ -48,6 +48,19 @@ export default function ActiveProjects() {
     }
   };
 
+  const showAlert = (projectId) => {
+    const isApproved = window.confirm(
+      "¿Estás seguro de que quieres aprobar este proyecto?"
+    );
+
+    if (isApproved) {
+      alert(`Proyecto ${projectId} aprobado`);
+      handleStatusToggle(projectId);
+    } else {
+      alert("Acción cancelada");
+    }
+  };
+
   const handleStatusToggle = async (projectId) => {
     try {
       const oneProject = await axios.get(
@@ -98,7 +111,7 @@ export default function ActiveProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects?.map((project) => (
+            {projects?.slice(0, 10).map((project) => (
               <tr
                 key={project.userId}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -116,7 +129,7 @@ export default function ActiveProjects() {
                   </button>
                 </td>
                 <td className="p-4">
-                  <button onClick={() => handleStatusToggle(project.projectId)}>
+                  <button onClick={() => showAlert(project.projectId)}>
                     {project.status ? (
                       <Check color="#A31616" />
                     ) : (
@@ -129,6 +142,7 @@ export default function ActiveProjects() {
           </tbody>
           <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
             <tr>
+              <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td></td>
               <td>Filas por página</td>

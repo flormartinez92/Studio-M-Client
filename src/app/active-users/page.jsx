@@ -16,6 +16,7 @@ export default function ActiveUsers() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`)
       .then((res) => {
         const courses = res.data;
+        console.log(courses);
         setCourses(courses);
       })
       .catch((error) => {
@@ -36,11 +37,18 @@ export default function ActiveUsers() {
       });
   }, []);
 
+  // const calculateTotalUsersPerCourse = (userId) => {
+  //   const user = users.find((user) => user._id === userId);
+  //   if (!user) {
+  //     return "";
+  //   }
+
   const calculateTotalUsersPerCourse = (userId) => {
     const user = users.find((user) => user._id === userId);
-    if (!user) {
-      return "";
+    if (!user || user.course.length === 0) {
+      return ""; // Puedes devolver un valor predeterminado si no hay cursos comprados
     }
+
     const courseNames = user.course.map((course) => {
       const matchingCourse = courses.find((c) => c._id === course.courseId);
       return matchingCourse
@@ -48,6 +56,11 @@ export default function ActiveUsers() {
         : "Course not found";
     });
     return courseNames.join(", ");
+  };
+
+  const handleCourseSelection = (userId, selectedCourse) => {
+    // Implementa la lógica para actualizar los cursos del usuario en el estado o realizar una solicitud al servidor
+    console.log(`Usuario ${userId} seleccionó el curso ${selectedCourse}`);
   };
 
   return (
@@ -67,7 +80,7 @@ export default function ActiveUsers() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users?.slice(0, 10).map((user) => (
               <tr
                 key={user._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -79,7 +92,28 @@ export default function ActiveUsers() {
                 </td>
                 <td>&nbsp;</td>
                 <td className="p-2">
-                  <ul>{calculateTotalUsersPerCourse(user._id)}</ul>
+                  <select
+                    value={calculateTotalUsersPerCourse(user._id)}
+                    onChange={(e) =>
+                      handleCourseSelection(user._id, e.target.value)
+                    }
+                  >
+                    <option value="">Seleccionar curso</option>
+                    {user.course.map((userCourse) => {
+                      const matchingCourse = courses.find(
+                        (course) => course._id === userCourse.courseId
+                      );
+                      return matchingCourse ? (
+                        <option
+                          key={matchingCourse._id}
+                          value={matchingCourse.courseShortTitle}
+                        >
+                          {matchingCourse.courseShortTitle}
+                        </option>
+                      ) : null;
+                    })}
+                  </select>
+                  {/* <ul>{calculateTotalUsersPerCourse(user._id)}</ul> */}
                 </td>
               </tr>
             ))}

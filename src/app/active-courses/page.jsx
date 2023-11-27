@@ -100,7 +100,7 @@ export default function ActiveCourses() {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => (
+            {courses?.slice(0, 10).map((course) => (
               <tr
                 key={course._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -118,14 +118,18 @@ export default function ActiveCourses() {
                   {calculateTotalUsersPerCourse(course._id)}
                 </td>
                 <td className="p-4">
-                  <button>
-                    <Plus color="#4FE21B" />
-                  </button>
+                  <Link href="/add-course">
+                    <button>
+                      <Plus color="#4FE21B" />
+                    </button>
+                  </Link>
                 </td>
                 <td className="p-2">
-                  <button>
-                    <Pencil color="#1BBEE2" />
-                  </button>
+                  <Link href="/add-course">
+                    <button>
+                      <Pencil color="#1BBEE2" />
+                    </button>
+                  </Link>
                 </td>
                 <td className="p-4">
                   <button

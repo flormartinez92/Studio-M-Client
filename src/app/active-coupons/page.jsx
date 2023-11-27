@@ -75,7 +75,7 @@ export default function ActiveCoupons() {
             </tr>
           </thead>
           <tbody>
-            {coupons.map((coupon) => (
+            {coupons?.slice(0, 10).map((coupon) => (
               <tr
                 key={coupon._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
