@@ -16,6 +16,12 @@ import { useEffect } from "react";
 
 export default function ActiveProjects() {
   const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const projectsPerPage = 10;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
 
   useEffect(() => {
     axios
@@ -45,6 +51,19 @@ export default function ActiveProjects() {
       setProjects(projects.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const showAlert = (projectId) => {
+    const isApproved = window.confirm(
+      "¿Estás seguro de que quieres aprobar este proyecto?"
+    );
+
+    if (isApproved) {
+      alert(`Proyecto ${projectId} aprobado`);
+      handleStatusToggle(projectId);
+    } else {
+      alert("Acción cancelada");
     }
   };
 
@@ -98,7 +117,7 @@ export default function ActiveProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects?.map((project) => (
+            {projects?.slice(startIndex, endIndex).map((project) => (
               <tr
                 key={project.userId}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -116,7 +135,7 @@ export default function ActiveProjects() {
                   </button>
                 </td>
                 <td className="p-4">
-                  <button onClick={() => handleStatusToggle(project.projectId)}>
+                  <button onClick={() => showAlert(project.projectId)}>
                     {project.status ? (
                       <Check color="#A31616" />
                     ) : (
@@ -130,12 +149,33 @@ export default function ActiveProjects() {
           <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
             <tr>
               <td>&nbsp;</td>
+              <td>&nbsp;</td>
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp; 1 de 3
-                <UilArrow1 color="lightGrey" />
-                <UilArrow2 color="lightGrey" />
+                &nbsp; {currentPage} de {totalPages}
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                >
+                  <UilArrow1
+                    color={currentPage === 1 ? "lightGrey" : "black"}
+                  />
+                </button>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) =>
+                      Math.min(prevPage + 1, totalPages)
+                    )
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  <UilArrow2
+                    color={currentPage === totalPages ? "lightGrey" : "black"}
+                  />
+                </button>
               </td>
             </tr>
           </tfoot>
