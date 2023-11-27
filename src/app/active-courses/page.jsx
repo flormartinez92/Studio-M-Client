@@ -19,6 +19,12 @@ import Link from "next/link";
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const coursesPerPage = 10;
+  const totalPages = Math.ceil(courses.length / coursesPerPage);
+  const startIndex = (currentPage - 1) * coursesPerPage;
+  const endIndex = startIndex + coursesPerPage;
 
   useEffect(() => {
     axios
@@ -100,7 +106,7 @@ export default function ActiveCourses() {
             </tr>
           </thead>
           <tbody>
-            {courses?.slice(0, 10).map((course) => (
+            {courses?.slice(startIndex, endIndex).map((course) => (
               <tr
                 key={course._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -154,9 +160,29 @@ export default function ActiveCourses() {
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp; 1 de 3
-                <UilArrow1 color="lightGrey" />
-                <UilArrow2 color="lightGrey" />
+                &nbsp; {currentPage} de {totalPages}
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                >
+                  <UilArrow1
+                    color={currentPage === 1 ? "lightGrey" : "black"}
+                  />
+                </button>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) =>
+                      Math.min(prevPage + 1, totalPages)
+                    )
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  <UilArrow2
+                    color={currentPage === totalPages ? "lightGrey" : "black"}
+                  />
+                </button>
               </td>
             </tr>
           </tfoot>

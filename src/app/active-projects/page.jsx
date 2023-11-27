@@ -16,6 +16,12 @@ import { useEffect } from "react";
 
 export default function ActiveProjects() {
   const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const projectsPerPage = 10;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
 
   useEffect(() => {
     axios
@@ -111,7 +117,7 @@ export default function ActiveProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects?.slice(0, 10).map((project) => (
+            {projects?.slice(startIndex, endIndex).map((project) => (
               <tr
                 key={project.userId}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
@@ -147,9 +153,29 @@ export default function ActiveProjects() {
               <td></td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp; 1 de 3
-                <UilArrow1 color="lightGrey" />
-                <UilArrow2 color="lightGrey" />
+                &nbsp; {currentPage} de {totalPages}
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                >
+                  <UilArrow1
+                    color={currentPage === 1 ? "lightGrey" : "black"}
+                  />
+                </button>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) =>
+                      Math.min(prevPage + 1, totalPages)
+                    )
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  <UilArrow2
+                    color={currentPage === totalPages ? "lightGrey" : "black"}
+                  />
+                </button>
               </td>
             </tr>
           </tfoot>
