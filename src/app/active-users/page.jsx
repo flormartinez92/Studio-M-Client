@@ -57,7 +57,20 @@ export default function ActiveUsers() {
   };
 
   const handleCourseSelection = (userId, selectedCourse) => {
-    console.log(`Usuario ${userId} seleccionó el curso ${selectedCourse}`);
+    // Copia del array de usuarios para no modificar el estado directamente
+    const updatedUsers = [...users];
+    // Encuentra el usuario correspondiente
+    const selectedUser = updatedUsers.find((user) => user._id === userId);
+    // Actualiza la información del curso seleccionado para el usuario
+    selectedUser.course = [
+      {
+        courseId: courses.find(
+          (course) => course.courseShortTitle === selectedCourse
+        )?._id,
+      },
+    ];
+    // Actualiza el estado local de los usuarios
+    setUsers(updatedUsers);
   };
 
   return (
@@ -84,11 +97,9 @@ export default function ActiveUsers() {
               >
                 <td className="p-4">{user.name + " " + user.lastname}</td>
                 <td>&nbsp;</td>
-                <td className="p-1">
-                  {user.dni.toLocaleString().replace(/,/g, ".")}
-                </td>
+                <td>{user.dni.toLocaleString().replace(/,/g, ".")}</td>
                 <td>&nbsp;</td>
-                <td className="p-2">
+                <td>
                   <select
                     value={calculateTotalUsersPerCourse(user._id)}
                     onChange={(e) =>

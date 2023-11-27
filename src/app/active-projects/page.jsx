@@ -60,7 +60,6 @@ export default function ActiveProjects() {
     );
 
     if (isApproved) {
-      alert(`Proyecto ${projectId} aprobado`);
       handleStatusToggle(projectId);
     } else {
       alert("Acción cancelada");
