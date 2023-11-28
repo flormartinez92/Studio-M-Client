@@ -459,12 +459,11 @@ export function BurgerDots({ width, height, color }) {
   );
 }
 
-export function Vector({ width, height, color, onClick }) {
+export function Vector({ width, height, color }) {
   return (
     <svg
-      onClick={onClick}
-      width={width || "35"}
-      height={height || "21"}
+      width={width || "35px"}
+      height={height || "21px"}
       viewBox="0 0 35 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

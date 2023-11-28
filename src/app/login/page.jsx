@@ -214,9 +214,9 @@ export default function Login() {
         sm:flex-row"
         >
           <p>¿No tenés cuenta?</p>
-          <a href="#" className="underline">
+          <Link href="/register" className="underline">
             Registrate
-          </a>
+          </Link>
         </div>
       </form>
     </div>

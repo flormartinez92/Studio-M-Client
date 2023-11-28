@@ -65,18 +65,15 @@ export default function CourseInformation({ params }) {
 
       {/* // Aca arranca vista desktop */}
       <div className="hidden md:block flex-col items-center justify-center select-none">
-        <div className="flex flex-col items-center justify-center pt-14 pb-6">
+        <div className="flex flex-col items-center justify-center pt-14 pb-6 w-[90%] m-auto">
           <CardsDesktop
             key={course._id}
-            courseTitleClasses="text-2xl leading-loose min-[1024px]:text-3xl min-[1024px]:py-2"
             courseLongTitle={course.courseLongTitle}
             courseImg_url={course.courseImg_url}
             courseSubtitle={course.courseSubtitle}
-            courseSubtitleClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
             coursePrice={course.coursePrice}
-            coursePriceClasses=" text-[1rem] min-[1024px]:text-[1.275rem]"
+            fullDescription={true}
             courseDescription={course.courseDescription}
-            courseDescriptionClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
           />
         </div>
       </div>
