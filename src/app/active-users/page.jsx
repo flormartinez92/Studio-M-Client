@@ -106,7 +106,7 @@ export default function ActiveUsers() {
                       handleCourseSelection(user._id, e.target.value)
                     }
                   >
-                    <option value="">Seleccionar curso</option>
+                    <option value="">Ver curso</option>
                     {user.course.map((userCourse) => {
                       const matchingCourse = courses.find(
                         (course) => course._id === userCourse.courseId
