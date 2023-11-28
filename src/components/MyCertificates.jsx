@@ -69,7 +69,7 @@ const MyCertificates = ({decodedToken}) => {
 
       {/*modo desktop*/}
       <div className="hidden md:flex md:flex-col md:justify-center items-center">
-        {userCertificates?.map((userCertificate, index) => (
+        {userCertificates?.slice(startIndex, endIndex - 1).map((userCertificate, index) => (
 
         <div className="relative" key={index}>
           <Image
@@ -133,6 +133,11 @@ const MyCertificates = ({decodedToken}) => {
           </div>
         </div>
         ))}
+        <div className="w-full flex flex-row gap-2 mt-4 mb-4 items-center justify-end mr-[15%]">
+          &nbsp; {currentPage} de {totalPages}
+          <button onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))} disabled={currentPage === 1}><ArrowBack  color={currentPage === 1 ? "lightGrey" : "black"}/></button>
+          <button  onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))} disabled={currentPage === totalPages}><Arrow color={currentPage === totalPages ? "lightGrey" : "black"}/></button>
+        </div>
       </div>
     </>
   );
