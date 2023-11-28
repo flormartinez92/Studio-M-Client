@@ -10,6 +10,12 @@ import { useEffect } from "react";
 export default function ActiveUsers() {
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const usersPerPage = 10;
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const endIndex = startIndex + usersPerPage;
 
   useEffect(() => {
     axios
@@ -28,7 +34,6 @@ export default function ActiveUsers() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminUser/allUsers`)
       .then((res) => {
         const users = res.data;
-        console.log(users);
         setUsers(users);
       })
       .catch((error) => {
@@ -38,9 +43,10 @@ export default function ActiveUsers() {
 
   const calculateTotalUsersPerCourse = (userId) => {
     const user = users.find((user) => user._id === userId);
-    if (!user) {
+    if (!user || user.course.length === 0) {
       return "";
     }
+
     const courseNames = user.course.map((course) => {
       const matchingCourse = courses.find((c) => c._id === course.courseId);
       return matchingCourse
@@ -48,6 +54,23 @@ export default function ActiveUsers() {
         : "Course not found";
     });
     return courseNames.join(", ");
+  };
+
+  const handleCourseSelection = (userId, selectedCourse) => {
+    // Copia del array de usuarios para no modificar el estado directamente
+    const updatedUsers = [...users];
+    // Encuentra el usuario correspondiente
+    const selectedUser = updatedUsers.find((user) => user._id === userId);
+    // Actualiza la información del curso seleccionado para el usuario
+    selectedUser.course = [
+      {
+        courseId: courses.find(
+          (course) => course.courseShortTitle === selectedCourse
+        )?._id,
+      },
+    ];
+    // Actualiza el estado local de los usuarios
+    setUsers(updatedUsers);
   };
 
   return (
@@ -67,19 +90,37 @@ export default function ActiveUsers() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users?.slice(startIndex, endIndex).map((user) => (
               <tr
                 key={user._id}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{user.name + " " + user.lastname}</td>
                 <td>&nbsp;</td>
-                <td className="p-1">
-                  {user.dni.toLocaleString().replace(/,/g, ".")}
-                </td>
+                <td>{user.dni.toLocaleString().replace(/,/g, ".")}</td>
                 <td>&nbsp;</td>
-                <td className="p-2">
-                  <ul>{calculateTotalUsersPerCourse(user._id)}</ul>
+                <td>
+                  <select
+                    value={calculateTotalUsersPerCourse(user._id)}
+                    onChange={(e) =>
+                      handleCourseSelection(user._id, e.target.value)
+                    }
+                  >
+                    <option value="">Seleccionar curso</option>
+                    {user.course.map((userCourse) => {
+                      const matchingCourse = courses.find(
+                        (course) => course._id === userCourse.courseId
+                      );
+                      return matchingCourse ? (
+                        <option
+                          key={matchingCourse._id}
+                          value={matchingCourse.courseShortTitle}
+                        >
+                          {matchingCourse.courseShortTitle}
+                        </option>
+                      ) : null;
+                    })}
+                  </select>
                 </td>
               </tr>
             ))}
@@ -91,9 +132,29 @@ export default function ActiveUsers() {
               <td>&nbsp;</td>
               <td>Filas por página</td>
               <td className="flex justify-between mt-3">
-                &nbsp; 1 de 3
-                <UilArrow1 color="lightGrey" />
-                <UilArrow2 color="lightGrey" />
+                &nbsp; {currentPage} de {totalPages}
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                >
+                  <UilArrow1
+                    color={currentPage === 1 ? "lightGrey" : "black"}
+                  />
+                </button>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prevPage) =>
+                      Math.min(prevPage + 1, totalPages)
+                    )
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  <UilArrow2
+                    color={currentPage === totalPages ? "lightGrey" : "black"}
+                  />
+                </button>
               </td>
             </tr>
           </tfoot>
