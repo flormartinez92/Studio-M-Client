@@ -99,7 +99,9 @@ export default function Intro() {
     <div className="flex flex-col justify-center items-center w-full h-auto">
       <div className="w-full my-10">
         <div className="flex flex-col justify-center items-center">
-          {/*  */}
+          {/*  asd*/}
+          <p className="text-[2rem] min-[340px]:text-[19rem]">PROBANDO</p>
+
           <h2
             className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[2rem] 
             min-[500px]:text-[2.4rem] md:text-[2.3rem] lg:text-[3rem] text-start md:text-start w-[60%] md:w-[70%]
@@ -109,7 +111,6 @@ export default function Intro() {
             {numCart}
             ¿Qué vas a aprender hoy?
           </h2>
-
           <div className="w-full flex justify-center items-start">
             <div className="w-full hidden md:block">
               <div className="relative flex justify-center items-center">

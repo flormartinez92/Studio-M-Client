@@ -126,6 +126,27 @@ export default function Trolley() {
                   .toLocaleString()
                   .replace(",", ".")}`}
               />
+
+              <div className="hidden md:block select-none w-[700px] min-[800px]:w-[900px] lg:w-[900px] h-auto mb-5">
+                <div className="flex flex-col w-full font-ms-gothic">
+                  <CardsDesktop
+                    courseDescription={idem.courseDescription}
+                    courseImg_url={idem.courseImg_url}
+                    courseLongTitle={idem.courseLongTitle}
+                    courseLevel={idem.courseLevel}
+                    courseSubtitle={idem.courseSubtitle}
+                    courseDuration={idem.courseDuration}
+                    coursePrice={idem.coursePrice}
+                    key={i}
+                    notjustPrice={true}
+                    isFavorite={idem.status_favorite}
+                    handleFavoriteClick={() =>
+                      handleClickHeart(idem.status_favorite, idem._id)
+                    }
+                  />
+                </div>
+              </div>
+              {/*
               <div className="hidden md:block select-none w-full h-auto mb-5">
                 <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
                   <div className="bg-black text-letterWhite font-mystery-mixed flex items-center justify-center rounded-t-[6px]">
@@ -183,11 +204,11 @@ export default function Trolley() {
                                 }
                               >
                                 <LineHeart height={25} width={25} />
-                                {/* <Heart height={25} width={25} /> */}
+                                
                               </div>
                             )}
                           </div>
-                          {/* <Heart height={25} width={25} /> */}
+                         
                         </div>
                         <div className="flex justify-end items-center gap-2 mt-[1rem]">
                           <h2>{`$ ${Number(idem.coursePrice)
@@ -198,7 +219,7 @@ export default function Trolley() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           );
         })}
