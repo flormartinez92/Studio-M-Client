@@ -8,6 +8,7 @@ const MyList = ({ decodedToken }) => {
   //Estado que setea los favoritos del usuario
   const [userFavorites, setUserFavorites] = useState([]);
 
+  //hook para scrollear
   const {
     containerRef: ContainerScroll_2,
     handleMouseDown: DownScroll_2,
