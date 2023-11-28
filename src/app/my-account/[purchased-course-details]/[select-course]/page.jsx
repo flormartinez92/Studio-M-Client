@@ -32,7 +32,6 @@ export default function SelectCourse({ params }) {
         module.topics.map((topic, indexTopic) => {
           topic.classes.map((classInfo, indexClass) => {
             if (courseClass.classId == classInfo._id) {
-              console.log("index: " + indexClass);
               setCurrentIndex(indexClass);
               if (topic.classes.length > indexClass + 1) {
                 setNextClassId(topic.classes[indexClass + 1]._id);
@@ -54,7 +53,6 @@ export default function SelectCourse({ params }) {
       )
       .then((res) => {
         const courseClass = res.data;
-        console.log(courseClass);
         setCourseClass(courseClass);
       })
       .catch((error) => {
@@ -68,7 +66,6 @@ export default function SelectCourse({ params }) {
         const oneCourse = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${courseId}`
         );
-        console.log(oneCourse.data);
         setCourseDetails(oneCourse.data);
       } catch (error) {
         console.error("Error while fetching courses:", error);
