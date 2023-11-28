@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import IconButton from "@/common/IconButton";
 import { Arrow, ArrowBack, BurgerMenu2, Check } from "@/common/Icons";
 import Button from "@/common/Button";
 import Image from "next/image";
@@ -78,11 +77,9 @@ export default function SelectCourse({ params }) {
     <div className="bg-white bg-opacity-0 flex flex-col justify-between h-auto items-center gap-8">
       <div className="flex flex-row  items-center justify-between mt-4 min-w-[90%]">
         <div className="flex flex-row justify-between items-center gap-2 text-base md:text-xl">
-          <IconButton className={""}>
-            <Link href={`/my-account/${courseId}`}>
-              <BurgerMenu2 width="30" height="30" color={"black"} />
-            </Link>
-          </IconButton>
+          <Link href={`/my-account/${courseId}`}>
+            <BurgerMenu2 width="30" height="30" color={"black"} />
+          </Link>
           <Link href={`/my-account/${courseId}`}>
             <h2 className="font-ms-gothic text-base items-center md:text-xl">
               Secciones del curso
@@ -97,12 +94,12 @@ export default function SelectCourse({ params }) {
           )}
           {nextClassId && (
             <Link href={`/my-account/${courseId}/${nextClassId}`}>
-              <Arrow color={"black"} />
+              <Arrow color="#E21B7B" />
             </Link>
           )}
         </div>
       </div>
-      <div className="min-w-[60%]">
+      <div className="min-w-[74%]">
         <Link href={`https://www.youtube.com/`}>
           <Message
             key={courseClass.classId}
