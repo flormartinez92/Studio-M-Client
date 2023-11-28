@@ -42,7 +42,7 @@ export default function AdminPanel() {
         <AdminButton
           icon={<User width={"5.62rem"} height={"5.62rem"} />}
           text={"Usuarios activos"}
-          className={"bg-blue"}
+          className={"bg-blueLigth"}
         />
       </Link>
       <Link href="/active-courses">
