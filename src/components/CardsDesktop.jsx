@@ -1,37 +1,178 @@
-import { Clock, Heart, Signal } from "@/common/Icons";
+import {
+  CartShopPlus,
+  CartShopPlusBgBlack,
+  Clock,
+  Heart,
+  LineHeart,
+  Signal,
+} from "@/common/Icons";
 import Image from "next/image";
 import React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
 
 export default function CardsDesktop({
-  handleViewCoursesClick,
-  courseTitleClasses,
   courseLongTitle,
   courseImg_url,
-  cartShopPlusBgBlack,
-  courseSubtitleClasses,
+  cartShopPlusBgBlack = false,
   courseSubtitle,
-  coursePriceClasses,
   coursePrice,
-  courseDescriptionClasses,
   courseDescription,
   courseLevel,
   courseDuration,
-  signaltWidth,
-  signalHeight,
-  courseLevelClasses,
-  clockWidth,
-  clockHeight,
-  courseDurationClasses,
-  courseFavoriteClasses,
-  heartWidth,
-  heartHeight,
+  notjustPrice = false,
+  cardWithoutItems = false,
+  fullDescription = false,
+  isFavorite = false,
+  handleFavoriteClick,
+  handleViewCourseClick,
+  handleCartClick,
 }) {
-  const isWideScreen = useMediaQuery("(min-width: 1300px)");
+  const is900Screen = useMediaQuery("(min-width: 900px)");
+  const isCart1024Screen = useMediaQuery("(min-width: 1024px)");
+  const isCart820Screen = useMediaQuery(
+    "only screen and (min-width : 768px) and (max-width : 1024px)"
+  );
+
+  const is820Screen = useMediaQuery(
+    "only screen and (min-width : 820px) and (max-width : 900px)"
+  );
+
+  const is768Screen = useMediaQuery(
+    "only screen and (min-width : 768px) and (max-width : 820px)"
+  );
 
   return (
-    <section className="flex flex-col justify-center items-center py-4">
-      <div className="grid grid-cols-4 w-[90%] py-6 drop-shadow-lg rounded-xl max-w-6xl">
+    <section className="flex flex-col justify-center items-center py-4 w-full drop-shadow-lg max-w-[950px] select-none">
+      <div
+        className="bg-buttonBlack font-mystery-mixed text-letterWhite w-full flex justify-center items-center rounded-t-[10px] py-[.35rem]"
+        onClick={handleViewCourseClick}
+      >
+        <h2 className="text-[1.4rem] lg:text-[1.8rem]">{courseLongTitle}</h2>
+      </div>
+      <div className="flex w-full bg-page rounded-b-[10px] items-center">
+        <div
+          className={`basis-[25%] drop-shadow-lg h-[12rem] max-w-[200px] min-w-[200px]`}
+        >
+          <Image
+            src={courseImg_url}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-bl-[10px]"
+            alt="img_course"
+          />
+        </div>
+
+        <div
+          className={`basis-[100%] flex flex-col justify-around px-4 font-ms-gothic h-[12rem] min-h-[192px] max-h-[192px]`}
+        >
+          <div className=" flex justify-between">
+            {is768Screen && (
+              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+                0,
+                45
+              )}...`}</h2>
+            )}
+            {is820Screen && (
+              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+                0,
+                53
+              )}...`}</h2>
+            )}
+            {is900Screen && (
+              <h2 className="text-[16px] text-h3Black lg:text-[19px]">{`${courseSubtitle}`}</h2>
+            )}
+
+            {cartShopPlusBgBlack && (
+              <h2 className="lg:text-[19px]">
+                {`$${Number(coursePrice)
+                  .toLocaleString()
+                  .replace(",", ".")} ARS`}
+              </h2>
+            )}
+          </div>
+          <div className=" w-full leading-4">
+            {fullDescription ? (
+              <p className="text-[14px] text-darkGray lg:text-[17px]">
+                {courseDescription}
+              </p>
+            ) : (
+              <p className="text-[14px] text-darkGray lg:text-[17px]">
+                {`${courseDescription.substring(0, 360)}... `}
+                <span
+                  className="text-[1rem] font-bold hover:underline cursor-pointer"
+                  onClick={handleViewCourseClick}
+                >
+                  ver más
+                </span>
+              </p>
+            )}
+          </div>
+          <div
+            className={`w-full flex ${
+              notjustPrice ? "justify-between" : "justify-end"
+            } items-center text-[12px]`}
+          >
+            {notjustPrice && (
+              <div className="flex justify-center items-center">
+                <Signal width={25} height={25} />
+                <p className="lg:text-[17px] text-buttonBlack">{courseLevel}</p>
+              </div>
+            )}
+            {notjustPrice && (
+              <div className="flex justify-center items-center gap-1">
+                <Clock width={19} height={19} />
+
+                <p className=" left-6 top-[1.1px] lg:text-[17px] text-buttonBlack">
+                  {courseDuration}
+                </p>
+              </div>
+            )}
+            {notjustPrice && (
+              <div className="flex justify-center items-center gap-x-1">
+                <p className="text-[12px] lg:text-[17px] text-buttonBlack">
+                  Agregar a la lista de deseos
+                </p>
+                <div onClick={handleFavoriteClick}>
+                  {isFavorite ? (
+                    <Heart width={16} height={16} color={"#A21616"} />
+                  ) : (
+                    <LineHeart width={16} height={16} color={"#A21616"} />
+                  )}
+                </div>
+              </div>
+            )}
+
+            {cardWithoutItems ? (
+              <></>
+            ) : (
+              <div className="flex justify-center items-center gap-x-1">
+                {cartShopPlusBgBlack ? (
+                  <div onClick={handleCartClick}>
+                    {isCart820Screen && (
+                      <CartShopPlusBgBlack width={40} height={40} />
+                    )}
+                    {isCart1024Screen && (
+                      <CartShopPlusBgBlack width={50} height={50} />
+                    )}
+                  </div>
+                ) : (
+                  <h2 className="lg:text-[19px]">
+                    {`$${Number(coursePrice)
+                      .toLocaleString()
+                      .replace(",", ".")} ARS`}
+                  </h2>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/*
+ <div className="grid grid-cols-4 w-[90%] max-w-[967px] py-6 drop-shadow-lg rounded-xl">
         <div
           className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl cursor-pointer"
           onClick={handleViewCoursesClick}
@@ -60,7 +201,7 @@ export default function CardsDesktop({
         </div>
 
         <div className="col-span-3">
-          {/* Aca si estoy en la vista donde estan todos los detalles, se muestra esto */}
+          // Aca si estoy en la vista donde estan todos los detalles, se muestra esto
           {cartShopPlusBgBlack ? (
             <div className="bg-lightGrey rounded-br-lg p-6">
               <div className="flex flex-row justify-between  gap-x-4 tracking-tight items-center text-h3Black">
@@ -77,7 +218,7 @@ export default function CardsDesktop({
               <p
                 className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${courseDescriptionClasses}`}
               >
-                {courseDescription}
+                {courseDescription.substring(0, 300)}
               </p>
 
               <div className="flex  justify-between items-center pt-8 font-ms-gothic text-h3Black leading-tight">
@@ -180,6 +321,5 @@ export default function CardsDesktop({
           )}
         </div>
       </div>
-    </section>
-  );
-}
+
+*/

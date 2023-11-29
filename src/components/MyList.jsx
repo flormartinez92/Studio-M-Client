@@ -2,10 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cards from "./Cards";
 import { CartShopSimple, Heart, LineHeart } from "@/common/Icons";
+import inputScroll from "@/hooks/useScroll";
 
 const MyList = ({ decodedToken }) => {
   //Estado que setea los favoritos del usuario
   const [userFavorites, setUserFavorites] = useState([]);
+
+  //hook para scrollear
+  const {
+    containerRef: ContainerScroll_2,
+    handleMouseDown: DownScroll_2,
+    handleMouseLeave: LeaveScroll_2,
+    handleMouseMove: MoveScroll_2,
+    handleMouseUp: MouseUpScroll_2,
+  } = inputScroll();
 
   //Pedido al back para trae los favoritos de un usuario
   useEffect(() => {
@@ -23,8 +33,14 @@ const MyList = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center">
-      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none">
+      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
+        ref={ContainerScroll_2}
+        onMouseDown={DownScroll_2}
+        onMouseMove={MoveScroll_2}
+        onMouseUp={MouseUpScroll_2}
+        onMouseLeave={LeaveScroll_2}
+      >
         {userFavorites?.map((userFavorite) => (
           <div key={userFavorite._id}>
             <Cards

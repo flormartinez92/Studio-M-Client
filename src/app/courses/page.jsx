@@ -36,6 +36,13 @@ export default function Courses() {
     router.push(`/courses/${data._id}`);
   };
 
+  const handleclickFavorite = () => {
+    console.log("click favorite");
+  };
+  const handleCartClick = () => {
+    console.log("click cart");
+  };
+
   return (
     <section className="h-full pb-14 min-[768px]:pb-24 min-[1024px]:pb-36">
       <h2 className="md:hidden flex items-center justify-center rotate-[-2.08deg] text-[2rem] min-[370px]:text-[2.375rem] min-[500px]:text-[2.7rem] font-normal  font-mystery-mixed pt-10 pb-8">
@@ -64,62 +71,50 @@ export default function Courses() {
 
       {/* Aca arranca la CardDesktop */}
       <div className="hidden md:block flex-col items-center justify-center">
-        <div className="flex flex-col items-center justify-center pt-14 pb-6">
-          <div className="flex flex-row items-center justify-start w-[90%] max-w-6xl">
-            <label className=" text-black font-mystery-mixed pr-5 text-xl min-[1024px]:text-2xl">
-              A-Z
-            </label>
-            <div className="cursor-pointer">
-              <Vector
-                width={isLgBreakpoint ? "25px" : "20px"}
-                height={isLgBreakpoint ? "15px" : "12px"}
-                onClick={() =>
-                  setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-                }
-              />
+        <div className="flex flex-col justify-center items-center pt-14 pb-6">
+          <div className="flex flex-col items-center justify-center w-[90%] gap-y-4 max-w-6xl mb-10">
+            <div className="w-full flex items-center justify-start max-w-[950px]">
+              <label className=" text-black font-mystery-mixed pr-5 text-xl min-[1024px]:text-2xl">
+                A-Z
+              </label>
+              <div className="cursor-pointer">
+                <Vector
+                  width={isLgBreakpoint ? "25px" : "20px"}
+                  height={isLgBreakpoint ? "15px" : "12px"}
+                  onClick={() =>
+                    setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                  }
+                />
+              </div>
             </div>
           </div>
-        </div>
-        {courses
-          ?.slice()
-          .sort((a, b) =>
-            sortOrder === "asc"
-              ? a.courseLongTitle.localeCompare(b.courseLongTitle)
-              : b.courseLongTitle.localeCompare(a.courseLongTitle)
-          )
-          .map((course) => (
-            <CardsDesktop
-              key={course._id}
-              handleViewCoursesClick={() => handleViewCourseClick(course._id)}
-              courseTitleClasses="text-2xl leading-loose min-[1024px]:text-3xl min-[1024px]:py-2"
-              courseLongTitle={course.courseLongTitle}
-              courseImg_url={course.courseImg_url && course.courseImg_url}
-              cartShopPlusBgBlack={
-                <CartShopPlusBgBlack
-                  width={isLgBreakpoint ? "57px" : "45px"}
-                  height={isLgBreakpoint ? "57px" : "45px"}
-                  onClick={() => alert("click en CART")}
+
+          <div className="flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl">
+            {courses.map((course, index) => {
+              //console.log(course);
+              return (
+                <CardsDesktop
+                  courseDescription={course.courseDescription}
+                  courseImg_url={course.courseImg_url}
+                  courseLongTitle={course.courseLongTitle}
+                  courseLevel={course.courseLevel}
+                  courseSubtitle={course.courseSubtitle}
+                  courseDuration={course.courseDuration}
+                  coursePrice={course.coursePrice}
+                  key={index}
+                  notjustPrice={true}
+                  cartShopPlusBgBlack={true}
+                  isFavorite={true}
+                  handleFavoriteClick={handleclickFavorite}
+                  handleViewCourseClick={() =>
+                    handleViewCourseClick(course._id)
+                  }
+                  handleCartClick={handleCartClick}
                 />
-              }
-              courseSubtitle={course.courseSubtitle}
-              courseSubtitleClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
-              coursePrice={course.coursePrice}
-              coursePriceClasses="text-[1rem] min-[1024px]:text-[1.275rem]"
-              courseDescription={course.courseDescription}
-              courseDescriptionClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-              courseLevel={course.courseLevel}
-              courseLevelClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-              courseDuration={course.courseDuration}
-              courseDurationClasses="text-[0.8rem] min-[1024px]:text-[1.02rem]"
-              clockWidth={isLgBreakpoint ? "25px" : "16px"}
-              clockHeight={isLgBreakpoint ? "25px" : "16px"}
-              courseFavoriteClasses="text-[0.8rem] tracking-tight min-[1024px]:text-[1.02rem]"
-              heartWidth={isLgBreakpoint ? "25px" : "16px"}
-              heartHeight={isLgBreakpoint ? "25px" : "16px"}
-              signaltWidth={isLgBreakpoint ? "50px" : "25px"}
-              signalHeight={isLgBreakpoint ? "50px" : "25px"}
-            />
-          ))}
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
