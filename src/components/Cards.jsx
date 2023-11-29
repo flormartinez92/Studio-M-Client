@@ -24,6 +24,7 @@ export default function Cards({
   className,
   className2,
   classNameButton,
+  progressBar,
   // classNameDivButton,
   classNameIconButton,
   classNameBorder,
@@ -118,6 +119,18 @@ export default function Cards({
             className={`font-mystery-mixed bg-[#181717] ${classNameButton}`}
           >
             {buttonTitle}
+            {progressBar && (
+              <div className="relative w-44 bg-[#D9D9D9] rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="w-full">
+                    <div className="flex h-2 overflow-hidden text-xs bg-teal-200 rounded">
+                      <div style={{ width: `${progressBar}%` }} className="flex flex-col shadow-none whitespace-nowrap text-white justify-center bg-pink">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </Button>
           <Button
             onClick={() => handleAddToCart(courseId)}

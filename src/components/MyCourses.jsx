@@ -47,12 +47,13 @@ const MyCourses = ({ decodedToken }) => {
               <Cards
                 title={userCourse.courseInfo.courseShortTitle}
                 buttonTitle={userCourse.progress + "%"}
+                progressBar={userCourse.progress.toString()}
                 img={userCourse.courseInfo.courseImg_url}
                 className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem]"
-                classNameButton="py-1 px-3 text-lg flex items-center"
+                classNameButton="py-1 px-0.5 text-lg flex items-center flex-col"
                 classNameImg="h-[12rem] object-cover rounded-b-lg"
                 className2="h-full"
-                classNameBorder="mb-2"
+                classNameBorder="h-14 mb-2"
               />
             </Link>
           </div>
