@@ -8,6 +8,7 @@ const MyCourses = ({ decodedToken }) => {
   //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
 
+  //hook para scrollear
   const {
     containerRef: ContainerScroll_1,
     handleMouseDown: DownScroll_1,
