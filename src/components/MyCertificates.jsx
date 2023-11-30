@@ -1,12 +1,22 @@
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import axios from "axios"
-import { Download, Share } from "@/common/Icons";
+import { Arrow, ArrowBack, Download, Share } from "@/common/Icons";
 import Border from "@/common/Border";
 import IconButton from "@/common/IconButton";
 
+//el token trae la informacion del usuario
 const MyCertificates = ({decodedToken}) => {
+  //estados para mostrar el arreglo de certificados y contar la paginacion
   const [userCertificates, setUserCertificates] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  //configuracion para la paginacion
+  const certificatesPerPage = 3;
+  const totalPages = Math.ceil(userCertificates.length / certificatesPerPage);
+  const startIndex = (currentPage - 1) * certificatesPerPage;
+  const endIndex = startIndex + certificatesPerPage;
+
 
   //funcion para cuando se genere un certificado vaya cambiando el color
   // const generateRandomColor = () => {
@@ -32,7 +42,7 @@ const MyCertificates = ({decodedToken}) => {
     <>
       {/*modo mobile*/}
       <div className=" py-12 md:hidden">
-        {userCertificates?.map((userCertificate) => (
+        {userCertificates?.slice(startIndex, endIndex).map((userCertificate) => (
         <div className="flex justify-center py-4" key={userCertificate.id}>
           <Border className="border-pink border-2 w-[70%] max-w-[19rem]">
             <div className="flex items-center w-full">
@@ -50,11 +60,16 @@ const MyCertificates = ({decodedToken}) => {
           </Border>
         </div>
         ))}
+        <div className="flex flex-row gap-2 mt-4 items-center justify-end mr-[15%]">
+          &nbsp; {currentPage} de {totalPages}
+          <button onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))} disabled={currentPage === 1}><ArrowBack  color={currentPage === 1 ? "lightGrey" : "black"}/></button>
+          <button  onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))} disabled={currentPage === totalPages}><Arrow color={currentPage === totalPages ? "lightGrey" : "black"}/></button>
+        </div>
       </div>
 
       {/*modo desktop*/}
       <div className="hidden md:flex md:flex-col md:justify-center items-center">
-        {userCertificates?.map((userCertificate, index) => (
+        {userCertificates?.slice(startIndex, endIndex - 1).map((userCertificate, index) => (
 
         <div className="relative" key={index}>
           <Image
@@ -118,6 +133,11 @@ const MyCertificates = ({decodedToken}) => {
           </div>
         </div>
         ))}
+        <div className="w-full flex flex-row gap-2 mt-4 mb-4 items-center justify-end mr-[15%]">
+          &nbsp; {currentPage} de {totalPages}
+          <button onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))} disabled={currentPage === 1}><ArrowBack  color={currentPage === 1 ? "lightGrey" : "black"}/></button>
+          <button  onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))} disabled={currentPage === totalPages}><Arrow color={currentPage === totalPages ? "lightGrey" : "black"}/></button>
+        </div>
       </div>
     </>
   );
