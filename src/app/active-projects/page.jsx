@@ -20,7 +20,6 @@ export default function ActiveProjects() {
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
-  console.log(selectedProjectId);
 
   const handleProjectClick = (projectId) => {
     setSelectedProjectId(projectId);
@@ -57,7 +56,6 @@ export default function ActiveProjects() {
       const projects = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`
       );
-      console.log(projects);
       setProjects(projects.data);
     } catch (error) {
       console.error(error);

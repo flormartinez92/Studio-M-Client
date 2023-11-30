@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/common/Button";
 import Input from "@/common/Input";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useInput from "@/hooks/useInput";
@@ -9,6 +9,7 @@ import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
+  const fileInputRef = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const [file, setFile] = useState("");
@@ -282,7 +283,9 @@ export default function Register() {
 
   const handleDivClick = () => {
     // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
-    Register.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   return (
@@ -512,7 +515,7 @@ export default function Register() {
 
                   <input
                     type="file"
-                    ref={(input) => (Register = input)} // Ref para acceder al input de tipo file
+                    ref={fileInputRef} // Ref para acceder al input de tipo file
                     className="hidden" // Ocultar el input, ya que haremos clic en él programáticamente
                     onChange={handleFileChange}
                   />

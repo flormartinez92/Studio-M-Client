@@ -90,9 +90,9 @@ export default function ActiveUsers() {
             </tr>
           </thead>
           <tbody>
-            {users?.slice(startIndex, endIndex).map((user) => (
+            {users?.slice(startIndex, endIndex).map((user, index) => (
               <tr
-                key={user._id}
+                key={index}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{user.name + " " + user.lastname}</td>
