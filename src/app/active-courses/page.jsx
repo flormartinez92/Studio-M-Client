@@ -26,6 +26,19 @@ export default function ActiveCourses() {
   const startIndex = (currentPage - 1) * coursesPerPage;
   const endIndex = startIndex + coursesPerPage;
 
+  const [mostrarBoton, setMostrarBoton] = useState(false);
+
+  useEffect(() => {
+    // Simulando un tiempo de espera con setTimeout
+    const timer = setTimeout(() => {
+      // Después de un tiempo determinado (por ejemplo, 2 segundos), se muestra el botón
+      setMostrarBoton(true);
+    }, 1000); // Cambia este valor al tiempo que desees
+
+    // Limpieza del timer al desmontar el componente
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/all-courses`)
@@ -189,14 +202,16 @@ export default function ActiveCourses() {
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Link href="/add-course">
-          <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
-            <Plus className="" width="25" />
-            <span className="text-white items-center flex justify-between md:ml-2">
-              Crear curso
-            </span>
-          </Button>
-        </Link>
+        {mostrarBoton && (
+          <Link href="/add-course">
+            <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md p-1 md:p-2 md:w-[150px]">
+              <Plus className="" width="25" />
+              <span className="text-white items-center flex justify-between md:ml-2">
+                Crear curso
+              </span>
+            </Button>
+          </Link>
+        )}
       </div>
     </section>
   );

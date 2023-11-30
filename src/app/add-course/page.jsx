@@ -12,7 +12,7 @@ export default function Register() {
   const fileInputRef = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState({});
   const [raiz, setRaiz] = useState({
     courseLongTitle: "",
     courseShortTitle: "",
@@ -389,7 +389,6 @@ export default function Register() {
               </div>
             </div>
           </div>
-
           <Input
             className={"flex-none"}
             label={"Descripcion"}
@@ -556,7 +555,6 @@ export default function Register() {
               </div>
             </div>
           </div>
-
           {/* MODULOS */}
           <div className="flex flex-col justify-center items-center w-[100%]">
             <div className="flex flex-row justify-center items-center w-full h-auto py-1">
@@ -706,7 +704,6 @@ export default function Register() {
               </p>
             )}
           </div>
-
           <Input
             className={"flex-none"}
             label={"Descripcion del proyecto"}
