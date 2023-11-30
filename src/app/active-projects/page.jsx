@@ -171,7 +171,7 @@ export default function ActiveProjects() {
                 <td>&nbsp;</td>
                 <td></td>
                 <td>Filas por página</td>
-                <td className="flex justify-between mt-3">
+                <td className="flex justify-between mt-3 mr-3">
                   &nbsp; {currentPage} de {totalPages}
                   <button
                     onClick={() =>
