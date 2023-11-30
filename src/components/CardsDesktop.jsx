@@ -26,6 +26,7 @@ export default function CardsDesktop({
   handleFavoriteClick,
   handleViewCourseClick,
   handleCartClick,
+  subtitleFull = false,
 }) {
   const is900Screen = useMediaQuery("(min-width: 900px)");
   const isCart1024Screen = useMediaQuery("(min-width: 1024px)");
@@ -66,20 +67,38 @@ export default function CardsDesktop({
           className={`basis-[100%] flex flex-col justify-around px-4 font-ms-gothic h-[12rem] min-h-[192px] max-h-[192px]`}
         >
           <div className=" flex justify-between">
-            {is768Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
-                0,
-                45
-              )}...`}</h2>
-            )}
-            {is820Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
-                0,
-                53
-              )}...`}</h2>
-            )}
-            {is900Screen && (
-              <h2 className="text-[16px] text-h3Black lg:text-[19px]">{`${courseSubtitle}`}</h2>
+            {subtitleFull ? (
+              <>
+                {is768Screen && (
+                  <h2 className="text-[16px] text-h3Black">{courseSubtitle}</h2>
+                )}
+                {is820Screen && (
+                  <h2 className="text-[16px] text-h3Black">{courseSubtitle}</h2>
+                )}
+                {is900Screen && (
+                  <h2 className="text-[16px] text-h3Black lg:text-[19px]">
+                    {courseSubtitle}
+                  </h2>
+                )}
+              </>
+            ) : (
+              <>
+                {is768Screen && (
+                  <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+                    0,
+                    45
+                  )}...`}</h2>
+                )}
+                {is820Screen && (
+                  <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+                    0,
+                    53
+                  )}...`}</h2>
+                )}
+                {is900Screen && (
+                  <h2 className="text-[16px] text-h3Black lg:text-[19px]">{`${courseSubtitle}`}</h2>
+                )}
+              </>
             )}
 
             {cartShopPlusBgBlack && (
@@ -132,7 +151,7 @@ export default function CardsDesktop({
                 <p className="text-[12px] lg:text-[17px] text-buttonBlack">
                   Agregar a la lista de deseos
                 </p>
-                <div onClick={handleFavoriteClick}>
+                <div onClick={handleFavoriteClick} className="cursor-pointer">
                   {isFavorite ? (
                     <Heart width={16} height={16} color={"#A21616"} />
                   ) : (
