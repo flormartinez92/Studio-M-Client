@@ -67,13 +67,13 @@ export default function CardsDesktop({
         >
           <div className=" flex justify-between">
             {is768Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle?.substring(
                 0,
                 45
               )}...`}</h2>
             )}
             {is820Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
+              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle?.substring(
                 0,
                 53
               )}...`}</h2>
@@ -147,7 +147,7 @@ export default function CardsDesktop({
             ) : (
               <div className="flex justify-center items-center gap-x-1">
                 {cartShopPlusBgBlack ? (
-                  <div onClick={handleCartClick}>
+                  <div onClick={handleCartClick} className="cursor-pointer">
                     {isCart820Screen && (
                       <CartShopPlusBgBlack width={40} height={40} />
                     )}

@@ -5,19 +5,44 @@ import Image from "next/image";
 import CourseSummary from "@/common/CourseSummary";
 import axios from "axios";
 import CardsDesktop from "@/components/CardsDesktop";
+import {
+  addFavorite,
+  fetchFavorites,
+  fetchUser,
+  removeFavorite,
+  handleCartClick,
+} from "@/helpers/apiHelpers";
 
 export default function CourseInformation({ params }) {
   const [course, setCourse] = useState({});
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const courseId = params["course-id"];
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(
+        const responseCourse = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${courseId}`
         );
-        const course = response.data;
-        setCourse(course);
+        const courseData = responseCourse.data;
+
+        const userData = await fetchUser();
+        setUser(userData);
+
+        let userFavorite = [];
+        let isFavorite = false;
+        if (userData) {
+          userFavorite = await fetchFavorites(userData._id);
+          isFavorite = userFavorite.some(
+            (favoriteCourse) => favoriteCourse._id === courseId
+          );
+        }
+
+        setCourse({
+          ...courseData,
+          isFavorite: isFavorite,
+        });
       } catch (error) {
         console.error("Error while fetching course:", error);
       }
@@ -25,8 +50,37 @@ export default function CourseInformation({ params }) {
     fetchCourse();
   }, [courseId]);
 
+  const handleclickFavoriteSingleCourse = async (courseId) => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    try {
+      setLoading(true);
+
+      const userFavorites = await fetchFavorites(user._id);
+
+      const isCourseInFavorites = userFavorites.some(
+        (favoriteCourse) => favoriteCourse._id === course._id
+      );
+
+      isCourseInFavorites
+        ? await removeFavorite(courseId, user._id)
+        : await addFavorite(courseId, user._id);
+
+      setCourse({
+        ...course,
+        isFavorite: !isCourseInFavorites,
+      });
+    } catch (error) {
+      console.error("Error while updating favorites:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <>
+    <section className={`${loading ? "cursor-wait" : ""}`}>
       {/* Aca vista mobile */}
       <div className="md:hidden flex flex-col justify-evenly h-auto items-center w-auto gap-8 mt-8 mb-16">
         <div className="flex items-center min-[280px]:gap-2 min-[390px]:gap-6 sm:ml-2 ">
@@ -148,9 +202,14 @@ export default function CourseInformation({ params }) {
             className={
               "md:flex md:flex-row md:h-24 md:font-ms-gothic md:text-base md:justify-around"
             }
+            handleFavoriteClick={() =>
+              handleclickFavoriteSingleCourse(courseId)
+            }
+            isFavorite={course.isFavorite}
+            handleCartClick={() => handleCartClick(course._id, user._id)}
           />
         </div>
       </div>
-    </>
+    </section>
   );
 }

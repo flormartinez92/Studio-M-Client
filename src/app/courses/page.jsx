@@ -7,6 +7,13 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
 import { useMediaQuery } from "@react-hook/media-query";
+import {
+  addFavorite,
+  fetchFavorites,
+  fetchUser,
+  removeFavorite,
+  handleCartClick,
+} from "@/helpers/apiHelpers";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -24,31 +31,17 @@ export default function Courses() {
         );
         const coursesData = responseCourses.data;
 
-        let userData = null;
-        try {
-          const responseUser = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/me`,
-            {
-              withCredentials: true,
-            }
-          );
-          userData = responseUser.data;
-          setUser(userData);
-        } catch (error) {
-          console.log("User is not authenticated");
-        }
+        const userData = await fetchUser();
+        setUser(userData);
 
-        let favoritesData = [];
+        let userFavorites = [];
         if (userData) {
-          const responseFavorites = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/${userData._id}`
-          );
-          favoritesData = responseFavorites.data;
+          userFavorites = await fetchFavorites(userData._id);
         }
 
         const coursesWithFavorites = coursesData.map((course) => ({
           ...course,
-          isFavorite: favoritesData.some(
+          isFavorite: userFavorites.some(
             (favoriteCourse) => favoriteCourse._id === course._id
           ),
         }));
@@ -76,22 +69,15 @@ export default function Courses() {
     try {
       setLoading(true);
 
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/${user._id}`
+      const userFavorites = await fetchFavorites(user._id);
+      const isCourseFavorite = userFavorites.some(
+        (favoriteCourse) => favoriteCourse._id === courseId
       );
 
-      const favorites = response.data;
-      if (favorites.some((favoriteCourse) => favoriteCourse._id === courseId)) {
-        // Si el curso ya está en favoritos, eliminarlo
-        await axios.delete(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${user._id}`
-        );
-      } else {
-        // Si el curso no está en favoritos, agregarlo
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${user._id}`
-        );
-      }
+      isCourseFavorite
+        ? await removeFavorite(courseId, user._id)
+        : await addFavorite(courseId, user._id);
+
       const updatedCourses = courses.map((course) => {
         if (course._id === courseId) {
           return {
@@ -108,10 +94,6 @@ export default function Courses() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCartClick = () => {
-    console.log("click cart");
   };
 
   return (
@@ -191,7 +173,9 @@ export default function Courses() {
                     handleViewCourseClick={() =>
                       handleViewCourseClick(course._id)
                     }
-                    handleCartClick={handleCartClick}
+                    handleCartClick={() =>
+                      handleCartClick(course._id, user._id)
+                    }
                   />
                 );
               })}
