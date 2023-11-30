@@ -100,7 +100,9 @@ export default function Intro() {
       <div className="w-full my-10">
         <div className="flex flex-col justify-center items-center">
           {/*  asd*/}
-          <p className="text-[2rem] min-[340px]:text-[19rem]">PROBANDO</p>
+          {/* <p className="text-[2rem] [@media(min-width:180px)]:text-[4rem]">
+            PROBANDO
+          </p> */}
 
           <h2
             className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[2rem] 

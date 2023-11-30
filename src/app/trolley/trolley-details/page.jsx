@@ -5,6 +5,7 @@ import IconButton from "@/common/IconButton";
 import { CartShopSimple, Close, Signal } from "@/common/Icons";
 import Input from "@/common/Input";
 import Cards from "@/components/Cards";
+import CardsDesktop from "@/components/CardsDesktop";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,11 +26,13 @@ export default function trolleyDetails() {
   const handleCheck = async () => {
     console.log(user);
     try {
-      const responseCart = await axios.post(
+      /* const responseCart = await axios.post(
         `http://localhost:8081/api/cart/confirmBuy/${user._id}`
-      );
-      console.log(responseCart);
-      router.push("/");
+      ); */
+      console.log(cartCourses);
+      localStorage.setItem("purchase", JSON.stringify(cartCourses));
+      //console.log(responseCart);
+      router.push("/trolley/purchase-completed");
     } catch (err) {
       console.error(err);
     }
@@ -166,7 +169,23 @@ export default function trolleyDetails() {
               key={course._id}
             >
               <div className="flex justify-center items-center">
-                <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
+                <div className="flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl">
+                  <CardsDesktop
+                    courseDescription={course.courseDescription}
+                    courseImg_url={course.courseImg_url}
+                    courseLongTitle={course.courseLongTitle}
+                    courseLevel={course.courseLevel}
+                    courseSubtitle={course.courseSubtitle}
+                    courseDuration={course.courseDuration}
+                    coursePrice={course.coursePrice}
+                    isFavorite={course.status_favorite}
+                    subtitleFull={true}
+                    handleFavoriteClick={() =>
+                      handleClickHeart(course.status_favorite, course._id)
+                    }
+                  />
+                </div>
+                {/* <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
                   <div className="bg-black text-letterWhite font-mystery-mixed flex items-center justify-center rounded-t-[6px]">
                     <h2 className="py-[6px] text-[1.6rem] leading-9">
                       {course.courseLongTitle.substring(0, 37)}
@@ -194,7 +213,7 @@ export default function trolleyDetails() {
                         .replace(",", ".")} ARS`}</h2>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           );
