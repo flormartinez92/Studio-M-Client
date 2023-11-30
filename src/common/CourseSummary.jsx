@@ -1,62 +1,17 @@
-"use client";
-
-import axios from "axios";
 import Border from "./Border";
-import IconButton from "./IconButton";
-import { Clock, Signal, Heart, CartShopPlusBgBlack, FullHeart } from "./Icons";
+import { Clock, Signal, Heart, CartShopPlusBgBlack, LineHeart } from "./Icons";
 import { useMediaQuery } from "@react-hook/media-query";
-import { useEffect, useState } from "react";
 
 export default function CourseSummary({
   level,
   hours,
   price,
   className,
-  courseId,
+  isFavorite = false,
+  handleFavoriteClick,
+  handleCartClick,
 }) {
   const isLgBreakpoint = useMediaQuery("(min-width: 1024px)");
-  const [favorite, setFavorite] = useState([]);
-
-  // const dispatch = useDispatch();
-  // const userId = localStorage.getItem("userId");
-
-  // const handleAddToCart = async () => {
-  //   try {
-  //     await axios.post(
-  //       `http://localhost:8081/api/cart/add/${courseId}/${userId}`
-  //     );
-
-  //     dispatch(addToCart(courseId));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(()=>{
-  //   const fetchFavorites = async ()=>{
-  //     try {
-  //       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/favorites/all-courses`)
-  //     } catch (error) {
-  //       console.error("Error while fetching favorites:", error);
-  //     }
-  //   }
-  // })
-
-  const handleHeartClick = async () => {
-    try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user/me`,
-        { withCredentials: true }
-      );
-
-      const addFavorite = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${data._id}`
-      );
-      console.log(addFavorite);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <Border
@@ -84,26 +39,31 @@ export default function CourseSummary({
           <p className="hidden md:flex md:text-lg lg:text-2xl">
             Agregar a lista de deseos
           </p>
-          <IconButton
-            className="cursor-pointer"
-            onClick={() => handleHeartClick()}
-          >
-            {/* <FullHeart /> */}
-            <Heart
-              width={isLgBreakpoint ? "25px" : "16px"}
-              height={isLgBreakpoint ? "25px" : "16px"}
-            />
-          </IconButton>
+          <div className="cursor-pointer" onClick={handleFavoriteClick}>
+            {isFavorite ? (
+              <Heart
+                width={isLgBreakpoint ? "25px" : "16px"}
+                height={isLgBreakpoint ? "25px" : "16px"}
+                color={"#A21616"}
+              />
+            ) : (
+              <LineHeart
+                width={isLgBreakpoint ? "25px" : "16px"}
+                height={isLgBreakpoint ? "25px" : "16px"}
+                color={"#A21616"}
+              />
+            )}
+          </div>
         </div>
         <div className="flex justify-center items-center gap-3 py-1 font-medium">
           <h5 className="md:hidden text-lg">
             ${Number(price).toLocaleString().replace(",", ".")} ARS
           </h5>
-          <div>
+          <div className="cursor-pointer">
             <CartShopPlusBgBlack
               width={isLgBreakpoint ? "57px" : "45px"}
               height={isLgBreakpoint ? "57px" : "45px"}
-              onClick={() => alert("click en CART")}
+              onClick={handleCartClick}
             />
           </div>
         </div>

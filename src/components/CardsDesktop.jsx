@@ -1,5 +1,4 @@
 import {
-  CartShopPlus,
   CartShopPlusBgBlack,
   Clock,
   Heart,
@@ -26,11 +25,12 @@ export default function CardsDesktop({
   handleFavoriteClick,
   handleViewCourseClick,
   handleCartClick,
+  subtitleFull = false,
 }) {
   const is900Screen = useMediaQuery("(min-width: 900px)");
   const isCart1024Screen = useMediaQuery("(min-width: 1024px)");
   const isCart820Screen = useMediaQuery(
-    "only screen and (min-width : 768px) and (max-width : 1024px)"
+    "only screen and (min-width : 768px) and (max-width : 1023px)"
   );
 
   const is820Screen = useMediaQuery(
@@ -44,7 +44,7 @@ export default function CardsDesktop({
   return (
     <section className="flex flex-col justify-center items-center py-4 w-full drop-shadow-lg max-w-[950px] select-none">
       <div
-        className="bg-buttonBlack font-mystery-mixed text-letterWhite w-full flex justify-center items-center rounded-t-[10px] py-[.35rem]"
+        className="bg-buttonBlack font-mystery-mixed text-letterWhite w-full flex justify-center items-center rounded-t-[10px] py-[.35rem] cursor-pointer"
         onClick={handleViewCourseClick}
       >
         <h2 className="text-[1.4rem] lg:text-[1.8rem]">{courseLongTitle}</h2>
@@ -59,6 +59,7 @@ export default function CardsDesktop({
             objectFit="cover"
             className="rounded-bl-[10px]"
             alt="img_course"
+            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 200px"
           />
         </div>
 
@@ -66,20 +67,38 @@ export default function CardsDesktop({
           className={`basis-[100%] flex flex-col justify-around px-4 font-ms-gothic h-[12rem] min-h-[192px] max-h-[192px]`}
         >
           <div className=" flex justify-between">
-            {is768Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
-                0,
-                45
-              )}...`}</h2>
-            )}
-            {is820Screen && (
-              <h2 className="text-[16px] text-h3Black">{`${courseSubtitle.substring(
-                0,
-                53
-              )}...`}</h2>
-            )}
-            {is900Screen && (
-              <h2 className="text-[16px] text-h3Black lg:text-[19px]">{`${courseSubtitle}`}</h2>
+            {subtitleFull ? (
+              <>
+                {is768Screen && (
+                  <h2 className="text-[16px] text-h3Black">{courseSubtitle}</h2>
+                )}
+                {is820Screen && (
+                  <h2 className="text-[16px] text-h3Black">{courseSubtitle}</h2>
+                )}
+                {is900Screen && (
+                  <h2 className="text-[16px] text-h3Black lg:text-[19px]">
+                    {courseSubtitle}
+                  </h2>
+                )}
+              </>
+            ) : (
+              <>
+                {is768Screen && (
+                  <h2 className="text-[16px] text-h3Black">{`${courseSubtitle?.substring(
+                    0,
+                    45
+                  )}...`}</h2>
+                )}
+                {is820Screen && (
+                  <h2 className="text-[16px] text-h3Black">{`${courseSubtitle?.substring(
+                    0,
+                    53
+                  )}...`}</h2>
+                )}
+                {is900Screen && (
+                  <h2 className="text-[16px] text-h3Black lg:text-[19px]">{`${courseSubtitle}`}</h2>
+                )}
+              </>
             )}
 
             {cartShopPlusBgBlack && (
@@ -97,7 +116,7 @@ export default function CardsDesktop({
               </p>
             ) : (
               <p className="text-[14px] text-darkGray lg:text-[17px]">
-                {`${courseDescription.substring(0, 360)}... `}
+                {`${courseDescription?.substring(0, 360)}... `}
                 <span
                   className="text-[1rem] font-bold hover:underline cursor-pointer"
                   onClick={handleViewCourseClick}
@@ -132,7 +151,7 @@ export default function CardsDesktop({
                 <p className="text-[12px] lg:text-[17px] text-buttonBlack">
                   Agregar a la lista de deseos
                 </p>
-                <div onClick={handleFavoriteClick}>
+                <div onClick={handleFavoriteClick} className="cursor-pointer">
                   {isFavorite ? (
                     <Heart width={16} height={16} color={"#A21616"} />
                   ) : (
@@ -147,7 +166,7 @@ export default function CardsDesktop({
             ) : (
               <div className="flex justify-center items-center gap-x-1">
                 {cartShopPlusBgBlack ? (
-                  <div onClick={handleCartClick}>
+                  <div onClick={handleCartClick} className="cursor-pointer">
                     {isCart820Screen && (
                       <CartShopPlusBgBlack width={40} height={40} />
                     )}
@@ -170,156 +189,3 @@ export default function CardsDesktop({
     </section>
   );
 }
-
-/*
- <div className="grid grid-cols-4 w-[90%] max-w-[967px] py-6 drop-shadow-lg rounded-xl">
-        <div
-          className="col-span-4 grid justify-center items-center bg-buttonBlack font-mystery-mixed text-white rounded-t-xl cursor-pointer"
-          onClick={handleViewCoursesClick}
-        >
-          <h3 className={`tracking-widest ${courseTitleClasses}`}>
-            {isWideScreen
-              ? courseLongTitle
-              : courseLongTitle?.length > 47
-              ? `${courseLongTitle.slice(0, 47)}...`
-              : courseLongTitle}
-          </h3>
-        </div>
-
-        <div className="col-span-1">
-          <div className="w-full h-full">
-            {courseImg_url && (
-              <Image
-                width={280}
-                height={255}
-                src={courseImg_url}
-                alt="Imagen Curso"
-                className="rounded-bl-lg drop-shadow-lg w-[100%] h-[100%] object-cover"
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="col-span-3">
-          // Aca si estoy en la vista donde estan todos los detalles, se muestra esto
-          {cartShopPlusBgBlack ? (
-            <div className="bg-lightGrey rounded-br-lg p-6">
-              <div className="flex flex-row justify-between  gap-x-4 tracking-tight items-center text-h3Black">
-                <h4 className={`font-ms-gothic ${courseSubtitleClasses}`}>
-                  {courseSubtitle}
-                </h4>
-
-                <p className={`font-mystery-mixed ${coursePriceClasses}`}>
-                  ${Number(coursePrice).toLocaleString().replace(",", ".")}
-                  ARS
-                </p>
-              </div>
-
-              <p
-                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${courseDescriptionClasses}`}
-              >
-                {courseDescription.substring(0, 300)}
-              </p>
-
-              <div className="flex  justify-between items-center pt-8 font-ms-gothic text-h3Black leading-tight">
-                {courseLevel ? (
-                  <div className="flex items-center space-x-2">
-                    <Signal
-                      width={`${signaltWidth}`}
-                      height={`${signalHeight}`}
-                    />
-                    <p className={`${courseLevelClasses}`}>{courseLevel}</p>
-                  </div>
-                ) : null}
-                {courseDuration ? (
-                  <div className="flex items-center space-x-4">
-                    <Clock width={`${clockWidth}`} height={`${clockHeight}`} />
-                    <p className={`${courseDurationClasses}`}>
-                      {courseDuration}
-                    </p>
-                  </div>
-                ) : null}
-                <div className="flex items-center space-x-3">
-                  <p className={`${courseFavoriteClasses}`}>
-                    Agregar a la lista de deseos
-                  </p>
-                  <Heart
-                    width={`${heartWidth}`}
-                    height={`${heartHeight}`}
-                    color={"#A31616"}
-                  />
-                </div>
-                {cartShopPlusBgBlack ? (
-                  <div className="flex space-x-3 cursor-pointer">
-                    <div>{cartShopPlusBgBlack}</div>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          ) : (
-            <div className="bg-lightGrey rounded-br-lg p-6 ">
-              <h4 className={`font-ms-gothic ${courseSubtitleClasses}`}>
-                {courseSubtitle}
-              </h4>
-              <p
-                className={`font-ms-gothic tracking-tight text-darkGray leading-tight mt-4 ${courseDescriptionClasses}`}
-              >
-                {courseDescription}
-              </p>
-              {!courseLevel && !courseDuration ? (
-                <div className="flex justify-end items-end pt-8 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
-                  {coursePrice ? (
-                    <div className="flex space-x-3">
-                      <p className={`font-ms-gothic ${coursePriceClasses}`}>
-                        $
-                        {Number(coursePrice).toLocaleString().replace(",", ".")}{" "}
-                        ARS
-                      </p>
-                    </div>
-                  ) : null}
-                </div>
-              ) : (
-                <div className="flex  justify-between items-center pt-14 font-ms-gothic text-h3Black text-[1.625rem] leading-tight">
-                  {courseLevel ? (
-                    <div className="flex items-center space-x-2">
-                      <Signal
-                        width={`${signaltWidth}`}
-                        height={`${signalHeight}`}
-                      />
-                      <p className={`${courseLevelClasses}`}>{courseLevel}</p>
-                    </div>
-                  ) : null}
-                  {courseDuration ? (
-                    <div className="flex items-center space-x-4">
-                      <Clock
-                        width={`${clockWidth}`}
-                        height={`${clockHeight}`}
-                      />
-                      <p className={`${courseDurationClasses}`}>
-                        {courseDuration}
-                      </p>
-                    </div>
-                  ) : null}
-                  <div className="flex items-center space-x-3">
-                    <p className={`${courseFavoriteClasses}`}>
-                      Agregar a la lista de deseos
-                    </p>
-                    <Heart width={`${heartWidth}`} height={`${heartHeight}`} />
-                  </div>
-                  {coursePrice ? (
-                    <div className="flex  space-x-3">
-                      <p className={`${coursePriceClasses}`}>
-                        $
-                        {Number(coursePrice).toLocaleString().replace(",", ".")}
-                        ARS
-                      </p>
-                    </div>
-                  ) : null}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-*/
