@@ -122,7 +122,7 @@ export default function ActiveProjects() {
         </h2>
         <div className="flex justify-center px-4 font-ms-gothic md:ml-10 xl:ml-10 md:mr-10 xl:mr-10 ">
           <table className="w-full xl:table-fixed">
-            <thead className="max-sm:hidden">
+            <thead className="max-md:hidden">
               <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
                 <td className="p-4">Nombre completo</td>
                 <td className="sm:pr-10">Curso</td>
@@ -165,12 +165,12 @@ export default function ActiveProjects() {
                 </tr>
               ))}
             </tbody>
-            <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
+            <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-md:hidden  border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg md:text-md sm:text-sm">
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td></td>
-                <td>Filas por página</td>
+                <td className="mr-4">Filas por página</td>
                 <td className="flex justify-between mt-3 mr-3">
                   &nbsp; {currentPage} de {totalPages}
                   <button

@@ -108,7 +108,7 @@ export default function ModalCommentProject({ status, closeModal, projectId }) {
                     onChange={handleInputComment}
                     type="text"
                     value={comment}
-                    className=" bg-lightGrey w-[100%] "
+                    className=" bg-lightGrey w-[100%] xl:h-[150px] md:h-[100px] h-[80px]"
                   ></textarea>
                 </div>
               </form>
