@@ -110,30 +110,32 @@ export default function ActiveCoupons() {
               <td>&nbsp;</td>
               <td></td>
               <td>Filas por página</td>
-              <td className="flex justify-between mt-3">
+              <td className="flex justify-between mt-3 mr-3">
                 &nbsp; {currentPage} de {totalPages}
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <UilArrow1
-                    color={currentPage === 1 ? "lightGrey" : "black"}
-                  />
-                </button>
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) =>
-                      Math.min(prevPage + 1, totalPages)
-                    )
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <UilArrow2
-                    color={currentPage === totalPages ? "lightGrey" : "black"}
-                  />
-                </button>
+                <div className="flex xl:gap-12 md:gap-10">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                  >
+                    <UilArrow1
+                      color={currentPage === 1 ? "lightGrey" : "black"}
+                    />
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) =>
+                        Math.min(prevPage + 1, totalPages)
+                      )
+                    }
+                    disabled={currentPage === totalPages}
+                  >
+                    <UilArrow2
+                      color={currentPage === totalPages ? "lightGrey" : "black"}
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           </tfoot>
