@@ -24,6 +24,7 @@ const MyCertificates = ({ decodedToken }) => {
   //   return randomColor
   // }
 
+  //pedido al back para traer todos los certificados
   useEffect(() => {
     if (decodedToken._id) {
       try {
@@ -37,6 +38,15 @@ const MyCertificates = ({ decodedToken }) => {
       }
     }
   }, []);
+
+  //manejador para abrir una nueva ventana y descargar el PDF del certificado
+  const handlePDFdownload = (userId, courseId)=> {
+    const pdfPath = `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/download/${userId}/${courseId}`;
+
+    window.open(pdfPath, "_blank")
+  }
+
+  console.log("----------------------", userCertificates);
 
   return (
     <>
@@ -57,8 +67,10 @@ const MyCertificates = ({ decodedToken }) => {
                     </h3>
                   </div>
                   <div className="w-[30%] flex justify-center">
-                    <IconButton className="flex flex-col">
-                      <Download />
+                    <IconButton className="flex flex-col" onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
+                      <Download/>
+                    </IconButton>
+                    <IconButton>
                       <Share />
                     </IconButton>
                   </div>
