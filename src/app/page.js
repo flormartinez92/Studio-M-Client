@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import "animate.css";
 
 export default function Home() {
   const dispatch = useDispatch();

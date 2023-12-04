@@ -25,7 +25,10 @@ export default function CardsDesktop({
   handleFavoriteClick,
   handleViewCourseClick,
   handleCartClick,
+  handleDelteCourse,
   subtitleFull = false,
+  iconDelete = false,
+  statusAnimated = false,
 }) {
   const is900Screen = useMediaQuery("(min-width: 900px)");
   const isCart1024Screen = useMediaQuery("(min-width: 1024px)");
@@ -41,13 +44,25 @@ export default function CardsDesktop({
     "only screen and (min-width : 768px) and (max-width : 820px)"
   );
 
+  console.log(statusAnimated);
+
   return (
-    <section className="flex flex-col justify-center items-center py-4 w-full drop-shadow-lg max-w-[950px] select-none">
+    <section
+      className={`animate__animated animate__fadeInLeft flex flex-col justify-center items-center py-4 w-full drop-shadow-lg max-w-[950px] select-none`}
+    >
       <div
-        className="bg-buttonBlack font-mystery-mixed text-letterWhite w-full flex justify-center items-center rounded-t-[10px] py-[.35rem] cursor-pointer"
+        className="bg-buttonBlack font-mystery-mixed relative text-letterWhite w-full flex justify-center items-center rounded-t-[10px] py-[.35rem] cursor-pointer"
         onClick={handleViewCourseClick}
       >
         <h2 className="text-[1.4rem] lg:text-[1.8rem]">{courseLongTitle}</h2>
+        {iconDelete && (
+          <div
+            className="absolute bottom-[.5rem] right-4 font-mystery-mixed text-4xl"
+            onClick={handleDelteCourse}
+          >
+            X
+          </div>
+        )}
       </div>
       <div className="flex w-full bg-page rounded-b-[10px] items-center">
         <div
