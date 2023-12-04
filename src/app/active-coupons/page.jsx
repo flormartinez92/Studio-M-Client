@@ -2,6 +2,7 @@
 
 import React from "react";
 import Button from "@/common/Button";
+import Link from "next/link";
 
 import {
   Trash,
@@ -142,12 +143,14 @@ export default function ActiveCoupons() {
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
-          <Plus className="" width="25" />
-          <span className="text-white items-center flex md:ml-1">
-            Crear cupón
-          </span>
-        </Button>
+        <Link href="/add-coupon">
+          <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
+            <Plus className="" width="25" />
+            <span className="text-white items-center flex md:ml-1">
+              Crear cupón
+            </span>
+          </Button>
+        </Link>
       </div>
     </section>
   );
