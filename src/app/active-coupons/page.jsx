@@ -90,9 +90,11 @@ export default function ActiveCoupons() {
                 <td className="p-4">{coupon.couponCode}</td>
                 <td className="p-4">{coupon.discountCoupon}</td>
                 <td className="p-2">
-                  <button>
-                    <Pencil color="#1BBEE2" />
-                  </button>
+                  <Link href="/add-coupon">
+                    <button>
+                      <Pencil color="#1BBEE2" />
+                    </button>
+                  </Link>
                 </td>
                 <td className="p-4">
                   <button onClick={() => handleStatusToggle(coupon._id)}>
