@@ -85,6 +85,22 @@ function useInput(type) {
         messageError: "*La contraseña debe contener al menos una minúscula",
       },
     ],
+    couponName: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El nombre del cupón no puede estar vacío",
+      },
+    ],
+    discount: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El descuento no puede estar vacío",
+      },
+      {
+        condition: (valor) => /^[0-9]+$/.test(valor),
+        messageError: "*El descuento solo puede contener numeros",
+      },
+    ],
   };
 
   const [message, setMessage] = useState("");
