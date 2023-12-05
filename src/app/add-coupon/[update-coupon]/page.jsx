@@ -27,6 +27,22 @@ export default function UpdateCoupon({ params }) {
     message: MessageDiscount,
   } = useInput("discount");
 
+  useEffect(() => {
+    const fetchCouponDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/allCoupons/${couponId}`
+        );
+        const { couponCode, discountCoupon } = response.data;
+        OnChangeCouponName({ target: { value: couponCode } });
+        OnChangeDiscount({ target: { value: discountCoupon } });
+      } catch (error) {
+        console.error("Error al obtener los detalles del cupón:", error);
+      }
+    };
+    fetchCouponDetails();
+  }, [couponId]);
+
   // Función para manejar la actualización del cupón
   const handleUpdateCoupon = async () => {
     try {
