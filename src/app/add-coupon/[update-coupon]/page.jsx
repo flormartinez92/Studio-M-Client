@@ -7,7 +7,7 @@ import axios from "axios";
 import useInput from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 
-export default function AddCoupon() {
+export default function UpdateCoupon() {
   const router = useRouter();
   const { query } = router;
   const id = query?.id;
@@ -88,7 +88,7 @@ export default function AddCoupon() {
               }
             );
             setmessageAlert("");
-            setmessageAlertOk("¡Cupón Creado!");
+            setmessageAlertOk("¡Cupón Actualizado!");
             setTimeout(() => {
               router.push("/active-coupons");
             }, 1300);
@@ -105,7 +105,7 @@ export default function AddCoupon() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
       <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
-        {isEditMode ? "Editar Cupón" : "Agregar Cupón"}
+        Editar Cupón
       </h2>
       <form
         onSubmit={onSubmitForm}
