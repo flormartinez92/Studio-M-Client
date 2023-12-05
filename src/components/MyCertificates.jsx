@@ -66,8 +66,8 @@ const MyCertificates = ({ decodedToken }) => {
                       {userCertificate.createdAt.slice(0, 10)}
                     </h3>
                   </div>
-                  <div className="w-[30%] flex justify-center">
-                    <IconButton className="flex flex-col" onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
+                  <div className="w-[30%] flex justify-center flex-col gap-1">
+                    <IconButton onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
                       <Download/>
                     </IconButton>
                     <IconButton>
@@ -159,10 +159,14 @@ const MyCertificates = ({ decodedToken }) => {
                 </div>
               </div>
               <div className="absolute top-16 right-10">
-                <IconButton className="flex flex-col">
-                  <Download />
-                  <Share />
-                </IconButton>
+                <div className="flex flex-col gap-1">
+                  <IconButton onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
+                    <Download />
+                  </IconButton>
+                  <IconButton>
+                    <Share />
+                  </IconButton>
+                </div>
               </div>
             </div>
           ))}
