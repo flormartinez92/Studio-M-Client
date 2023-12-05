@@ -4,6 +4,7 @@ import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
 import { CartShopSimple, Close, Signal } from "@/common/Icons";
 import Input from "@/common/Input";
+import Loading_common from "@/common/Loading_common";
 import Cards from "@/components/Cards";
 import CardsDesktop from "@/components/CardsDesktop";
 import axios from "axios";
@@ -26,9 +27,9 @@ export default function trolleyDetails() {
   const handleCheck = async () => {
     console.log(user);
     try {
-      /* const responseCart = await axios.post(
+      const responseCart = await axios.post(
         `http://localhost:8081/api/cart/confirmBuy/${user._id}`
-      ); */
+      );
       console.log(cartCourses);
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
       //console.log(responseCart);
@@ -95,7 +96,8 @@ export default function trolleyDetails() {
       document.body.style.overflow = "auto"; // Habilita el scroll del body
       document.body.querySelector("nav").style.opacity = "1";
       document.body.querySelector("#Footer").style.opacity = "1";
-      document.body.querySelector("#details").style.opacity = "1";
+      document.body.querySelector("#details") &&
+        (document.body.querySelector("#details").style.opacity = "1");
     }
   }, [isOpen]);
   const handleCoupon = (status) => {
@@ -138,54 +140,60 @@ export default function trolleyDetails() {
 
   return (
     <div className="flex flex-col justify-center items-center relative">
-      <div
-        id="details"
-        className="flex w-full flex-col justify-center items-center relative"
-      >
-        <div className="mt-12 mb-6 md:mb-10">
-          <h3 className="text-h2Black font-mystery-mixed text-[29px] min-[320px]:text-[38px] transform -rotate-2 md:rotate-0 md:text-5xl">
-            Detalle de la orden
-          </h3>
+      {cartCourses.length === 0 ? (
+        <div className="w-full h-[600px]  flex justify-center items-center">
+          <Loading_common />
         </div>
-        {cartCourses?.map((course) => (
-          //Contenido para dispositivos móviles
-          <Cards
-            key={course._id}
-            title={course.courseShortTitle}
-            className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem] min-[400px]:max-w-[15rem] md:hidden select-none"
-            img={course.courseImg_url}
-            classNameImg=" h-[12.625rem] rounded-bl-[10px] rounded-br-[10px]"
-            classNameBorder="h-[52px] flex-row justify-between items-center w-[170px] top-[182px]"
-            classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
-            buttonTitle={`$ ${Number(course.coursePrice)
-              .toLocaleString()
-              .replace(",", ".")}`}
-          />
-        ))}
-        {cartCourses?.map((course) => {
-          return (
-            <div
-              className="hidden md:block select-none w-full h-auto mb-8"
-              key={course._id}
-            >
-              <div className="flex justify-center items-center">
-                <div className="flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl">
-                  <CardsDesktop
-                    courseDescription={course.courseDescription}
-                    courseImg_url={course.courseImg_url}
-                    courseLongTitle={course.courseLongTitle}
-                    courseLevel={course.courseLevel}
-                    courseSubtitle={course.courseSubtitle}
-                    courseDuration={course.courseDuration}
-                    coursePrice={course.coursePrice}
-                    isFavorite={course.status_favorite}
-                    subtitleFull={true}
-                    handleFavoriteClick={() =>
-                      handleClickHeart(course.status_favorite, course._id)
-                    }
-                  />
-                </div>
-                {/* <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
+      ) : (
+        <>
+          <div
+            id="details"
+            className="flex w-full flex-col justify-center items-center relative"
+          >
+            <div className="mt-12 mb-6 md:mb-10">
+              <h3 className="text-h2Black font-mystery-mixed text-[29px] min-[320px]:text-[38px] transform -rotate-2 md:rotate-0 md:text-5xl">
+                Detalle de la orden
+              </h3>
+            </div>
+            {cartCourses?.map((course) => (
+              //Contenido para dispositivos móviles
+              <Cards
+                key={course._id}
+                title={course.courseShortTitle}
+                className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem] min-[400px]:max-w-[15rem] md:hidden select-none"
+                img={course.courseImg_url}
+                classNameImg=" h-[12.625rem] rounded-bl-[10px] rounded-br-[10px]"
+                classNameBorder="h-[52px] flex-row justify-between items-center w-[170px] top-[182px]"
+                classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
+                buttonTitle={`$ ${Number(course.coursePrice)
+                  .toLocaleString()
+                  .replace(",", ".")}`}
+              />
+            ))}
+            {cartCourses?.map((course) => {
+              return (
+                <div
+                  className="hidden md:block select-none w-full h-auto mb-8"
+                  key={course._id}
+                >
+                  <div className="flex justify-center items-center">
+                    <div className="flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl">
+                      <CardsDesktop
+                        courseDescription={course.courseDescription}
+                        courseImg_url={course.courseImg_url}
+                        courseLongTitle={course.courseLongTitle}
+                        courseLevel={course.courseLevel}
+                        courseSubtitle={course.courseSubtitle}
+                        courseDuration={course.courseDuration}
+                        coursePrice={course.coursePrice}
+                        isFavorite={course.status_favorite}
+                        subtitleFull={true}
+                        handleFavoriteClick={() =>
+                          handleClickHeart(course.status_favorite, course._id)
+                        }
+                      />
+                    </div>
+                    {/* <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
                   <div className="bg-black text-letterWhite font-mystery-mixed flex items-center justify-center rounded-t-[6px]">
                     <h2 className="py-[6px] text-[1.6rem] leading-9">
                       {course.courseLongTitle.substring(0, 37)}
@@ -214,11 +222,11 @@ export default function trolleyDetails() {
                     </div>
                   </div>
                 </div> */}
-              </div>
-            </div>
-          );
-        })}
-        {/* {cartCourses?.map((course) => (
+                  </div>
+                </div>
+              );
+            })}
+            {/* {cartCourses?.map((course) => (
           //Contenido para dispositivo de escritorio``
           <div
             key={course._id}
@@ -261,34 +269,34 @@ export default function trolleyDetails() {
             </div>
           </div>
         ))} */}
-        <div
-          className="mt-3 cursor-pointer select-none flex justify-center items-center relative"
-          onClick={() => handleCoupon(isOpen)}
-        >
-          <h3 className="text-h2Black font-ms-gothic text-[16px] md:text-lg">
-            Tengo un cupón de descuento
-          </h3>
-        </div>
-        <div className=" flex items-center justify-center text-h2Black font-mystery-mixed text-2xl min-[320px]:text-3xl w-[70%] mt-6 md:justify-center md:text-5xl">
-          <h2 className="mx-8">Total:</h2>
-          <h2 className="mx-8">
-            {!trolley
-              ? Number(cartAmount.totalAmount)
-                  .toLocaleString()
-                  .replace(",", ".")
-              : Number(trolley).toLocaleString().replace(",", ".")}
-          </h2>
-        </div>
-        <Button
-          onClick={handleCheck}
-          type="rounder"
-          className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[210px]"
-        >
-          Confirmar
-        </Button>
-      </div>
+            <div
+              className="mt-3 cursor-pointer select-none flex justify-center items-center relative"
+              onClick={() => handleCoupon(isOpen)}
+            >
+              <h3 className="text-h2Black font-ms-gothic text-[16px] md:text-lg">
+                Tengo un cupón de descuento
+              </h3>
+            </div>
+            <div className=" flex items-center justify-center text-h2Black font-mystery-mixed text-2xl min-[320px]:text-3xl w-[70%] mt-6 md:justify-center md:text-5xl">
+              <h2 className="mx-8">Total:</h2>
+              <h2 className="mx-8">
+                {!trolley
+                  ? Number(cartAmount.totalAmount)
+                      .toLocaleString()
+                      .replace(",", ".")
+                  : Number(trolley).toLocaleString().replace(",", ".")}
+              </h2>
+            </div>
+            <Button
+              onClick={handleCheck}
+              type="rounder"
+              className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[210px]"
+            >
+              Confirmar
+            </Button>
+          </div>
 
-      {/*  {cartCourses?.map((course) => (
+          {/*  {cartCourses?.map((course) => (
         //Contenido para dispositivos móviles
         <Cards
           key={course._id}
@@ -299,43 +307,45 @@ export default function trolleyDetails() {
           classNameImg=""
         />
       ))} */}
-      <div
-        className={` w-full  flex items-center justify-center fixed inset-0 z-50 ${
-          isOpen ? "block" : "hidden"
-        }`}
-      >
-        <div
-          ref={modalRef}
-          className="w-full max-w-[1100px] h-[350px] min-[500px]:h-[400px] min-[600px]:h-[500px] min-[700px]:h-[600px] min-[800px]:h-[720px]  bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center mx-4 sm:m-20"
-        >
-          <div className="flex h-[240px] min-[500px]:h-[350px] min-[600px]:h-[550px] w-full flex-col gap-y-10 justify-between min-[500px]:justify-around items-center">
-            <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
-              Ingresá tu cupón
-            </h2>
-
-            <Input
-              className={
-                "w-[83%] max-w-[420px] min-[500px]:max-w-[620px] min-[600px]:max-w-[820px]"
-              }
-              classNameInput={
-                "h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem]"
-              }
-              onChange={onChangeCoupon}
-              value={coupon}
-            />
-            <Border
-              className={`flex gap-0.5 border-pink border-[1px] p-1 ${""}`}
+          <div
+            className={` w-full  flex items-center justify-center fixed inset-0 z-50 ${
+              isOpen ? "block" : "hidden"
+            }`}
+          >
+            <div
+              ref={modalRef}
+              className="w-full max-w-[1100px] h-[350px] min-[500px]:h-[400px] min-[600px]:h-[500px] min-[700px]:h-[600px] min-[800px]:h-[720px]  bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center mx-4 sm:m-20"
             >
-              <Button
-                className={`font-mystery-mixed p-3 whitespace-nowrap flex items-center text-[1.5rem] min-[500px]:text-[2.5rem] min-[500px]:p-5  leading-3 min-[500px]:leading-5 `}
-                onClick={handleAddCoupon}
-              >
-                {"Aplicar descuento"}
-              </Button>
-            </Border>
+              <div className="flex h-[240px] min-[500px]:h-[350px] min-[600px]:h-[550px] w-full flex-col gap-y-10 justify-between min-[500px]:justify-around items-center">
+                <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
+                  Ingresá tu cupón
+                </h2>
+
+                <Input
+                  className={
+                    "w-[83%] max-w-[420px] min-[500px]:max-w-[620px] min-[600px]:max-w-[820px]"
+                  }
+                  classNameInput={
+                    "h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem]"
+                  }
+                  onChange={onChangeCoupon}
+                  value={coupon}
+                />
+                <Border
+                  className={`flex gap-0.5 border-pink border-[1px] p-1 ${""}`}
+                >
+                  <Button
+                    className={`font-mystery-mixed p-3 whitespace-nowrap flex items-center text-[1.5rem] min-[500px]:text-[2.5rem] min-[500px]:p-5  leading-3 min-[500px]:leading-5 `}
+                    onClick={handleAddCoupon}
+                  >
+                    {"Aplicar descuento"}
+                  </Button>
+                </Border>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

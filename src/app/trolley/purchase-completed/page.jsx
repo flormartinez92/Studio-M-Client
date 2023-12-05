@@ -4,11 +4,17 @@ import Button from "@/common/Button";
 import CardsDesktop from "@/components/CardsDesktop";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PurchasedCourseResume({ params }) {
   const courseId = params["purchased-course-resume"];
-  console.log("courseId--->", courseId);
+  const [courseUser, setCourseUser] = useState({
+    id_course: "",
+    id_classe: "",
+  });
+  //console.log("courseId--->", courseId);
   const [courseResume, setCourseResume] = useState([]);
 
   /* useEffect(() => {
@@ -18,10 +24,35 @@ export default function PurchasedCourseResume({ params }) {
       .catch((error) => console.error(error));
   }, [courseId]); */
 
+  /* const getCourse = async () => {
+    try {
+      const oneCourse = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses/${courseId}`
+      );
+      setCourseUser(oneCourse.data);
+    } catch (error) {
+      console.error("Error while fetching courses:", error);
+    }
+  }; */
+
   useEffect(() => {
     const purchase = JSON.parse(localStorage.getItem("purchase"));
-    //console.log(purchase);
-    setCourseResume(purchase);
+    const newArr = purchase.map((courseUser) => {
+      const newCourseUser = { ...courseUser };
+      courseUser.modules.forEach((module, i) => {
+        if (i === 0) {
+          module.topics.forEach((topic, z) => {
+            if (z === 0) {
+              newCourseUser.firstClass = topic.classes[0]._id;
+            }
+          });
+        }
+      });
+      return newCourseUser;
+    });
+
+    console.log(newArr);
+    setCourseResume(newArr);
   }, []);
 
   function newTitle(title) {
@@ -32,14 +63,17 @@ export default function PurchasedCourseResume({ params }) {
     }
     return;
   }
-  const handleClickStart = (course) => {
+  const handleClickStart = async (course) => {
     console.log(course);
   };
-  //console.log(courseResume);
+  //console.log(courseUser);
 
   return (
     <section className="flex flex-col justify-center items-center mb-[2rem] mt-[3rem] md:mt-[3.4rem] md:mb-[9rem]">
-      <h3 className="font-mystery-mixed text-[1.3rem] sm-300:text-[1.7rem] tracking-wider -rotate-2 md:text-4xl lg:text-5xl md:rotate-0">
+      {/* {JSON.stringify(
+        courseUser.modules && courseUser.modules[0].topics[0].classes[0]._id
+      )} */}
+      <h3 className="font-mystery-mixed text-[1.3rem] sm-300:text-[1.7rem] tracking-wider -rotate-2 md:text-4xl lg:text-5xl md:rotate-0 animate__animated animate__fadeInLeft">
         ¡Gracias por tu compra!
       </h3>
       {courseResume.map((course) => {
@@ -82,13 +116,15 @@ export default function PurchasedCourseResume({ params }) {
                 </p>
               </div>
               <div className="flex justify-center items-center my-4">
-                <Button
-                  type="rounder"
-                  className="font-ms-gothic w-[180px] py-2 text-[1.2rem] leading-5"
-                  onClick={() => handleClickStart(course)}
-                >
-                  Iniciar curso
-                </Button>
+                <Link href={`/my-account/${course._id}/${course.firstClass}`}>
+                  <Button
+                    type="rounder"
+                    className="font-ms-gothic w-[180px] py-2 text-[1.2rem] leading-5 animate__animated animate__fadeInLeft"
+                    onClick={() => handleClickStart(course)}
+                  >
+                    Iniciar curso
+                  </Button>
+                </Link>
               </div>
             </div>
             <div
@@ -110,13 +146,17 @@ export default function PurchasedCourseResume({ params }) {
                     fullDescription={true}
                   />
                   <div className="flex justify-center items-center my-4">
-                    <Button
-                      onClick={() => handleClickStart(course)}
-                      type="rounder"
-                      className="font-ms-gothic w-[240px] py-4 text-[1.7rem] leading-5"
+                    <Link
+                      href={`/my-account/${course._id}/${course.firstClass}`}
                     >
-                      Iniciar curso
-                    </Button>
+                      <Button
+                        onClick={() => handleClickStart(course)}
+                        type="rounder"
+                        className="font-ms-gothic w-[240px] py-4 text-[1.7rem] leading-5 animate__animated animate__fadeInLeft"
+                      >
+                        Iniciar curso
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>

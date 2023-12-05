@@ -19,6 +19,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
 import { useMediaQuery } from "@react-hook/media-query";
+import Loading_common from "@/common/Loading_common";
 
 export default function Trolley() {
   const [cartCourses, setCartCourses] = useState(null);
@@ -41,10 +42,6 @@ export default function Trolley() {
       setUser(responseUser.data);
       console.log(responseUser.data._id);
       //http://localhost:8081/api/cart/courses/65538c7afc108110ec0e0273
-      const responseFavorites = await axios.get(
-        `http://localhost:8081/api/favorites/${responseUser.data._id}`
-      );
-      console.log(responseFavorites.data);
 
       /* responseFavorites.data.courseId.map((e) => {
         console.log(responseCourses.data);
@@ -55,12 +52,17 @@ export default function Trolley() {
 
       setCartCourses(responseCourses.data);
     } catch (error) {
-      console.error(error);
+      if (error.response.data === "Cart not found") {
+        setCartCourses([]);
+      }
+
+      console.error(error.response.data);
     }
   };
 
   useEffect(() => {
     getUser();
+    console.log("NO HAY NADA");
   }, []);
 
   const handleClickHeart = async (status, idCourse) => {
@@ -165,17 +167,10 @@ export default function Trolley() {
     >
       {!cartCourses && (
         <div className=" w-full h-[500px] flex justify-center items-center">
-          <div className="w-20 h-20 flex justify-center items-center">
-            <h2 className="font-ms-gothic text-2xl">Cargando </h2>
-            <Image
-              src={"/svg/icons8-carga.gif"}
-              objectFit="cover"
-              width={100}
-              height={100}
-            />
-          </div>
+          <Loading_common />
         </div>
       )}
+
       {cartCourses &&
         (cartCourses.length !== 0 ? (
           <div className="flex w-full flex-col gap-y-6 justify-center items-center my-10 mb-[10rem]">
