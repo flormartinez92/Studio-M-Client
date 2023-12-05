@@ -90,7 +90,7 @@ export default function ActiveCoupons() {
                 <td className="p-4">{coupon.couponCode}</td>
                 <td className="p-4">{coupon.discountCoupon}</td>
                 <td className="p-2">
-                  <Link href="/add-coupon">
+                  <Link href={`/add-coupon/${coupon._id}`}>
                     <button>
                       <Pencil color="#1BBEE2" />
                     </button>
