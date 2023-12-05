@@ -1,19 +1,15 @@
 "use client";
-
 import Button from "@/common/Button";
 import Input from "@/common/Input";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useInput from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 
 export default function AddCoupon() {
   const router = useRouter();
-  const { query } = router;
-  const id = query?.id;
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
   const {
     OnChange: OnChangeCouponName,
     value: valueCouponName,
@@ -29,70 +25,36 @@ export default function AddCoupon() {
     message: MessageDiscount,
   } = useInput("discount");
 
-  useEffect(() => {
-    if (id) {
-      setIsEditMode(true);
-    }
-  }, [id]);
-
-  // Función para manejar la actualización del cupón
-  const handleUpdateCoupon = async () => {
-    try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/${id}`,
-        {
-          couponCode: valueCouponName,
-          discountCoupon: valueDiscount,
-        }
-      );
-      setmessageAlert("");
-      setmessageAlertOk("¡Cupón Actualizado!");
-      setTimeout(() => {
-        router.push("/active-coupons");
-      }, 1300);
-    } catch (error) {
-      console.error(error);
-      const { data } = error.response;
-      console.log(data);
-    }
-  };
-
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    // Verificación campos de los input
-    if (valueCouponName.trim() === "" || valueDiscount.trim() === "") {
+    //Verificacion campos de los input
+    if (valueCouponName.trim() == "" || valueDiscount.trim() == "") {
       setmessageAlert("¡Completar todos los campos!");
       setTimeout(() => {
         setmessageAlert("");
       }, 1300);
     } else {
-      // Verificación campos de los mensajes de error
+      //Verificacion campos de los mensajes de error
       if (MessageCouponName || MessageDiscount) {
         setmessageAlert("¡Verificar campos!");
         setTimeout(() => {
           setmessageAlert("");
         }, 1300);
       } else {
-        // Ruta para agregar o editar un cupón según el modo
+        //Ruta para agregar un coupon
         try {
-          if (isEditMode) {
-            // Si está en modo de edición, llama a la función para actualizar el cupón
-            handleUpdateCoupon();
-          } else {
-            // Si no está en modo de edición, llama a la función para agregar un nuevo cupón
-            await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/add`,
-              {
-                couponCode: valueCouponName,
-                discountCoupon: valueDiscount,
-              }
-            );
-            setmessageAlert("");
-            setmessageAlertOk("¡Cupón Creado!");
-            setTimeout(() => {
-              router.push("/active-coupons");
-            }, 1300);
-          }
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/add`,
+            {
+              couponCode: valueCouponName,
+              discountCoupon: valueDiscount,
+            }
+          );
+          setmessageAlert("");
+          setmessageAlertOk("¡Cupon Creado!");
+          setTimeout(() => {
+            router.push("/active-coupons");
+          }, 1300);
         } catch (error) {
           console.error(error);
           const { data } = error.response;
@@ -105,7 +67,7 @@ export default function AddCoupon() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
       <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
-        {isEditMode ? "Editar Cupón" : "Agregar Cupón"}
+        Agregar Cupón
       </h2>
       <form
         onSubmit={onSubmitForm}

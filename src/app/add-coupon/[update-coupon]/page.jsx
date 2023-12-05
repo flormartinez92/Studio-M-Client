@@ -7,13 +7,11 @@ import axios from "axios";
 import useInput from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 
-export default function UpdateCoupon() {
+export default function UpdateCoupon({ params }) {
+  const couponId = params["update-coupon"];
   const router = useRouter();
-  const { query } = router;
-  const id = query?.id;
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
   const {
     OnChange: OnChangeCouponName,
     value: valueCouponName,
@@ -29,17 +27,11 @@ export default function UpdateCoupon() {
     message: MessageDiscount,
   } = useInput("discount");
 
-  useEffect(() => {
-    if (id) {
-      setIsEditMode(true);
-    }
-  }, [id]);
-
   // Función para manejar la actualización del cupón
   const handleUpdateCoupon = async () => {
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/${couponId}`,
         {
           couponCode: valueCouponName,
           discountCoupon: valueDiscount,
@@ -59,6 +51,7 @@ export default function UpdateCoupon() {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+
     // Verificación campos de los input
     if (valueCouponName.trim() === "" || valueDiscount.trim() === "") {
       setmessageAlert("¡Completar todos los campos!");
@@ -73,31 +66,8 @@ export default function UpdateCoupon() {
           setmessageAlert("");
         }, 1300);
       } else {
-        // Ruta para agregar o editar un cupón según el modo
-        try {
-          if (isEditMode) {
-            // Si está en modo de edición, llama a la función para actualizar el cupón
-            handleUpdateCoupon();
-          } else {
-            // Si no está en modo de edición, llama a la función para agregar un nuevo cupón
-            await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/adminCoupon/add`,
-              {
-                couponCode: valueCouponName,
-                discountCoupon: valueDiscount,
-              }
-            );
-            setmessageAlert("");
-            setmessageAlertOk("¡Cupón Actualizado!");
-            setTimeout(() => {
-              router.push("/active-coupons");
-            }, 1300);
-          }
-        } catch (error) {
-          console.error(error);
-          const { data } = error.response;
-          console.log(data);
-        }
+        // Llama directamente a la función para actualizar el cupón
+        handleUpdateCoupon();
       }
     }
   };
