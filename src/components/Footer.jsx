@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Footer = () => {
   return (
     <div
@@ -122,30 +124,33 @@ export const Footer = () => {
         lg:h-[200px]
         "
         >
-          <div
-            className="
-          bg-[url('/behance.png')] 
-          bg-no-repeat 
-          w-[99px]
-          h-[108px]
-          md:w-[90px]
-          md:h-[100px]
-          md:ml-[50px]
-          md:mt-[50px]
-          lg:w-[100px]
-          lg:h-[110px]
-          lg:ml-[50px]
-          lg:mt-[50px]
-          xl:w-[137px]
-          xl:h-[149px]
-          xl:ml-0
-          xl:mt-0
-          bg-contain
-          -mr-[1px]
-          "
-          ></div>
-          <div
-            className="
+          <Link href="https://www.behance.net/macarenbernal">
+            <div
+              className="
+            bg-[url('/behance.png')] 
+            bg-no-repeat 
+            w-[99px]
+            h-[108px]
+            md:w-[90px]
+            md:h-[100px]
+            md:ml-[50px]
+            md:mt-[50px]
+            lg:w-[100px]
+            lg:h-[110px]
+            lg:ml-[50px]
+            lg:mt-[50px]
+            xl:w-[137px]
+            xl:h-[149px]
+            xl:ml-0
+            xl:mt-0
+            bg-contain
+            -mr-[1px]
+            "
+            ></div>
+          </Link>
+          <Link href="https://www.instagram.com/studio.bym/">
+            <div
+              className="
           bg-[url('/instagram.png')] 
           bg-no-repeat 
           w-[122px]
@@ -168,9 +173,11 @@ export const Footer = () => {
           mt-[17px]
           ml-[10px]
           "
-          ></div>
-          <div
-            className="
+            ></div>
+          </Link>
+          <Link href="https://github.com/Mcsand22">
+            <div
+              className="
           bg-[url('/github.png')] 
           bg-no-repeat 
           w-[113px]
@@ -189,9 +196,11 @@ export const Footer = () => {
           bg-contain
           mr-[12px]
           "
-          ></div>
-          <div
-            className="
+            ></div>
+          </Link>
+          <Link href="https://wa.me/qr/D4K4N3P4NR4CL1">
+            <div
+              className="
           bg-[url('/wpp.png')] 
           bg-no-repeat 
           w-[127px]
@@ -212,9 +221,11 @@ export const Footer = () => {
           mt-[40px]
           ml-[20px]
           "
-          ></div>
-          <div
-            className="
+            ></div>
+          </Link>
+          <Link href="https://www.tiktok.com/@studio.bym">
+            <div
+              className="
           bg-[url('/tiktok.png')] 
           bg-no-repeat 
           w-[115px]
@@ -237,7 +248,8 @@ export const Footer = () => {
           xl:-translate-y-0
           xl:translate-x-0
           "
-          ></div>
+            ></div>
+          </Link>
         </div>
         {/* ICON SOL */}
         <div
