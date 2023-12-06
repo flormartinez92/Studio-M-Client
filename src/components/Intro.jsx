@@ -22,12 +22,13 @@ export default function Intro() {
       );
 
       const courses = response.data.map(
-        ({ _id, courseTitle, courseImg_url }) => ({
+        ({ _id, courseShortTitle, courseImg_url }) => ({
           _id,
-          courseTitle,
+          courseShortTitle,
           courseImg_url,
         })
       );
+      console.log(courses);
       setValue(courses);
     } catch (err) {
       console.error(err);
@@ -48,8 +49,6 @@ export default function Intro() {
       );
 
       setNumCart(responseCart.data.length);
-
-      //console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -156,7 +155,7 @@ export default function Intro() {
                             flex justify-center items-center font-mystery-mixed 
                             text-[1.7rem] min-[1300px]:text-[2.2rem] rounded-t-[.6rem]"
                           >
-                            <h1>UX Research</h1>
+                            <h1>{item.courseShortTitle}</h1>
                           </div>
                           <div className="relative w-full flex justify-center items-center">
                             <Image
@@ -230,7 +229,7 @@ export default function Intro() {
               return (
                 <div className=" w-[13rem] h-[15rem] min-w-[13rem]" key={i}>
                   <div className="bg-black text-white w-full h-10 flex justify-center items-center font-mystery-mixed text-[1.7rem] rounded-t-[.6rem]">
-                    <h1>UX Research</h1>
+                    <h1>{item.courseShortTitle}</h1>
                   </div>
                   <div className="relative">
                     <Image
