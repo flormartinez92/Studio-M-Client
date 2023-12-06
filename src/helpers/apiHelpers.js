@@ -57,3 +57,15 @@ export const handleCartClick = async (courseId, userId) => {
     console.error("Error while adding cart:", error);
   }
 };
+
+export const fetchUserProject = async (userId) => {
+  try {
+    const userProject = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/user/project/${userId}`
+    );
+    return userProject.data;
+  } catch (error) {
+    console.error("User has no project", error);
+    return null;
+  }
+};

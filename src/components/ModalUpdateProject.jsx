@@ -9,11 +9,12 @@ import axios from "axios";
 import { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function ModalLinkProject({
+export default function ModalUpdateProject({
   status,
   closeModal,
-  courseId,
+  projectId,
   mail,
+  comment,
 }) {
   const dialofRef = useRef(null);
   const [showThanksModal, setShowThanksModal] = useState(false);
@@ -43,8 +44,8 @@ export default function ModalLinkProject({
       }, 1500);
     } else {
       try {
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/project/addProject/${courseId}`,
+        await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/project/updateProject/${projectId}`,
           { project_url: valueLinkProject, mail }
         );
         dispatch(changeButton("Proyecto Entregado"));
@@ -107,9 +108,9 @@ export default function ModalLinkProject({
         >
           <div
             onClick={(event) => handleModalContentClick(event)}
-            className="flex items-center justify-center w-[80%] h-[27%] border-[2px] border-dashed border-purple rounded-md
+            className="flex items-center justify-center w-[80%] h-[35%] border-[2px] border-dashed border-purple rounded-md
         min-[560px]:w-[90%] min-[560px]:h-[35%]
-        md:w-[90%] md:h-[50%]
+        md:w-[90%] md:h-[55%]
         lg:w-[90%] lg:h-[90%]"
           >
             <div className="flex flex-col justify-center items-center bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center w-[97%] h-[97%] md:justify-normal md:pt-5 lg:justify-center min-[820]:justify-center">
@@ -118,19 +119,18 @@ export default function ModalLinkProject({
               min-[560px]:text-4xl md:text-5xl md:pb-7 md:pt-9 min-[820px]:pt-16 lg:text-6xl lg:py-10 xl:text-7xl
               "
               >
-                Link de Entrega
+                Comentarios
               </h2>
-              <p className="pb-3 font-ms-gothic text-[10px] text-white px-3 text-center min-[390px]:text-xs min-[390px]:pb-4 min-[560px]:text-lg min-[560px]:leading-6  min-[560px]:pb-4 md:text-2xl md:w-[87%] lg:text-4xl lg:w-[95%] lg:px-3 lg:pb-8 xl:w-[85%] xl:pb-10">
-                El proyecto debe presentarse con un link de behance, drive (pdf)
-                o a la presentación realizada en figma
+              <p className="pb-3 font-ms-gothic text-[10px] text-white px-3 text-center min-[390px]:text-xs min-[390px]:pb-4 min-[560px]:text-lg min-[560px]:leading-6  min-[560px]:pb-4 md:text-2xl md:w-[87%] lg:text-xl lg:w-[95%] lg:px-3 lg:pb-8 xl:w-[85%] xl:pb-10">
+                {comment}
               </p>
 
               <form onSubmit={handleButtonClick} className="w-[75%] md:w-[80%]">
                 {isMdBreakpoint ? (
                   <div className="flex flex-col justify-start items-start pb-2 ">
-                    <label className=" font-mystery-mixed text-white text-start text-3xl lg:text-4xl">
-                      Link
-                    </label>
+                    <h3 className=" font-mystery-mixed text-white text-start text-3xl lg:text-4xl">
+                      Nuevo Link
+                    </h3>
                   </div>
                 ) : null}
                 <div className="flex flex-col justify-center items-center">
