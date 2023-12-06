@@ -2,6 +2,7 @@
 
 import React from "react";
 import Button from "@/common/Button";
+import Link from "next/link";
 
 import {
   Trash,
@@ -89,9 +90,11 @@ export default function ActiveCoupons() {
                 <td className="p-4">{coupon.couponCode}</td>
                 <td className="p-4">{coupon.discountCoupon}</td>
                 <td className="p-2">
-                  <button>
-                    <Pencil color="#1BBEE2" />
-                  </button>
+                  <Link href={`/add-coupon/${coupon._id}`}>
+                    <button>
+                      <Pencil color="#1BBEE2" />
+                    </button>
+                  </Link>
                 </td>
                 <td className="p-4">
                   <button onClick={() => handleStatusToggle(coupon._id)}>
@@ -110,42 +113,46 @@ export default function ActiveCoupons() {
               <td>&nbsp;</td>
               <td></td>
               <td>Filas por página</td>
-              <td className="flex justify-between mt-3">
+              <td className="flex justify-between mt-3 mr-3">
                 &nbsp; {currentPage} de {totalPages}
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <UilArrow1
-                    color={currentPage === 1 ? "lightGrey" : "black"}
-                  />
-                </button>
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) =>
-                      Math.min(prevPage + 1, totalPages)
-                    )
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <UilArrow2
-                    color={currentPage === totalPages ? "lightGrey" : "black"}
-                  />
-                </button>
+                <div className="flex xl:gap-12 md:gap-10">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                  >
+                    <UilArrow1
+                      color={currentPage === 1 ? "lightGrey" : "black"}
+                    />
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) =>
+                        Math.min(prevPage + 1, totalPages)
+                      )
+                    }
+                    disabled={currentPage === totalPages}
+                  >
+                    <UilArrow2
+                      color={currentPage === totalPages ? "lightGrey" : "black"}
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
       <div className="flex justify-center mt-10 md:justify-end md:mr-24">
-        <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
-          <Plus className="" width="25" />
-          <span className="text-white items-center flex md:ml-1">
-            Crear cupón
-          </span>
-        </Button>
+        <Link href="/add-coupon">
+          <Button className="w-[120px] h-[40px] bg-darkGreen flex items-center rounded-md md:p-1 md:w-[150px]">
+            <Plus className="" width="25" />
+            <span className="text-white items-center flex md:ml-1">
+              Crear cupón
+            </span>
+          </Button>
+        </Link>
       </div>
     </section>
   );

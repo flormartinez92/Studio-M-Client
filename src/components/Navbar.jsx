@@ -132,61 +132,63 @@ export default function Navbar() {
         </nav>
       ) : (
         <nav className=" bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center p-10 md:p-5 shadow text-white font-mystery-mixed md:flex md:items-center md:justify-end">
-          <div className="flex justify-between items-center">
-            {titleShouldDisplay && (
-              <span className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden">
-                Studio by M
-              </span>
-            )}
-            <input
-              type="checkbox"
-              id="menu-toggle"
-              className="hidden md:hidden"
-            />
-            <label
-              htmlFor="menu-toggle"
-              className="absolute right-0 mr-[8%] md:hidden"
-            >
-              <IconButton className="cursor-pointer" onClick={toggleMenu}>
-                <BurgerMenu width="24" height="24" />
-              </IconButton>
-            </label>
-            <div className="hidden md:block">
-              <ul className="md:w-full md:flex md:flex-row md:items-center">
-                <li className="mx-4">
-                  <Link
-                    href="/"
-                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
-                  >
-                    Inicio
-                  </Link>
-                </li>
-                <li className="mx-4">
-                  <Link
-                    href="/courses"
-                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
-                  >
-                    Cursos
-                  </Link>
-                </li>
-                <li className="mx-4">
-                  <Link
-                    href="/my-account"
-                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
-                  >
-                    Mi cuenta
-                  </Link>
-                </li>
-                <li className="mx-4">
-                  <Link href="/trolley">
-                    <IconButton className="hover:underline hover:decoration-pink">
-                      <CartShopSimple width="43" height="40" />
-                    </IconButton>
-                  </Link>
-                </li>
-              </ul>
+          <Link href="/">
+            <div className="flex justify-between items-center">
+              {titleShouldDisplay && (
+                <span className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden">
+                  Studio by M
+                </span>
+              )}
+              <input
+                type="checkbox"
+                id="menu-toggle"
+                className="hidden md:hidden"
+              />
+              <label
+                htmlFor="menu-toggle"
+                className="absolute right-0 mr-[8%] md:hidden"
+              >
+                <IconButton className="cursor-pointer" onClick={toggleMenu}>
+                  <BurgerMenu width="24" height="24" />
+                </IconButton>
+              </label>
+              <div className="hidden md:block">
+                <ul className="md:w-full md:flex md:flex-row md:items-center">
+                  <li className="mx-4">
+                    <Link
+                      href="/"
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Inicio
+                    </Link>
+                  </li>
+                  <li className="mx-4">
+                    <Link
+                      href="/courses"
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Cursos
+                    </Link>
+                  </li>
+                  <li className="mx-4">
+                    <Link
+                      href="/my-account"
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Mi cuenta
+                    </Link>
+                  </li>
+                  <li className="mx-4">
+                    <Link href="/trolley">
+                      <IconButton className="hover:underline hover:decoration-pink">
+                        <CartShopSimple width="43" height="40" />
+                      </IconButton>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </Link>
         </nav>
       )}
     </>

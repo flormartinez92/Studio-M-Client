@@ -90,9 +90,9 @@ export default function ActiveUsers() {
             </tr>
           </thead>
           <tbody>
-            {users?.slice(startIndex, endIndex).map((user) => (
+            {users?.slice(startIndex, endIndex).map((user, index) => (
               <tr
-                key={user._id}
+                key={index}
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{user.name + " " + user.lastname}</td>
@@ -125,36 +125,38 @@ export default function ActiveUsers() {
               </tr>
             ))}
           </tbody>
-          <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg">
+          <tfoot className="w-full md:w-[740px] xl:w-[1211px] h-[48px] max-sm:hidden border-t-[0.5px] border-lightGrey shadow-xl md:border-r-[0.5px] md:border-l-[0.5px] rounded-b-lg md:text-md sm:text-sm">
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>Filas por página</td>
-              <td className="flex justify-between mt-3">
+              <td className="flex justify-between mt-3 mr-3 ml-3">
                 &nbsp; {currentPage} de {totalPages}
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <UilArrow1
-                    color={currentPage === 1 ? "lightGrey" : "black"}
-                  />
-                </button>
-                <button
-                  onClick={() =>
-                    setCurrentPage((prevPage) =>
-                      Math.min(prevPage + 1, totalPages)
-                    )
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <UilArrow2
-                    color={currentPage === totalPages ? "lightGrey" : "black"}
-                  />
-                </button>
+                <div className="flex xl:gap-12 md:gap-10">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                  >
+                    <UilArrow1
+                      color={currentPage === 1 ? "lightGrey" : "black"}
+                    />
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) =>
+                        Math.min(prevPage + 1, totalPages)
+                      )
+                    }
+                    disabled={currentPage === totalPages}
+                  >
+                    <UilArrow2
+                      color={currentPage === totalPages ? "lightGrey" : "black"}
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           </tfoot>

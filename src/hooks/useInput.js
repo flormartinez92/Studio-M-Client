@@ -89,6 +89,22 @@ function useInput(type) {
       {
         condition: (valor) => valor.trim() !== "",
         messageError: "*El link no puede estar vacío",
+       },
+    ],
+    couponName: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El nombre del cupón no puede estar vacío",
+      },
+    ],
+    discount: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El descuento no puede estar vacío",
+      },
+      {
+        condition: (valor) => /^[0-9]+$/.test(valor),
+        messageError: "*El descuento solo puede contener numeros",
       },
     ],
   };
