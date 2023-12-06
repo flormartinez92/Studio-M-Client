@@ -28,7 +28,6 @@ export default function Intro() {
           courseImg_url,
         })
       );
-      console.log(courses);
       setValue(courses);
     } catch (err) {
       console.error(err);
