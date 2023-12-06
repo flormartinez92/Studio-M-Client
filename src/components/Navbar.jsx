@@ -1,17 +1,24 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import IconButton from "@/common/IconButton";
-import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import IconButton from "@/common/IconButton";
+import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
+import { jwtDecode } from "jwt-decode";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [numCart, setNumCart] = useState();
   const [title, setTitle] = useState("");
+
+  //Token para la informacion de usuario.
+  const userToken = sessionStorage.getItem("token");
+  const decodedToken = userToken && jwtDecode(userToken);
+  const userAdmin = decodedToken?.isAdmin;
+
 
   //condicion para que cuando este en la home no muestre el titulo studio by m
   const pathname = usePathname();
@@ -64,8 +71,8 @@ export default function Navbar() {
             </IconButton>
           </div>
           <div className="flex flex-col items-center justify-center z-10 absolute w-full left-0 py-7 pl-7">
-            <ul className=" md:z-auto md:static md:w-auto md:py-0 md:pl-0 ">
-              <li className="mx-[3rem]">
+            <ul className="text-center md:z-auto md:static md:w-auto md:py-0 md:pl-0 ">
+              <li className="">
                 <Link
                   href="/"
                   className="text-[50px] text-white font-mystery-mixed"
@@ -74,15 +81,26 @@ export default function Navbar() {
                   Inicio
                 </Link>
               </li>
-              <li className="mx-[2rem]">
-                <Link
+                {!userAdmin ? 
+              (<li className="">
+                  <Link
                   href="/courses"
                   className="text-[50px] text-white font-mystery-mixed"
                   onClick={handleClick}
                 >
                   Cursos
+                  </Link>
+              </li>) :
+              (<li className="">
+                  <Link 
+                  href="/admin-panel"
+                  className="text-[50px] text-white font-mystery-mixed"
+                  onClick={handleClick}
+                >
+                  Admin Panel
                 </Link>
-              </li>
+              </li>)
+                }
               <li className="">
                 <Link
                   href="/my-account"
@@ -92,7 +110,7 @@ export default function Navbar() {
                   Mi cuenta
                 </Link>
               </li>
-              <li className="mx-[4.5rem]">
+              <li className="mx-[6rem]">
                 <Link
                   href="/trolley"
                   className="text-[50px] text-white font-mystery-mixed"
@@ -162,12 +180,17 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li className="mx-4">
-                  <Link
+                  {!userAdmin ? ( <Link
                     href="/courses"
                     className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                   >
                     Cursos
-                  </Link>
+                  </Link>) : (<Link
+                    href="/admin-panel"
+                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                  >
+                    Admin Panel
+                  </Link>)}
                 </li>
                 <li className="mx-4">
                   <Link
