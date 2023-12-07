@@ -51,31 +51,29 @@ export default function Login() {
       } else {
         //Registro de usuario
         try {
-          await axios
-            .post(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/user/login`,
-              {
-                mail: valueMail,
-                password: valuePassword,
-              },
-              { withCredentials: true }
-            )
-            .then((res) => res.data)
-            .then((data) => {
-              sessionStorage.setItem("token", data.token);
-              dispatch(
-                setCredentials({
-                  dni: data.user.dni,
-                  name: data.user.name,
-                  lastname: data.user.lastname,
-                  mail: data.user.mail,
-                  id: data.user._id,
-                })
-              );
-              setmessageAlert("");
-              setmessageAlertOk("¡Bienvenido!");
-              router.push("/");
-            });
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/login`,
+            {
+              mail: valueMail,
+              password: valuePassword,
+            },
+            { withCredentials: true }
+          );
+
+          const data = response.data;
+          sessionStorage.setItem("token", data.token);
+          dispatch(
+            setCredentials({
+              dni: data.user.dni,
+              name: data.user.name,
+              lastname: data.user.lastname,
+              mail: data.user.mail,
+              id: data.user._id,
+            })
+          );
+          setmessageAlert("");
+          setmessageAlertOk("¡Bienvenido!");
+          router.push("/");
         } catch (error) {
           console.error(error);
           setmessageAlert("Error en el login");
