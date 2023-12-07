@@ -36,11 +36,11 @@ module.exports = {
       "ms-gothic": ["ms-gothic"],
     },
     colors: {
+      turquoise: "#1BBEE2",
       page: "#C7C7C7",
       pink: "#E21B7B",
       green: "#4FE21B",
       darkGreen: "#389817",
-      blueLigth: "#1BBEE2",
       purple: "#9747FF",
       red: "#ff0000",
       white: "#F5F0F0",
