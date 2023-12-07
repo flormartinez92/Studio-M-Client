@@ -85,6 +85,12 @@ function useInput(type) {
         messageError: "*La contraseña debe contener al menos una minúscula",
       },
     ],
+    linkProject: [
+      {
+        condition: (valor) => valor.trim() !== "",
+        messageError: "*El link no puede estar vacío",
+       },
+    ],
     couponName: [
       {
         condition: (valor) => valor.trim() !== "",
