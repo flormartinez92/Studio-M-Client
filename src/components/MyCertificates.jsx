@@ -19,7 +19,7 @@ const MyCertificates = ({ decodedToken }) => {
 
   //funcion para cuando se genere un certificado vaya cambiando el color
   // const generateRandomColor = () => {
-  //   let colors = ["border-pink", "border-blue", "border-green"];
+  //   let colors = ["border-pink", "border-turquoise", "border-green"];
   //   let randomColor = colors[Math.floor(Math.random() * 2)];
   //   return randomColor
   // }

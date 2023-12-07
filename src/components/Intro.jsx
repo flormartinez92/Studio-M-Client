@@ -291,7 +291,7 @@ export default function Intro() {
           <div>
             <CheckList
               text="Accede y conecta con una comunidad de trainees"
-              className="p-0.5 border-blueLigth mr-2"
+              className="p-0.5 border-turquoise mr-2"
               classNameDiv={
                 "w-[100%] text-[.95rem] min-[400px]:text-[1.1rem] sm:text-[1.2rem] md:text-[1.3rem] lg:text-[1.5rem] min-[1500px]:text-[2.2rem] items-center leading-3"
               }
