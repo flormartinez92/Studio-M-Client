@@ -14,7 +14,6 @@ export default function AdminPanel() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`)
       .then((res) => {
         const projects = res.data;
-        console.log(projects);
         setProjects(projects);
       })
       .catch((error) => {
@@ -42,7 +41,7 @@ export default function AdminPanel() {
         <AdminButton
           icon={<User width={"5.62rem"} height={"5.62rem"} />}
           text={"Usuarios activos"}
-          className={"bg-[#1BBEE2]"}
+          className={"bg-blueLigth"}
         />
       </Link>
       <Link href="/active-courses">
