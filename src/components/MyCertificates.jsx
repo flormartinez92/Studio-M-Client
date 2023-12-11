@@ -24,6 +24,7 @@ const MyCertificates = ({ decodedToken }) => {
   //   return randomColor
   // }
 
+  //pedido al back para traer todos los certificados
   useEffect(() => {
     if (decodedToken._id) {
       try {
@@ -37,6 +38,15 @@ const MyCertificates = ({ decodedToken }) => {
       }
     }
   }, []);
+
+  //manejador para abrir una nueva ventana y descargar el PDF del certificado
+  const handlePDFdownload = (userId, courseId)=> {
+    const pdfPath = `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/download/${userId}/${courseId}`;
+
+    window.open(pdfPath, "_blank")
+  }
+
+  console.log("----------------------", userCertificates);
 
   return (
     <>
@@ -56,9 +66,11 @@ const MyCertificates = ({ decodedToken }) => {
                       {userCertificate.createdAt.slice(0, 10)}
                     </h3>
                   </div>
-                  <div className="w-[30%] flex justify-center">
-                    <IconButton className="flex flex-col">
-                      <Download />
+                  <div className="w-[30%] flex justify-center flex-col gap-1">
+                    <IconButton onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
+                      <Download/>
+                    </IconButton>
+                    <IconButton>
                       <Share />
                     </IconButton>
                   </div>
@@ -147,10 +159,14 @@ const MyCertificates = ({ decodedToken }) => {
                 </div>
               </div>
               <div className="absolute top-16 right-10">
-                <IconButton className="flex flex-col">
-                  <Download />
-                  <Share />
-                </IconButton>
+                <div className="flex flex-col gap-1">
+                  <IconButton onClick={()=> handlePDFdownload(decodedToken._id, userCertificate.courseId)}>
+                    <Download />
+                  </IconButton>
+                  <IconButton>
+                    <Share />
+                  </IconButton>
+                </div>
               </div>
             </div>
           ))}
