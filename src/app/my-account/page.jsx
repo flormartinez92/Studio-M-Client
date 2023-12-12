@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import { jwtDecode } from "jwt-decode";
 import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
 import { Arrow } from "@/common/Icons";
@@ -18,6 +17,10 @@ export default function MyAccount() {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("Mis datos");
   const [user, setUser] = useState(null);
+  const [arrowColors, setArrowColors] = useState({
+    left: "white",
+    right: "white",
+  });
   const router = useRouter();
   const userState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -28,21 +31,12 @@ export default function MyAccount() {
       const user = await fetchUser();
       dispatch(setCredentials(user));
       setUser(user);
-      // console.log("USER-->", user);
       if (!user) {
         router.push("/login");
       }
     };
     checkUserAuthentication();
   }, []);
-
-  // console.log("USER DEL SET-->", user);
-  // console.log("REDUX USER", userState.user);
-
-  //Token para la informacion de usuario.
-  // const userToken = sessionStorage.getItem("token");
-  // const decodedToken = jwtDecode(userToken);
-  // console.log("DECODEDTOKEN-->", decodedToken);
 
   //Arreglo de las 4 secciones a mostrar
   const pages = [
@@ -68,14 +62,46 @@ export default function MyAccount() {
     },
   ];
 
-  //Manejadores de paginas (siguiente y previa)
-  const handlePrevPage = () =>
-    currentPage > 0 && setCurrentPage(currentPage - 1);
-  const handleNextPage = () =>
-    currentPage < pages.length - 1 && setCurrentPage(currentPage + 1);
+  // Manejadores de paginas (siguiente y previa)
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setArrowColors({
+        left: "white",
+        right: "white",
+      });
+    }
+  };
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
+      setArrowColors({
+        left: "white",
+        right: "white",
+      });
+    }
+  };
 
-  //Hace los pedidos para traer la informacion de las secciones
-  const handleTitle = (title) => setCurrentTitle(title);
+  // Maneja Color de Arrow
+  const handleArrowTouchStart = (direction) => {
+    setArrowColors((prevColors) => ({
+      ...prevColors,
+      [direction]: "#E21B7B",
+    }));
+  };
+
+  // Maneja Color de Arrow
+  const handleArrowTouchEnd = (direction) => {
+    setArrowColors((prevColors) => ({
+      ...prevColors,
+      [direction]: "white",
+    }));
+  };
+
+  // Hace los pedidos para traer la informacion de las secciones
+  const handleTitle = (title) => {
+    setCurrentTitle(title);
+  };
 
   return (
     <>
@@ -89,9 +115,13 @@ export default function MyAccount() {
             {currentPage > 0 && (
               <IconButton
                 className="absolute left-0 ml-[10%] rotate-180"
-                onClick={handlePrevPage}
+                onTouchStart={() => {
+                  handlePrevPage();
+                  handleArrowTouchStart("left");
+                }}
+                onTouchEnd={() => handleArrowTouchEnd("left")}
               >
-                <Arrow color="white" />
+                <Arrow color={arrowColors.left} />
               </IconButton>
             )}
             <h2
@@ -103,17 +133,19 @@ export default function MyAccount() {
             {currentPage < pages.length - 1 && (
               <IconButton
                 className="absolute right-0 mr-[10%]"
-                onClick={handleNextPage}
+                onTouchStart={() => {
+                  handleNextPage();
+                  handleArrowTouchStart("right");
+                }}
+                onTouchEnd={() => handleArrowTouchEnd("right")}
               >
-                <Arrow color="white" />
+                <Arrow color={arrowColors.right} />
               </IconButton>
             )}
           </div>
           {pages[currentPage].content}
         </div>
       </div>
-
-      {/* #E21B7B */}
 
       {/* Modo escritorio */}
       <div className="hidden md:flex md:flex-col md:items-center">
