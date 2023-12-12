@@ -111,9 +111,9 @@ export default function ActiveCourses() {
           <thead className="max-sm:hidden">
             <tr className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey  md:border-r-[0.5px] rounded-t-lg text-[#757575] border-t-[0.05px]">
               <td className="p-4">Curso</td>
+              <td className="sm:pr-10 md:pr-10">&nbsp;</td>
               <td className="sm:pr-10 md:pr-10">Clases</td>
               <td className="sm:pr-10 md:pr-10">Alumnos</td>
-              <td className="sm:pr-10 md:pr-10">Agregar</td>
               <td className="sm:pr-10 md:pr-10">Editar</td>
               <td>Bloquear/Habilitar</td>
             </tr>
@@ -125,6 +125,7 @@ export default function ActiveCourses() {
                 className="w-full md:w-[740px] xl:w-[1211px] h-[48px] border-b-[0.5px] md:border-l-[0.5px] border-lightGrey md:border-r-[0.5px] "
               >
                 <td className="p-4">{course.courseShortTitle}</td>
+                <td className="p-4">&nbsp;</td>
                 <td className="max-sm:hidden p-4">
                   {course.modules.reduce((totalClasses, module) => {
                     const moduleClasses = module.topics.reduce((acc, topic) => {
@@ -135,13 +136,6 @@ export default function ActiveCourses() {
                 </td>
                 <td className="max-sm:hidden p-5">
                   {calculateTotalUsersPerCourse(course._id)}
-                </td>
-                <td className="p-4">
-                  <Link href="/add-course">
-                    <button>
-                      <Plus color="#4FE21B" />
-                    </button>
-                  </Link>
                 </td>
                 <td className="p-2">
                   <Link href="/add-course">
