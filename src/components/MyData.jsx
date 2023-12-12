@@ -5,20 +5,16 @@ import { Pencil, Save } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 import Input from "@/common/Input";
 import useInput from "@/hooks/useInput";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "@/state/features/authSlice";
 
-const MyData = ({ decodedToken }) => {
-  //Estados para cambio de password y datos de usuario.
+const MyData = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const [changePassword, setChangePassword] = useState(false);
-  const [messageAlert, setmessageAlert] = useState("");
-  const [userData, setUserData] = useState({
-    name: "",
-    lastname: "",
-    mail: "",
-    dni: "",
-    firstpassword: "",
-    secondpassword: "",
-    profileImg: "",
-  });
+  const [messageAlert, setMessageAlert] = useState("");
+  const [messageAlertOk, setMessageAlertOk] = useState("");
 
   const {
     OnChange: OnChangePassword,
@@ -26,104 +22,79 @@ const MyData = ({ decodedToken }) => {
     blur: BlurPassword,
     focus: FocusPassword,
     message: MessagePassword,
-  } = useInput("passwordLogin");
-
+  } = useInput("password");
   const {
     OnChange: OnChangePassword2,
     value: valuePassword2,
     blur: BlurPassword2,
     focus: FocusPassword2,
     message: MessagePassword2,
-  } = useInput("passwordLogin");
+  } = useInput("password");
 
-  //Pedido al back para los datos de usuario (el token tambien los trae).
   useEffect(() => {
-    if (decodedToken._id) {
-      try {
-        axios
-          .get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/${decodedToken._id}`
-          )
-          .then((res) => setUserData({...res.data, firstpassword: "", secondpassword: ""}));
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    const checkUserAuthentication = async () => {
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+    };
+    checkUserAuthentication();
   }, []);
 
-  //Pedido al back para cambiar la imagen
-  const handleImage = async () => {
-    try {
-      await axios
-        .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {
-          mail: userData.mail,
-        })
-        .then((res) => setUserData({ ...userData, profileImg: res.data.img }))
-        .catch((error) => console.error(error));
-      // userData.profileImg = data.img;
-    } catch (error) {
-      console.error(error);
-    }
+  const handleEditMode = () => {
+    setChangePassword(!changePassword);
   };
 
-  //Pedido al back para cambiar la contraseña
-  const handlePassword = async ({ firstpassword, secondpassword }) => {
-    try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user/updatePassword/${decodedToken._id}`,
-        {
-          firstpassword,
-          secondpassword,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  //Manejador de cambio para los campos de entrada
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setUserData({ ...userData, [name]: value });
-  };
+  // Pedido al back para cambiar la imagen
+  // const handleImage = async () => {
+  //   try {
+  //     await axios
+  //       .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {
+  //         mail: userData.mail,
+  //       })
+  //       .then((res) => setUserData({ ...userData, profileImg: res.data.img }))
+  //       .catch((error) => console.error(error));
+  //     // userData.profileImg = data.img;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   //Manejador de click de contraseña
-  const handleClickEdit = (e) => {
-    e.preventDefault();
-
-    const { name, value } = e.target;
-    switch(name){
-      case "firstpassword": 
-        OnChangePassword(value);
-        break;
-      case "secondpassword":
-        OnChangePassword(value);
-        break;
-      default:
-        break;
-    }
-    setUserData({ ...userData, [name]: value });
-
-    if (changePassword) {
-      handlePassword({
-        firstpassword: userData.firstpassword,
-        secondpassword: userData.secondpassword
-      });
-    }
-    setChangePassword(!changePassword);
-
-    if(valuePassword.trim() == ""){
-      setmessageAlert("¡Completar todos los campos!");
+  const handleClickEdit = async (e) => {
+    if (valuePassword.trim() == "" || valuePassword2.trim() == "") {
+      setMessageAlert("¡Completar todos los campos!");
       setTimeout(() => {
-        setmessageAlert("");
-      }, 800);
-    }else {
-      if(MessagePassword){
-        setmessageAlert("¡Verificar campos!");
+        setMessageAlert("");
+      }, 1300);
+    } else {
+      if (MessagePassword || MessagePassword2) {
+        setMessageAlert("¡Verificar campos!");
         setTimeout(() => {
-          setmessageAlert("");
-        }, 800);
+          setMessageAlert("");
+        }, 1300);
+      } else {
+        try {
+          await axios.put(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/user/updateUserPassword/${user._id}`,
+            {
+              firstpassword: valuePassword,
+              secondpassword: valuePassword2,
+            }
+          );
+          setMessageAlert("");
+          setMessageAlertOk("¡Cambio de contraseña exitoso!");
+          setTimeout(() => {
+            setChangePassword(false);
+          }, 2000);
+        } catch (error) {
+          console.error(error);
+          const { data } = error.response;
+          if (data == "Invalid Password") {
+            setMessageAlert("*Las contraseñas deben coincidir");
+            setTimeout(() => {
+              setMessageAlert("");
+            }, 2000);
+          }
+        }
       }
     }
   };
@@ -144,7 +115,7 @@ const MyData = ({ decodedToken }) => {
           <IconButton
             className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]"
             style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
-            onClick={handleImage}
+            // onClick={handleImage}
           >
             <Pencil color="white" width="12" height="10" />
           </IconButton>
@@ -155,8 +126,7 @@ const MyData = ({ decodedToken }) => {
         <Input
           name="name"
           type="text"
-          value={userData.name}
-          onChange={handleInputChange}
+          value={user?.name}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -165,8 +135,7 @@ const MyData = ({ decodedToken }) => {
         <Input
           name="lastName"
           type="text"
-          value={userData.lastname}
-          onChange={handleInputChange}
+          value={user?.lastname}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -175,8 +144,7 @@ const MyData = ({ decodedToken }) => {
         <Input
           name="email"
           type="text"
-          value={userData.mail}
-          onChange={handleInputChange}
+          value={user?.mail}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -185,8 +153,7 @@ const MyData = ({ decodedToken }) => {
         <Input
           name="document"
           type="INT"
-          value={userData.dni}
-          onChange={handleInputChange}
+          value={Number(user?.dni).toLocaleString().replace(/,/g, ".")}
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -211,19 +178,31 @@ const MyData = ({ decodedToken }) => {
             <Input
               name="secondpassword"
               type="password"
-              value={valuePassword}
+              value={valuePassword2}
               onChange={OnChangePassword2}
               placeholder="********"
               className="w-full md:w-[45%]"
               classNameInput="p-[5.5px]"
               classNameLabel="text-[20px]"
               label="Confirmar contraseña"
-              onFocus={FocusPassword}
-              onBlur={BlurPassword}
+              onFocus={FocusPassword2}
+              onBlur={BlurPassword2}
             />
             <div className="h-[.5rem] pb-6">
-              {MessagePassword && (
-                <p className="text-red text-[.9rem] leading-3">{MessagePassword}</p>
+              {(MessagePassword || MessagePassword2) && (
+                <p className="text-red text-[.9rem] leading-3">
+                  {MessagePassword || MessagePassword2}
+                </p>
+              )}
+            </div>
+
+            <div className="h-[.5rem] w-full">
+              {messageAlert != "" ? (
+                <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
+              ) : (
+                <p className="text-darkGreen text-[1rem] leading-3">
+                  {messageAlertOk}
+                </p>
               )}
             </div>
           </>
@@ -238,7 +217,9 @@ const MyData = ({ decodedToken }) => {
         <IconButton
           className="bg-[#1E1E1E] rounded-full w-6 h-6"
           style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
-          onClick={handleClickEdit}
+          onClick={() =>
+            changePassword ? handleClickEdit() : handleEditMode()
+          }
         >
           {changePassword ? (
             <Save color="white" width="14" height="14" />
