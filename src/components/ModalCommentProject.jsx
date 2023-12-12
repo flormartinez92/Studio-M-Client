@@ -130,7 +130,6 @@ export default function ModalCommentProject({ status, closeModal, projectId }) {
           </div>
         </div>
       )}
-
       {showThanksModal && (
         <div
           onClick={handleThanksModalClose}
@@ -146,9 +145,6 @@ export default function ModalCommentProject({ status, closeModal, projectId }) {
               <h2 className="py-2 font-mystery-mixed text-white text-lg min-[390px]:text-2xl min-[390px]:pb-12 md:text-5xl lg:text-6xl">
                 ¡Comentario enviado!
               </h2>
-              <p className="pb-3 font-ms-gothic text-xs font-light text-white text-center w-[80%] leading-3 min-[390px]:text-sm min-[390px]:leading-3  md:text-3xl md:pt-8 lg:text-4xl">
-                Recibirás el comentario del proyecto por email.
-              </p>
             </div>
           </div>
         </div>
