@@ -10,11 +10,13 @@ import axios from "axios";
 import inputScroll from "@/hooks/useScroll";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
+import Alert_common from "@/common/Alert_common";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
   const [numCart, setNumCart] = useState();
   const [user, setUser] = useState();
+  const [out, setout] = useState(false);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -52,6 +54,7 @@ export default function Intro() {
       console.error(error);
     }
   };
+  const [showAlert, setShowAlert] = useState(false);
   const addCourseCart = async (id_curse) => {
     try {
       const { data } = await axios.get("http://localhost:8081/api/user/me", {
@@ -68,6 +71,12 @@ export default function Intro() {
       setNumCart(responseAddCart.data.courseId.length);
     } catch (error) {
       console.error(error);
+      if (error.response.data === "Course already in the cart") {
+        setShowAlert(true);
+        /*  setTimeout(() => {
+          setShowAlert(false);
+        }, 3000); */
+      }
     }
   };
 
@@ -93,9 +102,34 @@ export default function Intro() {
     handleMouseUp: MouseUpScroll_2,
   } = inputScroll();
 
+  const handleAlert = () => {
+    setout(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      setout(false);
+    }, 700);
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center w-full h-auto">
-      <div className="w-full my-10">
+    <div
+      className={`flex flex-col justify-center items-center w-full h-auto relative`}
+    >
+      {/* border border-gray-300 shadow-md p-4 rounded */}
+
+      {showAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="Curso ya está en el carrito"
+          classNameAlert="w-[300px]"
+        />
+      )}
+
+      <div
+        className={`w-full my-10 ${
+          showAlert && "pointer-events-none"
+        } select-none`}
+      >
         <div className="flex flex-col justify-center items-center">
           <h2
             className="font-mystery-mixed text-[1.8rem] min-[400px]:text-[2rem] 
@@ -242,7 +276,10 @@ export default function Intro() {
                         >
                           {"Ver curso"}
                         </Button>
-                        <Button className={`py-2 px-2 flex items-center`}>
+                        <Button
+                          className={`py-2 px-2 flex items-center`}
+                          onClick={() => addCourseCart(item._id)}
+                        >
                           {<CartShopSimple />}
                         </Button>
                       </Border>
@@ -254,7 +291,15 @@ export default function Intro() {
           </div>
         </div>
       </div>
-      <div className="w-full h-auto px-6 mt-2 flex flex-col justify-center items-center max-w-[1100px] min-[1500px]:max-w-[1400px] ">
+      {/* ${
+          showAlert && "pointer-events-none"
+        } */}
+
+      <div
+        className={`w-full h-auto px-6 mt-2 flex flex-col justify-center items-center max-w-[1100px] min-[1500px]:max-w-[1400px] ${
+          showAlert && "pointer-events-none"
+        } select-none`}
+      >
         <div className="w-full flex justify-start sm:justify-center">
           <h2
             className="font-mystery-mixed text-start sm:text-start
@@ -310,7 +355,7 @@ export default function Intro() {
           </div>
         </div>
       </div>
-      <div className="relative w-full h-auto flex flex-col justify-center items-center md:mb-[7rem] lg:mb-[8rem] ">
+      <div className="select-none relative w-full h-auto flex flex-col justify-center items-center md:mb-[7rem] lg:mb-[8rem] ">
         <Image
           src={"/img/paper.png"}
           width={200}
