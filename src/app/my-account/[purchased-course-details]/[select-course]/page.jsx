@@ -26,23 +26,27 @@ export default function SelectCourse({ params }) {
   const { _id, mail } = jwtDecode(userToken);
 
   const handleClick = async () => {
-    if (!completed) {
-      try {
-        const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseAdvance`,
-          {
-            mail: mail,
-            courseId: courseId,
-            classId: classId,
-            status: true,
-          }
-        );
-        if (response.status === 200) {
-          setCompleted(true);
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseAdvance`,
+        {
+          mail: mail,
+          courseId: courseId,
+          classId: classId,
+          status: !courseClass.status,
         }
-      } catch (error) {
-        console.error("Error while fetching update classes:", error);
+      );
+      if (response.status === 200) {
+        // Actualiza el estado local solo si la llamada a la API fue exitosa
+        setCourseClass((prevCourseClass) => ({
+          ...prevCourseClass,
+          status: !prevCourseClass.status,
+        }));
+      } else {
+        console.error("La llamada a la API no fue exitosa:", response);
       }
+    } catch (error) {
+      console.error("Error while fetching update classes:", error);
     }
   };
 
@@ -127,6 +131,7 @@ export default function SelectCourse({ params }) {
             item_num={currentIndex + 1}
             text={courseClass.classInfo}
             url={courseClass.video_url}
+            status={courseClass.status}
             className={
               "text-white text-2xl w-[90%] bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center py-14 sm:py-24 md:py-28 md:px-10 md:text-3xl lg:py-40 lg:px-28 lg:text-4xl xl:py-48 xl:text-5xl"
             }
@@ -147,32 +152,27 @@ export default function SelectCourse({ params }) {
           </div>
         )}
       </div>
-      {completed ? (
-        <Button
-          type={"rounder"}
-          className={
-            "flex flex-row justify-center items-center w-40 p-2 mb-14 bg-green xl:p-2 xl:px-10 xl:w-80 xl:text-3xl"
-          }
-        >
-          <Check color={"black"} width={"50"} height={"50"} />
-        </Button>
-      ) : (
-        <Button
-          type={"rounder"}
-          className={
-            "flex flex-row justify-between items-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl md:text-3xl mt-6"
-          }
-          onClick={handleClick}
-        >
-          Completar&nbsp;
-          <Image
-            src={"/img/Ellipse.png"}
-            width={"26"}
-            height={"26"}
-            alt="ellipse"
-          />
-        </Button>
-      )}
+      <Button
+        type={"rounder"}
+        className={`flex flex-row justify-center items-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl md:text-3xl mt-6
+    ${courseClass.status ? "bg-green" : ""}`}
+        onClick={() => handleClick()}
+      >
+        {courseClass.status ? (
+          <Check color={"black"} width={"40"} height={"40"} />
+        ) : (
+          <>
+            Completar&nbsp;
+            <Image
+              src={"/img/Ellipse.png"}
+              width={"26"}
+              height={"26"}
+              alt="ellipse"
+              className="sm:ml-auto"
+            />
+          </>
+        )}
+      </Button>
     </div>
   );
 }
