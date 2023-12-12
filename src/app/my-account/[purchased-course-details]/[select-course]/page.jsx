@@ -14,7 +14,6 @@ import { Message } from "@/common/Message";
 export default function SelectCourse({ params }) {
   const courseId = params["purchased-course-details"];
   const classId = params["select-course"];
-  const [completed, setCompleted] = useState(false);
   const [courseClass, setCourseClass] = useState({});
   const [courseDetails, setCourseDetails] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
