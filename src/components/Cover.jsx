@@ -170,6 +170,8 @@ export default function Cover() {
              </div>
            </div>
         </nav>)}
+
+        {!menuOpen && 
       <div
         className="h-1/2 flex flex-col
       md:h-screen md:px-7 md:flex-row md:pb-24"
@@ -250,6 +252,7 @@ export default function Cover() {
           />
         </div>
       </div>
+      }
     </section>
   );
 }
