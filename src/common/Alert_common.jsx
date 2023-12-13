@@ -1,8 +1,10 @@
 export default function Alert_common({
   out = false,
   handleAlert,
+  handleCancel,
   titleAlert = "",
   classNameAlert = "w-auto",
+  cancelText,
 }) {
   return (
     <div
@@ -15,12 +17,24 @@ export default function Alert_common({
         className={`animate__animated animate__fadeInDown animate__faster ${classNameAlert} flex flex-col justify-center items-end bg-white py-3 rounded`}
       >
         <h2 className="w-full text-start pl-2">{titleAlert}</h2>
-        <button
-          onClick={handleAlert}
-          className="bg-page p-2 leading-3 mt-2 mr-2 font-bold rounded hover:p-[.6rem] h-[2rem]"
-        >
-          aceptar
-        </button>
+        <div className="flex justify-between">
+          <button
+            onClick={handleAlert}
+            className="bg-page p-2 leading-3 mt-2 mr-2 font-bold rounded hover:p-[.6rem] h-[2rem]"
+          >
+            Aceptar
+          </button>
+          {cancelText && (
+            <button
+              onClick={() => {
+                handleCancel();
+              }}
+              className="bg-gray-300 p-2 leading-3 mt-2 mr-2 font-bold rounded hover:p-[.6rem] h-[2rem]"
+            >
+              {cancelText}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
