@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import {
   BoxCheck,
   Check,
@@ -14,12 +13,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import ModalCommentProject from "@/components/ModalCommentProject";
+import Alert_common from "@/common/Alert_common";
 
 export default function ActiveProjects() {
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [isAlertVisible, setAlertVisible] = useState(false);
 
   const handleProjectClick = (projectId) => {
     setSelectedProjectId(projectId);
@@ -62,39 +63,6 @@ export default function ActiveProjects() {
     }
   };
 
-  const showAlert = (projectId) => {
-    const isApproved = window.confirm(
-      "¿Estás seguro de que quieres aprobar este proyecto?"
-    );
-
-    if (isApproved) {
-      handleStatusToggle(projectId);
-    } else {
-      alert("Acción cancelada");
-    }
-  };
-
-  const handleStatusToggle = async (projectId) => {
-    try {
-      const oneProject = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${projectId}`
-      );
-      const newStatus = !oneProject.data.status;
-      toggleStatus(projectId, newStatus, oneProject.data);
-      setTimeout(() => {
-        setProjects((prevProjects) =>
-          prevProjects.map((project) =>
-            project.projectId === projectId
-              ? { ...project, status: newStatus }
-              : project
-          )
-        );
-      }, 500);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleClick = (url) => {
     try {
       if (url) {
@@ -107,6 +75,37 @@ export default function ActiveProjects() {
     }
   };
 
+  const showAlert = (projectId) => {
+    setSelectedProjectId(projectId);
+    setAlertVisible(true);
+  };
+
+  const handleConfirmAlert = async () => {
+    try {
+      const oneProject = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects/${selectedProjectId}`
+      );
+      const newStatus = !oneProject.data.status;
+      toggleStatus(selectedProjectId, newStatus, oneProject.data);
+      setTimeout(() => {
+        setProjects((prevProjects) =>
+          prevProjects.map((project) =>
+            project.projectId === selectedProjectId
+              ? { ...project, status: newStatus }
+              : project
+          )
+        );
+      }, 500);
+    } catch (error) {
+      console.error(error);
+    }
+    setAlertVisible(false);
+  };
+
+  const handleCancelAlert = () => {
+    setAlertVisible(false);
+  };
+
   return (
     <>
       {modal && (
@@ -114,6 +113,15 @@ export default function ActiveProjects() {
           status={modal}
           closeModal={() => setModal(false)}
           projectId={selectedProjectId}
+        />
+      )}
+      {isAlertVisible && (
+        <Alert_common
+          handleAlert={handleConfirmAlert}
+          handleCancel={handleCancelAlert}
+          classNameAlert={"w-[55%]"}
+          titleAlert="¿Estás seguro que queres aprobar este proyecto?"
+          cancelText="Cancelar"
         />
       )}
       <section className="my-20 mb-60">

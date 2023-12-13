@@ -124,7 +124,7 @@ export const Footer = () => {
         lg:h-[200px]
         "
         >
-          <Link href="https://www.behance.net/macarenbernal">
+          <Link href="https://www.behance.net/macarenbernal" target="_blank">
             <div
               className="
             bg-[url('/behance.png')] 
@@ -148,14 +148,13 @@ export const Footer = () => {
             "
             ></div>
           </Link>
-          <Link href="https://www.instagram.com/studio.bym/">
+          <Link href="https://www.instagram.com/studio.bym/" target="_blank">
             <div
               className="
           bg-[url('/instagram.png')] 
           bg-no-repeat 
           w-[122px]
           h-[118px]
-          md:bg-[url('/github.png')]
           md:w-[90px]
           md:h-[100px]
           md:ml-[50px]
@@ -175,14 +174,13 @@ export const Footer = () => {
           "
             ></div>
           </Link>
-          <Link href="https://github.com/Mcsand22">
+          <Link href="https://github.com/Mcsand22" target="_blank">
             <div
               className="
           bg-[url('/github.png')] 
           bg-no-repeat 
           w-[113px]
           h-[108px]
-          md:bg-[url('/instagram.png')]
           md:w-[100px]
           md:h-[105px]
           md:ml-[53px]
@@ -198,7 +196,7 @@ export const Footer = () => {
           "
             ></div>
           </Link>
-          <Link href="https://wa.me/qr/D4K4N3P4NR4CL1">
+          <Link href="https://wa.me/qr/D4K4N3P4NR4CL1" target="_blank">
             <div
               className="
           bg-[url('/wpp.png')] 
@@ -223,7 +221,7 @@ export const Footer = () => {
           "
             ></div>
           </Link>
-          <Link href="https://www.tiktok.com/@studio.bym">
+          <Link href="https://www.tiktok.com/@studio.bym" target="_blank">
             <div
               className="
           bg-[url('/tiktok.png')] 

@@ -98,10 +98,7 @@ export default function Courses() {
   };
 
   return (
-    <section
-      //pb-14 min-[768px]:pb-24 min-[1024px]:pb-36
-      className={`h-full  ${loading ? "cursor-wait" : ""}`}
-    >
+    <section className={`h-full  ${loading ? "cursor-wait" : ""}`}>
       {courses.length === 0 ? (
         <div className="w-full h-[600px]  flex justify-center items-center">
           <Loading_common />
