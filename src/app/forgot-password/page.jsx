@@ -59,14 +59,14 @@ export default function Forgot() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-[#fff] py-[115px]">
-      <h2 className="font-mystery-mixed text-[35px] min-[320px]:text-[45px] sm:text-[55px] leading-3">
+    <div className="flex flex-col justify-center items-center bg-[#fff] py-20">
+      <h2 className="font-mystery-mixed text-[35px] mx-6 text-center min-[320px]:text-[45px] sm:text-[55px]">
         Recuperá tu contraseña
       </h2>
       <form
         onSubmit={handleSubmit}
         className="
-            mt-[50px] 
+            mt-10 
             w-[80%] 
             min-[450px]:max-w-[350px]
             sm:max-w-[450px] 
@@ -87,7 +87,7 @@ export default function Forgot() {
             classNameLabel={"block text-[23px]"}
             type={"email"}
             className={"w-full sm:max-w-[85%]"}
-            classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
+            classNameInput={`p-[5px] outline-none w-[100%] h-[40px] bg-black/20`}
             placeholder={"ingresa tu mail"}
             value={valueMail}
             onFocus={FocusMail}
