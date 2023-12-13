@@ -119,8 +119,8 @@ export default function ActiveProjects() {
         <Alert_common
           handleAlert={handleConfirmAlert}
           handleCancel={handleCancelAlert}
-          classNameAlert={"w-[55%]"}
-          titleAlert="¿Estás seguro que queres aprobar este proyecto?"
+          classNameAlert={"md:text-xl sm:text-lg pl-1 pr-2"}
+          titleAlert="¿Estás seguro que querés aprobar este proyecto?"
           cancelText="Cancelar"
         />
       )}
