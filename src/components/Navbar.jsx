@@ -97,7 +97,7 @@ export default function Navbar() {
                   className="text-[50px] text-white font-mystery-mixed"
                   onClick={handleClick}
                 >
-                  Admin Panel
+                  Mi Panel
                 </Link>
               </li>)
                 }
@@ -149,7 +149,7 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className=" bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center p-10 md:p-5 shadow text-white font-mystery-mixed md:flex md:items-center md:justify-end">
+        <nav className=" bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center p-10 md:p-5 text-white font-mystery-mixed md:flex md:items-center md:justify-end">
           <div className="flex justify-between items-center">
             {titleShouldDisplay && (
               <span className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden">
@@ -189,7 +189,7 @@ export default function Navbar() {
                     href="/admin-panel"
                     className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                   >
-                    Admin Panel
+                    Mi Panel
                   </Link>)}
                 </li>
                 <li className="mx-4">
