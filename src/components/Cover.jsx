@@ -181,9 +181,9 @@ export default function Cover() {
         md:px-10 "
         >
           <h1
-            className="text-white font-mystery-mixed text-[2.75rem] tracking-wide
-          md:text-[3.5rem] md:pb-10
-          xl:text-[6.9rem]"
+            className="text-white font-mystery-mixed text-5xl tracking-wide
+          md:text-6xl md:pb-10 lg:text-8xl
+          xl:text-9xl"
           >
             Studio by M
           </h1>
