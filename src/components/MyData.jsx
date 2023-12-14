@@ -127,6 +127,7 @@ const MyData = () => {
           name="name"
           type="text"
           value={user?.name}
+          readOnly
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -136,6 +137,7 @@ const MyData = () => {
           name="lastName"
           type="text"
           value={user?.lastname}
+          readOnly
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -145,6 +147,7 @@ const MyData = () => {
           name="email"
           type="text"
           value={user?.mail}
+          readOnly
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"
@@ -152,8 +155,9 @@ const MyData = () => {
         />
         <Input
           name="document"
-          type="INT"
+          type="int"
           value={Number(user?.dni).toLocaleString().replace(/,/g, ".")}
+          readOnly
           className="w-full md:w-[45%]"
           classNameInput="p-[5.5px]"
           classNameLabel="text-[20px]"

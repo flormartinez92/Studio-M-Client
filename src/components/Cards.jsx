@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import { addToCart } from "@/state/features/cartSlice";
 import Button from "@/common/Button";
 import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
-// import { CartShopPlus, Clock, Heart, Signal } from "@/common/Icons";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
+import { useEffect } from "react";
 
 export default function Cards({
   title,
@@ -25,61 +26,60 @@ export default function Cards({
   className2,
   classNameButton,
   progressBar,
-  // classNameDivButton,
   classNameIconButton,
   classNameBorder,
   courseId,
 }) {
+  const [isFavorite, setIsFavorite] = useState(true);
   const dispatch = useDispatch();
-  //Token para la informacion de usuario.
-  const userToken = sessionStorage.getItem("token");
-  const decodedToken = jwtDecode(userToken);
+  const { user } = useSelector((state) => state.auth);
+  const router = useRouter();
 
-  //Pedido al back para agregar al carrito
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+    };
+    checkUserAuthentication();
+  }, []);
+
   const handleAddToCart = async (courseId) => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
         courseId,
-        userId: decodedToken._id,
+        userId: user?._id,
       });
-
+      // Modificar este dispatch
       dispatch(addToCart(courseId));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const router = useRouter();
-
   const handleClick = async (courseId) => {
-    axios
-      .get(`http://localhost:8081/api/course/all-courses/${courseId}`)
-      .then(() => router.push(`/courses/${courseId}`));
+    try {
+      router.push(`/courses/${courseId}`);
+    } catch (error) {
+      console.error("Error al obtener los datos del curso:", error);
+    }
   };
 
-  //Estados y pedidos para favoritos
-  const [isFavorite, setIsFavorite] = useState(true);
-
-  //Lo agrega
   const handleAddFavorites = async () => {
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${decodedToken._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${user?._id}`
       );
-
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
     }
   };
 
-  //Lo elimina
   const handleDeleteFavorites = async () => {
     try {
       await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${decodedToken._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${user?._id}`
       );
-
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
@@ -109,12 +109,10 @@ export default function Cards({
         >
           {isFavorite ? iconFavorite : iconFavorite2}
         </IconButton>
-        {/* <div className={`${classNameDivButton}`}> */}
         <Border
           className={`flex gap-0.5 w-auto h-10 absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${classNameBorder}`}
         >
           <Button
-            // onClick={handleViewCoursesClick}
             onClick={() => handleClick(courseId)}
             className={`font-mystery-mixed bg-[#181717] ${classNameButton}`}
           >
@@ -124,8 +122,10 @@ export default function Cards({
                 <div className="flex items-center justify-between">
                   <div className="w-full">
                     <div className="flex h-2 overflow-hidden text-xs bg-teal-200 rounded">
-                      <div style={{ width: `${progressBar}%` }} className="flex flex-col shadow-none whitespace-nowrap text-white justify-center bg-pink">
-                      </div>
+                      <div
+                        style={{ width: `${progressBar}%` }}
+                        className="flex flex-col shadow-none whitespace-nowrap text-white justify-center bg-pink"
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -139,7 +139,6 @@ export default function Cards({
             {icon}
           </Button>
         </Border>
-        {/* </div> */}
       </div>
     </div>
   );
