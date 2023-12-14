@@ -44,8 +44,6 @@ export default function CardsDesktop({
     "only screen and (min-width : 768px) and (max-width : 820px)"
   );
 
-  console.log(statusAnimated);
-
   return (
     <section
       className={`animate__animated animate__fadeInLeft flex flex-col justify-center items-center py-4 w-full drop-shadow-lg max-w-[950px] select-none`}

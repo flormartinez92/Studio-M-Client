@@ -4,42 +4,40 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import IconButton from "@/common/IconButton";
 import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
-import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "@/state/features/authSlice";
+import { fetchUser } from "@/helpers/apiHelpers";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [numCart, setNumCart] = useState();
   const [title, setTitle] = useState("");
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  //Token para la informacion de usuario.
-  const userToken = sessionStorage.getItem("token");
-  const decodedToken = userToken && jwtDecode(userToken);
-  const userAdmin = decodedToken?.isAdmin;
-
-
-  //condicion para que cuando este en la home no muestre el titulo studio by m
-  const pathname = usePathname();
-  const titleShouldDisplay = pathname !== "/";
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+    };
+    checkUserAuthentication();
+  }, []);
 
   const cartUser = async () => {
     try {
       const responseUser = await axios.get(
-        "http://localhost:8081/api/user/me",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/me`,
         {
           withCredentials: true,
         }
       );
 
       const responseCart = await axios.get(
-        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${responseUser.data._id}`
       );
-
       setNumCart(responseCart.data.length);
-
-      //console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -81,26 +79,27 @@ export default function Navbar() {
                   Inicio
                 </Link>
               </li>
-                {!userAdmin ? 
-              (<li className="">
+              {!user?.isAdmin ? (
+                <li className="">
                   <Link
-                  href="/courses"
-                  className="text-[50px] text-white font-mystery-mixed"
-                  onClick={handleClick}
-                >
-                  Cursos
+                    href="/courses"
+                    className="text-[50px] text-white font-mystery-mixed"
+                    onClick={handleClick}
+                  >
+                    Cursos
                   </Link>
-              </li>) :
-              (<li className="">
-                  <Link 
-                  href="/admin-panel"
-                  className="text-[50px] text-white font-mystery-mixed"
-                  onClick={handleClick}
-                >
-                  Mi Panel
-                </Link>
-              </li>)
-                }
+                </li>
+              ) : (
+                <li className="">
+                  <Link
+                    href="/admin-panel"
+                    className="text-[50px] text-white font-mystery-mixed"
+                    onClick={handleClick}
+                  >
+                    Mi Panel
+                  </Link>
+                </li>
+              )}
               <li className="">
                 <Link
                   href="/my-account"
@@ -151,11 +150,12 @@ export default function Navbar() {
       ) : (
         <nav className=" bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center p-10 md:p-5 text-white font-mystery-mixed md:flex md:items-center md:justify-end">
           <div className="flex justify-between items-center">
-            {titleShouldDisplay && (
-              <span className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden">
-                Studio by M
-              </span>
-            )}
+            <Link
+              href={"/"}
+              className="text-[35px] cursor-pointer absolute left-0 ml-[8%] md:hidden"
+            >
+              Studio by M
+            </Link>
             <input
               type="checkbox"
               id="menu-toggle"
@@ -180,17 +180,21 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li className="mx-4">
-                  {!userAdmin ? ( <Link
-                    href="/courses"
-                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
-                  >
-                    Cursos
-                  </Link>) : (<Link
-                    href="/admin-panel"
-                    className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
-                  >
-                    Mi Panel
-                  </Link>)}
+                  {!user?.isAdmin ? (
+                    <Link
+                      href="/courses"
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Cursos
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/admin-panel"
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Mi Panel
+                    </Link>
+                  )}
                 </li>
                 <li className="mx-4">
                   <Link
@@ -208,8 +212,8 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
-             </div>
-           </div>
+            </div>
+          </div>
         </nav>
       )}
     </>
