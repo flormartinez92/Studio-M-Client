@@ -44,6 +44,10 @@ export default function Cards({
   }, []);
 
   const handleAddToCart = async (courseId) => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
         courseId,
