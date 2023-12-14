@@ -124,8 +124,10 @@ export default function Cards({
                 <div className="flex items-center justify-between">
                   <div className="w-full">
                     <div className="flex h-2 overflow-hidden text-xs bg-teal-200 rounded">
-                      <div style={{ width: `${progressBar}%` }} className="flex flex-col shadow-none whitespace-nowrap text-white justify-center bg-pink">
-                      </div>
+                      <div
+                        style={{ width: `${progressBar}%` }}
+                        className="flex flex-col shadow-none whitespace-nowrap text-white justify-center bg-pink"
+                      ></div>
                     </div>
                   </div>
                 </div>
