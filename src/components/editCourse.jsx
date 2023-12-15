@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/common/Button";
 import Input from "@/common/Input";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useInput from "@/hooks/useInput";
@@ -286,6 +286,43 @@ export default function EditCourse() {
       fileInputRef.current.click();
     }
   };
+
+  useEffect(() => {
+    //console.log(edit);
+    const courseInfo = localStorage.getItem("course_edit");
+    if (courseInfo) {
+      const courseData = JSON.parse(courseInfo);
+      console.log(courseData.courseImg_url.substring(0, 212));
+
+      setValue("res.cloudinary.com");
+      seteditCourse(courseData);
+      setCampos(courseData.modules);
+
+      //console.log(courseData);
+      //console.log(topics);
+      courseData.modules.forEach((module, i) => {
+        const topicData = new Array(module.topics.length).fill("TEMA");
+        const dataTopics = module.topics;
+        dataTopics.forEach((info, t) => {
+          if (!classes[i]) classes[i] = [];
+          if (!classes[i][t]) classes[i][t] = info.classes;
+
+          const objs = { ...classes };
+          /* objs[i][t].push({ video_url: "", classInfo: "" }); */
+          setClasses(objs);
+
+          /* console.log(info.classes);
+          console.log({ [i]: "PROBANDO" }); */
+        });
+
+        if (!topics[i]) topics[i] = topicData;
+        const objs = { ...topics };
+        setTopics(objs);
+      });
+      //console.log(courseData.modules);
+    }
+  }, []);
+
   return (
     <form
       onSubmit={onSubmitForm}
