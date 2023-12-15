@@ -44,6 +44,8 @@ export default function Register() {
     blur: BlurPassword,
     focus: FocusPassword,
     message: MessagePassword,
+    isPasswordVisible,
+    setIsPasswordVisible,
   } = useInput("password");
 
   const onSubmitForm = async (e) => {
@@ -239,6 +241,10 @@ export default function Register() {
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
+              isPasswordVisible={isPasswordVisible}
+              togglePasswordVisibility={() =>
+                setIsPasswordVisible(!isPasswordVisible)
+              }
             />
             <div className="h-[.5rem]">
               {MessagePassword && (

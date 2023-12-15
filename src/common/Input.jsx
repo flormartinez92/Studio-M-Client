@@ -1,3 +1,5 @@
+import { ClosedEye, Eye } from "./Icons";
+
 export default function Input({
   name,
   label,
@@ -6,6 +8,8 @@ export default function Input({
   className,
   classNameLabel,
   classNameInput,
+  isPasswordVisible,
+  togglePasswordVisibility,
   ...inputProps
 }) {
   return (
@@ -16,16 +20,27 @@ export default function Input({
       >
         {label ? label : null}
       </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        id={name}
-        name={name}
-        className={`p-2 pl-3 font-ms-gothic outline-none ${
-          classNameInput || ""
-        }`}
-        {...inputProps}
-      />
+      <div className="relative">
+        <input
+          type={type === "password" && isPasswordVisible ? "text" : type}
+          placeholder={placeholder}
+          id={name}
+          name={name}
+          className={`p-2 pl-3 font-ms-gothic outline-none ${
+            classNameInput || ""
+          }`}
+          {...inputProps}
+        />
+        {type === "password" && (
+          <button
+            type="button"
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisible ? <ClosedEye /> : <Eye />}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

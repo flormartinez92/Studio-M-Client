@@ -153,7 +153,7 @@ export default function MyAccount() {
           className="bg-[#D9D9D9] rounded-xl mt-10 mb-48 w-[90%] max-w-[1000px]"
           style={{ boxShadow: "0px 5px 6px -2px rgba(0,0,0,0.40)" }}
         >
-          <div className="bg-[#1E1E1E] w-full rounded-t-lg py-3 flex items-center px-4">
+          <div className="bg-[#1E1E1E] w-full rounded-t-lg py-3 flex items-center px-4 md:justify-around md:px-0">
             {pages?.map((page, index) => (
               <Button
                 key={index}
@@ -161,7 +161,7 @@ export default function MyAccount() {
                 className={`w-full `}
               >
                 <h2
-                  className={`text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 ${
+                  className={`text-[#fff] bg-[#1E1E1E] font-mystery-mixed text-2xl py-1 md:text-[20px] lg:text-3xl ${
                     currentTitle === page.title
                       ? "underline decoration-pink decoration-[1.5px]"
                       : "hover:underline hover:decoration-pink hover:decoration-[1.5px]"

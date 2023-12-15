@@ -33,33 +33,36 @@ const MyList = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none">
-      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none lg:ml-[8%] xl:ml-[12%]">
+      <div
+        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
         ref={ContainerScroll_2}
         onMouseDown={DownScroll_2}
         onMouseMove={MoveScroll_2}
         onMouseUp={MouseUpScroll_2}
         onMouseLeave={LeaveScroll_2}
       >
-        {userFavorites?.map((userFavorite) => (
-          <div key={userFavorite._id}>
-            <Cards
-              title={userFavorite.courseShortTitle}
-              buttonTitle="Ver curso"
-              icon={<CartShopSimple />}
-              img={userFavorite.courseImg_url}
-              iconFavorite={<Heart />}
-              iconFavorite2={<LineHeart />}
-              courseId={userFavorite._id}
-              className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem] mr-4"
-              classNameBorder="mb-2"
-              classNameButton="py-1 px-3 text-lg whitespace-nowrap w-auto flex items-center"
-              classNameImg="h-[12rem] object-cover rounded-b-lg"
-              className2="h-full"
-              classNameIconButton="py-1 px-2"
-            />
-          </div>
-        ))}
+        <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-9 xl:space-x-11">
+          {userFavorites?.map((userFavorite) => (
+            <div key={userFavorite._id}>
+              <Cards
+                title={userFavorite.courseShortTitle}
+                buttonTitle="Ver curso"
+                icon={<CartShopSimple />}
+                img={userFavorite.courseImg_url}
+                iconFavorite={<Heart />}
+                iconFavorite2={<LineHeart />}
+                courseId={userFavorite._id}
+                className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem] mr-4"
+                classNameBorder="mb-2"
+                classNameButton="py-1 px-3 text-lg whitespace-nowrap w-auto flex items-center"
+                classNameImg="h-[12rem] object-cover rounded-b-lg"
+                className2="h-full"
+                classNameIconButton="py-1 px-2"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -34,6 +34,8 @@ export default function ResetPassword() {
     blur: BlurPassword,
     focus: FocusPassword,
     message: MessagePassword,
+    isPasswordVisible,
+    setIsPasswordVisible,
   } = useInput("password");
 
   const {
@@ -42,6 +44,8 @@ export default function ResetPassword() {
     blur: BlurConfirmPassword,
     focus: FocusConfirmPassword,
     message: MessageConfirmPassword,
+    isPasswordVisible: isPasswordVisible1,
+    setIsPasswordVisible: setIsPasswordVisible1,
   } = useInput("password");
 
   const handleSubmit = async (e) => {
@@ -111,6 +115,10 @@ export default function ResetPassword() {
               onChange={OnChangePassword}
               onBlur={BlurPassword}
               onFocus={FocusPassword}
+              isPasswordVisible={isPasswordVisible}
+              togglePasswordVisibility={() =>
+                setIsPasswordVisible(!isPasswordVisible)
+              }
             />
             <div className="h-[.5rem]">
               {MessagePassword && (
@@ -133,6 +141,10 @@ export default function ResetPassword() {
               onChange={OnChangeConfirmPassword}
               onBlur={BlurConfirmPassword}
               onFocus={FocusConfirmPassword}
+              isPasswordVisible={isPasswordVisible1}
+              togglePasswordVisibility={() =>
+                setIsPasswordVisible1(!isPasswordVisible1)
+              }
             />
             <div className="h-[.5rem]">
               {MessageConfirmPassword && (
