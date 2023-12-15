@@ -4,16 +4,15 @@ import Border from "@/common/Border";
 import Button from "@/common/Button";
 import { useMediaQuery } from "@react-hook/media-query";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+
 import { useRef, useEffect, useState } from "react";
 
 export default function ModalCommentProject({ status, closeModal, projectId }) {
   const dialofRef = useRef(null);
   const [comment, setComment] = useState("");
   const [showThanksModal, setShowThanksModal] = useState(false);
+  const [projects, setProjects] = useState([]);
   const isMdBreakpoint = useMediaQuery("(min-width: 768px)");
-  const userToken = sessionStorage.getItem("token");
-  const { mail } = jwtDecode(userToken);
 
   const handleInputComment = (event) => {
     event.preventDefault();
@@ -24,12 +23,31 @@ export default function ModalCommentProject({ status, closeModal, projectId }) {
     event.stopPropagation();
   };
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/allProjects`)
+      .then((res) => {
+        const projects = res.data;
+        // Mapear los proyectos y extraer los correos electrónicos
+        const userMail = projects.map((project) => project.mail);
+        setProjects(projects);
+      })
+      .catch((error) => {
+        console.error("Error getting Projects:", error);
+      });
+  }, []);
+
   const handleButtonClick = async (event) => {
     event.preventDefault();
     try {
+      // Buscar el correo electrónico asociado al userId
+      const userProject = projects.find(
+        (project) => project.projectId === projectId
+      );
+      const userMail = userProject?.mail || "";
       await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/adminProject/${projectId}`,
-        { comment, mail }
+        { comment, mail: userMail }
       );
       setShowThanksModal(true);
     } catch (error) {
