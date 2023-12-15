@@ -51,14 +51,14 @@ export const handleCartClick = async (
   courseId,
   userId,
   setShowAlert,
-  setCount
+  setDeletingId
 ) => {
   try {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
       courseId,
       userId,
     });
-    setCount(1);
+    setDeletingId(courseId);
   } catch (error) {
     setShowAlert(true);
     console.error("Error while adding cart:", error);

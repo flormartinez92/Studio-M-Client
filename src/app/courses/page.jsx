@@ -20,7 +20,6 @@ import Alert_common from "@/common/Alert_common";
 
 import IconButton from "@/common/IconButton";
 
-
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -34,11 +33,11 @@ export default function Courses() {
 
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
-
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -226,13 +225,17 @@ export default function Courses() {
                         handleViewCourseClick={() =>
                           handleViewCourseClick(course._id)
                         }
-
                         handleCartClick={() => {
                           user
-                            ? handleCartClick(course._id, user._id,setShowAlert,setCount)
+                            ? handleCartClick(
+                                course._id,
+                                user._id,
+                                setShowAlert,
+                                setDeletingId
+                              )
                             : router.push("/login");
                         }}
-
+                        IsAddCourse={deletingId === course._id}
                       />
                     );
                   })}
