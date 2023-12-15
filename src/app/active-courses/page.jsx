@@ -138,7 +138,7 @@ export default function ActiveCourses() {
                   {calculateTotalUsersPerCourse(course._id)}
                 </td>
                 <td className="p-2">
-                  <Link href="/add-course">
+                  <Link href="/edit-course">
                     <button>
                       <Pencil color="#1BBEE2" />
                     </button>
