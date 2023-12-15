@@ -22,6 +22,8 @@ const MyData = () => {
     blur: BlurPassword,
     focus: FocusPassword,
     message: MessagePassword,
+    isPasswordVisible: isPasswordVisible,
+    setIsPasswordVisible: setIsPasswordVisible,
   } = useInput("password");
   const {
     OnChange: OnChangePassword2,
@@ -29,6 +31,8 @@ const MyData = () => {
     blur: BlurPassword2,
     focus: FocusPassword2,
     message: MessagePassword2,
+    isPasswordVisible: isPasswordVisible2,
+    setIsPasswordVisible: setIsPasswordVisible2,
   } = useInput("password");
 
   useEffect(() => {
@@ -101,136 +105,154 @@ const MyData = () => {
 
   return (
     //Contenedor
-    <div className="mt-7 relative flex flex-col items-center md:h-80 md:flex-row md:justify-around md:items-start md:mt-12">
+    <div className="mt-7 relative flex flex-col items-center md:mt-10 md:h-80 md:flex-row md:items-start">
       {/*Imagen e Icono*/}
-      <div className="flex flex-row justify-between md:mt-3">
-        <Image
-          src={"/img/usuario.png"}
-          width={100}
-          height={100}
-          alt="Profile Image"
-          className="rounded-full w-[85px] h-[85px] md:w-[170px] md:h-[170px]"
-        />
-        <div className="relative md:mb-[6.5%] md:mr-[7.5%]">
-          <IconButton
-            className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]"
-            style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
-            // onClick={handleImage}
-          >
-            <Pencil color="white" width="12" height="10" />
-          </IconButton>
+      <div className="md:basis-[27.5%] flex justify-center items-center">
+        <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5">
+          <Image
+            src={"/img/perfilDefault.png"}
+            width={100}
+            height={100}
+            alt="Profile Image"
+            className="rounded-full w-[85px] h-[85px] md:w-[150px] md:h-[150px] lg:w-[190px] lg:h-[190px]"
+          />
+          <div className="relative md:mb-[6.5%] md:mr-[7.5%]">
+            <IconButton
+              className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]
+              lg:bottom-1 lg:right-1"
+              style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
+              // onClick={handleImage}
+            >
+              <Pencil color="white" width="12" height="10" />
+            </IconButton>
+          </div>
         </div>
       </div>
       {/*Inputs*/}
-      <div className="w-[60%] mb-11 md:flex md:flex-wrap md:gap-x-6">
-        <Input
-          name="name"
-          type="text"
-          value={user?.name}
-          readOnly
-          className="w-full md:w-[45%]"
-          classNameInput="p-[5.5px]"
-          classNameLabel="text-[20px]"
-          label="Nombre"
-        />
-        <Input
-          name="lastName"
-          type="text"
-          value={user?.lastname}
-          readOnly
-          className="w-full md:w-[45%]"
-          classNameInput="p-[5.5px]"
-          classNameLabel="text-[20px]"
-          label="Apellido"
-        />
-        <Input
-          name="email"
-          type="text"
-          value={user?.mail}
-          readOnly
-          className="w-full md:w-[45%]"
-          classNameInput="p-[5.5px]"
-          classNameLabel="text-[20px]"
-          label="Email"
-        />
-        <Input
-          name="document"
-          type="int"
-          value={Number(user?.dni).toLocaleString().replace(/,/g, ".")}
-          readOnly
-          className="w-full md:w-[45%]"
-          classNameInput="p-[5.5px]"
-          classNameLabel="text-[20px]"
-          label="DNI"
-        />
-        {/*Inputs cambio de contraseña*/}
-        {changePassword && (
-          <>
-            <Input
-              name="firstpassword"
-              type="password"
-              value={valuePassword}
-              onChange={OnChangePassword}
-              placeholder="********"
-              className="w-full md:w-[45%]"
-              classNameInput="p-[5.5px]"
-              classNameLabel="text-[20px]"
-              label="Nueva contraseña"
-              onFocus={FocusPassword}
-              onBlur={BlurPassword}
-            />
-            <Input
-              name="secondpassword"
-              type="password"
-              value={valuePassword2}
-              onChange={OnChangePassword2}
-              placeholder="********"
-              className="w-full md:w-[45%]"
-              classNameInput="p-[5.5px]"
-              classNameLabel="text-[20px]"
-              label="Confirmar contraseña"
-              onFocus={FocusPassword2}
-              onBlur={BlurPassword2}
-            />
-            <div className="h-[.5rem] pb-6">
-              {(MessagePassword || MessagePassword2) && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessagePassword || MessagePassword2}
-                </p>
-              )}
-            </div>
+      <div className="md:basis-[62.5%] items-start">
+        <div className="mb-11 md:grid md:grid-cols-2">
+          <Input
+            name="name"
+            type="text"
+            value={user?.name}
+            readOnly
+            className="md:w-[190px] w-[210px] lg:w-[90%]"
+            classNameInput="p-[5.5px] w-full"
+            classNameLabel="text-[20px]"
+            label="Nombre"
+          />
+          <Input
+            name="lastName"
+            type="text"
+            value={user?.lastname}
+            readOnly
+            className="md:w-[190px] w-[210px] lg:w-[90%]"
+            classNameInput="p-[5.5px] w-full"
+            classNameLabel="text-[20px]"
+            label="Apellido"
+          />
 
-            <div className="h-[.5rem] w-full">
-              {messageAlert != "" ? (
-                <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
-              ) : (
-                <p className="text-darkGreen text-[1rem] leading-3">
-                  {messageAlertOk}
-                </p>
-              )}
-            </div>
-          </>
-        )}
+          <Input
+            name="email"
+            type="text"
+            value={user?.mail}
+            readOnly
+            className="md:w-[190px] w-[210px] lg:w-[90%]"
+            classNameInput="p-[5.5px] w-full"
+            classNameLabel="text-[20px]"
+            label="Email"
+          />
+          <Input
+            name="document"
+            type="int"
+            value={Number(user?.dni).toLocaleString().replace(/,/g, ".")}
+            readOnly
+            className="md:w-[190px] w-[210px] lg:w-[90%]"
+            classNameInput="p-[5.5px] w-full"
+            classNameLabel="text-[20px]"
+            label="DNI"
+          />
+          {/*Inputs cambio de contraseña*/}
+          {changePassword && (
+            <>
+              <Input
+                name="firstpassword"
+                type="password"
+                value={valuePassword}
+                onChange={OnChangePassword}
+                placeholder="********"
+                className="md:w-[190px] w-[210px] lg:w-[90%]"
+                classNameInput="p-[5.5px] w-full"
+                classNameLabel="text-[20px]"
+                label="Nueva contraseña"
+                onFocus={FocusPassword}
+                onBlur={BlurPassword}
+                isPasswordVisible={isPasswordVisible}
+                togglePasswordVisibility={() =>
+                  setIsPasswordVisible(!isPasswordVisible)
+                }
+              />
+              <Input
+                name="secondpassword"
+                type="password"
+                value={valuePassword2}
+                onChange={OnChangePassword2}
+                placeholder="********"
+                className="md:w-[190px] w-[210px] lg:w-[90%]"
+                classNameInput="p-[5.5px] w-full"
+                classNameLabel="text-[20px]"
+                label="Confirmar contraseña"
+                onFocus={FocusPassword2}
+                onBlur={BlurPassword2}
+                isPasswordVisible={isPasswordVisible2}
+                togglePasswordVisibility={() =>
+                  setIsPasswordVisible2(!isPasswordVisible2)
+                }
+              />
+              <div className="h-[.5rem] pb-6">
+                {(MessagePassword || MessagePassword2) && (
+                  <p className="text-red text-[.8rem] leading-3">
+                    {MessagePassword || MessagePassword2}
+                  </p>
+                )}
+              </div>
+
+              <div className="h-[.5rem] w-full">
+                {messageAlert != "" ? (
+                  <p className="text-red text-[1rem] leading-3">
+                    {messageAlert}
+                  </p>
+                ) : (
+                  <p className="text-darkGreen text-[1rem] leading-3">
+                    {messageAlertOk}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
-      {/* Icono cambio de contraseña */}
-      <div
-        className={
-          "absolute bottom-0 right-0 mr-[5%] mb-[4.5%] md:mr-[4%] md:mb-[3.5%]"
-        }
-      >
-        <IconButton
-          className="bg-[#1E1E1E] rounded-full w-6 h-6"
-          style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
-          onClick={() =>
-            changePassword ? handleClickEdit() : handleEditMode()
+      <div className="md:basis-[10%]">
+        {/* Icono cambio de contraseña */}
+        <div
+          className={
+            "absolute bottom-0 right-0 mr-[5%] mb-[4.5%] md:mr-[4%] md:mb-[3.5%]"
           }
         >
-          {changePassword ? (
-            <Save color="white" width="14" height="14" />
-          ) : (
-            <Pencil color="white" width="14" height="15" />
-          )}
-        </IconButton>
+          <IconButton
+            className="bg-[#1E1E1E] rounded-full w-6 h-6"
+            style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
+            onClick={() =>
+              changePassword ? handleClickEdit() : handleEditMode()
+            }
+          >
+            {changePassword ? (
+              <Save color="white" width="14" height="14" />
+            ) : (
+              <Pencil color="white" width="14" height="15" />
+            )}
+          </IconButton>
+        </div>
       </div>
     </div>
   );

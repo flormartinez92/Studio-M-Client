@@ -8,14 +8,13 @@ import { Provider } from "react-redux";
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
-
-   //condicion para que cuando este en la home la navbar no aparezca
-   const pathname = usePathname();
-   const home = pathname !== "/";
+  //condicion para que cuando este en la home la navbar no aparezca
+  const pathname = usePathname();
+  const home = pathname !== "/";
 
   return (
     <html lang="en">
-      <body>
+      <body className="select-none">
         <Provider store={store}>
           {home && <Navbar />}
           {children}

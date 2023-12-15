@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function useInput(type) {
   const [value, setValue] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const OnChange = (e) => setValue(e.target.value);
   const validations_types = {
     course_add: [
@@ -89,7 +90,7 @@ function useInput(type) {
       {
         condition: (valor) => valor.trim() !== "",
         messageError: "*El link no puede estar vacío",
-       },
+      },
     ],
     couponName: [
       {
@@ -130,7 +131,16 @@ function useInput(type) {
     setMessage("");
   };
 
-  return { message, blur, focus, OnChange, value, setValue };
+  return {
+    message,
+    blur,
+    focus,
+    OnChange,
+    value,
+    setValue,
+    isPasswordVisible,
+    setIsPasswordVisible,
+  };
 }
 
 export default useInput;

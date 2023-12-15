@@ -30,6 +30,8 @@ export default function Login() {
     blur: BlurPassword,
     focus: FocusPassword,
     message: MessagePassword,
+    isPasswordVisible,
+    setIsPasswordVisible,
   } = useInput("passwordLogin");
 
   const onSubmitForm = async (e) => {
@@ -127,13 +129,8 @@ export default function Login() {
           </div>
         </div>
         <div
-          className="
-        mb-4 
-        w-[100%] 
-        sm:px-3
-        flex justify-start items-center
-        flex-col
-        "
+          className="mb-4 w-[100%] flex justify-start items-center flex-col
+        sm:px-3"
         >
           <Input
             label={"Contraseña"}
@@ -147,6 +144,10 @@ export default function Login() {
             onFocus={FocusPassword}
             onChange={OnChangePassword}
             onBlur={BlurPassword}
+            isPasswordVisible={isPasswordVisible}
+            togglePasswordVisibility={() =>
+              setIsPasswordVisible(!isPasswordVisible)
+            }
           />
 
           <div className="h-[.5rem] pb-6">
@@ -180,7 +181,6 @@ export default function Login() {
               </p>
             )}
           </div>
-
           <Button
             className={`bg-black 
           text-white 
