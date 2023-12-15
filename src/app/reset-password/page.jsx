@@ -88,13 +88,10 @@ export default function ResetPassword() {
     }
   };
 
-  console.log("PASSWORD--->", valuePassword);
-  console.log("CONFIRMPASSWORD-->", valueConfirmPassword);
-
   return (
     <section>
-      <div className="flex flex-col justify-center items-center bg-[#fff] py-[115px]">
-        <h2 className="font-mystery-mixed text-[35px] min-[320px]:text-[45px] sm:text-[55px] leading-3">
+      <div className="flex flex-col justify-center items-center bg-[#fff] py-20">
+        <h2 className="font-mystery-mixed text-[35px] mx-6 min-[320px]:text-[45px] text-center sm:text-[55px]">
           Restablecer Contraseña
         </h2>
         <form
@@ -108,7 +105,7 @@ export default function ResetPassword() {
               classNameLabel={"text-[23px]"}
               type={"password"}
               className="w-full sm:max-w-[85%]"
-              classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
+              classNameInput={`p-[5px] outline-none w-[100%] h-[40px] bg-black/20`}
               placeholder={"Ingresa tu nueva contraseña"}
               value={valuePassword}
               onChange={OnChangePassword}
@@ -130,7 +127,7 @@ export default function ResetPassword() {
               classNameLabel={"text-[23px]"}
               type={"password"}
               className="w-full sm:max-w-[85%]"
-              classNameInput={`p-[5px] outline-none w-[100%] h-[40px] rounded-[3px] bg-black/20`}
+              classNameInput={`p-[5px] outline-none w-[100%] h-[40px] bg-black/20`}
               placeholder={"Confirma tu contraseña"}
               value={valueConfirmPassword}
               onChange={OnChangeConfirmPassword}
