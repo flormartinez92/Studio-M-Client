@@ -1,35 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Cards from "../../components/Cards";
+
 import Button from "@/common/Button";
-import Image from "next/image";
-import IconButton from "@/common/IconButton";
-import {
-  CartShopPlus,
-  CartShopSimple,
-  Clock,
-  Close,
-  FullHeart,
-  Heart,
-  LineHeart,
-  Signal,
-} from "@/common/Icons";
+
+import { CartShopSimple } from "@/common/Icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
-import { useMediaQuery } from "@react-hook/media-query";
+
 import Loading_common from "@/common/Loading_common";
+import CardsMobile from "@/components/CardsMobile";
 
 export default function Trolley() {
   const [cartCourses, setCartCourses] = useState(null);
   const [user, setUser] = useState({});
-  const [favorites, setFavorites] = useState([]);
-  const [isCourseDeleted, setIsCourseDeleted] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const isMdBreakpoint = useMediaQuery("(min-width: 768px)");
 
   const getUser = async () => {
     try {
@@ -62,13 +50,9 @@ export default function Trolley() {
 
   useEffect(() => {
     getUser();
-    console.log("NO HAY NADA");
   }, []);
 
   const handleClickHeart = async (status, idCourse) => {
-    /* console.log(status);
-    console.log(idCourse);
-    console.log(user._id); */
     try {
       if (status) {
         await axios.delete(
@@ -105,61 +89,22 @@ export default function Trolley() {
       console.error(err);
     }
   };
+  const [deletingId, setDeletingId] = useState(null);
 
-  const handleRemove = async (courseId) => {
-    /*  console.log(courseId);
-    console.log(cartCourses.filter((course) => course._id !== courseId));
-    console.log(user);
-    setCartCourses(cartCourses.filter((course) => course._id !== courseId)); */
-    if (isLoading) return;
+  const handleRemove = async (courseId, index) => {
+    setDeletingId(courseId);
     try {
-      console.log("ESPERA QUE TERMINO");
-      setIsLoading(true);
       const responseDelete = await axios.delete(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${user._id}`
       );
       setCartCourses(cartCourses.filter((course) => course._id !== courseId));
-      /* const responseCourses = await axios.get(
-        `http://localhost:8081/api/cart/courses/${user._id}`
-      );
-      setCartCourses(responseCourses.data); */
+      setDeletingId(null);
 
-      console.log(responseDelete);
+      //console.log(responseDelete);
     } catch (err) {
       console.error(err);
-    } finally {
-      setIsLoading(false);
-      console.log("LISTO");
     }
-    /* axios
-      .delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${userId}`
-      )
-      .then(() => router.push("/trolley"))
-      .catch((error) => console.error(error)); */
   };
-
-  /* useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/cart/${userId}`)
-      .then((res) => setCartCourses(res.data))
-      .catch((error) => console.error(error));
-  }, [userId]);
-
-  const handleCheck = () => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${userId}`)
-      .then(() => router.push("/"));
-  };
-
-  const handleRemove = (courseId) => {
-    axios
-      .delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${userId}`
-      )
-      .then(() => router.push("/trolley"))
-      .catch((error) => console.error(error));
-  }; */
 
   return (
     <div
@@ -177,18 +122,14 @@ export default function Trolley() {
             {cartCourses?.map((idem, i) => {
               return (
                 <div key={i} className="flex justify-center items-center">
-                  <Cards
-                    key={idem._id}
-                    title={idem.courseShortTitle}
-                    className="pb-10 w-[66%] min-h-[15rem] min-w-[14rem] max-w-[14rem] min-[400px]:max-w-[21rem] md:hidden select-none"
-                    img={idem.courseImg_url}
-                    classNameImg=" h-[12.625rem] rounded-bl-[10px] rounded-br-[10px]"
-                    classNameBorder="h-[52px] flex-row justify-between items-center w-[170px] top-[182px]"
-                    classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
-                    buttonTitle={`$ ${Number(idem.coursePrice)
-                      .toLocaleString()
-                      .replace(",", ".")}`}
-                  />
+                  <div className="md:hidden mt-4">
+                    <CardsMobile
+                      img={idem.courseImg_url}
+                      title={idem.courseShortTitle}
+                      price={idem.coursePrice}
+                      handleClickDelete={() => handleRemove(idem._id)}
+                    />
+                  </div>
 
                   <div
                     className={`hidden md:block select-none w-full
@@ -196,9 +137,7 @@ export default function Trolley() {
                   >
                     <div className="flex flex-col justify-center items-center mt-8">
                       <div
-                        className={`flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl opacity-0 ${
-                          isLoading ? "opacity-70" : "opacity-100"
-                        }`}
+                        className={`flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl`}
                       >
                         <CardsDesktop
                           courseDescription={idem.courseDescription}
@@ -213,10 +152,11 @@ export default function Trolley() {
                           isFavorite={idem.status_favorite}
                           subtitleFull={true}
                           iconDelete={true}
-                          handleDelteCourse={() => handleRemove(idem._id)}
+                          handleDelteCourse={() => handleRemove(idem._id, i)}
                           handleFavoriteClick={() =>
                             handleClickHeart(idem.status_favorite, idem._id)
                           }
+                          isDeleting={deletingId === idem._id}
                         />
                       </div>
                     </div>
@@ -226,7 +166,7 @@ export default function Trolley() {
             })}
             <div className="flex w-full justify-center items-center">
               <div className="w-[90%] select-none max-w-[855px]">
-                <div className="flex flex-col gap-y-5 justify-center items-center md:justify-end md:flex-row md:gap-x-4">
+                <div className="flex flex-col gap-y-5 justify-center mt-8 md:mt-0 items-center md:justify-end md:flex-row md:gap-x-4">
                   <Button
                     onClick={handleremoveCart}
                     className="bg-buttonBlack w-[270px] md:w-[130px] h-10 p-6 md:h-8 md:p-0  rounded-[10px] flex justify-center items-center gap-x-1"

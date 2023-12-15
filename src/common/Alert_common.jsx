@@ -11,7 +11,7 @@ export default function Alert_common({
       id="alertBox"
       className={`${
         out && "animate__animated animate__fadeOut"
-      } fixed z-50 top-0 mt-4 left-0  w-full flex justify-center items-center font-ms-gothic`}
+      } fixed z-50 top-0 mt-4 left-0 w-full flex justify-center items-center font-ms-gothic`}
     >
       <div
         className={`animate__animated animate__fadeInDown animate__faster ${classNameAlert} flex flex-col justify-center items-end bg-white py-3 rounded`}

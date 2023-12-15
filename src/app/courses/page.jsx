@@ -15,7 +15,11 @@ import {
   handleCartClick,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
+
+import Alert_common from "@/common/Alert_common";
+
 import IconButton from "@/common/IconButton";
+
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -27,9 +31,14 @@ export default function Courses() {
   const coursesPerPage = 5;
   const router = useRouter();
   const isLgBreakpoint = useMediaQuery("(min-width: 1024px)");
+
+  const [out, setout] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -108,6 +117,14 @@ export default function Courses() {
       setLoading(false);
     }
   };
+  const handleAlert = () => {
+    setout(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      setout(false);
+    }, 700);
+  };
+  const [count, setCount] = useState(null);
 
   const renderCourseRangeIndicator = () => {
     const totalPages = Math.ceil(courses.length / coursesPerPage);
@@ -125,7 +142,15 @@ export default function Courses() {
   };
 
   return (
-    <section className={`h-full  ${loading ? "cursor-wait" : ""}`}>
+    <section className={`h-full  ${loading ? "cursor-wait" : ""} relative`}>
+      {showAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="Curso ya está en el carrito"
+          classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
       {courses.length === 0 ? (
         <div className="w-full h-[600px]  flex justify-center items-center">
           <Loading_common />
@@ -201,11 +226,13 @@ export default function Courses() {
                         handleViewCourseClick={() =>
                           handleViewCourseClick(course._id)
                         }
+
                         handleCartClick={() => {
                           user
-                            ? handleCartClick(course._id, user._id)
+                            ? handleCartClick(course._id, user._id,setShowAlert,setCount)
                             : router.push("/login");
                         }}
+
                       />
                     );
                   })}

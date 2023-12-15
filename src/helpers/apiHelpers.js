@@ -47,13 +47,20 @@ export const addFavorite = async (courseId, userId) => {
   }
 };
 
-export const handleCartClick = async (courseId, userId) => {
+export const handleCartClick = async (
+  courseId,
+  userId,
+  setShowAlert,
+  setCount
+) => {
   try {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
       courseId,
       userId,
     });
+    setCount(1);
   } catch (error) {
+    setShowAlert(true);
     console.error("Error while adding cart:", error);
   }
 };
