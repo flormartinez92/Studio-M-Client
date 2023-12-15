@@ -19,6 +19,10 @@ export default function trolleyDetails() {
   const [isOpen, setIsOpen] = useState(false);
   const [coupon, setCoupon] = useState("");
   const [trolley, setTrolley] = useState(null);
+  const [messageAlertError, setMessageAlertError] = useState(null);
+  const [messageAlertOk, setMessageAlertOk] = useState(null);
+  const [priceDiscount, setPriceDiscount] = useState(null);
+  const [out, setOut] = useState(null);
 
   const modalRef = useRef();
   const [user, setUser] = useState({});
@@ -63,13 +67,23 @@ export default function trolleyDetails() {
       const responseTotalAmount = await axios.get(
         `http://localhost:8081/api/cart/courses/total/${user._id}`
       );
-
+      setMessageAlertOk("Descuento Aplicado!");
+      setTimeout(() => {
+        setMessageAlertOk(null);
+        setIsOpen(false);
+      }, 1400);
       setCartAmount(responseTotalAmount.data);
-      setIsOpen(false);
+      setPriceDiscount(responseCoupon.data.totalAmount);
       setTrolley(responseCoupon.data.totalDiscount);
 
       console.log(responseCoupon);
     } catch (err) {
+      if (err.response.data === "Coupon not found") {
+        setMessageAlertError("Coupon not found");
+        setTimeout(() => {
+          setMessageAlertError(null);
+        }, 1400);
+      }
       console.error(err);
     }
     /* console.log(user.mail);
@@ -95,6 +109,8 @@ export default function trolleyDetails() {
       document.removeEventListener("mousedown", handleOutsideClick); // fugas de memoria mejor eliminar
       document.body.style.overflow = "auto"; // Habilita el scroll del body
       document.body.querySelector("nav").style.opacity = "1";
+      setCoupon("");
+
       document.body.querySelector("#Footer").style.opacity = "1";
       document.body.querySelector("#details") &&
         (document.body.querySelector("#details").style.opacity = "1");
@@ -137,6 +153,7 @@ export default function trolleyDetails() {
   useEffect(() => {
     getUser();
   }, []);
+  //console.log(isOpen);
 
   return (
     <div className="flex flex-col justify-center items-center relative">
@@ -193,82 +210,11 @@ export default function trolleyDetails() {
                         }
                       />
                     </div>
-                    {/* <div className="flex flex-col w-[43rem] min-[800px]:w-[47rem] font-ms-gothic">
-                  <div className="bg-black text-letterWhite font-mystery-mixed flex items-center justify-center rounded-t-[6px]">
-                    <h2 className="py-[6px] text-[1.6rem] leading-9">
-                      {course.courseLongTitle.substring(0, 37)}
-                    </h2>
-                  </div>
-                  <div className="flex gap-x-3 bg-page  rounded-b-[6px]">
-                    <div className="basis-[25%]  flex justify-start items-center h-[10rem]">
-                      <Image
-                        src={course.courseImg_url}
-                        width={100}
-                        height={100}
-                        alt="imagen"
-                        className="w-[12.5rem] h-full rounded-bl-[6px]"
-                      />
-                    </div>
-                    <div className="basis-[75%] flex flex-col justify-around items-start pb-3 pr-3 h-[10rem]">
-                      <div className="text-[16px]">{course.courseSubtitle}</div>
-                      <div className="text-[12px] w-[90%] leading-[13px]">
-                        {course.courseDescription.substring(0, 400) + "..."}
-                      </div>
-                      <h2 className="w-full text-end">{`$${Number(
-                        course.coursePrice
-                      )
-                        .toLocaleString()
-                        .replace(",", ".")} ARS`}</h2>
-                    </div>
-                  </div>
-                </div> */}
                   </div>
                 </div>
               );
             })}
-            {/* {cartCourses?.map((course) => (
-          //Contenido para dispositivo de escritorio``
-          <div
-            key={course._id}
-            className="hidden md:flex flex-col w-[80%] mt-12 shadow-xl"
-          >
-            <div className="w-full bg-black flex justify-between items-center rounded-t-md">
-              <h3 className="flex-1 m-0 text-center text-white font-mystery-mixed text-2xl">
-                {course.courseLongTitle}
-              </h3>
-              <IconButton
-                onClick={() => handleRemove(course._id)}
-                className={"p-1"}
-              >
-                <Close color={"white"} />
-              </IconButton>
-            </div>
-            <div className="bg-page flex justify-between rounded-b-md">
-              <div className="w-[25%]">
-                <Image
-                  src={course.courseImg_url}
-                  width={300}
-                  height={300}
-                  alt="Picture"
-                  className="h-full rounded-bl-lg"
-                />
-              </div>
-              <div className="w-[75%] flex flex-col justify-between">
-                <p className="text-black font-ms-gothic mx-2 text-lg">
-                  {course.courseSubtitle}
-                </p>
-                <p className=" text-darkGray font-ms-gothic mx-2 text-sm">
-                  {course.courseDescription}
-                </p>
-                <p className="text-black font-ms-gothic flex justify-end mx-2 text-base">
-                  {`$ ${Number(course.coursePrice)
-                    .toLocaleString()
-                    .replace(",", ".")} ARS`}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))} */}
+
             <div
               className="mt-3 cursor-pointer select-none flex justify-center items-center relative"
               onClick={() => handleCoupon(isOpen)}
@@ -279,13 +225,20 @@ export default function trolleyDetails() {
             </div>
             <div className=" flex items-center justify-center text-h2Black font-mystery-mixed text-2xl min-[320px]:text-3xl w-[70%] mt-6 md:justify-center md:text-5xl">
               <h2 className="mx-8">Total:</h2>
-              <h2 className="mx-8">
-                {!trolley
-                  ? Number(cartAmount.totalAmount)
-                      .toLocaleString()
-                      .replace(",", ".")
-                  : Number(trolley).toLocaleString().replace(",", ".")}
-              </h2>
+              <div className="relative">
+                {priceDiscount && (
+                  <p className="absolute -top-5 md:-top-5 left-1/2 -translate-x-1/2 text-[15px] md:text-[25px] -rotate-2 line-through font-ms-gothic">
+                    {Number(priceDiscount).toLocaleString().replace(",", ".")}
+                  </p>
+                )}
+                <h2 className="mx-8">
+                  {!trolley
+                    ? Number(cartAmount.totalAmount)
+                        .toLocaleString()
+                        .replace(",", ".")
+                    : Number(trolley).toLocaleString().replace(",", ".")}
+                </h2>
+              </div>
             </div>
             <Button
               onClick={handleCheck}
@@ -308,13 +261,13 @@ export default function trolleyDetails() {
         />
       ))} */}
           <div
-            className={` w-full  flex items-center justify-center fixed inset-0 z-50 ${
-              isOpen ? "block" : "hidden"
+            className={` w-full  flex items-center justify-center fixed inset-0 z-50 animate__animated  ${
+              isOpen ? "block animate__zoomIn" : "hidden animate__zoomOut"
             }`}
           >
             <div
               ref={modalRef}
-              className="w-full max-w-[1100px] h-[350px] min-[500px]:h-[400px] min-[600px]:h-[500px] min-[700px]:h-[600px] min-[800px]:h-[720px]  bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center mx-4 sm:m-20"
+              className="  w-full max-w-[1100px] h-[350px] min-[500px]:h-[400px] min-[600px]:h-[500px] min-[700px]:h-[600px] min-[800px]:h-[720px]  bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center mx-4 sm:m-20"
             >
               <div className="flex h-[240px] min-[500px]:h-[350px] min-[600px]:h-[550px] w-full flex-col gap-y-10 justify-between min-[500px]:justify-around items-center">
                 <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
@@ -331,16 +284,30 @@ export default function trolleyDetails() {
                   onChange={onChangeCoupon}
                   value={coupon}
                 />
-                <Border
-                  className={`flex gap-0.5 border-pink border-[1px] p-1 ${""}`}
-                >
-                  <Button
-                    className={`font-mystery-mixed p-3 whitespace-nowrap flex items-center text-[1.5rem] min-[500px]:text-[2.5rem] min-[500px]:p-5  leading-3 min-[500px]:leading-5 `}
-                    onClick={handleAddCoupon}
+
+                <div className="relative flex justify-center items-center">
+                  {messageAlertError && (
+                    <p className=" absolute -top-10 text-red font-ms-gothic h-10 md:text-[1.5rem]">
+                      {messageAlertError}
+                    </p>
+                  )}
+                  {messageAlertOk && (
+                    <p className="absolute -top-10 text-darkGreen font-ms-gothic h-10 md:text-[1.5rem]">
+                      {messageAlertOk}
+                    </p>
+                  )}
+
+                  <Border
+                    className={`flex gap-0.5 border-pink border-[1px] p-1 ${""}`}
                   >
-                    {"Aplicar descuento"}
-                  </Button>
-                </Border>
+                    <Button
+                      className={`font-mystery-mixed p-3 whitespace-nowrap flex items-center text-[1.5rem] min-[500px]:text-[2.5rem] min-[500px]:p-5  leading-3 min-[500px]:leading-5 `}
+                      onClick={handleAddCoupon}
+                    >
+                      {"Aplicar descuento"}
+                    </Button>
+                  </Border>
+                </div>
               </div>
             </div>
           </div>
