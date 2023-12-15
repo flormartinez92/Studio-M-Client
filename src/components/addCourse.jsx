@@ -287,9 +287,13 @@ export default function AddCourse() {
     }
   };
   return (
-    <form
-      onSubmit={onSubmitForm}
-      className="
+    <>
+      <h2 className="font-mystery-mixed w-full h-auto text-[2.3rem] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3 text-center">
+        Agregar Curso
+      </h2>
+      <form
+        onSubmit={onSubmitForm}
+        className="
             mt-[50px] 
             w-[80%]
             max-w-[400px] 
@@ -298,459 +302,465 @@ export default function AddCourse() {
             flex-col
             justify-center
             "
-    >
-      <div className="w-auto">
-        <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
-          <div className=" w-full basis-[33.3%]">
-            <Input
-              className={"flex-none"}
-              label={"Titulo largo"}
-              value={valueTitleLong}
-              onChange={OnChangeTitleLong}
-              onBlur={BlurTitleLong}
-              onFocus={FocusTitleLong}
-              classNameLabel={"block text-[1.21rem]"}
-              placeholder={"Ingresa titulo largo del curso"}
-              name={"nombre"}
-              classNameInput={`
+      >
+        <div className="w-auto">
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Titulo largo"}
+                value={valueTitleLong}
+                onChange={OnChangeTitleLong}
+                onBlur={BlurTitleLong}
+                onFocus={FocusTitleLong}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa titulo largo del curso"}
+                name={"nombre"}
+                classNameInput={`
                 p-[5px] 
                 outline-none 
                 w-[100%]
                 h-[40px] 
                 rounded-[3px]   
                 bg-black/20`}
-            />
-            <div className="h-[.5rem] mb-2">
-              {MessageTitleLong && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageTitleLong}
-                </p>
-              )}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageTitleLong && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageTitleLong}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-          <div className=" w-full basis-[33.3%]">
-            <Input
-              className={"flex-none"}
-              label={"Titulo corto"}
-              value={valueTitleShort}
-              onChange={OnChangeTitleShort}
-              onBlur={BlurTitleShort}
-              onFocus={FocusTitleShort}
-              classNameLabel={"block text-[1.21rem]"}
-              placeholder={"Ingresa titulo corto del curso"}
-              name={"nombre"}
-              classNameInput={`p-[5px] 
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Titulo corto"}
+                value={valueTitleShort}
+                onChange={OnChangeTitleShort}
+                onBlur={BlurTitleShort}
+                onFocus={FocusTitleShort}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa titulo corto del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-            />
-            <div className="h-[.5rem] mb-2">
-              {MessageTitleShort && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageTitleShort}
-                </p>
-              )}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageTitleShort && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageTitleShort}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-          <div className=" w-full basis-[33.3%]">
-            <Input
-              className={"flex-none"}
-              label={"Sub-titulo"}
-              value={valueSubtitle}
-              onChange={OnChangeSubtitle}
-              onBlur={BlurSubtitle}
-              onFocus={FocusSubtitle}
-              classNameLabel={"block text-[1.21rem]"}
-              placeholder={"Ingresa Subtitulo del curso"}
-              name={"nombre"}
-              classNameInput={`p-[5px] 
+            <div className=" w-full basis-[33.3%]">
+              <Input
+                className={"flex-none"}
+                label={"Sub-titulo"}
+                value={valueSubtitle}
+                onChange={OnChangeSubtitle}
+                onBlur={BlurSubtitle}
+                onFocus={FocusSubtitle}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa Subtitulo del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-            />
-            <div className="h-[.5rem] mb-2">
-              {MessageSubtitle && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageSubtitle}
-                </p>
-              )}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageSubtitle && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageSubtitle}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <Input
-          className={"flex-none"}
-          label={"Descripcion"}
-          value={valueDescription}
-          onChange={OnChangeDescription}
-          onBlur={BlurDescription}
-          onFocus={FocusDescription}
-          classNameLabel={"block text-[1.21rem]"}
-          placeholder={"Ingresa descripcion del curso"}
-          name={"nombre"}
-          classNameInput={`p-[5px] 
+          <Input
+            className={"flex-none"}
+            label={"Descripcion"}
+            value={valueDescription}
+            onChange={OnChangeDescription}
+            onBlur={BlurDescription}
+            onFocus={FocusDescription}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa descripcion del curso"}
+            name={"nombre"}
+            classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[9rem] 
               rounded-[3px]   
               bg-black/20
               text-start`}
-        />
-        <div className="h-[.5rem] mb-2">
-          {MessageDescription && (
-            <p className="text-red text-[.9rem] leading-3">
-              {MessageDescription}
-            </p>
-          )}
-        </div>
-        <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
-          <div className="w-full basis-[50%]">
-            <Input
-              className={"flex-none"}
-              label={"Precio"}
-              value={valuePrice}
-              onChange={OnChangePrice}
-              onBlur={BlurPrice}
-              onFocus={FocusPrice}
-              classNameLabel={"block text-[1.21rem]"}
-              placeholder={"Ingresa precio del curso"}
-              name={"nombre"}
-              classNameInput={`p-[5px] 
+          />
+          <div className="h-[.5rem] mb-2">
+            {MessageDescription && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageDescription}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className="w-full basis-[50%]">
+              <Input
+                className={"flex-none"}
+                label={"Precio"}
+                value={valuePrice}
+                onChange={OnChangePrice}
+                onBlur={BlurPrice}
+                onFocus={FocusPrice}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa precio del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-            />
-            <div className="h-[.5rem] mb-2">
-              {MessagePrice && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessagePrice}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="w-full basis-[50%]">
-            <div className="flex flex-col my-2 ">
-              <label
-                htmlFor="select_level"
-                className="block text-[1.21rem] font-mystery-mixed mb-1"
-              >
-                Dificultad del curso
-              </label>
-              <select
-                id="select_level"
-                className="w-full p-2   pl-3 font-ms-gothic outline-none bg-black/20 text-[15px] appearance-none h-[40px] 
-                  rounded-[3px]"
-                value={valueCourseLevel}
-                onChange={OnChangeCourseLevel}
-                style={{
-                  backgroundColor: "lightgray", // Cambia el color de fondo de la opción seleccionada
-                }}
-              >
-                <option disabled className="text-[15px]">
-                  Selecciona una dificultad
-                </option>
-                <option value="Facil" className="bg-black/20 text-[15px]">
-                  Facil
-                </option>
-                <option value="Intermedio" className="bg-black/20 text-[15px]">
-                  Intermedio
-                </option>
-                <option value="Dificil" className="bg-black/20 text-[15px]">
-                  Dificil
-                </option>
-              </select>
-            </div>
-            <div className="h-[.5rem] mb-2">
-              {MessageCourseLevel && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageCourseLevel}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
-          <div className="w-full basis-[50%]">
-            <div className="flex flex-col justify-center">
-              <p className="block text-[1.21rem] font-mystery-mixed mb-1">
-                Carga de Imagen
-              </p>
-              <div
-                className="border h-[40px] bg-buttonBlack p-4 cursor-pointer flex gap-x-5 text-letterWhite justify-center items-center "
-                onClick={handleDivClick}
-              >
-                <h1>Selecciona un archivo</h1>
-
-                <h1>
-                  {value == "" ? (
-                    <Image
-                      src={"/svg/bx-file-blank.svg"}
-                      width={24}
-                      height={24}
-                      className=""
-                      alt="SVG Icon"
-                    />
-                  ) : (
-                    value
-                  )}
-                </h1>
-
-                <input
-                  type="file"
-                  ref={fileInputRef} // Ref para acceder al input de tipo file
-                  className="hidden" // Ocultar el input, ya que haremos clic en él programáticamente
-                  onChange={handleFileChange}
-                />
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessagePrice && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessagePrice}
+                  </p>
+                )}
               </div>
             </div>
-            <div className="h-[.5rem] mb-2">
-              {MessageImage && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageImage}
-                </p>
-              )}
+
+            <div className="w-full basis-[50%]">
+              <div className="flex flex-col my-2 ">
+                <label
+                  htmlFor="select_level"
+                  className="block text-[1.21rem] font-mystery-mixed mb-1"
+                >
+                  Dificultad del curso
+                </label>
+                <select
+                  id="select_level"
+                  className="w-full p-2   pl-3 font-ms-gothic outline-none bg-black/20 text-[15px] appearance-none h-[40px] 
+                  rounded-[3px]"
+                  value={valueCourseLevel}
+                  onChange={OnChangeCourseLevel}
+                  style={{
+                    backgroundColor: "lightgray", // Cambia el color de fondo de la opción seleccionada
+                  }}
+                >
+                  <option disabled className="text-[15px]">
+                    Selecciona una dificultad
+                  </option>
+                  <option value="Facil" className="bg-black/20 text-[15px]">
+                    Facil
+                  </option>
+                  <option
+                    value="Intermedio"
+                    className="bg-black/20 text-[15px]"
+                  >
+                    Intermedio
+                  </option>
+                  <option value="Dificil" className="bg-black/20 text-[15px]">
+                    Dificil
+                  </option>
+                </select>
+              </div>
+              <div className="h-[.5rem] mb-2">
+                {MessageCourseLevel && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageCourseLevel}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
-          <div className="w-full basis-[50%] ">
-            <Input
-              className={"flex-none"}
-              label={"Duracion del curso"}
-              value={valueCourseDuration}
-              onChange={OnChangeCourseDuration}
-              onBlur={BlurCourseDuration}
-              onFocus={FocusCourseDuration}
-              classNameLabel={"block text-[1.21rem]"}
-              placeholder={"Ingresa la duración del curso"}
-              name={"nombre"}
-              classNameInput={`p-[5px] 
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
+            <div className="w-full basis-[50%]">
+              <div className="flex flex-col justify-center">
+                <p className="block text-[1.21rem] font-mystery-mixed mb-1">
+                  Carga de Imagen
+                </p>
+                <div
+                  className="border h-[40px] bg-buttonBlack p-4 cursor-pointer flex gap-x-5 text-letterWhite justify-center items-center "
+                  onClick={handleDivClick}
+                >
+                  <h1>Selecciona un archivo</h1>
+
+                  <h1>
+                    {value == "" ? (
+                      <Image
+                        src={"/svg/bx-file-blank.svg"}
+                        width={24}
+                        height={24}
+                        className=""
+                        alt="SVG Icon"
+                      />
+                    ) : (
+                      value
+                    )}
+                  </h1>
+
+                  <input
+                    type="file"
+                    ref={fileInputRef} // Ref para acceder al input de tipo file
+                    className="hidden" // Ocultar el input, ya que haremos clic en él programáticamente
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
+              <div className="h-[.5rem] mb-2">
+                {MessageImage && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageImage}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="w-full basis-[50%] ">
+              <Input
+                className={"flex-none"}
+                label={"Duracion del curso"}
+                value={valueCourseDuration}
+                onChange={OnChangeCourseDuration}
+                onBlur={BlurCourseDuration}
+                onFocus={FocusCourseDuration}
+                classNameLabel={"block text-[1.21rem]"}
+                placeholder={"Ingresa la duración del curso"}
+                name={"nombre"}
+                classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-            />
-            <div className="h-[.5rem] mb-2">
-              {MessageCourseDuration && (
-                <p className="text-red text-[.9rem] leading-3">
-                  {MessageCourseDuration}
-                </p>
-              )}
+              />
+              <div className="h-[.5rem] mb-2">
+                {MessageCourseDuration && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageCourseDuration}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        {/* MODULOS */}
-        <div className="flex flex-col justify-center items-center w-[100%]">
-          <div className="flex flex-row justify-center items-center w-full h-auto py-1">
-            <div className="text-[30px]">+</div>
-            <div className="text-[18px] font-ms-gothic" onClick={agregarCampo}>
-              Agregar modulo
+          {/* MODULOS */}
+          <div className="flex flex-col justify-center items-center w-[100%]">
+            <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+              <div className="text-[30px]">+</div>
+              <div
+                className="text-[18px] font-ms-gothic"
+                onClick={agregarCampo}
+              >
+                Agregar modulo
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col w-[100%] h-auto gap-y-4">
-            {campos.map((e, i) => {
-              //console.log(`course_add_${i}`);
+            <div className="flex flex-col w-[100%] h-auto gap-y-4">
+              {campos.map((e, i) => {
+                //console.log(`course_add_${i}`);
 
-              return (
-                <div className="w-[100%]  py-4" key={i}>
-                  <Input
-                    className={"flex-none"}
-                    label={"Nombre de modulo"}
-                    value={campos.moduleName}
-                    onChange={(x) => handleInputChange(i, x)}
-                    classNameLabel={"block text-[1.21rem]"}
-                    placeholder={"Ingresa nombre del modulo"}
-                    name={"moduleName"}
-                    classNameInput={`p-[5px] 
+                return (
+                  <div className="w-[100%]  py-4" key={i}>
+                    <Input
+                      className={"flex-none"}
+                      label={"Nombre de modulo"}
+                      value={campos.moduleName}
+                      onChange={(x) => handleInputChange(i, x)}
+                      classNameLabel={"block text-[1.21rem]"}
+                      placeholder={"Ingresa nombre del modulo"}
+                      name={"moduleName"}
+                      classNameInput={`p-[5px] 
                   outline-none 
                   w-[100%]
                   h-[40px] 
                   rounded-[3px]   
                   bg-black/20`}
-                  />
+                    />
 
-                  <div className="flex flex-row justify-center items-center w-full h-auto py-1">
-                    <div className="text-[30px]">+</div>
-                    <div
-                      className="text-[18px] font-ms-gothic"
-                      onClick={() => agregarTema(i)}
-                    >
-                      Agregar tema
-                    </div>
-                  </div>
-                  {topics[i]?.map((x, c) => {
-                    return (
-                      <div key={c} className="">
-                        <div className="mt-7">
-                          <Input
-                            className={"flex-none"}
-                            label={"Nombre del tema"}
-                            value={
-                              campos[i]["topics"][c]?.topicName
-                                ? campos[i]["topics"][c]?.topicName
-                                : ""
-                            }
-                            onChange={(e) => handleInputChangeTopic(e, i, c)}
-                            classNameLabel={"block text-[1.21rem]"}
-                            placeholder={"Ingresa nombre del tema"}
-                            name={"moduleName"}
-                            classNameInput={`p-[5px] 
-                                      outline-none 
-                                      w-[100%]
-                                      h-[40px] 
-                                      rounded-[3px]   
-                                      bg-black/20`}
-                          />
-                        </div>
-                        <div className="flex flex-row justify-center items-center w-full h-auto py-1">
-                          <div className="text-[30px]">+</div>
-                          <div
-                            className="text-[18px] font-ms-gothic"
-                            onClick={() => agregarClasse(i, c)}
-                          >
-                            Agregar clase
-                          </div>
-                        </div>
-                        {classes[i] &&
-                          classes[i][c] &&
-                          classes[i][c].map((item, p) => {
-                            return (
-                              <div key={p} className="">
-                                <Input
-                                  className={"flex-none"}
-                                  label={"Nombre de la clase"}
-                                  value={classes[i][c][p].classInfo}
-                                  onChange={(e) =>
-                                    handleInputChangeClasse(e, i, c, p)
-                                  }
-                                  classNameLabel={"block text-[1.21rem]"}
-                                  placeholder={"Ingresa nombre de la clase"}
-                                  name={"moduleName"}
-                                  classNameInput={`p-[5px] 
-                                      outline-none 
-                                      w-[100%]
-                                      h-[40px] 
-                                      rounded-[3px]   
-                                      bg-black/20`}
-                                />
-                                <Input
-                                  className={"flex-none"}
-                                  label={"Url Video"}
-                                  value={classes[i][c][p].video_url}
-                                  onChange={(e) =>
-                                    handleInputChangeUrlVideo(e, i, c, p)
-                                  }
-                                  classNameLabel={"block text-[1.21rem]"}
-                                  placeholder={"Ingresa el url del video"}
-                                  name={"moduleName"}
-                                  classNameInput={`p-[5px] 
-                                      outline-none 
-                                      w-[100%]
-                                      h-[40px] 
-                                      rounded-[3px]   
-                                      bg-black/20`}
-                                />
-                              </div>
-                            );
-                          })}
+                    <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+                      <div className="text-[30px]">+</div>
+                      <div
+                        className="text-[18px] font-ms-gothic"
+                        onClick={() => agregarTema(i)}
+                      >
+                        Agregar tema
                       </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                    </div>
+                    {topics[i]?.map((x, c) => {
+                      return (
+                        <div key={c} className="">
+                          <div className="mt-7">
+                            <Input
+                              className={"flex-none"}
+                              label={"Nombre del tema"}
+                              value={
+                                campos[i]["topics"][c]?.topicName
+                                  ? campos[i]["topics"][c]?.topicName
+                                  : ""
+                              }
+                              onChange={(e) => handleInputChangeTopic(e, i, c)}
+                              classNameLabel={"block text-[1.21rem]"}
+                              placeholder={"Ingresa nombre del tema"}
+                              name={"moduleName"}
+                              classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                            />
+                          </div>
+                          <div className="flex flex-row justify-center items-center w-full h-auto py-1">
+                            <div className="text-[30px]">+</div>
+                            <div
+                              className="text-[18px] font-ms-gothic"
+                              onClick={() => agregarClasse(i, c)}
+                            >
+                              Agregar clase
+                            </div>
+                          </div>
+                          {classes[i] &&
+                            classes[i][c] &&
+                            classes[i][c].map((item, p) => {
+                              return (
+                                <div key={p} className="">
+                                  <Input
+                                    className={"flex-none"}
+                                    label={"Nombre de la clase"}
+                                    value={classes[i][c][p].classInfo}
+                                    onChange={(e) =>
+                                      handleInputChangeClasse(e, i, c, p)
+                                    }
+                                    classNameLabel={"block text-[1.21rem]"}
+                                    placeholder={"Ingresa nombre de la clase"}
+                                    name={"moduleName"}
+                                    classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                                  />
+                                  <Input
+                                    className={"flex-none"}
+                                    label={"Url Video"}
+                                    value={classes[i][c][p].video_url}
+                                    onChange={(e) =>
+                                      handleInputChangeUrlVideo(e, i, c, p)
+                                    }
+                                    classNameLabel={"block text-[1.21rem]"}
+                                    placeholder={"Ingresa el url del video"}
+                                    name={"moduleName"}
+                                    classNameInput={`p-[5px] 
+                                      outline-none 
+                                      w-[100%]
+                                      h-[40px] 
+                                      rounded-[3px]   
+                                      bg-black/20`}
+                                  />
+                                </div>
+                              );
+                            })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <Input
-          className={"flex-none"}
-          label={"Nombre del proyecto"}
-          value={valueProjectsTitle}
-          onChange={OnChangeProjectsTitle}
-          onBlur={BlurProjectsTitle}
-          onFocus={FocusProjectsTitle}
-          classNameLabel={"block text-[1.21rem]"}
-          placeholder={"Ingresa nombre del proyecto"}
-          name={"nombre"}
-          classNameInput={`p-[5px] 
+          <Input
+            className={"flex-none"}
+            label={"Nombre del proyecto"}
+            value={valueProjectsTitle}
+            onChange={OnChangeProjectsTitle}
+            onBlur={BlurProjectsTitle}
+            onFocus={FocusProjectsTitle}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa nombre del proyecto"}
+            name={"nombre"}
+            classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-        />
-        <div className="h-[.5rem] mb-2">
-          {MessageProjectsTitle && (
-            <p className="text-red text-[.9rem] leading-3">
-              {MessageProjectsTitle}
-            </p>
-          )}
-        </div>
-        <Input
-          className={"flex-none"}
-          label={"Descripcion del proyecto"}
-          value={valueProjectsDescription}
-          onChange={OnChangeProjectsDescription}
-          onBlur={BlurProjectsDescription}
-          onFocus={FocusProjectsDescription}
-          classNameLabel={"block text-[1.21rem]"}
-          placeholder={"Ingresa descripcion del proyecto"}
-          name={"nombre"}
-          classNameInput={`p-[5px] 
+          />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectsTitle && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectsTitle}
+              </p>
+            )}
+          </div>
+          <Input
+            className={"flex-none"}
+            label={"Descripcion del proyecto"}
+            value={valueProjectsDescription}
+            onChange={OnChangeProjectsDescription}
+            onBlur={BlurProjectsDescription}
+            onFocus={FocusProjectsDescription}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa descripcion del proyecto"}
+            name={"nombre"}
+            classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[9rem] 
               rounded-[3px]   
               bg-black/20`}
-        />
-        <div className="h-[.5rem] mb-2">
-          {MessageProjectsDescription && (
-            <p className="text-red text-[.9rem] leading-3">
-              {MessageProjectsDescription}
-            </p>
-          )}
-        </div>
-        <Input
-          className={"flex-none"}
-          label={"Mensaje curso completado"}
-          value={valueProjectAim}
-          onChange={OnChangeProjectAim}
-          onBlur={BlurProjectAim}
-          onFocus={FocusProjectAim}
-          classNameLabel={"block text-[1.21rem]"}
-          placeholder={"Ingresa mensaje"}
-          name={"nombre"}
-          classNameInput={`p-[5px] 
+          />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectsDescription && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectsDescription}
+              </p>
+            )}
+          </div>
+          <Input
+            className={"flex-none"}
+            label={"Mensaje curso completado"}
+            value={valueProjectAim}
+            onChange={OnChangeProjectAim}
+            onBlur={BlurProjectAim}
+            onFocus={FocusProjectAim}
+            classNameLabel={"block text-[1.21rem]"}
+            placeholder={"Ingresa mensaje"}
+            name={"nombre"}
+            classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
               h-[40px] 
               rounded-[3px]   
               bg-black/20`}
-        />
-        <div className="h-[.5rem] mb-2">
-          {MessageProjectAim && (
-            <p className="text-red text-[.9rem] leading-3">
-              {MessageProjectAim}
-            </p>
-          )}
+          />
+          <div className="h-[.5rem] mb-2">
+            {MessageProjectAim && (
+              <p className="text-red text-[.9rem] leading-3">
+                {MessageProjectAim}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="w-full flex flex-col justify-center items-center">
-        <div className="h-[.5rem] mt-3">
-          {messageAlert ? (
-            <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
-          ) : (
-            <p className="text-darkGreen text-[1rem] leading-3">
-              {messageAlertOk}
-            </p>
-          )}
-        </div>
-        <Button
-          className={`bg-black 
+        <div className="w-full flex flex-col justify-center items-center">
+          <div className="h-[.5rem] mt-3">
+            {messageAlert ? (
+              <p className="text-red text-[1rem] leading-3">{messageAlert}</p>
+            ) : (
+              <p className="text-darkGreen text-[1rem] leading-3">
+                {messageAlertOk}
+              </p>
+            )}
+          </div>
+          <Button
+            className={`bg-black 
           text-white 
           py-[18px] 
           px-[54px] 
@@ -761,10 +771,11 @@ export default function AddCourse() {
           w-[100%]
           mt-[2rem]
           sm:w-[20rem]`}
-        >
-          Confirmar
-        </Button>
-      </div>
-    </form>
+          >
+            Confirmar
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }

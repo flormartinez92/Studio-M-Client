@@ -15,6 +15,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
+import { stringify } from "postcss";
 
 export default function ActiveCourses() {
   const [courses, setCourses] = useState([]);
@@ -100,6 +101,10 @@ export default function ActiveCourses() {
       return total + matchingCourses.length;
     }, 0);
   };
+  const handleEditCourse = (course) => {
+    console.log("EDITANDO", course);
+    localStorage.setItem("courseEdit", JSON.stringify(course));
+  };
 
   return (
     <section className="my-20 mb-60">
@@ -139,7 +144,7 @@ export default function ActiveCourses() {
                 </td>
                 <td className="p-2">
                   <Link href="/edit-course">
-                    <button>
+                    <button onClick={() => handleEditCourse(course)}>
                       <Pencil color="#1BBEE2" />
                     </button>
                   </Link>
