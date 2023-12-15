@@ -13,11 +13,13 @@ import {
   handleCartClick,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
+import { useRouter } from "next/navigation";
 
 export default function CourseInformation({ params }) {
   const [course, setCourse] = useState({});
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const courseId = params["course-id"];
 
   useEffect(() => {
@@ -217,7 +219,11 @@ export default function CourseInformation({ params }) {
                     handleclickFavoriteSingleCourse(courseId)
                   }
                   isFavorite={course.isFavorite}
-                  handleCartClick={() => handleCartClick(course._id, user._id)}
+                  handleCartClick={() => {
+                    user
+                      ? handleCartClick(course._id, user._id)
+                      : router.push("/login");
+                  }}
                 />
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards";
-import { CartShopSimple, Vector } from "@/common/Icons";
+import { Arrow, ArrowBack, CartShopSimple, Vector } from "@/common/Icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
@@ -15,17 +15,30 @@ import {
   handleCartClick,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
+
 import Alert_common from "@/common/Alert_common";
+
+import IconButton from "@/common/IconButton";
+
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const coursesPerPage = 5;
   const router = useRouter();
   const isLgBreakpoint = useMediaQuery("(min-width: 1024px)");
+
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -51,6 +64,11 @@ export default function Courses() {
         }));
 
         setCourses(coursesWithFavorites);
+
+        const updatedTotalPages = Math.ceil(
+          coursesWithFavorites.length / coursesPerPage
+        );
+        setTotalPages(updatedTotalPages);
       } catch (error) {
         console.error("Error while fetching courses:", error);
       }
@@ -107,6 +125,21 @@ export default function Courses() {
     }, 700);
   };
   const [count, setCount] = useState(null);
+
+  const renderCourseRangeIndicator = () => {
+    const totalPages = Math.ceil(courses.length / coursesPerPage);
+    let indicator = `${currentPage}-${totalPages}`;
+
+    return indicator;
+  };
+
+  const handleArrowClick = (direction) => {
+    if (direction === "forward" && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "backward" && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <section className={`h-full  ${loading ? "cursor-wait" : ""} relative`}>
@@ -166,7 +199,7 @@ export default function Courses() {
               </div>
 
               <div className="flex flex-col items-center justify-center w-[90%] gap-y-12 max-w-6xl">
-                {courses
+                {currentCourses
                   ?.slice()
                   .sort((a, b) =>
                     sortOrder === "asc"
@@ -193,17 +226,31 @@ export default function Courses() {
                         handleViewCourseClick={() =>
                           handleViewCourseClick(course._id)
                         }
-                        handleCartClick={() =>
-                          handleCartClick(
-                            course._id,
-                            user._id,
-                            setShowAlert,
-                            setCount
-                          )
-                        }
+
+                        handleCartClick={() => {
+                          user
+                            ? handleCartClick(course._id, user._id,setShowAlert,setCount)
+                            : router.push("/login");
+                        }}
+
                       />
                     );
                   })}
+              </div>
+              <div className="flex items-center justify-start w-[90%] max-w-[950px] mt-8 space-x-3">
+                <div className="font-mystery-mixed text-2xl">
+                  {renderCourseRangeIndicator()}
+                </div>
+                {currentPage > 1 && (
+                  <IconButton onClick={() => handleArrowClick("backward")}>
+                    <ArrowBack />
+                  </IconButton>
+                )}
+                {currentPage < totalPages && (
+                  <IconButton onClick={() => handleArrowClick("forward")}>
+                    <Arrow />
+                  </IconButton>
+                )}
               </div>
             </div>
           </div>

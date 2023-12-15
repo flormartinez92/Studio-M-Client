@@ -4,14 +4,19 @@ import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { Arrow, ArrowBack, BurgerMenu2, Check } from "@/common/Icons";
 import Button from "@/common/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { Message } from "@/common/Message";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "@/state/features/authSlice";
+import { isMobile } from "react-device-detect";
 
 export default function SelectCourse({ params }) {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const courseId = params["purchased-course-details"];
   const classId = params["select-course"];
   const [courseClass, setCourseClass] = useState({});
@@ -20,23 +25,67 @@ export default function SelectCourse({ params }) {
   const [nextClassId, setNextClassId] = useState("");
   const [previousClassId, setPreviousClassId] = useState("");
   const [showVideo, setShowVideo] = useState(false);
+  const [previousArrowColor, setPreviousArrowColor] = useState("black");
+  const [nextArrowColor, setNextArrowColor] = useState("black");
 
-  const userToken = sessionStorage.getItem("token");
-  const { _id, mail } = jwtDecode(userToken);
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+    };
+    checkUserAuth();
+  }, []);
+
+  const handleArrowMouseDown = (direction) => {
+    if (direction === "previous") {
+      setPreviousArrowColor("#E21B7B");
+      setNextArrowColor("black");
+    } else if (direction === "next") {
+      setNextArrowColor("#E21B7B");
+      setPreviousArrowColor("black");
+    }
+  };
+  const handleArrowMouseUp = () => {
+    setPreviousArrowColor("black");
+    setNextArrowColor("black");
+  };
+
+  const handleArrowTouchStart = (direction) => {
+    if (direction === "previous") {
+      setPreviousArrowColor("#E21B7B");
+      setNextArrowColor("black");
+    } else if (direction === "next") {
+      setNextArrowColor("#E21B7B");
+      setPreviousArrowColor("black");
+    }
+  };
+
+  const handleArrowTouchEnd = () => {
+    setPreviousArrowColor("black");
+    setNextArrowColor("black");
+  };
+  const arrowHandlers = isMobile
+    ? {
+        onTouchStart: () => handleArrowTouchStart("previous"),
+        onTouchEnd: handleArrowTouchEnd,
+      }
+    : {
+        onMouseDown: () => handleArrowMouseDown("previous"),
+        onMouseUp: handleArrowMouseUp,
+      };
 
   const handleClick = async () => {
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseAdvance`,
         {
-          mail: mail,
+          mail: user?.mail,
           courseId: courseId,
           classId: classId,
           status: !courseClass.status,
         }
       );
       if (response.status === 200) {
-        // Actualiza el estado local solo si la llamada a la API fue exitosa
         setCourseClass((prevCourseClass) => ({
           ...prevCourseClass,
           status: !prevCourseClass.status,
@@ -72,7 +121,7 @@ export default function SelectCourse({ params }) {
   useEffect(() => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseClass/${_id}/${courseId}/${classId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/courseClass/${user?._id}/${courseId}/${classId}`
       )
       .then((res) => {
         const courseClass = res.data;
@@ -81,7 +130,7 @@ export default function SelectCourse({ params }) {
       .catch((error) => {
         console.error("Error getting courses:", error);
       });
-  }, [_id, courseId, classId]);
+  }, [user?._id, courseId, classId]);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -112,14 +161,28 @@ export default function SelectCourse({ params }) {
         </div>
         <div className="flex flex-row gap-4">
           {previousClassId && (
-            <Link href={`/my-account/${courseId}/${previousClassId}`}>
-              <ArrowBack color={"black"} />
-            </Link>
+            <div
+              onMouseDown={() => handleArrowMouseDown("previous")}
+              onMouseUp={handleArrowMouseUp}
+              onTouchStart={() => handleArrowTouchStart("previous")}
+              onTouchEnd={handleArrowTouchEnd}
+            >
+              <Link href={`/my-account/${courseId}/${previousClassId}`}>
+                <ArrowBack color={previousArrowColor} />
+              </Link>
+            </div>
           )}
           {nextClassId && (
-            <Link href={`/my-account/${courseId}/${nextClassId}`}>
-              <Arrow color="#E21B7B" />
-            </Link>
+            <div
+              onMouseDown={() => handleArrowMouseDown("next")}
+              onMouseUp={handleArrowMouseUp}
+              onTouchStart={() => handleArrowTouchStart("next")}
+              onTouchEnd={handleArrowTouchEnd}
+            >
+              <Link href={`/my-account/${courseId}/${nextClassId}`}>
+                <Arrow color={nextArrowColor} />
+              </Link>
+            </div>
           )}
         </div>
       </div>

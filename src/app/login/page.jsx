@@ -5,13 +5,12 @@ import Input from "@/common/Input";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCredentials } from "../../state/features/authSlice";
 import useInput from "@/hooks/useInput";
 import Link from "next/link";
 
 export default function Login() {
-  const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");
@@ -61,7 +60,6 @@ export default function Login() {
           );
 
           const data = response.data;
-          sessionStorage.setItem("token", data.token);
           dispatch(
             setCredentials({
               dni: data.user.dni,
