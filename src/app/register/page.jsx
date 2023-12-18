@@ -230,7 +230,7 @@ export default function Register() {
               onFocus={FocusPassword}
               classNameLabel={"block text-[23px]"}
               name={"password"}
-              placeholder={"Ingresa tu contraseña"}
+              placeholder={"********"}
               classNameInput={`p-[4px] 
               outline-none 
               w-[100%]
