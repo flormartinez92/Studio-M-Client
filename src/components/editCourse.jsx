@@ -130,6 +130,7 @@ export default function EditCourse() {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+
     if (
       !valueTitleLong ||
       !valueTitleShort ||
@@ -147,11 +148,6 @@ export default function EditCourse() {
         setmessageAlert("");
       }, 2000);
     }
-
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("archivo", file);
-
     const data = {
       courseLongTitle: valueTitleLong,
       courseShortTitle: valueTitleShort,
@@ -167,11 +163,36 @@ export default function EditCourse() {
       modules: campos,
     };
 
+    //console.log(file.name);
+    const formData = new FormData();
+    if (!file) console.log("esta vacio");
+    if (!value) return;
+    if (file.name) {
+      formData.append("archivo", file);
+      //console.log(file);
+    }
+    /* const formData = new FormData();
+    formData.append("archivo", file); */
+
+    console.log(campos);
     try {
       const resp2 = await axios.put(
-        `http://localhost:8081/api/adminCourse/${courseData._id}`,
+        `http://localhost:8081/api/adminCourse/${editCourse._id}`,
         data
       );
+      if (file.name) {
+        const resp = await axios.put(
+          `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        console.log(resp);
+      }
       /* const resp = await axios.put(
         `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
         formData,
@@ -181,8 +202,6 @@ export default function EditCourse() {
           },
         }
       ); */
-
-      console.log(resp2);
     } catch (error) {
       console.log(error);
     }
@@ -226,6 +245,7 @@ export default function EditCourse() {
     const objs = { ...classes };
     classes[i][c][p].classInfo = e.target.value;
     setClasses(objs);
+    console.log(classes);
   };
   const handleInputChangeUrlVideo = (e, i, c, p) => {
     const objs = { ...classes };
@@ -281,6 +301,7 @@ export default function EditCourse() {
       setValueData10(courseData.projectAim);
 
       setValue("res.cloudinary.com");
+      console.log(courseData);
       seteditCourse(courseData);
       setCampos(courseData.modules);
 
@@ -594,7 +615,7 @@ export default function EditCourse() {
                     <Input
                       className={"flex-none"}
                       label={"Nombre de modulo"}
-                      value={campos.moduleName}
+                      value={e.moduleName}
                       onChange={(x) => handleInputChange(i, x)}
                       classNameLabel={"block text-[1.21rem]"}
                       placeholder={"Ingresa nombre del modulo"}
