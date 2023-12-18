@@ -138,7 +138,9 @@ export default function Login() {
             classNameLabel={"text-[30px]"}
             type={"password"}
             className={"w-full sm:max-w-[85%]"}
-            classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20`}
+            classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20 ${
+              isPasswordVisible ? "text-md" : "text-3xl"
+            }`}
             placeholder={"********"}
             value={valuePassword}
             onFocus={FocusPassword}

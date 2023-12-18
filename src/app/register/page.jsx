@@ -235,7 +235,7 @@ export default function Register() {
               outline-none 
               w-[100%]
               h-[40px] 
-              bg-black/20`}
+              bg-black/20 ${isPasswordVisible ? "text-md" : "text-3xl"}`}
               isPasswordVisible={isPasswordVisible}
               togglePasswordVisibility={() =>
                 setIsPasswordVisible(!isPasswordVisible)
