@@ -9,23 +9,13 @@ import Image from "next/image";
 
 export default function EditCourse() {
   const router = useRouter();
+
   const fileInputRef = useRef(null);
+
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const [file, setFile] = useState({});
-  const [raiz, setRaiz] = useState({
-    courseLongTitle: "",
-    courseShortTitle: "",
-    courseSubtitle: "",
-    courseDescription: "",
-    coursePrice: "",
-    courseLevel: "",
-    courseDuration: "",
-    courseImg_url: "",
-    projectsTitle: "",
-    projectsDescription: "",
-    projectAim: "",
-  });
+
   const [campos, setCampos] = useState([
     {
       moduleName: "",
@@ -33,9 +23,9 @@ export default function EditCourse() {
     },
   ]);
   const [classes, setClasses] = useState({});
-  const [items, setItems] = useState({});
+
   const [topics, setTopics] = useState({});
-  const [selectedOption, setSelectedOption] = useState("");
+
   const [value, setValue] = useState("");
   const [editCourse, seteditCourse] = useState([]);
   const {
@@ -147,6 +137,7 @@ export default function EditCourse() {
       setTimeout(() => {
         setmessageAlert("");
       }, 2000);
+      return;
     }
     const data = {
       courseLongTitle: valueTitleLong,
@@ -156,7 +147,6 @@ export default function EditCourse() {
       coursePrice: valuePrice,
       courseLevel: valueCourseLevel,
       courseDuration: valueCourseDuration,
-      courseImg_url: valueImage,
       projectsTitle: valueProjectsTitle,
       projectsDescription: valueProjectsDescription,
       projectAim: valueProjectAim,
@@ -171,6 +161,18 @@ export default function EditCourse() {
       formData.append("archivo", file);
       //console.log(file);
     }
+    const arrData = campos.map((idem, i) => {
+      idem.topics.forEach((r, t) => {
+        console.log(!!classes[i]);
+        //Condicion si la iteracion de classes es undefined
+        if (!!classes[i]) {
+          classes[i][t].forEach((b, n) => {
+            idem.topics[t].classes[n] = b;
+          });
+        }
+      });
+      return idem;
+    });
     /* const formData = new FormData();
     formData.append("archivo", file); */
 
@@ -193,6 +195,14 @@ export default function EditCourse() {
 
         console.log(resp);
       }
+
+      setmessageAlertOk("Cambios realizados!");
+      setTimeout(() => {
+        setmessageAlertOk(null);
+
+        router.push("/active-courses");
+        localStorage.removeItem("courseEdit");
+      }, 1500);
       /* const resp = await axios.put(
         `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
         formData,
@@ -284,10 +294,11 @@ export default function EditCourse() {
 
   useEffect(() => {
     //console.log(edit);
+
     const courseInfo = localStorage.getItem("courseEdit");
     if (courseInfo) {
       const courseData = JSON.parse(courseInfo);
-      console.log(courseData.courseImg_url.substring(0, 212));
+      //console.log(courseData.courseImg_url.substring(0, 212));
 
       setValueData1(courseData.courseLongTitle);
       setValueData2(courseData.courseShortTitle);
@@ -301,7 +312,7 @@ export default function EditCourse() {
       setValueData10(courseData.projectAim);
 
       setValue("res.cloudinary.com");
-      console.log(courseData);
+      //console.log(courseData);
       seteditCourse(courseData);
       setCampos(courseData.modules);
 
