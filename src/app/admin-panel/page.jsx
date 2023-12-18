@@ -4,10 +4,27 @@ import Link from "next/link";
 import AdminButton from "../../common/AdminButton";
 import { DashIcons, MenuBook, Percent, User } from "@/common/Icons";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "@/state/features/authSlice";
+import { fetchUser } from "@/helpers/apiHelpers";
 import axios from "axios";
+import Alert_common from "@/common/Alert_common";
+import { useRouter } from "next/navigation";
 
 export default function AdminPanel() {
   const [projects, setProjects] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     axios
@@ -23,6 +40,22 @@ export default function AdminPanel() {
 
   const totalProyectos = projects.reduce((total, project) => total + 1, 0);
 
+  const handleConfirmAlert = () => {
+    router.push("/");
+    setShowAlert(false);
+  };
+
+  if (!user || !user.isAdmin) {
+    return (
+      <div>
+        <Alert_common
+          handleAlert={handleConfirmAlert}
+          classNameAlert={"md:text-xl sm:text-lg pl-1 pr-2"}
+          titleAlert="No tienes permiso para acceder a esta página"
+        />
+      </div>
+    );
+  }
   return (
     <div
       className="flex flex-col gap-12 items-center justify-center my-16
