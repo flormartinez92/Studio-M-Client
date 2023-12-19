@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import useInput from "@/hooks/useInput";
 import Image from "next/image";
 
-export default function Register() {
+export default function AddCourse() {
   const router = useRouter();
   const fileInputRef = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
@@ -37,7 +37,6 @@ export default function Register() {
   const [topics, setTopics] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [value, setValue] = useState("");
-
   const {
     OnChange: OnChangeTitleLong,
     value: valueTitleLong,
@@ -287,14 +286,11 @@ export default function Register() {
       fileInputRef.current.click();
     }
   };
-
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
+    <>
       <h2 className="font-mystery-mixed w-full h-auto text-[2.3rem] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3 text-center">
         Agregar Curso
       </h2>
-
-      {/* {JSON.stringify(raiz)} */}
       <form
         onSubmit={onSubmitForm}
         className="
@@ -780,6 +776,6 @@ export default function Register() {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   );
 }
