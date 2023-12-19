@@ -175,9 +175,9 @@ export default function ActiveCoupons() {
           </div>
         </section>
       ) : (
-        <p className="bg-white text-black">
+        <h1 className="bg-black text-white text-2xl flex items-center justify-center h-screen">
           404 | This page could not be found
-        </p>
+        </h1>
       )}
     </>
   );
