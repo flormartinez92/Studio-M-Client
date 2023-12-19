@@ -3,6 +3,10 @@
 import React from "react";
 import Button from "@/common/Button";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 import {
   Trash,
@@ -17,6 +21,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export default function ActiveCoupons() {
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [coupons, setCoupons] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,6 +31,14 @@ export default function ActiveCoupons() {
   const totalPages = Math.ceil(coupons.length / couponsPerPage);
   const startIndex = (currentPage - 1) * couponsPerPage;
   const endIndex = startIndex + couponsPerPage;
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     axios
@@ -65,6 +80,11 @@ export default function ActiveCoupons() {
       console.error(error);
     }
   };
+
+  if (!user || !user.isAdmin) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <section className="my-20 mb-60">

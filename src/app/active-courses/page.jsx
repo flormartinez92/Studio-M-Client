@@ -2,6 +2,10 @@
 
 import React from "react";
 import Button from "@/common/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 import {
   Trash,
@@ -18,6 +22,9 @@ import Link from "next/link";
 import { stringify } from "postcss";
 
 export default function ActiveCourses() {
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [courses, setCourses] = useState([]);
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +35,14 @@ export default function ActiveCourses() {
   const endIndex = startIndex + coursesPerPage;
 
   const [mostrarBoton, setMostrarBoton] = useState(false);
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     // Simulando un tiempo de espera con setTimeout
@@ -105,6 +120,11 @@ export default function ActiveCourses() {
     console.log("EDITANDO", course);
     localStorage.setItem("courseEdit", JSON.stringify(course));
   };
+
+  if (!user || !user.isAdmin) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <section className="my-20 mb-60">

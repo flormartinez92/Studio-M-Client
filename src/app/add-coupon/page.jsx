@@ -1,12 +1,17 @@
 "use client";
 import Button from "@/common/Button";
 import Input from "@/common/Input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useInput from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 export default function AddCoupon() {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const router = useRouter();
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
@@ -63,6 +68,19 @@ export default function AddCoupon() {
       }
     }
   };
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
+
+  if (!user || !user.isAdmin) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">

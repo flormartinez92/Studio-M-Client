@@ -14,13 +14,28 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ModalCommentProject from "@/components/ModalCommentProject";
 import Alert_common from "@/common/Alert_common";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 export default function ActiveProjects() {
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [isAlertVisible, setAlertVisible] = useState(false);
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
 
   const handleProjectClick = (projectId) => {
     setSelectedProjectId(projectId);
@@ -105,6 +120,11 @@ export default function ActiveProjects() {
   const handleCancelAlert = () => {
     setAlertVisible(false);
   };
+
+  if (!user || !user.isAdmin) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <>

@@ -6,8 +6,15 @@ import { UilArrow1, UilArrow2 } from "@/common/Icons";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 export default function ActiveUsers() {
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +23,14 @@ export default function ActiveUsers() {
   const totalPages = Math.ceil(users.length / usersPerPage);
   const startIndex = (currentPage - 1) * usersPerPage;
   const endIndex = startIndex + usersPerPage;
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userData = await fetchUser();
+      dispatch(setCredentials(userData));
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     axios
@@ -72,6 +87,11 @@ export default function ActiveUsers() {
     // Actualiza el estado local de los usuarios
     setUsers(updatedUsers);
   };
+
+  if (!user || !user.isAdmin) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <section className="my-20 mb-60">
