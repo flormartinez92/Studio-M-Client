@@ -8,18 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { fetchUser } from "@/helpers/apiHelpers";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 export default function AdminPanel() {
   const [projects, setProjects] = useState([]);
-  const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const userData = await fetchUser();
-      dispatch(setCredentials(userData));
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
     };
     checkUserAuthentication();
   }, []);
@@ -38,46 +36,49 @@ export default function AdminPanel() {
 
   const totalProyectos = projects.reduce((total, project) => total + 1, 0);
 
-  if (!user || !user.isAdmin) {
-    router.push("/");
-    return null;
-  }
-
   return (
-    <div
-      className="flex flex-col gap-12 items-center justify-center my-16
-    md:flex-row md:py-[8%] md:gap-5 
-    lg:flex-row lg:gap-6
-    xl:flex-row xl:gap-16 xl:pb-[17%]"
-    >
-      <Link href="/active-projects">
-        <AdminButton
-          icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
-          text={`${totalProyectos} proyectos para corregir`}
-          className={"bg-pink"}
-        />
-      </Link>
-      <Link href="/active-users">
-        <AdminButton
-          icon={<User width={"5.62rem"} height={"5.62rem"} />}
-          text={"Usuarios activos"}
-          className={"bg-turquoise"}
-        />
-      </Link>
-      <Link href="/active-courses">
-        <AdminButton
-          icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
-          text={"Cursos activos"}
-          className={"bg-darkGreen"}
-        />
-      </Link>
-      <Link href="/active-coupons">
-        <AdminButton
-          icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
-          text={"Cupones de descuento activos"}
-          className={"bg-purple"}
-        />
-      </Link>
-    </div>
+    <>
+      {user?.isAdmin ? (
+        <div
+          className="flex flex-col gap-12 items-center justify-center my-16
+          md:flex-row md:py-[8%] md:gap-5 
+          lg:flex-row lg:gap-6
+          xl:flex-row xl:gap-16 xl:pb-[17%]"
+        >
+          <Link href="/active-projects">
+            <AdminButton
+              icon={<MenuBook width={"5.62rem"} height={"5.62rem"} />}
+              text={`${totalProyectos} proyectos para corregir`}
+              className={"bg-pink"}
+            />
+          </Link>
+          <Link href="/active-users">
+            <AdminButton
+              icon={<User width={"5.62rem"} height={"5.62rem"} />}
+              text={"Usuarios activos"}
+              className={"bg-turquoise"}
+            />
+          </Link>
+          <Link href="/active-courses">
+            <AdminButton
+              icon={<DashIcons width={"5.62rem"} height={"5.62rem"} />}
+              text={"Cursos activos"}
+              className={"bg-darkGreen"}
+            />
+          </Link>
+          <Link href="/active-coupons">
+            <AdminButton
+              icon={<Percent width={"5.62rem"} height={"5.62rem"} />}
+              text={"Cupones de descuento activos"}
+              className={"bg-purple"}
+            />
+          </Link>
+        </div>
+      ) : (
+        <p className="bg-white text-black">
+          404 | This page could not be found
+        </p>
+      )}
+    </>
   );
 }
