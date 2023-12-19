@@ -29,8 +29,8 @@ export default function ActiveProjects() {
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const userData = await fetchUser();
-      dispatch(setCredentials(userData));
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
     };
     checkUserAuthentication();
   }, []);
@@ -121,7 +121,7 @@ export default function ActiveProjects() {
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <>
           {modal && (
             <ModalCommentProject

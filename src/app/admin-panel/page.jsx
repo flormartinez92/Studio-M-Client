@@ -38,7 +38,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <div
           className="flex flex-col gap-12 items-center justify-center my-16
           md:flex-row md:py-[8%] md:gap-5 

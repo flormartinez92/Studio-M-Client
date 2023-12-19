@@ -32,8 +32,9 @@ export default function ActiveCoupons() {
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const userData = await fetchUser();
-      dispatch(setCredentials(userData));
+      const user = await fetchUser();
+      console.log(user);
+      dispatch(setCredentials(user));
     };
     checkUserAuthentication();
   }, []);
@@ -81,7 +82,7 @@ export default function ActiveCoupons() {
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <section className="my-20 mb-60">
           <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
             Cupones activos
@@ -175,7 +176,7 @@ export default function ActiveCoupons() {
           </div>
         </section>
       ) : (
-        <h1 className="bg-black text-white text-2xl flex items-center justify-center h-screen">
+        <h1 className="bg-black text-white text-2xl flex items-center justify-center min-h-screen">
           404 | This page could not be found
         </h1>
       )}

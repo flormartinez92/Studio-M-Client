@@ -121,7 +121,7 @@ export default function ActiveCourses() {
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <section className="my-20 mb-60">
           <h2 className="text-4xl md:text-5xl xl:text-6xl font-mystery-mixed mt-10 mb-10 md:mb-15 xl:mb-20 text-center flex justify-center">
             Cursos activos

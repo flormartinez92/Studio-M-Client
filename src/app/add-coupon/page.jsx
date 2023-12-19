@@ -71,15 +71,15 @@ export default function AddCoupon() {
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const userData = await fetchUser();
-      dispatch(setCredentials(userData));
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
     };
     checkUserAuthentication();
   }, []);
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
           <h2 className="font-mystery-mixed text-[49px] mb-[10px] sm:text-[71px] sm:mb-[20px] leading-3">
             Agregar Cupón

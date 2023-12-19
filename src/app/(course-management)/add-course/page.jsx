@@ -12,15 +12,15 @@ export default function AddCourseAdmin() {
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const userData = await fetchUser();
-      dispatch(setCredentials(userData));
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
     };
     checkUserAuthentication();
   }, []);
 
   return (
     <>
-      {user?.isAdmin ? (
+      {user && user.isAdmin ? (
         <div className="flex flex-col justify-center items-center w-full h-full py-[105px] ">
           <AddCourse />
         </div>
