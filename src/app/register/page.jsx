@@ -133,8 +133,7 @@ export default function Register() {
               classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
-              h-[40px] 
-              rounded-[3px]   
+              h-[40px]    
               bg-black/20`}
             />
             <div className="h-[.5rem]">
@@ -158,8 +157,7 @@ export default function Register() {
               classNameInput={`p-[5px] 
               outline-none 
               w-[100%]
-              h-[40px] 
-              rounded-[3px]   
+              h-[40px]   
               bg-black/20`}
             />
             <div className="h-[.5rem]">
@@ -187,7 +185,6 @@ export default function Register() {
               outline-none 
               w-[100%]
               h-[40px] 
-              rounded-[3px]   
               bg-black/20`}
             />
             <div className="h-[.5rem]">
@@ -209,12 +206,11 @@ export default function Register() {
               onFocus={FocusMail}
               classNameLabel={"block text-[23px]"}
               name={"mail"}
-              placeholder={"Ingresa tu mail"}
+              placeholder={"Ingrese su mail"}
               classNameInput={`p-[4px] 
               outline-none 
               w-[100%]
-              h-[40px] 
-              rounded-[3px]   
+              h-[40px]  
               bg-black/20`}
             />
             <div className="h-[.5rem]">
@@ -239,7 +235,6 @@ export default function Register() {
               outline-none 
               w-[100%]
               h-[40px] 
-              rounded-[3px]   
               bg-black/20`}
               isPasswordVisible={isPasswordVisible}
               togglePasswordVisibility={() =>
