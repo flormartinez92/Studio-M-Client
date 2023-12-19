@@ -116,7 +116,7 @@ export default function Login() {
             type={"text"}
             className={"w-full sm:max-w-[85%]"}
             classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20`}
-            placeholder={"ingresa tu mail"}
+            placeholder={"Ingrese su mail"}
             onFocus={FocusMail}
             value={valueMail}
             onChange={OnChangeMail}
@@ -139,7 +139,7 @@ export default function Login() {
             type={"password"}
             className={"w-full sm:max-w-[85%]"}
             classNameInput={`p-[20px] outline-none w-[100%] h-[40px] bg-black/20`}
-            placeholder={"ingresa tu contraseña"}
+            placeholder={"Ingrese su contraseña"}
             value={valuePassword}
             onFocus={FocusPassword}
             onChange={OnChangePassword}
