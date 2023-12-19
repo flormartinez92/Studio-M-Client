@@ -206,7 +206,7 @@ export default function Register() {
               onFocus={FocusMail}
               classNameLabel={"block text-[23px]"}
               name={"mail"}
-              placeholder={"Ingresa tu mail"}
+              placeholder={"Ingrese su mail"}
               classNameInput={`p-[4px] 
               outline-none 
               w-[100%]
@@ -230,12 +230,12 @@ export default function Register() {
               onFocus={FocusPassword}
               classNameLabel={"block text-[23px]"}
               name={"password"}
-              placeholder={"********"}
+              placeholder={"Ingresa tu contraseña"}
               classNameInput={`p-[4px] 
               outline-none 
               w-[100%]
               h-[40px] 
-              bg-black/20 ${isPasswordVisible ? "text-md" : "text-3xl"}`}
+              bg-black/20`}
               isPasswordVisible={isPasswordVisible}
               togglePasswordVisibility={() =>
                 setIsPasswordVisible(!isPasswordVisible)
