@@ -49,12 +49,14 @@ export default function Cards({
       return;
     }
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
-        courseId,
-        userId: user?._id,
-      });
-      // Modificar este dispatch
-      dispatch(addToCart(courseId));
+      const cartItems = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`,
+        {
+          courseId,
+          userId: user?._id,
+        }
+      );
+      dispatch(addToCart(cartItems.data.courseId.length));
     } catch (error) {
       console.error(error);
     }

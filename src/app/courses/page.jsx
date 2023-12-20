@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/state/features/cartSlice";
 import Cards from "../../components/Cards";
 import { Arrow, ArrowBack, CartShopSimple, Vector } from "@/common/Icons";
 import axios from "axios";
@@ -15,9 +17,7 @@ import {
   handleCartClick,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
-
 import Alert_common from "@/common/Alert_common";
-
 import IconButton from "@/common/IconButton";
 
 export default function Courses() {
@@ -30,11 +30,10 @@ export default function Courses() {
   const coursesPerPage = 5;
   const router = useRouter();
   const isLgBreakpoint = useMediaQuery("(min-width: 1024px)");
-
+  const dispatch = useDispatch();
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
-
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
@@ -116,6 +115,7 @@ export default function Courses() {
       setLoading(false);
     }
   };
+
   const handleAlert = () => {
     setout(true);
     setTimeout(() => {
@@ -123,7 +123,6 @@ export default function Courses() {
       setout(false);
     }, 700);
   };
-  const [count, setCount] = useState(null);
 
   const renderCourseRangeIndicator = () => {
     const totalPages = Math.ceil(courses.length / coursesPerPage);
@@ -137,6 +136,17 @@ export default function Courses() {
       setCurrentPage(currentPage + 1);
     } else if (direction === "backward" && currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleItemsCart = async () => {
+    try {
+      const responseCart = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user._id}`
+      );
+      dispatch(addToCart(responseCart.data.length));
+    } catch (error) {
+      console.error("Error fetching itemsCount cart:", error);
     }
   };
 
@@ -225,15 +235,18 @@ export default function Courses() {
                         handleViewCourseClick={() =>
                           handleViewCourseClick(course._id)
                         }
-                        handleCartClick={() => {
-                          user
-                            ? handleCartClick(
-                                course._id,
-                                user._id,
-                                setShowAlert,
-                                setDeletingId
-                              )
-                            : router.push("/login");
+                        handleCartClick={async () => {
+                          if (user) {
+                            await handleCartClick(
+                              course._id,
+                              user._id,
+                              setShowAlert,
+                              setDeletingId
+                            );
+                            await handleItemsCart();
+                          } else {
+                            router.push("/login");
+                          }
                         }}
                         IsAddCourse={deletingId === course._id}
                       />

@@ -6,7 +6,7 @@ import {
   Signal,
 } from "@/common/Icons";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
 
 export default function CardsDesktop({
@@ -35,11 +35,9 @@ export default function CardsDesktop({
   const isCart820Screen = useMediaQuery(
     "only screen and (min-width : 768px) and (max-width : 1023px)"
   );
-
   const is820Screen = useMediaQuery(
     "only screen and (min-width : 820px) and (max-width : 900px)"
   );
-
   const is768Screen = useMediaQuery(
     "only screen and (min-width : 768px) and (max-width : 820px)"
   );
