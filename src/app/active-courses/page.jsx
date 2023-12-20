@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
 import { stringify } from "postcss";
+import NotFound from "@/common/NotFound";
 
 export default function ActiveCourses() {
   const { user } = useSelector((state) => state.auth);
@@ -234,9 +235,7 @@ export default function ActiveCourses() {
           </div>
         </section>
       ) : (
-        <h1 className="bg-black text-white text-2xl flex items-center justify-center h-screen">
-          404 | This page could not be found
-        </h1>
+        <NotFound />
       )}
     </>
   );

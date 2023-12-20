@@ -17,6 +17,7 @@ import Alert_common from "@/common/Alert_common";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
+import NotFound from "@/common/NotFound";
 
 export default function ActiveProjects() {
   const { user } = useSelector((state) => state.auth);
@@ -234,9 +235,7 @@ export default function ActiveProjects() {
           </section>
         </>
       ) : (
-        <h1 className="bg-black text-white text-2xl flex items-center justify-center h-screen">
-          404 | This page could not be found
-        </h1>
+        <NotFound />
       )}
     </>
   );
