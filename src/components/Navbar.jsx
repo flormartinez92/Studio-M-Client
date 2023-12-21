@@ -8,13 +8,14 @@ import IconButton from "@/common/IconButton";
 import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
+import { addToCart } from "@/state/features/cartSlice";
 import { fetchUser } from "@/helpers/apiHelpers";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [numCart, setNumCart] = useState();
   const [title, setTitle] = useState("");
   const { user } = useSelector((state) => state.auth);
+  const { itemCount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +38,8 @@ export default function Navbar() {
       const responseCart = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${responseUser.data._id}`
       );
-      setNumCart(responseCart.data.length);
+      const cartLength = responseCart.data.length;
+      dispatch(addToCart(cartLength));
     } catch (error) {
       console.error(error);
     }
@@ -115,8 +117,17 @@ export default function Navbar() {
                   className="text-[50px] text-white font-mystery-mixed"
                   onClick={handleClick}
                 >
-                  <IconButton>
-                    <CartShopSimple width="43" height="40" />
+                  <IconButton className={"relative"}>
+                    {itemCount >= 1 ? (
+                      <>
+                        <p className="absolute bottom-5 left-11 text-2xl">
+                          {itemCount}
+                        </p>
+                        <CartShopSimple width="43" height="40" />
+                      </>
+                    ) : (
+                      <CartShopSimple width="43" height="40" />
+                    )}
                   </IconButton>
                 </Link>
               </li>
@@ -206,8 +217,17 @@ export default function Navbar() {
                 </li>
                 <li className="mx-4">
                   <Link href="/trolley">
-                    <IconButton className="hover:underline hover:decoration-pink">
-                      <CartShopSimple width="43" height="40" />
+                    <IconButton className="hover:underline hover:decoration-pink relative">
+                      {itemCount >= 1 ? (
+                        <>
+                          <p className="absolute bottom-6 left-11 text-3xl">
+                            {itemCount}
+                          </p>
+                          <CartShopSimple width="43" height="40" />
+                        </>
+                      ) : (
+                        <CartShopSimple width="43" height="40" />
+                      )}
                     </IconButton>
                   </Link>
                 </li>

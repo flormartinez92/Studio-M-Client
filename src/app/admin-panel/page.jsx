@@ -17,8 +17,11 @@ export default function AdminPanel() {
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
-      const user = await fetchUser();
-      dispatch(setCredentials(user));
+      const userData = await fetchUser();
+      if (!userData) {
+        return;
+      }
+      dispatch(setCredentials(userData));
     };
     checkUserAuthentication();
   }, []);
