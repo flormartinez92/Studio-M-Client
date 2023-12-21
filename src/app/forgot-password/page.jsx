@@ -49,10 +49,18 @@ export default function Forgot() {
             });
         } catch (error) {
           console.error(error);
-          setMessageAlert("Error al intentar recuperar la contraseña");
-          setTimeout(() => {
-            setMessageAlert("");
-          }, 1300);
+          if (error.response.data === "user not found") {
+            setMessageAlert("Mail no registrado!");
+            setTimeout(() => {
+              setMessageAlert("");
+              router.push("/register");
+            }, 1300);
+          } else {
+            setMessageAlert("Error al intentar recuperar la contraseña");
+            setTimeout(() => {
+              setMessageAlert("");
+            }, 1300);
+          }
         }
       }
     }
