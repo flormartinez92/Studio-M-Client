@@ -33,7 +33,7 @@ const MyCourses = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none lg:ml-[8%] xl:ml-[12%]">
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none md:mx-[1%] lg:mx-[8%] xl:mx-[11%]">
       <div
         className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
         ref={ContainerScroll_1}
@@ -44,7 +44,7 @@ const MyCourses = ({ decodedToken }) => {
       >
         <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-9 xl:space-x-11">
           {userCourses?.map((userCourse) => (
-            <div key={userCourse.courseInfo._id} className="mr-4">
+            <div key={userCourse.courseInfo._id}>
               <Link href={`/my-account/${userCourse.courseInfo._id}`}>
                 <Cards
                   title={userCourse.courseInfo.courseShortTitle}
