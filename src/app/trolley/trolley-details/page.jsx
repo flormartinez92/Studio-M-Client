@@ -14,8 +14,10 @@ import { useRouter } from "next/navigation";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 export default function trolleyDetails() {
+  initMercadoPago("TEST-c518be13-29ef-4509-bb7a-48a54fbb609f");
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +31,7 @@ export default function trolleyDetails() {
   const { user } = useSelector((state) => state.auth);
   const modalRef = useRef();
   const router = useRouter();
+  const [dataMp, setDataMp] = useState({ preferenceId: "", orderData: {} });
 
   // const [user, setUser] = useState({});
 
@@ -149,6 +152,18 @@ export default function trolleyDetails() {
     getUser();
   }, []);
 
+  useEffect(() => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`)
+      .then((res) => {
+        const preferenceId = res.data.result.id;
+        const orderData = res.data.result.items[0];
+        setDataMp(preferenceId, orderData);
+      });
+  }, []);
+
+  console.log(dataMp);
+
   return (
     <div className="flex flex-col justify-center items-center relative">
       {cartCourses.length === 0 ? (
@@ -241,6 +256,14 @@ export default function trolleyDetails() {
             >
               Confirmar
             </Button>
+            <div id="wallet_container">
+              <Wallet
+                onClick={() => mp}
+                initialization={{
+                  preferenceId: dataMp,
+                }}
+              />
+            </div>
           </div>
 
           {/*  {cartCourses?.map((course) => (
