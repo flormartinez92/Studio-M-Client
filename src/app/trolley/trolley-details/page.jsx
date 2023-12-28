@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 export default function trolleyDetails() {
-  initMercadoPago("TEST-c518be13-29ef-4509-bb7a-48a54fbb609f");
+  initMercadoPago(process.env.NEXT_PUBLIC_KEY);
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -153,16 +153,52 @@ export default function trolleyDetails() {
   }, []);
 
   useEffect(() => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`)
-      .then((res) => {
-        const preferenceId = res.data.result.id;
-        const orderData = res.data.result.items[0];
-        setDataMp(preferenceId, orderData);
-      });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const responseCourses = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
+        );
+        setCartCourses(responseCourses.data);
 
-  console.log(dataMp);
+        // Ahora que hemos obtenido los cursos, podemos crear la orden de pago
+        const orderData = responseCourses.data[0];
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`,
+          {
+            title: orderData.courseLongTitle,
+            price: orderData.coursePrice,
+          }
+        );
+
+        const preferenceId = res.data.result.id;
+        const orderDataForState = res.data.result.items[0];
+        setDataMp({ preferenceId, orderData: orderDataForState });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // Llamada a la función que realiza ambas operaciones
+  }, []); // Asegúrate de que este efecto se ejecute solo una vez al montar el componente
+
+  // useEffect(() => {
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`, {
+  //       title: cartCourses[0]?.courseLongTitle,
+  //       price: cartCourses[0]?.coursePrice,
+  //     })
+
+  //     .then((res) => {
+  //       const preferenceId = res.data.result.id;
+  //       const orderData = res.data.result.items[0];
+  //       setDataMp(preferenceId, orderData);
+  //     });
+  // }, []);
+
+  console.log("TITULOOO", cartCourses[0]?.courseLongTitle);
+  console.log("PRICEE", cartCourses[0]?.coursePrice);
+
+  // console.log(dataMp);
 
   return (
     <div className="flex flex-col justify-center items-center relative">
