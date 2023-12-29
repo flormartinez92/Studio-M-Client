@@ -18,7 +18,6 @@ import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
 
 import { useDispatch, useSelector } from "react-redux";
 
-
 export default function trolleyDetails() {
   const [{ isPending }] = usePayPalScriptReducer();
   const [cartCourses, setCartCourses] = useState([]);
@@ -134,7 +133,7 @@ export default function trolleyDetails() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
       );
       const responseOrder = await axios.get(
-        `http://localhost:8081/api/purchaseOrder/${responseUser.data._id}`
+        `http://localhost:8081/api/purchaseOrder/${user._id}`
       );
 
       setOrder(responseOrder);
