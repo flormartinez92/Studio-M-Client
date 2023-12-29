@@ -105,6 +105,32 @@ export default function Trolley() {
       console.error(err);
     }
   };
+  const handleClickCreateOrder = async (user) => {
+    try {
+      console.log(user._id);
+
+      const responseOrder = await axios.get(
+        `http://localhost:8081/api/purchaseOrder/${user._id}`
+      );
+      console.log(responseOrder);
+
+      if (responseOrder.data) return router.push("/trolley/trolley-details");
+
+      const { data } = await axios.get(
+        `http://localhost:8081/api/cart/courses/total/${user._id}`
+      );
+
+      const createOrder = await axios.post(
+        "http://localhost:8081/api/purchaseOrder/add",
+        { userId: data.userId, totalAmmount: data.totalAmount }
+      );
+      router.push("/trolley/trolley-details");
+      //console.log(createOrder);
+    } catch (error) {
+      console.log(error);
+    }
+    //router.push("/trolley/trolley-details");
+  };
 
   return (
     <div
@@ -179,7 +205,7 @@ export default function Trolley() {
                     </div>
                   </Button>
                   <Button
-                    onClick={() => router.push("/trolley/trolley-details")}
+                    onClick={() => handleClickCreateOrder(user)}
                     className="bg-buttonBlack w-[270px] md:w-[130px] h-10 p-6 md:h-8 md:p-0  rounded-[10px] flex justify-center items-center gap-x-1"
                   >
                     <h2 className="text-[1.5rem] md:text-[1rem]">Comprar</h2>

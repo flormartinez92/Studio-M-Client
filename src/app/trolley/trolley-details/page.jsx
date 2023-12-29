@@ -10,10 +10,12 @@ import CardsDesktop from "@/components/CardsDesktop";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useEffect, useRef, useState } from "react";
+import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
 
 export default function trolleyDetails() {
+  const [{ isPending }] = usePayPalScriptReducer();
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,7 @@ export default function trolleyDetails() {
   const [messageAlertOk, setMessageAlertOk] = useState(null);
   const [priceDiscount, setPriceDiscount] = useState(null);
   const [out, setOut] = useState(null);
+  const [order, setOrder] = useState({});
 
   const modalRef = useRef();
   const [user, setUser] = useState({});
@@ -34,28 +37,13 @@ export default function trolleyDetails() {
       const responseCart = await axios.post(
         `http://localhost:8081/api/cart/confirmBuy/${user._id}`
       );
-      console.log(cartCourses);
+      //console.log(cartCourses);
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
       //console.log(responseCart);
       router.push("/trolley/purchase-completed");
     } catch (err) {
       console.error(err);
     }
-
-    //http://localhost:8081/api/cart/confirmBuy/65538c7afc108110ec0e0273
-    /* if (cartAmount.totalDiscount == 0) {
-      console.log(
-        "No hay descuento aplicado, el precio real es",
-        cartAmount.totalAmount
-      );
-    } else {
-      const totalDiscount =
-        cartAmount.totalAmount -
-        (cartAmount.totalAmount * cartAmount.discount) / 100;
-      if (totalDiscount !== cartAmount.totalDiscount) return;
-      console.log("Hay descuento, el precio real es", totalDiscount);
-    }
-    console.log(cartAmount); */
   };
   const handleAddCoupon = async () => {
     if (!coupon) return;
@@ -140,7 +128,11 @@ export default function trolleyDetails() {
       const responseTotalAmount = await axios.get(
         `http://localhost:8081/api/cart/courses/total/${responseUser.data._id}`
       );
+      const responseOrder = await axios.get(
+        `http://localhost:8081/api/purchaseOrder/${responseUser.data._id}`
+      );
 
+      setOrder(responseOrder);
       setCartAmount(responseTotalAmount.data);
 
       setCartCourses(responseCourses.data);
@@ -240,13 +232,24 @@ export default function trolleyDetails() {
                 </h2>
               </div>
             </div>
-            <Button
+            {/* <Button
               onClick={handleCheck}
               type="rounder"
-              className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[210px]"
+              className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1 "
             >
               Confirmar
-            </Button>
+            </Button> */}
+
+            <div
+              className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
+            >
+              <PayPalButton
+                orderId={order._id}
+                amount={20}
+                userId={user._id}
+                cartCourses={cartCourses}
+              />
+            </div>
           </div>
 
           {/*  {cartCourses?.map((course) => (

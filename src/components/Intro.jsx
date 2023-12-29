@@ -17,6 +17,7 @@ export default function Intro() {
   const [numCart, setNumCart] = useState();
   const [user, setUser] = useState();
   const [out, setout] = useState(false);
+  console.log(process.env.PAYPAL_SECRET);
   const fetchData = async () => {
     try {
       const response = await axios.get(
