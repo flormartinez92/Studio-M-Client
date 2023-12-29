@@ -260,7 +260,6 @@ export default function trolleyDetails() {
             </Button>
             <div id="wallet_container">
               <Wallet
-                onClick={() => mp}
                 initialization={{
                   preferenceId: dataMp,
                 }}
