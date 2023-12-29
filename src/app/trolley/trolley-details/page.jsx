@@ -1,18 +1,23 @@
 "use client";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
-import IconButton from "@/common/IconButton";
-import { CartShopSimple, Close, Signal } from "@/common/Icons";
+// import IconButton from "@/common/IconButton";
+// import { CartShopSimple, Close, Signal } from "@/common/Icons";
 import Input from "@/common/Input";
 import Loading_common from "@/common/Loading_common";
 import Cards from "@/components/Cards";
 import CardsDesktop from "@/components/CardsDesktop";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useEffect, useRef, useState } from "react";
+
 import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
+
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function trolleyDetails() {
   const [{ isPending }] = usePayPalScriptReducer();
@@ -25,19 +30,26 @@ export default function trolleyDetails() {
   const [messageAlertOk, setMessageAlertOk] = useState(null);
   const [priceDiscount, setPriceDiscount] = useState(null);
   const [out, setOut] = useState(null);
+
   const [order, setOrder] = useState({});
 
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const modalRef = useRef();
-  const [user, setUser] = useState({});
   const router = useRouter();
+
+  // const [user, setUser] = useState({});
 
   const handleCheck = async () => {
     console.log(user);
     try {
       const responseCart = await axios.post(
-        `http://localhost:8081/api/cart/confirmBuy/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
       );
+
       //console.log(cartCourses);
+
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
       //console.log(responseCart);
       router.push("/trolley/purchase-completed");
@@ -49,11 +61,11 @@ export default function trolleyDetails() {
     if (!coupon) return;
     try {
       const responseCoupon = await axios.put(
-        "http://localhost:8081/api/cart/addDiscount",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
         { couponCode: coupon, mail: user.mail }
       );
       const responseTotalAmount = await axios.get(
-        `http://localhost:8081/api/cart/courses/total/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user._id}`
       );
       setMessageAlertOk("Descuento Aplicado!");
       setTimeout(() => {
@@ -63,8 +75,6 @@ export default function trolleyDetails() {
       setCartAmount(responseTotalAmount.data);
       setPriceDiscount(responseCoupon.data.totalAmount);
       setTrolley(responseCoupon.data.totalDiscount);
-
-      console.log(responseCoupon);
     } catch (err) {
       if (err.response.data === "Coupon not found") {
         setMessageAlertError("Coupon not found");
@@ -74,8 +84,6 @@ export default function trolleyDetails() {
       }
       console.error(err);
     }
-    /* console.log(user.mail);
-    console.log(coupon); */
   };
   const onChangeCoupon = (e) => {
     e.preventDefault();
@@ -98,35 +106,32 @@ export default function trolleyDetails() {
       document.body.style.overflow = "auto"; // Habilita el scroll del body
       document.body.querySelector("nav").style.opacity = "1";
       setCoupon("");
-
       document.body.querySelector("#Footer").style.opacity = "1";
       document.body.querySelector("#details") &&
         (document.body.querySelector("#details").style.opacity = "1");
     }
   }, [isOpen]);
+
   const handleCoupon = (status) => {
     if (!status) {
       setIsOpen(true);
     }
-    //console.log("agregando cupon");
   };
 
   const getUser = async () => {
     try {
-      const responseUser = await axios.get(
-        "http://localhost:8081/api/user/me",
-        {
-          withCredentials: true,
-        }
-      );
-      setUser(responseUser.data);
+      const user = await fetchUser();
+      if (!user) {
+        return;
+      }
+      dispatch(setCredentials(user));
 
       const responseCourses = await axios.get(
-        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
 
       const responseTotalAmount = await axios.get(
-        `http://localhost:8081/api/cart/courses/total/${responseUser.data._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
       );
       const responseOrder = await axios.get(
         `http://localhost:8081/api/purchaseOrder/${responseUser.data._id}`
@@ -134,18 +139,15 @@ export default function trolleyDetails() {
 
       setOrder(responseOrder);
       setCartAmount(responseTotalAmount.data);
-
       setCartCourses(responseCourses.data);
     } catch (error) {
       console.error(error);
     }
   };
-  //console.log(cartCourses);
-  //console.log(cartAmount);
+
   useEffect(() => {
     getUser();
   }, []);
-  //console.log(isOpen);
 
   return (
     <div className="flex flex-col justify-center items-center relative">

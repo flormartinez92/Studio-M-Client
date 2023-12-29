@@ -1,5 +1,4 @@
 import React from "react";
-import Cards from "./Cards";
 import { CartShopSimple, Check } from "@/common/Icons";
 import CheckList from "../common/CheckList";
 import Image from "next/image";
@@ -11,17 +10,22 @@ import inputScroll from "@/hooks/useScroll";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import Alert_common from "@/common/Alert_common";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
+import { addToCart } from "@/state/features/cartSlice";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
-  const [numCart, setNumCart] = useState();
-  const [user, setUser] = useState();
   const [out, setout] = useState(false);
-  console.log(process.env.PAYPAL_SECRET);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/course/all-courses"
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`
       );
 
       const courses = response.data.map(
@@ -39,44 +43,35 @@ export default function Intro() {
 
   const cartUser = async () => {
     try {
-      const responseUser = await axios.get(
-        "http://localhost:8081/api/user/me",
-        {
-          withCredentials: true,
-        }
-      );
-      setUser(responseUser.data);
-      const responseCart = await axios.get(
-        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
-      );
+      const user = await fetchUser();
+      if (!user) {
+        return;
+      }
+      dispatch(setCredentials(user));
 
-      setNumCart(responseCart.data.length);
+      const responseCart = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
+      );
+      dispatch(addToCart(responseCart.data.length));
     } catch (error) {
       console.error(error);
     }
   };
-  const [showAlert, setShowAlert] = useState(false);
+
   const addCourseCart = async (id_curse) => {
     try {
-      const { data } = await axios.get("http://localhost:8081/api/user/me", {
-        withCredentials: true,
-      });
       const responseAddCart = await axios.post(
-        "http://localhost:8081/api/cart/add",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`,
         {
           courseId: id_curse,
-          userId: data._id,
+          userId: user?._id,
         }
       );
-
-      setNumCart(responseAddCart.data.courseId.length);
+      dispatch(addToCart(responseAddCart.data.courseId.length));
     } catch (error) {
       console.error(error);
       if (error.response.data === "Course already in the cart") {
         setShowAlert(true);
-        /*  setTimeout(() => {
-          setShowAlert(false);
-        }, 3000); */
       }
     }
   };
@@ -85,9 +80,7 @@ export default function Intro() {
     fetchData();
     cartUser();
   }, []);
-  const onclickBtn = (e) => {
-    console.log(e);
-  };
+
   const {
     containerRef: ContainerScroll_1,
     handleMouseDown: DownScroll_1,
@@ -95,6 +88,7 @@ export default function Intro() {
     handleMouseMove: MoveScroll_1,
     handleMouseUp: MouseUpScroll_1,
   } = inputScroll();
+
   const {
     containerRef: ContainerScroll_2,
     handleMouseDown: DownScroll_2,
@@ -115,8 +109,6 @@ export default function Intro() {
     <div
       className={`flex flex-col justify-center items-center w-full h-auto relative`}
     >
-      {/* border border-gray-300 shadow-md p-4 rounded */}
-
       {showAlert && (
         <Alert_common
           handleAlert={handleAlert}
@@ -138,7 +130,6 @@ export default function Intro() {
             max-w-[1350px] 
             leading-8 min-[500px]:leading-10 -rotate-2 py-4 md:mr-[8rem] mt-3  md:mt-16 min-[1500px]:text-[60px] mb-5"
           >
-            {numCart}
             ¿Qué vas a aprender hoy?
           </h2>
           <div className="w-full flex justify-center items-start">
@@ -210,7 +201,6 @@ export default function Intro() {
                                         className={`font-mystery-mixed py-2 md:h-[2.3rem] lg:h-[2.6rem] min-[1300px]:h-[2.9rem] min-[1300px]:py-4
                                         min-[1300px]:px-6 px-3 whitespace-nowrap
                                         flex items-center min-[1300px]:text-[1.7rem] text-[1.19rem] leading-3`}
-                                        onClick={() => onclickBtn(item._id)}
                                       >
                                         {"Ver curso"}
                                       </Button>
@@ -292,9 +282,6 @@ export default function Intro() {
           </div>
         </div>
       </div>
-      {/* ${
-          showAlert && "pointer-events-none"
-        } */}
 
       <div
         className={`w-full h-auto px-6 mt-2 flex flex-col justify-center items-center max-w-[1100px] min-[1500px]:max-w-[1400px] ${

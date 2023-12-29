@@ -14,13 +14,20 @@ import {
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
 import { useRouter } from "next/navigation";
+import { addToCart } from "@/state/features/cartSlice";
+import { useDispatch } from "react-redux";
+import Alert_common from "@/common/Alert_common";
 
 export default function CourseInformation({ params }) {
   const [course, setCourse] = useState({});
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [out, setout] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
   const courseId = params["course-id"];
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -82,8 +89,35 @@ export default function CourseInformation({ params }) {
     }
   };
 
+  const handleAlert = () => {
+    setout(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      setout(false);
+    }, 700);
+  };
+
+  const handleItemsCart = async () => {
+    try {
+      const responseCart = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user._id}`
+      );
+      dispatch(addToCart(responseCart.data.length));
+    } catch (error) {
+      console.error("Error fetching itemsCount cart:", error);
+    }
+  };
+
   return (
     <section className={`${loading ? "cursor-wait" : ""}`}>
+      {showAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="Curso ya está en el carrito"
+          classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
       {Object.keys(course).length === 0 ? (
         <div className="w-full h-[600px]  flex justify-center items-center">
           <Loading_common />
@@ -219,10 +253,23 @@ export default function CourseInformation({ params }) {
                     handleclickFavoriteSingleCourse(courseId)
                   }
                   isFavorite={course.isFavorite}
-                  handleCartClick={() => {
-                    user
-                      ? handleCartClick(course._id, user._id)
-                      : router.push("/login");
+                  // handleCartClick={() => {
+                  //   user
+                  //     ? handleCartClick(course._id, user._id)
+                  //     : router.push("/login");
+                  // }}
+                  handleCartClick={async () => {
+                    if (user) {
+                      await handleCartClick(
+                        course._id,
+                        user._id,
+                        setShowAlert,
+                        setDeletingId
+                      );
+                      await handleItemsCart();
+                    } else {
+                      router.push("/login");
+                    }
                   }}
                 />
               </div>

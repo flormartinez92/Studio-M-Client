@@ -33,6 +33,7 @@ export default function MyAccount() {
       setUser(user);
       if (!user) {
         router.push("/login");
+        return;
       }
     };
     checkUserAuthentication();

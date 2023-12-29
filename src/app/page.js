@@ -16,7 +16,9 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/api/user/me", { withCredentials: true })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/me`, {
+        withCredentials: true,
+      })
 
       .then(({ data: { user } }) => {
         if (user) {

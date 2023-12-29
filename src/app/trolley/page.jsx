@@ -1,49 +1,43 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import Button from "@/common/Button";
-
 import { CartShopSimple } from "@/common/Icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
-
 import Loading_common from "@/common/Loading_common";
 import CardsMobile from "@/components/CardsMobile";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "@/state/features/cartSlice";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
 
 export default function Trolley() {
   const [cartCourses, setCartCourses] = useState(null);
-  const [user, setUser] = useState({});
-
-  const [isLoading, setIsLoading] = useState(false);
+  // const [user, setUser] = useState({});
+  const [deletingId, setDeletingId] = useState(null);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const getUser = async () => {
     try {
-      const responseUser = await axios.get(
-        "http://localhost:8081/api/user/me",
-        {
-          withCredentials: true,
-        }
-      );
-      setUser(responseUser.data);
-      console.log(responseUser.data._id);
-      //http://localhost:8081/api/cart/courses/65538c7afc108110ec0e0273
-
-      /* responseFavorites.data.courseId.map((e) => {
-        console.log(responseCourses.data);
-      }); */
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+      if (!user) {
+        router.push("/login");
+        return;
+      }
       const responseCourses = await axios.get(
-        `http://localhost:8081/api/cart/courses/${responseUser.data._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
-
       setCartCourses(responseCourses.data);
     } catch (error) {
+      console.log("ERROR", error);
       if (error.response.data === "Cart not found") {
         setCartCourses([]);
       }
-
       console.error(error.response.data);
     }
   };
@@ -56,18 +50,18 @@ export default function Trolley() {
     try {
       if (status) {
         await axios.delete(
-          `http://localhost:8081/api/favorites/remove/${idCourse}/${user._id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${idCourse}/${user?._id}`
         );
         const responseCourses = await axios.get(
-          `http://localhost:8081/api/cart/courses/${user._id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
         );
         setCartCourses(responseCourses.data);
       } else {
         await axios.post(
-          `http://localhost:8081/api/favorites/add/${idCourse}/${user._id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${idCourse}/${user?._id}`
         );
         const responseCourses = await axios.get(
-          `http://localhost:8081/api/cart/courses/${user._id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
         );
         setCartCourses(responseCourses.data);
       }
@@ -77,30 +71,26 @@ export default function Trolley() {
   };
 
   const handleremoveCart = async () => {
-    console.log("remover el carrito entero");
     try {
       const responseDelete = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${user?._id}`
       );
-
+      dispatch(addToCart(0));
       setCartCourses([]);
-      console.log(responseDelete);
     } catch (err) {
       console.error(err);
     }
   };
-  const [deletingId, setDeletingId] = useState(null);
 
   const handleRemove = async (courseId, index) => {
     setDeletingId(courseId);
     try {
       const responseDelete = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/remove/${courseId}/${user?._id}`
       );
+      dispatch(addToCart(responseDelete.data.courseId.length));
       setCartCourses(cartCourses.filter((course) => course._id !== courseId));
       setDeletingId(null);
-
-      //console.log(responseDelete);
     } catch (err) {
       console.error(err);
     }
@@ -221,7 +211,7 @@ export default function Trolley() {
             </div>
           </div>
         ) : (
-          <div className="h-[600px] w-full bg-page flex justify-center items-center ">
+          <div className="h-[600px] w-full bg-white flex justify-center items-center ">
             <h2 className="font-mystery-mixed text-[1.6rem] sm:text-[2.6rem] md:text-[3.6rem] lg:text-[4.6rem] animate__animated animate__flipInX">
               No hay cursos en tu carrito
             </h2>
