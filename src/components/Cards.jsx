@@ -12,6 +12,7 @@ import IconButton from "@/common/IconButton";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { useEffect } from "react";
+import Alert_common from "@/common/Alert_common";
 
 export default function Cards({
   title,
@@ -31,6 +32,8 @@ export default function Cards({
   courseId,
 }) {
   const [isFavorite, setIsFavorite] = useState(true);
+  const [out, setout] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
@@ -58,7 +61,9 @@ export default function Cards({
       );
       dispatch(addToCart(cartItems.data.courseId.length));
     } catch (error) {
-      console.error(error);
+      if (error.response.data === "Course already in the cart") {
+        setShowAlert(true);
+      }
     }
   };
 
@@ -92,8 +97,25 @@ export default function Cards({
     }
   };
 
+  const handleAlert = () => {
+    setout(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      setout(false);
+    }, 700);
+  };
+
   return (
     <div className={`w-80 relative ${className || ""}`}>
+      {showAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="Curso ya está en el carrito"
+          classNameAlert="w-[300px]"
+        />
+      )}
+
       <h2
         className={`text-3xl text-white bg-[#181717] font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg ${
           classNameTitle || ""
