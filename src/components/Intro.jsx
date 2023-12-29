@@ -18,10 +18,10 @@ import { addToCart } from "@/state/features/cartSlice";
 export default function Intro() {
   const [value, setValue] = useState([]);
   const [out, setout] = useState(false);
+
   const [showAlert, setShowAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
   const fetchData = async () => {
     try {
       const response = await axios.get(
