@@ -26,7 +26,7 @@ export default function Input({
           placeholder={placeholder}
           id={name}
           name={name}
-          className={`p-2 pl-3 font-ms-gothic outline-none ${
+          className={`p-2 pl-3 font-ms-gothic outline-none  ${
             classNameInput || ""
           }`}
           {...inputProps}
