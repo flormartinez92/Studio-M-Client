@@ -33,7 +33,7 @@ const MyList = ({ decodedToken }) => {
   }, []);
 
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none lg:ml-[8%] xl:ml-[12%]">
+    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none md:mx-[1%] lg:mx-[8%] xl:mx-[11%]">
       <div
         className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
         ref={ContainerScroll_2}
@@ -53,7 +53,7 @@ const MyList = ({ decodedToken }) => {
                 iconFavorite={<Heart />}
                 iconFavorite2={<LineHeart />}
                 courseId={userFavorite._id}
-                className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem] mr-4"
+                className="min-w-[12.5rem] max-w-[12.5rem] h-[15rem] max-h-[15rem]"
                 classNameBorder="mb-2"
                 classNameButton="py-1 px-3 text-lg whitespace-nowrap w-auto flex items-center"
                 classNameImg="h-[12rem] object-cover rounded-b-lg"
