@@ -263,6 +263,7 @@ export default function trolleyDetails() {
                 initialization={{
                   preferenceId: dataMp,
                 }}
+              />
             </div>
 
             <div
@@ -274,8 +275,8 @@ export default function trolleyDetails() {
                 userId={user._id}
                 cartCourses={cartCourses}
               />
+            </div>
           </div>
-         </div>
 
           {/*  {cartCourses?.map((course) => (
         //Contenido para dispositivos móviles
