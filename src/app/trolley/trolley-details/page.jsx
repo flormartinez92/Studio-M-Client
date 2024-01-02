@@ -17,8 +17,10 @@ import { useEffect, useRef, useState } from "react";
 import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
 
 import { useDispatch, useSelector } from "react-redux";
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 export default function trolleyDetails() {
+  initMercadoPago(process.env.NEXT_PUBLIC_KEY);
   const [{ isPending }] = usePayPalScriptReducer();
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});
@@ -37,6 +39,7 @@ export default function trolleyDetails() {
 
   const modalRef = useRef();
   const router = useRouter();
+  const [dataMp, setDataMp] = useState({ preferenceId: "", orderData: {} });
 
   // const [user, setUser] = useState({});
 
@@ -128,6 +131,20 @@ export default function trolleyDetails() {
       const responseCourses = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
+
+      console.log(responseCourses.data[0].courseLongTitle);
+
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`, {
+          title: responseCourses.data[0]?.courseLongTitle,
+          price: responseCourses.data[0]?.coursePrice,
+        })
+
+        .then((res) => {
+          const preferenceId = res.data.result.id;
+          const orderData = res.data.result.items[0];
+          setDataMp(preferenceId, orderData);
+        });
 
       const responseTotalAmount = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
@@ -239,7 +256,14 @@ export default function trolleyDetails() {
               className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1 "
             >
               Confirmar
-            </Button> */}
+             </Button> */}
+
+            <div id="wallet_container">
+              <Wallet
+                initialization={{
+                  preferenceId: dataMp,
+                }}
+            </div>
 
             <div
               className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
@@ -250,8 +274,8 @@ export default function trolleyDetails() {
                 userId={user._id}
                 cartCourses={cartCourses}
               />
-            </div>
           </div>
+         </div>
 
           {/*  {cartCourses?.map((course) => (
         //Contenido para dispositivos móviles
