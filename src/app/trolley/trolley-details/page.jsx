@@ -308,7 +308,7 @@ export default function trolleyDetails() {
                     "w-[83%] max-w-[420px] min-[500px]:max-w-[620px] min-[600px]:max-w-[820px]"
                   }
                   classNameInput={
-                    "h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem]"
+                    "h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem] w-full"
                   }
                   onChange={onChangeCoupon}
                   value={coupon}
