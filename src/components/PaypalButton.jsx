@@ -1,12 +1,15 @@
 import { paypalCheckPayment, setTransactionId } from "@/helpers/apiHelpers";
+import { addToCart } from "@/state/features/cartSlice";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 export const PayPalButton = ({ orderId, amount, userId, cartCourses }) => {
   const router = useRouter();
   const rountedAmount = Math.round(amount * 100) / 100; //123.23
-
+  //dispatch
+  const dispatch = useDispatch();
   const createOrder = async (data, actions) => {
     const transactionId = await actions.order.create({
       purchase_units: [
@@ -31,6 +34,7 @@ export const PayPalButton = ({ orderId, amount, userId, cartCourses }) => {
       const responseCart = await axios.post(
         `http://localhost:8081/api/cart/confirmBuy/${userId}`
       );
+      dispatch(addToCart(0));
       //console.log(cartCourses);
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
       //console.log(responseCart);

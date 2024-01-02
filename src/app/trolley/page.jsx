@@ -24,21 +24,23 @@ export default function Trolley() {
   const getUser = async () => {
     try {
       const user = await fetchUser();
+      console.log(user);
       dispatch(setCredentials(user));
       if (!user) {
         router.push("/login");
         return;
       }
       const responseCourses = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
+        `http://localhost:8081/api/cart/courses/${user?._id}`
       );
+      console.log(responseCourses);
       setCartCourses(responseCourses.data);
     } catch (error) {
       console.log("ERROR", error);
       if (error.response.data === "Cart not found") {
         setCartCourses([]);
       }
-      console.error(error.response.data);
+      console.error(error);
     }
   };
 
