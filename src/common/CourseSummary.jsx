@@ -57,7 +57,7 @@ export default function CourseSummary({
         </div>
         <div className="flex justify-center items-center gap-3 py-1 font-medium">
           <h5 className="md:hidden text-lg">
-            ${Number(price).toLocaleString().replace(",", ".")} ARS
+            ${Number(price).toLocaleString().replace(",", ".")} USD
           </h5>
           <div className="cursor-pointer">
             <CartShopPlusBgBlack
