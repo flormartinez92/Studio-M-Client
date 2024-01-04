@@ -252,9 +252,8 @@ export default function trolleyDetails() {
               className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
               <MpButton
+                cartCourses={cartCourses}
                 orderId={order._id}
-                longTitle={cartCourses[0].courseLongTitle}
-                finalPrice={cartCourses[0].coursePrice}
               />
               <PayPalButton
                 orderId={order._id}
