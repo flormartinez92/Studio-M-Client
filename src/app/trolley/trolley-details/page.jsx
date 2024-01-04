@@ -149,6 +149,15 @@ export default function trolleyDetails() {
     }
   };
 
+  cartCourses.forEach((element) => {
+    const order = {
+      id: element._id,
+      title: element.courseLongTitle,
+      quantity: 1,
+      unit_price: element.coursePrice,
+    };
+  });
+
   useEffect(() => {
     getUser();
   }, []);

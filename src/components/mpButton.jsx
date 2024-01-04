@@ -18,8 +18,6 @@ export default function MpButton({ orderId, longTitle, finalPrice }) {
           }
         );
         console.log(res.data);
-        //const preferenceId = res.data.result.id;
-        //const orderData = res.data.result.items[0];
         const preferenceId = res.data.mpPreferenceID;
         setDataMp({ preferenceId });
       } catch (error) {
