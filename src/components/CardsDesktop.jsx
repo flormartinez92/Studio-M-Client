@@ -124,7 +124,7 @@ export default function CardsDesktop({
                 <h2 className="lg:text-[19px]">
                   {`$${Number(coursePrice)
                     .toLocaleString()
-                    .replace(",", ".")} ARS`}
+                    .replace(",", ".")} USD`}
                 </h2>
               )}
             </div>
@@ -199,7 +199,7 @@ export default function CardsDesktop({
                     <h2 className="lg:text-[19px]">
                       {`$${Number(coursePrice)
                         .toLocaleString()
-                        .replace(",", ".")} ARS`}
+                        .replace(",", ".")} USD`}
                     </h2>
                   )}
                 </div>
