@@ -13,14 +13,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useEffect, useRef, useState } from "react";
-
 import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
-
 import { useDispatch, useSelector } from "react-redux";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import MpButton from "@/components/mpButton";
 
 export default function trolleyDetails() {
-  initMercadoPago(process.env.NEXT_PUBLIC_KEY);
   const [{ isPending }] = usePayPalScriptReducer();
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});
@@ -132,20 +129,10 @@ export default function trolleyDetails() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
 
-      console.log(responseCourses.data[0].courseLongTitle);
-
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`, {
-          title: responseCourses.data[0]?.courseLongTitle,
-          price: responseCourses.data[0]?.coursePrice,
-        })
-
-        .then((res) => {
-          const preferenceId = res.data.result.id;
-          const orderData = res.data.result.items[0];
-          setDataMp(preferenceId, orderData);
-        });
-
+      // const responseCoupon = await axios.put(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
+      //   { couponCode: coupon, mail: user.mail }
+      // );
       const responseTotalAmount = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
       );
@@ -153,13 +140,23 @@ export default function trolleyDetails() {
         `http://localhost:8081/api/purchaseOrder/${user._id}`
       );
 
-      setOrder(responseOrder);
+      setOrder(responseOrder.data);
       setCartAmount(responseTotalAmount.data);
       setCartCourses(responseCourses.data);
+      // setPriceDiscount(responseCoupon.data.totalAmount);
     } catch (error) {
       console.error(error);
     }
   };
+
+  cartCourses.forEach((element) => {
+    const order = {
+      id: element._id,
+      title: element.courseLongTitle,
+      quantity: 1,
+      unit_price: element.coursePrice,
+    };
+  });
 
   useEffect(() => {
     getUser();
@@ -250,25 +247,15 @@ export default function trolleyDetails() {
                 </h2>
               </div>
             </div>
-            {/* <Button
-              onClick={handleCheck}
-              type="rounder"
-              className="font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1 "
-            >
-              Confirmar
-             </Button> */}
-
-            <div id="wallet_container">
-              <Wallet
-                initialization={{
-                  preferenceId: dataMp,
-                }}
-              />
-            </div>
 
             <div
               className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
+              <MpButton
+                orderId={order._id}
+                longTitle={cartCourses[0].courseLongTitle}
+                finalPrice={cartCourses[0].coursePrice}
+              />
               <PayPalButton
                 orderId={order._id}
                 amount={20}
