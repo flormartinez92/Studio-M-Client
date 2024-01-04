@@ -27,8 +27,6 @@ export default function trolleyDetails() {
   const [messageAlertError, setMessageAlertError] = useState(null);
   const [messageAlertOk, setMessageAlertOk] = useState(null);
   const [priceDiscount, setPriceDiscount] = useState(null);
-  const [out, setOut] = useState(null);
-
   const [order, setOrder] = useState({});
 
   const dispatch = useDispatch();
@@ -36,9 +34,6 @@ export default function trolleyDetails() {
 
   const modalRef = useRef();
   const router = useRouter();
-  const [dataMp, setDataMp] = useState({ preferenceId: "", orderData: {} });
-
-  // const [user, setUser] = useState({});
 
   const handleCheck = async () => {
     console.log(user);
@@ -47,10 +42,7 @@ export default function trolleyDetails() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
       );
 
-      //console.log(cartCourses);
-
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
-      //console.log(responseCart);
       router.push("/trolley/purchase-completed");
     } catch (err) {
       console.error(err);
@@ -120,19 +112,14 @@ export default function trolleyDetails() {
   const getUser = async () => {
     try {
       const user = await fetchUser();
-      if (!user) {
-        return;
-      }
+      if (!user) return;
+      
       dispatch(setCredentials(user));
 
       const responseCourses = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
 
-      // const responseCoupon = await axios.put(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
-      //   { couponCode: coupon, mail: user.mail }
-      // );
       const responseTotalAmount = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
       );
@@ -143,20 +130,10 @@ export default function trolleyDetails() {
       setOrder(responseOrder.data);
       setCartAmount(responseTotalAmount.data);
       setCartCourses(responseCourses.data);
-      // setPriceDiscount(responseCoupon.data.totalAmount);
     } catch (error) {
       console.error(error);
     }
   };
-
-  cartCourses.forEach((element) => {
-    const order = {
-      id: element._id,
-      title: element.courseLongTitle,
-      quantity: 1,
-      unit_price: element.coursePrice,
-    };
-  });
 
   useEffect(() => {
     getUser();
