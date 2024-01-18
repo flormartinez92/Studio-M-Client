@@ -141,7 +141,6 @@ const getPaypalBearerToken = async () => {
     method: "POST",
     headers: myHeaders,
     body: urlencoded,
-    redirect: "follow",
   };
   try {
     const response = await fetch(oauth2Url, {

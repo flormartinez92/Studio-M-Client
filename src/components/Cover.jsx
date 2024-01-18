@@ -199,7 +199,7 @@ export default function Cover() {
                 </li>
                 <li className="mx-4">
                   <Link
-                    href="/my-account"
+                    href={user ? "my-account" : "/login"}
                     className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                   >
                     Mi cuenta

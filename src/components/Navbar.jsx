@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
 import { fetchUser } from "@/helpers/apiHelpers";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function Navbar() {
   const { user } = useSelector((state) => state.auth);
   const { itemCount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
