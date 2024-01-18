@@ -297,6 +297,7 @@ export default function trolleyDetails() {
                 <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
                   Ingresá tu cupón
                 </h2>
+                {/* sd */}
 
                 <div className="flex w-full justify-center">
                   <Input
