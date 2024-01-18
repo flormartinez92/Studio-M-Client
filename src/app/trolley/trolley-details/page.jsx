@@ -9,6 +9,7 @@ import Cards from "@/components/Cards";
 import CardsDesktop from "@/components/CardsDesktop";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
+import { addDiscount } from "@/state/features/totalDiscountSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -56,8 +57,23 @@ export default function trolleyDetails() {
       console.error(err);
     }
   };
+
+  const resetDiscount = async () => {
+    try {
+      const user = await fetchUser();
+      const responseCoupon = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/discountCart`,
+        { mail: user.mail }
+      );
+      //console.log(responseCoupon);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleAddCoupon = async () => {
     if (!coupon) return;
+
     try {
       const responseCoupon = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
@@ -73,6 +89,9 @@ export default function trolleyDetails() {
       }, 1400);
       setCartAmount(responseTotalAmount.data);
       setPriceDiscount(responseCoupon.data.totalAmount);
+
+      //console.log(responseCoupon.data);
+
       setTrolley(responseCoupon.data.totalDiscount);
     } catch (err) {
       if (err.response.data === "Coupon not found") {
@@ -160,6 +179,7 @@ export default function trolleyDetails() {
 
   useEffect(() => {
     getUser();
+    resetDiscount();
   }, []);
 
   return (
@@ -249,7 +269,7 @@ export default function trolleyDetails() {
             </div>
 
             <div
-              className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
+              className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
               <MpButton
                 orderId={order._id}
@@ -258,7 +278,7 @@ export default function trolleyDetails() {
               />
               <PayPalButton
                 orderId={order._id}
-                amount={20}
+                amount={trolley}
                 userId={user._id}
                 cartCourses={cartCourses}
               />
@@ -289,17 +309,22 @@ export default function trolleyDetails() {
                 <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
                   Ingresá tu cupón
                 </h2>
+                {/* sd */}
 
-                <Input
-                  className={
-                    "w-[83%] max-w-[420px] min-[500px]:max-w-[620px] min-[600px]:max-w-[820px]"
-                  }
-                  classNameInput={
-                    "h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem] w-full"
-                  }
-                  onChange={onChangeCoupon}
-                  value={coupon}
-                />
+
+                <div className="flex w-full justify-center">
+                  <Input
+                    className={
+                      "w-[83%] max-w-[420px] min-[500px]:max-w-[620px] min-[600px]:max-w-[820px]"
+                    }
+                    classNameInput={
+                      "w-full h-[2.7rem] min-[500px]:h-[3.1rem] min-[600px]:h-[3.5rem] text-[2rem] min-[500px]:text-[3rem] uppercase"
+                    }
+                    onChange={onChangeCoupon}
+                    value={coupon}
+                  />
+                </div>
+
 
                 <div className="relative flex justify-center items-center">
                   {messageAlertError && (

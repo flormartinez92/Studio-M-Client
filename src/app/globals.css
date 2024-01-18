@@ -18,3 +18,7 @@
   padding: 0;
   margin: 0;
 }
+.paypal-buttons {
+  height: 3rem !important; /* Asegúrate de usar !important si los estilos no están siendo aplicados */
+  /* Otros estilos necesarios */
+}
