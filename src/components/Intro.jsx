@@ -136,9 +136,10 @@ export default function Intro() {
             <div className="w-full hidden md:block">
               <div className="relative flex justify-center items-center">
                 <Image
-                  src={"/img/paper.png"}
+                  src={"/img/paper_2@4x.png"}
                   width={400}
                   height={800}
+                  quality={100}
                   className="w-full max-w-[1350px] h-full"
                   alt="paper_fondo"
                 />
@@ -345,9 +346,10 @@ export default function Intro() {
       </div>
       <div className="select-none relative w-full h-auto flex flex-col justify-center items-center md:mb-[7rem] lg:mb-[8rem] ">
         <Image
-          src={"/img/paper.png"}
+          src={"/img/paper_2@4x.png"}
           width={200}
           height={200}
+          quality={100}
           className="w-full max-w-[1350px] h-full"
           alt="paper_fondo"
         />
