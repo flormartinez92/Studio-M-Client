@@ -37,7 +37,7 @@ export default function PurchasedCourseResume({ params }) {
 
   useEffect(() => {
     const purchase = JSON.parse(localStorage.getItem("purchase"));
-    const newArr = purchase.map((courseUser) => {
+    const newArr = purchase?.map((courseUser) => {
       const newCourseUser = { ...courseUser };
       courseUser.modules.forEach((module, i) => {
         if (i === 0) {
@@ -76,7 +76,7 @@ export default function PurchasedCourseResume({ params }) {
       <h3 className="font-mystery-mixed text-[1.3rem] sm-300:text-[1.7rem] tracking-wider -rotate-2 md:text-4xl lg:text-5xl md:rotate-0 animate__animated animate__fadeInLeft">
         ¡Gracias por tu compra!
       </h3>
-      {courseResume.map((course) => {
+      {courseResume?.map((course) => {
         return (
           <div
             key={course._id}

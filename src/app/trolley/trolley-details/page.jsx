@@ -36,7 +36,7 @@ export default function trolleyDetails() {
   const router = useRouter();
 
   const handleCheck = async () => {
-    console.log(user);
+
     try {
       const responseCart = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
@@ -51,21 +51,37 @@ export default function trolleyDetails() {
   const handleAddCoupon = async () => {
     if (!coupon) return;
     try {
+
       const responseCoupon = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
         { couponCode: coupon, mail: user.mail }
       );
+
       const responseTotalAmount = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user._id}`
       );
+
+      const responseCourses = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
+      );
+
+      const updatedMp = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/updateOrder`, {userId: user?._id}
+      );
+
+      console.log("MP ACTULIZADO----------", updatedMp);
+
       setMessageAlertOk("Descuento Aplicado!");
       setTimeout(() => {
         setMessageAlertOk(null);
         setIsOpen(false);
-      }, 1400);
+      }, 1000);
+
+      setCartCourses(responseCourses.data);
       setCartAmount(responseTotalAmount.data);
       setPriceDiscount(responseCoupon.data.totalAmount);
       setTrolley(responseCoupon.data.totalDiscount);
+
     } catch (err) {
       if (err.response.data === "Coupon not found") {
         setMessageAlertError("Coupon not found");
@@ -76,10 +92,12 @@ export default function trolleyDetails() {
       console.error(err);
     }
   };
+
   const onChangeCoupon = (e) => {
     e.preventDefault();
     setCoupon(e.target.value);
   };
+
   const handleOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setIsOpen(false);
@@ -228,6 +246,7 @@ export default function trolleyDetails() {
             <div
               className={`font-ms-gothic text-[28px] w-[60%] max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
+
               <MpButton
                 cartCourses={cartCourses}
                 orderId={order._id}
@@ -241,17 +260,6 @@ export default function trolleyDetails() {
             </div>
           </div>
 
-          {/*  {cartCourses?.map((course) => (
-        //Contenido para dispositivos móviles
-        <Cards
-          key={course._id}
-          title={course.courseTitle}
-          buttonTitle="$ 10.000"
-          img={course.courseImg_url}
-          className="w-[50%] mt-8 text-1xl md:hidden"
-          classNameImg=""
-        />
-      ))} */}
           <div
             className={` w-full  flex items-center justify-center fixed inset-0 z-50 animate__animated  ${
               isOpen ? "block animate__zoomIn" : "hidden animate__zoomOut"
