@@ -99,12 +99,12 @@ export default function Trolley() {
   };
   const handleClickCreateOrder = async (user) => {
     try {
-      console.log(user._id);
+      // console.log(user._id);
 
       const responseOrder = await axios.get(
         `http://localhost:8081/api/purchaseOrder/${user._id}`
       );
-      console.log(responseOrder);
+      // console.log(responseOrder);
 
       if (responseOrder.data) return router.push("/trolley/trolley-details");
 

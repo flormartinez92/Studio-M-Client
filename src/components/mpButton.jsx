@@ -2,7 +2,7 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function MpButton({ orderId, longTitle, finalPrice }) {
+export default function MpButton({ cartCourses, orderId }) {
   const [dataMp, setDataMp] = useState({ preferenceId: "", orderData: {} });
 
   useEffect(() => {
@@ -12,12 +12,11 @@ export default function MpButton({ orderId, longTitle, finalPrice }) {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`,
           {
-            orderId: orderId,
-            title: longTitle,
-            price: finalPrice,
+            cartCourses: cartCourses,
+            orderId: orderId
           }
         );
-        console.log(res.data);
+        // console.log("---------------------------", res.data);
         const preferenceId = res.data.mpPreferenceID;
         setDataMp({ preferenceId });
       } catch (error) {
@@ -27,7 +26,8 @@ export default function MpButton({ orderId, longTitle, finalPrice }) {
     if (dataMp.preferenceId == "") {
       createOrder();
     }
-  }, [dataMp, orderId, longTitle, finalPrice]);
+  }, [dataMp, orderId]);
+  // agregar cartCourses a la dependece
 
   return (
     <div>
