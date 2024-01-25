@@ -60,6 +60,19 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/logout`,
+        {},
+        { withCredentials: true }
+      );
+      router.push("/");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
   return (
     <>
       {menuOpen ? (
@@ -113,6 +126,17 @@ export default function Navbar() {
                   Mi cuenta
                 </Link>
               </li>
+              {user && (
+                <li className="">
+                  <Link
+                    href="/"
+                    className="text-[50px] text-white font-mystery-mixed"
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </Link>
+                </li>
+              )}
               <li className="mx-[6rem]">
                 <Link
                   href="/trolley"
@@ -134,7 +158,6 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-
             <div className=" mx-auto  mb-[60px] mt-[4rem] relative">
               <Image
                 src="/img/pink-square.png"
@@ -217,6 +240,17 @@ export default function Navbar() {
                     Mi cuenta
                   </Link>
                 </li>
+                {user && (
+                  <li className="mx-4">
+                    <Link
+                      href="/"
+                      onClick={handleLogout}
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Cerrar sesión
+                    </Link>
+                  </li>
+                )}
                 <li className="mx-4">
                   <Link href="/trolley">
                     <IconButton className="hover:underline hover:decoration-pink relative">
