@@ -13,6 +13,8 @@ import IconButton from "@/common/IconButton";
 import ModalLinkProject from "@/components/ModalLinkProject";
 import ModalUpdateProject from "@/components/ModalUpdateProject";
 import { fetchUser, fetchUserProject } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function PurchasedCourseDetails({ params }) {
   const courseId = params["purchased-course-details"];
@@ -24,6 +26,21 @@ export default function PurchasedCourseDetails({ params }) {
   const [commentModal, setCommentModal] = useState(false);
   const buttonProjectState = useSelector((state) => state.buttonProject);
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  //Si no hay user, te redirige a Login
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const user = await fetchUser();
+      dispatch(setCredentials(user));
+      setUser(user);
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {

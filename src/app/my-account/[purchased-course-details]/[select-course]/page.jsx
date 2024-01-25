@@ -13,10 +13,12 @@ import { fetchUser } from "@/helpers/apiHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { isMobile } from "react-device-detect";
+import { useRouter } from "next/navigation";
 
 export default function SelectCourse({ params }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [userr, setUserr] = useState(null);
   const courseId = params["purchased-course-details"];
   const classId = params["select-course"];
   const [courseClass, setCourseClass] = useState({});
@@ -27,6 +29,20 @@ export default function SelectCourse({ params }) {
   const [showVideo, setShowVideo] = useState(false);
   const [previousArrowColor, setPreviousArrowColor] = useState("black");
   const [nextArrowColor, setNextArrowColor] = useState("black");
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUserAuthentication = async () => {
+      const userr = await fetchUser();
+      dispatch(setCredentials(userr));
+      setUserr(userr);
+      if (!userr) {
+        router.push("/login");
+        return;
+      }
+    };
+    checkUserAuthentication();
+  }, []);
 
   useEffect(() => {
     const checkUserAuth = async () => {
