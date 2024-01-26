@@ -114,7 +114,7 @@ export default function CourseInformation({ params }) {
         <Alert_common
           handleAlert={handleAlert}
           out={out}
-          titleAlert="Curso ya está en el carrito"
+          titleAlert="¡Este curso ya está en tu carrito!"
           classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
         />
       )}

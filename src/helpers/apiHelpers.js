@@ -27,6 +27,18 @@ export const fetchFavorites = async (userId) => {
   }
 };
 
+export const fetchCart = async (userId) => {
+  try {
+    const userCart = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${userId}`
+    );
+    return userCart.data;
+  } catch (error) {
+    console.error("Error while fetching cart:", error);
+    return [];
+  }
+};
+
 export const removeFavorite = async (courseId, userId) => {
   try {
     await axios.delete(

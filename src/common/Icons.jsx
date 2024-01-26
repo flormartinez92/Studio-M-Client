@@ -347,7 +347,7 @@ export function UilArrow2({ color }) {
   );
 }
 
-export function CartShopSimple({ width, height }) {
+export function CartShopSimple({ width, height, item }) {
   return (
     <svg
       width={width || "20"}

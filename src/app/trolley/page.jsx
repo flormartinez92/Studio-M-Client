@@ -15,7 +15,6 @@ import { setCredentials } from "@/state/features/authSlice";
 
 export default function Trolley() {
   const [cartCourses, setCartCourses] = useState(null);
-  // const [user, setUser] = useState({});
   const [deletingId, setDeletingId] = useState(null);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -24,16 +23,14 @@ export default function Trolley() {
   const getUser = async () => {
     try {
       const user = await fetchUser();
-      console.log(user);
       dispatch(setCredentials(user));
       if (!user) {
         router.push("/login");
         return;
       }
       const responseCourses = await axios.get(
-        `http://localhost:8081/api/cart/courses/${user?._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
       );
-      console.log(responseCourses);
       setCartCourses(responseCourses.data);
     } catch (error) {
       console.log("ERROR", error);
@@ -99,29 +96,24 @@ export default function Trolley() {
   };
   const handleClickCreateOrder = async (user) => {
     try {
-      // console.log(user._id);
-
       const responseOrder = await axios.get(
-        `http://localhost:8081/api/purchaseOrder/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/${user._id}`
       );
-      // console.log(responseOrder);
 
       if (responseOrder.data) return router.push("/trolley/trolley-details");
 
       const { data } = await axios.get(
-        `http://localhost:8081/api/cart/courses/total/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user._id}`
       );
 
       const createOrder = await axios.post(
-        "http://localhost:8081/api/purchaseOrder/add",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/add`,
         { userId: data.userId, totalAmmount: data.totalAmount }
       );
       router.push("/trolley/trolley-details");
-      //console.log(createOrder);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-    //router.push("/trolley/trolley-details");
   };
 
   return (

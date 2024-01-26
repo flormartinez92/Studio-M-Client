@@ -15,6 +15,7 @@ import {
   fetchUser,
   removeFavorite,
   handleCartClick,
+  fetchCart,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
 import Alert_common from "@/common/Alert_common";
@@ -49,15 +50,20 @@ export default function Courses() {
         const userData = await fetchUser();
         setUser(userData);
 
+        let userCart = [];
         let userFavorites = [];
         if (userData) {
           userFavorites = await fetchFavorites(userData._id);
+          userCart = await fetchCart(userData._id);
         }
 
         const coursesWithFavorites = coursesData.map((course) => ({
           ...course,
           isFavorite: userFavorites.some(
             (favoriteCourse) => favoriteCourse._id === course._id
+          ),
+          isInCart: userCart.some(
+            (courseCart) => courseCart._id === course._id
           ),
         }));
 
@@ -183,6 +189,7 @@ export default function Courses() {
                 buttonTitle="Ver curso"
                 classNameIconButton="h-[90%] pl-[15px] pr-[15px] pb-3 pt-3 bg-[#181717]"
                 icon={<CartShopSimple width={"16px"} height={"16px"} />}
+                cartCount={course.isInCart}
               />
             ))}
           </div>

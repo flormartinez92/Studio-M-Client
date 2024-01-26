@@ -3,6 +3,7 @@ import authReducer from "./features/authSlice";
 import cartReducer from "./features/cartSlice";
 import buttonProjectReducer from "./features/buttonProjectSlice";
 import DiscountReducer from "./features/totalDiscountSlice";
+import cartButtonReducer from "./features/cartButtonSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     cart: cartReducer,
     buttonProject: buttonProjectReducer,
     totalDiscount: DiscountReducer,
+    buttonCart: cartButtonReducer,
   },
 });
