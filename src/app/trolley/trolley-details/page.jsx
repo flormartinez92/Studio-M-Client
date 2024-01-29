@@ -37,7 +37,6 @@ export default function trolleyDetails() {
   const router = useRouter();
 
   const handleCheck = async () => {
-
     try {
       const responseCart = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
@@ -67,7 +66,6 @@ export default function trolleyDetails() {
     if (!coupon) return;
 
     try {
-
       const responseCoupon = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/addDiscount`,
         { couponCode: coupon, mail: user.mail }
@@ -82,7 +80,8 @@ export default function trolleyDetails() {
       );
 
       const updatedMp = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/updateOrder`, {userId: user?._id}
+        `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/updateOrder`,
+        { userId: user?._id }
       );
 
       console.log("MP ACTULIZADO----------", updatedMp);
@@ -100,7 +99,6 @@ export default function trolleyDetails() {
       //console.log(responseCoupon.data);
 
       setTrolley(responseCoupon.data.totalDiscount);
-
     } catch (err) {
       if (err.response.data === "Coupon not found") {
         setMessageAlertError("Coupon not found");
@@ -150,7 +148,7 @@ export default function trolleyDetails() {
     try {
       const user = await fetchUser();
       if (!user) return;
-      
+
       dispatch(setCredentials(user));
 
       const responseCourses = await axios.get(
@@ -264,13 +262,9 @@ export default function trolleyDetails() {
             </div>
 
             <div
-              className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
+            // className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
-
-              <MpButton
-                cartCourses={cartCourses}
-                orderId={order._id}
-              />
+              <MpButton cartCourses={cartCourses} orderId={order._id} />
               <PayPalButton
                 orderId={order._id}
                 amount={trolley}
@@ -295,7 +289,6 @@ export default function trolleyDetails() {
                 </h2>
                 {/* sd */}
 
-
                 <div className="flex w-full justify-center">
                   <Input
                     className={
@@ -308,7 +301,6 @@ export default function trolleyDetails() {
                     value={coupon}
                   />
                 </div>
-
 
                 <div className="relative flex justify-center items-center">
                   {messageAlertError && (
