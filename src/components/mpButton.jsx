@@ -36,13 +36,14 @@ export default function MpButton({ cartCourses, orderId }) {
           initialization={{
             preferenceId: dataMp.preferenceId,
           }}
-          // customization={{ texts: { valueProp: "null" } }}
           customization={{
-            texts: { valueProp: "none" },
+            texts: { action: "pay", valueProp: "none" },
             visual: {
               buttonWidth: "120px",
               borderRadius: "50px",
-            }, // Establece un tamaño inicial
+              buttonBackground: "black",
+              valuePropColor: "white",
+            },
           }}
         />
       )}
