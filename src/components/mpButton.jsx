@@ -13,7 +13,7 @@ export default function MpButton({ cartCourses, orderId }) {
           `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`,
           {
             cartCourses: cartCourses,
-            orderId: orderId
+            orderId: orderId,
           }
         );
         // console.log("---------------------------", res.data);
@@ -35,6 +35,15 @@ export default function MpButton({ cartCourses, orderId }) {
         <Wallet
           initialization={{
             preferenceId: dataMp.preferenceId,
+          }}
+          customization={{
+            texts: { action: "pay", valueProp: "none" },
+            visual: {
+              buttonWidth: "120px",
+              borderRadius: "50px",
+              buttonBackground: "black",
+              valuePropColor: "white",
+            },
           }}
         />
       )}
