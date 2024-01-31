@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cards from "./Cards";
 import axios from "axios";
-import inputScroll from "@/hooks/useScroll";
+// import inputScroll from "@/hooks/useScroll";
+import IconButton from "@/common/IconButton";
+import { ArrowBlack1, ArrowBlack2 } from "@/common/Icons";
 
 const MyCourses = ({ decodedToken }) => {
   //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [scrollDisabled, setScrollDisabled] = useState(false);
 
   //hook para scrollear
-  const {
-    containerRef: ContainerScroll_1,
-    handleMouseDown: DownScroll_1,
-    handleMouseLeave: LeaveScroll_1,
-    handleMouseMove: MoveScroll_1,
-    handleMouseUp: MouseUpScroll_1,
-  } = inputScroll();
+  // const {
+  //   containerRef: ContainerScroll_1,
+  //   handleMouseDown: DownScroll_1,
+  //   handleMouseLeave: LeaveScroll_1,
+  //   handleMouseMove: MoveScroll_1,
+  //   handleMouseUp: MouseUpScroll_1,
+  // } = inputScroll();
 
   //Pedido al back para traer los cursos de un usuario
   useEffect(() => {
@@ -32,19 +36,54 @@ const MyCourses = ({ decodedToken }) => {
     }
   }, []);
 
+  const handlePrevCourse = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setScrollDisabled(true);
+    }
+  };
+
+  const handleNextCourse = () => {
+    if (currentPage < userCourses.length - 1) {
+      setCurrentPage(currentPage + 1);
+      setScrollDisabled(true);
+    }
+  };
+  const handleScroll = () => {
+    if (scrollDisabled) {
+      setScrollDisabled(false);
+    }
+  };
   return (
-    <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none md:mx-[1%] lg:mx-[8%] xl:mx-[11%]">
-      <div
-        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
-        ref={ContainerScroll_1}
-        onMouseDown={DownScroll_1}
-        onMouseMove={MoveScroll_1}
-        onMouseUp={MouseUpScroll_1}
-        onMouseLeave={LeaveScroll_1}
-      >
+    <div
+      className={`py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none md:mx-[1%] lg:mx-[8%] xl:mx-[11%] ${
+        scrollDisabled ? "overflow-hidden" : ""
+      }`}
+      onWheel={handleScroll}
+    >
+      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
         <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-9 xl:space-x-11">
-          {userCourses?.map((userCourse) => (
-            <div key={userCourse.courseInfo._id}>
+          {userCourses?.map((userCourse, index) => (
+            <div
+              key={userCourse.courseInfo._id}
+              className="flex justify-center items-center"
+            >
+              {index === currentPage && (
+                <>
+                  <IconButton
+                    className="absolute left-0 ml-[20%]"
+                    onClick={handlePrevCourse}
+                  >
+                    <ArrowBlack1 />
+                  </IconButton>
+                  <IconButton
+                    className="absolute right-0 mr-[20%]"
+                    onClick={handleNextCourse}
+                  >
+                    <ArrowBlack2 />
+                  </IconButton>
+                </>
+              )}
               <Link href={`/my-account/${userCourse.courseInfo._id}`}>
                 <Cards
                   title={userCourse.courseInfo.courseShortTitle}

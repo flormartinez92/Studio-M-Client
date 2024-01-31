@@ -395,6 +395,126 @@ export function Arrow({ width, height, color }) {
   );
 }
 
+export function ArrowBlack1({ width, height, color }) {
+  return (
+    <svg
+      width={width || "45"}
+      height={height || "45"}
+      viewBox="0 0 59 62"
+      fill={color || "none"}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_2697_2163)">
+        <ellipse cx="29.5" cy="26.8002" rx="25.5" ry="26.8002" fill="#1E1E1E" />
+      </g>
+      <path
+        d="M17.9167 27L27.4167 17.5M17.9167 27L27.4167 36.5M17.9167 27L40.0834 27"
+        stroke="#F8F8F8"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_d_2697_2163"
+          x="0"
+          y="0"
+          width="59"
+          height="61.6001"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="2" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_2697_2163"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_2697_2163"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export function ArrowBlack2({ width, height, color }) {
+  return (
+    <svg
+      width={width || "45"}
+      height={height || "45"}
+      viewBox="0 0 59 62"
+      fill={color || "none"}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_2697_2167)">
+        <ellipse cx="29.5" cy="26.8002" rx="25.5" ry="26.8002" fill="#1E1E1E" />
+      </g>
+      <path
+        d="M40.0834 27L30.5834 17.5M40.0834 27L30.5834 36.5M40.0834 27L17.9167 27"
+        stroke="#F8F8F8"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_d_2697_2167"
+          x="0"
+          y="0"
+          width="59"
+          height="61.6001"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="2" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_2697_2167"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_2697_2167"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
 export function ArrowBack({ width, height, color }) {
   return (
     <svg
