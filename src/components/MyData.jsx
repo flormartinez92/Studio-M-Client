@@ -105,10 +105,10 @@ const MyData = () => {
 
   return (
     //Contenedor
-    <div className="mt-7 relative flex flex-col items-center md:mt-10 md:h-80 md:flex-row md:items-start">
+    <div className="mt-7 relative flex flex-col items-center md:mt-10 md:h-80 md:flex-row md:items-start md:ml-[8%]">
       {/*Imagen e Icono*/}
-      <div className="md:basis-[27.5%] flex justify-center items-center">
-        <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5">
+      <div className="md:basis-[27.5%] flex justify-center items-center md:mr-6">
+        <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5 md:mt-2.5 ">
           <Image
             src={"/img/perfilDefault.png"}
             width={100}
