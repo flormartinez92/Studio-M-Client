@@ -14,18 +14,9 @@ import IconButton from "@/common/IconButton";
 const MyList = ({ decodedToken }) => {
   //Estado que setea los favoritos del usuario
   const [userFavorites, setUserFavorites] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [scrollDisabled, setScrollDisabled] = useState(false);
+  const [startCourse, setStartCourse] = useState(0);
   const [userCourses, setUserCourses] = useState([]);
-
-  //hook para scrollear
-  // const {
-  //   containerRef: ContainerScroll_2,
-  //   handleMouseDown: DownScroll_2,
-  //   handleMouseLeave: LeaveScroll_2,
-  //   handleMouseMove: MoveScroll_2,
-  //   handleMouseUp: MouseUpScroll_2,
-  // } = inputScroll();
+  const cardsPerPage = 3;
 
   //Pedido al back para trae los favoritos de un usuario
   useEffect(() => {
@@ -42,57 +33,27 @@ const MyList = ({ decodedToken }) => {
     }
   }, []);
 
-  const handlePrevCourse = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setScrollDisabled(true);
+  const handlePrevPage = () => {
+    if (startCourse > 0) {
+      setStartCourse(startCourse - 1);
     }
   };
 
-  const handleNextCourse = () => {
-    if (currentPage < userCourses.length - 1) {
-      setCurrentPage(currentPage + 1);
-      setScrollDisabled(true);
-    }
-  };
-  const handleScroll = () => {
-    if (scrollDisabled) {
-      setScrollDisabled(false);
+  const handleNextPage = () => {
+    if (startCourse < userCourses.length - 1) {
+      setStartCourse(startCourse + 1);
     }
   };
 
   return (
     <div className="py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center scrollbar-none md:mx-[1%] lg:mx-[8%] xl:mx-[11%]">
-      <div
-        className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row"
-        // ref={ContainerScroll_2}
-        // onMouseDown={DownScroll_2}
-        // onMouseMove={MoveScroll_2}
-        // onMouseUp={MouseUpScroll_2}
-        // onMouseLeave={LeaveScroll_2}
-      >
+      <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
         <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-9 xl:space-x-11">
           {userFavorites?.map((userFavorite, index) => (
             <div
               key={userFavorite._id}
               className="flex justify-center items-center"
             >
-              {index === currentPage && (
-                <>
-                  <IconButton
-                    className="absolute left-0 ml-[20%]"
-                    onClick={handlePrevCourse}
-                  >
-                    <ArrowBlack1 />
-                  </IconButton>
-                  <IconButton
-                    className="absolute right-0 mr-[20%]"
-                    onClick={handleNextCourse}
-                  >
-                    <ArrowBlack2 />
-                  </IconButton>
-                </>
-              )}
               <Cards
                 title={userFavorite.courseShortTitle}
                 buttonTitle="Ver curso"
@@ -110,6 +71,22 @@ const MyList = ({ decodedToken }) => {
               />
             </div>
           ))}
+          {userCourses.length > cardsPerPage && (
+            <div className="hidden xl:flex">
+              <IconButton
+                className="absolute left-0 ml-[18%]"
+                onClick={handlePrevPage}
+              >
+                <ArrowBlack1 />
+              </IconButton>
+              <IconButton
+                className="absolute right-0 mr-[18%]"
+                onClick={handleNextPage}
+              >
+                <ArrowBlack2 />
+              </IconButton>
+            </div>
+          )}
         </div>
       </div>
     </div>
