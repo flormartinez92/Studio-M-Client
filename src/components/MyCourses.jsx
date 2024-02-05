@@ -44,7 +44,7 @@ const MyCourses = ({ decodedToken }) => {
       className={`py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center md:mx-[1%] lg:mx-[8%] xl:mx-[11%]`}
     >
       <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
-        <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-9 xl:space-x-11">
+        <div className="flex items-center space-x-4 md:space-x-8 lg:space-x-11 xl:space-x-15 lg:ml-6 ">
           {userCourses
             ?.slice(startCourse, startCourse + cardsPerPage)
             .map((userCourse, index) => (
@@ -70,13 +70,13 @@ const MyCourses = ({ decodedToken }) => {
           {userCourses.length > cardsPerPage && (
             <div className="hidden xl:flex">
               <IconButton
-                className="absolute left-0 ml-[18%]"
+                className="absolute left-0 ml-[20%]"
                 onClick={handlePrevPage}
               >
                 <ArrowBlack1 />
               </IconButton>
               <IconButton
-                className="absolute right-0 mr-[18%]"
+                className="absolute right-0 mr-[20%]"
                 onClick={handleNextPage}
               >
                 <ArrowBlack2 />
