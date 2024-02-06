@@ -20,6 +20,7 @@ import {
 import Loading_common from "@/common/Loading_common";
 import Alert_common from "@/common/Alert_common";
 import IconButton from "@/common/IconButton";
+import CartAlert_common from "@/common/CartAlert";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -34,6 +35,7 @@ export default function Courses() {
   const dispatch = useDispatch();
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [cartAlert, setCartAlert] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -166,6 +168,13 @@ export default function Courses() {
           classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
         />
       )}
+      {cartAlert && (
+        <CartAlert_common
+          out={out}
+          titleAlert="¡Has agregado un curso al carrito!"
+          classNameAlert="w-[300px]"
+        />
+      )}
       {courses.length === 0 ? (
         <div className="w-full h-[600px]  flex justify-center items-center">
           <Loading_common />
@@ -189,7 +198,6 @@ export default function Courses() {
                 buttonTitle="Ver curso"
                 classNameIconButton="h-[90%] pl-[15px] pr-[15px] pb-3 pt-3 bg-[#181717]"
                 icon={<CartShopSimple width={"16px"} height={"16px"} />}
-                cartCount={course.isInCart}
               />
             ))}
           </div>
@@ -248,6 +256,8 @@ export default function Courses() {
                               course._id,
                               user._id,
                               setShowAlert,
+                              setCartAlert,
+                              setLoading,
                               setDeletingId
                             );
                             await handleItemsCart();

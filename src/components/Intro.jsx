@@ -14,14 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
+import CartAlert_common from "@/common/CartAlert";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
   const [out, setout] = useState(false);
-
   const [showAlert, setShowAlert] = useState(false);
+  const [cartAlert, setCartAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -67,6 +69,11 @@ export default function Intro() {
           userId: user?._id,
         }
       );
+      setCartAlert(true);
+      setTimeout(() => {
+        setCartAlert(false);
+      }, 2500);
+
       dispatch(addToCart(responseAddCart.data.courseId.length));
     } catch (error) {
       console.error(error);
@@ -114,6 +121,13 @@ export default function Intro() {
           handleAlert={handleAlert}
           out={out}
           titleAlert="¡Este curso ya está en tu carrito!"
+          classNameAlert="w-[300px]"
+        />
+      )}
+      {cartAlert && (
+        <CartAlert_common
+          out={out}
+          titleAlert="¡Has agregado un curso al carrito!"
           classNameAlert="w-[300px]"
         />
       )}

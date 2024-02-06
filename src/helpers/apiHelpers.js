@@ -63,17 +63,26 @@ export const handleCartClick = async (
   courseId,
   userId,
   setShowAlert,
+  setCartAlert,
+  setLoading,
   setDeletingId
 ) => {
   try {
+    setLoading(true);
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
       courseId,
       userId,
     });
     setDeletingId(courseId);
+    setCartAlert(true);
+    setTimeout(() => {
+      setCartAlert(false);
+    }, 2500);
   } catch (error) {
     setShowAlert(true);
     console.error("Error while adding cart:", error);
+  } finally {
+    setLoading(false);
   }
 };
 

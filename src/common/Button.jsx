@@ -3,7 +3,6 @@ export default function Button({
   className,
   type,
   onClick,
-  cartCount,
   ...propButton
 }) {
   return (
@@ -14,12 +13,7 @@ export default function Button({
       } ${className || ""}`}
       {...propButton}
     >
-      <div>
-        <div className=" absolute top-2 right-3">
-          {cartCount && <p className=" text-sm font-mystery-mixed">1</p>}
-        </div>
-        <div>{children}</div>
-      </div>
+      <div>{children}</div>
     </button>
   );
 }
