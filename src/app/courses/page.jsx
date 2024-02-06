@@ -15,10 +15,12 @@ import {
   fetchUser,
   removeFavorite,
   handleCartClick,
+  fetchCart,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
 import Alert_common from "@/common/Alert_common";
 import IconButton from "@/common/IconButton";
+import CartAlert_common from "@/common/CartAlert";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -33,6 +35,7 @@ export default function Courses() {
   const dispatch = useDispatch();
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [cartAlert, setCartAlert] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -49,15 +52,20 @@ export default function Courses() {
         const userData = await fetchUser();
         setUser(userData);
 
+        let userCart = [];
         let userFavorites = [];
         if (userData) {
           userFavorites = await fetchFavorites(userData._id);
+          userCart = await fetchCart(userData._id);
         }
 
         const coursesWithFavorites = coursesData.map((course) => ({
           ...course,
           isFavorite: userFavorites.some(
             (favoriteCourse) => favoriteCourse._id === course._id
+          ),
+          isInCart: userCart.some(
+            (courseCart) => courseCart._id === course._id
           ),
         }));
 
@@ -156,8 +164,15 @@ export default function Courses() {
         <Alert_common
           handleAlert={handleAlert}
           out={out}
-          titleAlert="Curso ya está en el carrito"
+          titleAlert="¡Este curso ya está en tu carrito!"
           classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
+      {cartAlert && (
+        <CartAlert_common
+          out={out}
+          titleAlert="¡Has agregado un curso al carrito!"
+          classNameAlert="w-[300px]"
         />
       )}
       {courses.length === 0 ? (
@@ -241,6 +256,8 @@ export default function Courses() {
                               course._id,
                               user._id,
                               setShowAlert,
+                              setCartAlert,
+                              setLoading,
                               setDeletingId
                             );
                             await handleItemsCart();

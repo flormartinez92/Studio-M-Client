@@ -27,6 +27,18 @@ export const fetchFavorites = async (userId) => {
   }
 };
 
+export const fetchCart = async (userId) => {
+  try {
+    const userCart = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${userId}`
+    );
+    return userCart.data;
+  } catch (error) {
+    console.error("Error while fetching cart:", error);
+    return [];
+  }
+};
+
 export const removeFavorite = async (courseId, userId) => {
   try {
     await axios.delete(
@@ -51,17 +63,26 @@ export const handleCartClick = async (
   courseId,
   userId,
   setShowAlert,
+  setCartAlert,
+  setLoading,
   setDeletingId
 ) => {
   try {
+    setLoading(true);
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
       courseId,
       userId,
     });
     setDeletingId(courseId);
+    setCartAlert(true);
+    setTimeout(() => {
+      setCartAlert(false);
+    }, 2500);
   } catch (error) {
     setShowAlert(true);
     console.error("Error while adding cart:", error);
+  } finally {
+    setLoading(false);
   }
 };
 

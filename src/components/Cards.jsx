@@ -13,6 +13,7 @@ import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { useEffect } from "react";
 import Alert_common from "@/common/Alert_common";
+import CartAlert_common from "@/common/CartAlert";
 
 export default function Cards({
   title,
@@ -34,6 +35,7 @@ export default function Cards({
   const [isFavorite, setIsFavorite] = useState(true);
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [cartAlert, setCartAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
@@ -59,6 +61,11 @@ export default function Cards({
           userId: user?._id,
         }
       );
+      setCartAlert(true);
+      setTimeout(() => {
+        setCartAlert(false);
+      }, 2500);
+
       dispatch(addToCart(cartItems.data.courseId.length));
     } catch (error) {
       if (error.response.data === "Course already in the cart") {
@@ -111,11 +118,17 @@ export default function Cards({
         <Alert_common
           handleAlert={handleAlert}
           out={out}
-          titleAlert="Curso ya está en el carrito"
+          titleAlert="¡Este curso ya está en tu carrito!"
           classNameAlert="w-[300px]"
         />
       )}
-
+      {cartAlert && (
+        <CartAlert_common
+          out={out}
+          titleAlert="¡Has agregado un curso al carrito!"
+          classNameAlert="w-[300px]"
+        />
+      )}
       <h2
         className={`text-3xl text-white bg-[#181717] font-mystery-mixed p-1 flex items-center justify-center rounded-t-lg ${
           classNameTitle || ""

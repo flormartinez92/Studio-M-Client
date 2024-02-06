@@ -16,7 +16,7 @@ export default function Alert_common({
       <div
         className={`animate__animated animate__fadeInDown animate__faster ${classNameAlert} flex flex-col justify-center items-end bg-white py-3 rounded`}
       >
-        <h2 className="w-full text-start pl-2">{titleAlert}</h2>
+        <h2 className="w-full text-start pl-4">{titleAlert}</h2>
         <div className="flex justify-between">
           <button
             onClick={handleAlert}

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { addToCart } from "@/state/features/cartSlice";
 import { useDispatch } from "react-redux";
 import Alert_common from "@/common/Alert_common";
+import CartAlert_common from "@/common/CartAlert";
 
 export default function CourseInformation({ params }) {
   const [course, setCourse] = useState({});
@@ -25,6 +26,7 @@ export default function CourseInformation({ params }) {
   const [out, setout] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [cartAlert, setCartAlert] = useState(false);
   const router = useRouter();
   const courseId = params["course-id"];
   const dispatch = useDispatch();
@@ -114,8 +116,15 @@ export default function CourseInformation({ params }) {
         <Alert_common
           handleAlert={handleAlert}
           out={out}
-          titleAlert="Curso ya está en el carrito"
+          titleAlert="¡Este curso ya está en tu carrito!"
           classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
+      {cartAlert && (
+        <CartAlert_common
+          out={out}
+          titleAlert="¡Has agregado un curso al carrito!"
+          classNameAlert="w-[300px]"
         />
       )}
       {Object.keys(course).length === 0 ? (
@@ -253,17 +262,14 @@ export default function CourseInformation({ params }) {
                     handleclickFavoriteSingleCourse(courseId)
                   }
                   isFavorite={course.isFavorite}
-                  // handleCartClick={() => {
-                  //   user
-                  //     ? handleCartClick(course._id, user._id)
-                  //     : router.push("/login");
-                  // }}
                   handleCartClick={async () => {
                     if (user) {
                       await handleCartClick(
                         course._id,
                         user._id,
                         setShowAlert,
+                        setCartAlert,
+                        setLoading,
                         setDeletingId
                       );
                       await handleItemsCart();

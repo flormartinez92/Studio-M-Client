@@ -13,7 +13,7 @@ export default function Button({
       } ${className || ""}`}
       {...propButton}
     >
-      {children}
+      <div>{children}</div>
     </button>
   );
 }
