@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
+import { useRouter } from "next/navigation";
 
 export default function Cover() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function Cover() {
   const { user } = useSelector((state) => state.auth);
   const { itemCount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
@@ -52,6 +54,19 @@ export default function Cover() {
   const handleClick = (title) => {
     setTitle(title);
     setMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/logout`,
+        {},
+        { withCredentials: true }
+      );
+      router.push("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   return (
@@ -107,6 +122,17 @@ export default function Cover() {
                   Mi cuenta
                 </Link>
               </li>
+              {user && (
+                <li className="">
+                  <Link
+                    href="/"
+                    className="text-[50px] text-white font-mystery-mixed"
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </Link>
+                </li>
+              )}
               <li className="mx-[6rem]">
                 <Link
                   href="/trolley"
@@ -205,6 +231,17 @@ export default function Cover() {
                     Mi cuenta
                   </Link>
                 </li>
+                {user && (
+                  <li className="mx-4">
+                    <Link
+                      href="/"
+                      onClick={handleLogout}
+                      className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
+                    >
+                      Cerrar sesión
+                    </Link>
+                  </li>
+                )}
                 <li className="mx-4">
                   <Link href="/trolley">
                     <IconButton className="hover:underline hover:decoration-pink relative">
