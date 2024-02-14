@@ -3,7 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import IconButton from "@/common/IconButton";
-import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
+import { BurgerMenu, CartShopSimple, Close, LogOut } from "@/common/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
@@ -129,7 +129,7 @@ export default function Cover() {
                     className="text-[50px] text-white font-mystery-mixed"
                     onClick={handleLogout}
                   >
-                    Cerrar sesión
+                    <LogOut />
                   </Link>
                 </li>
               )}
@@ -238,7 +238,7 @@ export default function Cover() {
                       onClick={handleLogout}
                       className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                     >
-                      Cerrar sesión
+                      <LogOut />
                     </Link>
                   </li>
                 )}

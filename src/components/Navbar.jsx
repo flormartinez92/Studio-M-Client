@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import IconButton from "@/common/IconButton";
-import { BurgerMenu, CartShopSimple, Close } from "@/common/Icons";
+import { BurgerMenu, CartShopSimple, Close, LogOut } from "@/common/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
@@ -133,7 +133,7 @@ export default function Navbar() {
                     className="text-[50px] text-white font-mystery-mixed"
                     onClick={handleLogout}
                   >
-                    Cerrar sesión
+                    <LogOut />
                   </Link>
                 </li>
               )}
@@ -247,7 +247,7 @@ export default function Navbar() {
                       onClick={handleLogout}
                       className="text-[40px] text-white font-mystery-mixed hover:underline hover:decoration-pink"
                     >
-                      Cerrar sesión
+                      <LogOut />
                     </Link>
                   </li>
                 )}
