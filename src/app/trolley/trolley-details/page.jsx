@@ -56,7 +56,6 @@ export default function trolleyDetails() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/discountCart`,
         { mail: user.mail }
       );
-      //console.log(responseCoupon);
     } catch (error) {
       console.error(error);
     }
@@ -202,9 +201,9 @@ export default function trolleyDetails() {
                 classNameImg=" h-[12.625rem] rounded-bl-[10px] rounded-br-[10px]"
                 classNameBorder="h-[52px] flex-row justify-between items-center w-[170px] top-[182px]"
                 classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
-                buttonTitle={`$ ${Number(course.coursePrice)
+                buttonTitle={`${Number(course.coursePrice)
                   .toLocaleString()
-                  .replace(",", ".")}`}
+                  .replace(",", ".")} US$`}
               />
             ))}
             {cartCourses?.map((course) => {
@@ -247,16 +246,18 @@ export default function trolleyDetails() {
               <h2 className="mx-8">Total:</h2>
               <div className="relative">
                 {priceDiscount && (
-                  <p className="absolute -top-5 md:-top-5 left-1/2 -translate-x-1/2 text-[15px] md:text-[25px] -rotate-2 line-through font-ms-gothic">
-                    {Number(priceDiscount).toLocaleString().replace(",", ".")}
+                  <p className="absolute -top-5 md:-top-5 left-16 -translate-x-1/2 text-[15px] md:text-[25px] -rotate-2 line-through font-ms-gothic">
+                    {Number(priceDiscount).toLocaleString().replace(",", ".")}{" "}
                   </p>
                 )}
                 <h2 className="mx-8">
+                  {" "}
                   {!trolley
                     ? Number(cartAmount.totalAmount)
                         .toLocaleString()
                         .replace(",", ".")
                     : Number(trolley).toLocaleString().replace(",", ".")}
+                  &nbsp; US$
                 </h2>
               </div>
             </div>

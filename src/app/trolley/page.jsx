@@ -181,23 +181,27 @@ export default function Trolley() {
                     onClick={handleremoveCart}
                     className="bg-buttonBlack w-[270px] md:w-[130px] h-10 p-6 md:h-8 md:p-0  rounded-[10px] flex justify-center items-center gap-x-1"
                   >
-                    <h2 className="text-[1.5rem] md:text-[1rem]">
-                      Vaciar carrito
-                    </h2>
-                    <div className="md:hidden">
-                      <CartShopSimple height={24} width={24} />
+                    <div className="flex flex-row gap-x-1 justify-center items-center">
+                      <h2 className="text-[1.5rem] md:text-[1rem]">
+                        Vaciar carrito
+                      </h2>
+                      <div className="md:hidden">
+                        <CartShopSimple height={24} width={24} />
+                      </div>
                     </div>
                   </Button>
                   <Button
                     onClick={() => handleClickCreateOrder(user)}
                     className="bg-buttonBlack w-[270px] md:w-[130px] h-10 p-6 md:h-8 md:p-0  rounded-[10px] flex justify-center items-center gap-x-1"
                   >
-                    <h2 className="text-[1.5rem] md:text-[1rem]">Comprar</h2>
-                    <div className="md:hidden">
-                      <CartShopSimple height={24} width={24} />
-                    </div>
-                    <div className="hidden md:block">
-                      <CartShopSimple height={20} width={20} />
+                    <div className="flex flex-row gap-x-1 justify-center items-center">
+                      <h2 className="text-[1.5rem] md:text-[1rem]">Comprar</h2>
+                      <div className="md:hidden">
+                        <CartShopSimple height={24} width={24} />
+                      </div>
+                      <div className="hidden md:block">
+                        <CartShopSimple height={20} width={20} />
+                      </div>
                     </div>
                   </Button>
                 </div>

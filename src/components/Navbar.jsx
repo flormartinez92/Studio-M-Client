@@ -127,7 +127,7 @@ export default function Navbar() {
                 </Link>
               </li>
               {user && (
-                <li className="">
+                <li className="mx-[6rem]">
                   <Link
                     href="/"
                     className="text-[50px] text-white font-mystery-mixed"

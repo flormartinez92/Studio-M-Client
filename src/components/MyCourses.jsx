@@ -68,9 +68,9 @@ const MyCourses = ({ decodedToken }) => {
               </div>
             ))}
           {userCourses.length > cardsPerPage && (
-            <div className="hidden xl:flex">
+            <div className="hidden xl:flex bg-pink">
               <IconButton
-                className="absolute left-0 ml-[22%]"
+                className="absolute left-0 ml-[20%]"
                 onClick={handlePrevPage}
               >
                 <ArrowBlack1 />
