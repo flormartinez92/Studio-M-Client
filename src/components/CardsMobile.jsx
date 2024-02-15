@@ -63,7 +63,7 @@ export default function CardsMobile({ img, title, price, handleClickDelete }) {
                 <Button
                   className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.5rem] leading-5`}
                 >
-                  {`$ ${Number(price).toLocaleString().replace(",", ".")}`}
+                  {`${Number(price).toLocaleString().replace(",", ".")} US$`}
                 </Button>
               </Border>
             </div>

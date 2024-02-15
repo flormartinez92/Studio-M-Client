@@ -151,7 +151,7 @@ export default function MyAccount() {
       {/* Modo escritorio */}
       <div className="hidden md:flex md:flex-col md:items-center">
         <div
-          className="bg-[#D9D9D9] rounded-xl mt-10 mb-48 w-[90%] max-w-[1000px]" // aca
+          className="bg-[#D9D9D9] rounded-xl mt-10 mb-48 w-[90%] max-w-[1000px]"
           style={{ boxShadow: "0px 5px 6px -2px rgba(0,0,0,0.40)" }}
         >
           <div className="bg-[#1E1E1E] w-full rounded-t-lg py-3 flex items-center px-4 md:justify-around md:px-0">
