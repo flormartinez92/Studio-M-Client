@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const buttonProjectSlice = createSlice({
   name: "buttonProject",
-  initialState: "Entregar Proyecto",
+  initialState: false,
   reducers: {
-    changeButton: (state, action) => {
+    changeButtonState: (state, action) => {
       return action.payload;
     },
   },
 });
 
-export const { changeButton } = buttonProjectSlice.actions;
+export const { changeButtonState } = buttonProjectSlice.actions;
 export default buttonProjectSlice.reducer;
