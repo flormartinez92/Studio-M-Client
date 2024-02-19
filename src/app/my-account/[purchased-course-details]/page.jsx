@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useMediaQuery } from "@react-hook/media-query";
 import { useSelector, useDispatch } from "react-redux";
-import { changeButton } from "../../../state/features/buttonProjectSlice";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import { BurgerDots } from "@/common/Icons";
@@ -27,6 +26,8 @@ export default function PurchasedCourseDetails({ params }) {
   const buttonProjectState = useSelector((state) => state.buttonProject);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [buttonName, setButtonName] = useState("Entregar Proyecto");
 
   //Si no hay user, te redirige a Login
   useEffect(() => {
@@ -53,26 +54,42 @@ export default function PurchasedCourseDetails({ params }) {
         const userData = await fetchUser();
         setUser(userData);
 
-        const userProject = await fetchUserProject(userData._id);
-        setUserProject(userProject);
+        //* Esto me trae un arreglo con los proyectos del usuario
+        const userProjects = await fetchUserProject(userData._id);
+        const project = userProjects.find(
+          (project) => project.courseId === courseId
+        );
 
-        if (userProject !== "") {
-          if (userProject.status) {
-            return dispatch(changeButton("Proyecto Aprobado"));
-          } else if (!userProject.status && userProject.comment) {
-            return dispatch(changeButton("Tenés un comentario"));
+        if (project) {
+          setUserProject(project);
+          if (project.status) {
+            return setButtonName("Proyecto Aprobado");
+          } else if (!project.status && project.comment) {
+            return setButtonName("Tenés un comentario");
           } else {
-            return dispatch(changeButton("Proyecto Entregado"));
+            return setButtonName("Proyecto Entregado");
           }
         } else {
-          return dispatch(changeButton("Entregar Proyecto"));
+          return setButtonName("Entregar Proyecto");
         }
+
+        // if (userProject !== "") {
+        //   if (userProject.status) {
+        //     return dispatch(changeButton("Proyecto Aprobado"));
+        //   } else if (!userProject.status && userProject.comment) {
+        //     return dispatch(changeButton("Tenés un comentario"));
+        //   } else {
+        //     return dispatch(changeButton("Proyecto Entregado"));
+        //   }
+        // } else {
+        //   return dispatch(changeButton("Entregar Proyecto"));
+        // }
       } catch (error) {
         console.error("Error while fetching data:", error);
       }
     };
     fetchCourseDetails();
-  }, [courseId]);
+  }, [courseId, buttonProjectState]);
 
   const handleProjectClick = async () => {
     setModal(!modal);
@@ -166,23 +183,23 @@ export default function PurchasedCourseDetails({ params }) {
             <Border className="flex w-auto h-auto border-[3px] border-pink shadow-xl">
               <Button
                 onClick={() => {
-                  if (buttonProjectState === "Entregar Proyecto") {
+                  if (buttonName === "Entregar Proyecto") {
                     handleProjectClick();
-                  } else if (buttonProjectState === "Tenés un comentario") {
+                  } else if (buttonName === "Tenés un comentario") {
                     handleUpdateProjectClick();
                   }
                 }}
                 disabled={
-                  buttonProjectState === "Proyecto Entregado" ||
-                  buttonProjectState === "Proyecto Aprobado"
+                  buttonName === "Proyecto Entregado" ||
+                  buttonName === "Proyecto Aprobado"
                 }
                 className="p-2 font-mystery-mixed text-lg m-2.5 md:text-3xl md:py-2.5 md:px-8 xl:text-4xl"
               >
                 {userProject === ""
-                  ? `${buttonProjectState}`
-                  : userProject.status
-                  ? `${buttonProjectState}`
-                  : `${buttonProjectState}`}
+                  ? `${buttonName}`
+                  : userProject?.status
+                  ? `${buttonName}`
+                  : `${buttonName}`}
               </Button>
             </Border>
           </div>

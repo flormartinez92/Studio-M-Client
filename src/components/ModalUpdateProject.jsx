@@ -3,11 +3,11 @@
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import useInput from "@/hooks/useInput";
-import { changeButton } from "@/state/features/buttonProjectSlice";
+import { changeButtonState } from "@/state/features/buttonProjectSlice";
 import { useMediaQuery } from "@react-hook/media-query";
 import axios from "axios";
 import { useRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ModalUpdateProject({
   status,
@@ -21,6 +21,7 @@ export default function ModalUpdateProject({
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const isMdBreakpoint = useMediaQuery("(min-width: 768px)");
+  const buttonProjectState = useSelector((state) => state.buttonProject);
   const dispatch = useDispatch();
   const {
     OnChange: OnChangeLinkProject,
@@ -48,7 +49,7 @@ export default function ModalUpdateProject({
           `${process.env.NEXT_PUBLIC_API_URL}/api/project/updateProject/${projectId}`,
           { project_url: valueLinkProject, mail }
         );
-        dispatch(changeButton("Proyecto Entregado"));
+        dispatch(changeButtonState(!buttonProjectState));
         setmessageAlertOk("¡Link Entregado!");
         setmessageAlert("");
         setTimeout(() => {
