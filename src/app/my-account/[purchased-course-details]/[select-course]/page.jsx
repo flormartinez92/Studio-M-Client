@@ -232,7 +232,7 @@ export default function SelectCourse({ params }) {
       </div>
       <Button
         type={"rounder"}
-        className={`flex justify-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl md:text-3xl mt-6 
+        className={`flex justify-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-3  xl:w-60 xl:text-3xl md:text-3xl mt-6 
     ${courseClass.status ? "bg-green" : ""}`}
         onClick={() => handleClick()}
       >
@@ -244,8 +244,8 @@ export default function SelectCourse({ params }) {
               <span>Completar</span>&nbsp; &nbsp;
               <Image
                 src={"/img/Ellipse.png"}
-                width={"24"}
-                height={"24"}
+                width={"26"}
+                height={"26"}
                 alt="ellipse"
               />
             </div>
