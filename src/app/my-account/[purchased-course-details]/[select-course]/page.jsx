@@ -232,7 +232,7 @@ export default function SelectCourse({ params }) {
       </div>
       <Button
         type={"rounder"}
-        className={`flex flex-row justify-center items-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl md:text-3xl mt-6
+        className={`flex justify-center w-56 p-2 font-ms-gothic text-2xl mb-14 xl:p-2 xl:px-10 xl:w-60 xl:text-3xl md:text-3xl mt-6 
     ${courseClass.status ? "bg-green" : ""}`}
         onClick={() => handleClick()}
       >
@@ -240,14 +240,15 @@ export default function SelectCourse({ params }) {
           <Check color={"black"} width={"40"} height={"40"} />
         ) : (
           <>
-            Completar&nbsp;
-            <Image
-              src={"/img/Ellipse.png"}
-              width={"26"}
-              height={"26"}
-              alt="ellipse"
-              className="sm:ml-auto"
-            />
+            <div className="flex justify-center items-center">
+              <span>Completar</span>&nbsp; &nbsp;
+              <Image
+                src={"/img/Ellipse.png"}
+                width={"24"}
+                height={"24"}
+                alt="ellipse"
+              />
+            </div>
           </>
         )}
       </Button>
