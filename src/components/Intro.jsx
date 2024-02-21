@@ -15,6 +15,7 @@ import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
 import CartAlert_common from "@/common/CartAlert";
+import { useRouter } from "next/navigation";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
@@ -23,6 +24,7 @@ export default function Intro() {
   const [cartAlert, setCartAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const router = useRouter();
 
   const fetchData = async () => {
     try {
@@ -222,7 +224,11 @@ export default function Intro() {
                                     </Link>
                                     <Button
                                       className={`py-2 px-2 flex items-center`}
-                                      onClick={() => addCourseCart(item._id)}
+                                      onClick={() =>
+                                        user
+                                          ? addCourseCart(item._id)
+                                          : router.push("/login")
+                                      }
                                     >
                                       {<CartShopSimple />}
                                     </Button>
