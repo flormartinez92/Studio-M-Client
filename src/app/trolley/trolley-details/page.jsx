@@ -1,8 +1,7 @@
 "use client";
+
 import Border from "@/common/Border";
 import Button from "@/common/Button";
-// import IconButton from "@/common/IconButton";
-// import { CartShopSimple, Close, Signal } from "@/common/Icons";
 import Input from "@/common/Input";
 import Loading_common from "@/common/Loading_common";
 import Cards from "@/components/Cards";
@@ -83,8 +82,6 @@ export default function trolleyDetails() {
         { userId: user?._id }
       );
 
-      console.log("MP ACTULIZADO----------", updatedMp);
-
       setMessageAlertOk("Descuento Aplicado!");
       setTimeout(() => {
         setMessageAlertOk(null);
@@ -94,8 +91,6 @@ export default function trolleyDetails() {
       setCartCourses(responseCourses.data);
       setCartAmount(responseTotalAmount.data);
       setPriceDiscount(responseCoupon.data.totalAmount);
-
-      //console.log(responseCoupon.data);
 
       setTrolley(responseCoupon.data.totalDiscount);
     } catch (err) {
@@ -158,7 +153,7 @@ export default function trolleyDetails() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user?._id}`
       );
       const responseOrder = await axios.get(
-        `http://localhost:8081/api/purchaseOrder/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/${user._id}`
       );
 
       setOrder(responseOrder.data);
@@ -262,9 +257,7 @@ export default function trolleyDetails() {
               </div>
             </div>
 
-            <div
-            // className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
-            >
+            <div>
               <MpButton cartCourses={cartCourses} orderId={order._id} />
               <PayPalButton
                 orderId={order._id}
@@ -288,8 +281,6 @@ export default function trolleyDetails() {
                 <h2 className="font-mystery-mixed text-[2rem] min-[500px]:text-[3rem] min-[600px]:text-[3.5rem] min-[700px]:text-[4rem] md:text-[4.5rem] text-letterWhite">
                   Ingresá tu cupón
                 </h2>
-                {/* sd */}
-
                 <div className="flex w-full justify-center">
                   <Input
                     className={

@@ -1,4 +1,5 @@
 "use client";
+
 import Button from "@/common/Button";
 import Input from "@/common/Input";
 import React, { useEffect, useState } from "react";
@@ -63,8 +64,6 @@ export default function AddCoupon() {
           }, 1300);
         } catch (error) {
           console.error(error);
-          const { data } = error.response;
-          console.log(data);
         }
       }
     }

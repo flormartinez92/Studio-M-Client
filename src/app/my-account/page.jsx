@@ -22,7 +22,6 @@ export default function MyAccount() {
     right: "white",
   });
   const router = useRouter();
-  const userState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   //Si no hay user, te redirige a Login

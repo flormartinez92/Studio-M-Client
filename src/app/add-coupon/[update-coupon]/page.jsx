@@ -66,8 +66,6 @@ export default function UpdateCoupon({ params }) {
       }, 1300);
     } catch (error) {
       console.error(error);
-      const { data } = error.response;
-      console.log(data);
     }
   };
 
