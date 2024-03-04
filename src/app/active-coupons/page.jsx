@@ -24,7 +24,6 @@ export default function ActiveCoupons() {
   const dispatch = useDispatch();
   const [coupons, setCoupons] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
   const couponsPerPage = 10;
   const totalPages = Math.ceil(coupons.length / couponsPerPage);
   const startIndex = (currentPage - 1) * couponsPerPage;
@@ -33,7 +32,6 @@ export default function ActiveCoupons() {
   useEffect(() => {
     const checkUserAuthentication = async () => {
       const user = await fetchUser();
-      console.log(user);
       dispatch(setCredentials(user));
     };
     checkUserAuthentication();
@@ -65,6 +63,7 @@ export default function ActiveCoupons() {
       console.error(error);
     }
   };
+
   const handleStatusToggle = async (couponId) => {
     try {
       const oneCoupon = await axios.get(

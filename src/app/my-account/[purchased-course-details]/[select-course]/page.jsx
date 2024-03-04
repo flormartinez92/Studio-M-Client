@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
-
 import axios from "axios";
 import { Arrow, ArrowBack, BurgerMenu2, Check } from "@/common/Icons";
 import Button from "@/common/Button";

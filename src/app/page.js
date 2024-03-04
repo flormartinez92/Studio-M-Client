@@ -1,7 +1,6 @@
 "use client";
 
 import Cover from "@/components/Cover";
-
 import Intro from "@/components/Intro";
 import { setCredentials } from "@/state/features/authSlice";
 import { useEffect } from "react";

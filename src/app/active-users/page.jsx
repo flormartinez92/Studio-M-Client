@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import { UilArrow1, UilArrow2 } from "@/common/Icons";
 import axios from "axios";
 import { useState } from "react";

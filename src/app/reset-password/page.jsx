@@ -14,20 +14,6 @@ export default function ResetPassword() {
   const router = useRouter();
   const [messageAlert, setMessageAlert] = useState("");
   const [messageAlertOk, setMessageAlertOk] = useState("");
-  // const [password, setPassword] = useState({
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-
-  // const handlePasswordChange = (e) => {
-  //   const { name, value } = e.target;
-  //   console.log("e--->", e);
-  //   setPassword((data) => ({
-  //     ...data,
-  //     [name]: value,
-  //   }));
-  // };
-
   const {
     OnChange: OnChangePassword,
     value: valuePassword,
@@ -37,7 +23,6 @@ export default function ResetPassword() {
     isPasswordVisible,
     setIsPasswordVisible,
   } = useInput("password");
-
   const {
     OnChange: OnChangeConfirmPassword,
     value: valueConfirmPassword,

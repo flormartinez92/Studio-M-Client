@@ -72,18 +72,6 @@ export default function PurchasedCourseDetails({ params }) {
         } else {
           return setButtonName("Entregar Proyecto");
         }
-
-        // if (userProject !== "") {
-        //   if (userProject.status) {
-        //     return dispatch(changeButton("Proyecto Aprobado"));
-        //   } else if (!userProject.status && userProject.comment) {
-        //     return dispatch(changeButton("Tenés un comentario"));
-        //   } else {
-        //     return dispatch(changeButton("Proyecto Entregado"));
-        //   }
-        // } else {
-        //   return dispatch(changeButton("Entregar Proyecto"));
-        // }
       } catch (error) {
         console.error("Error while fetching data:", error);
       }

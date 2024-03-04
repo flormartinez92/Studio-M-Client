@@ -5,7 +5,6 @@ import Button from "@/common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
-
 import {
   Trash,
   Pencil,
@@ -17,7 +16,6 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
-import { stringify } from "postcss";
 import NotFound from "@/common/NotFound";
 
 export default function ActiveCourses() {
@@ -43,11 +41,9 @@ export default function ActiveCourses() {
   }, []);
 
   useEffect(() => {
-    // Simulando un tiempo de espera con setTimeout
     const timer = setTimeout(() => {
-      // Después de un tiempo determinado (por ejemplo, 2 segundos), se muestra el botón
       setMostrarBoton(true);
-    }, 1000); // Cambia este valor al tiempo que desees
+    }, 1000);
 
     // Limpieza del timer al desmontar el componente
     return () => clearTimeout(timer);
@@ -79,6 +75,7 @@ export default function ActiveCourses() {
       console.error(error);
     }
   };
+
   const handleStatusToggle = async (courseId) => {
     try {
       const oneCourse = await axios.get(
@@ -114,8 +111,8 @@ export default function ActiveCourses() {
       return total + matchingCourses.length;
     }, 0);
   };
+
   const handleEditCourse = (course) => {
-    console.log("EDITANDO", course);
     localStorage.setItem("courseEdit", JSON.stringify(course));
   };
 
