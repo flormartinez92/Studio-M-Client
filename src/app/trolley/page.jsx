@@ -96,24 +96,29 @@ export default function Trolley() {
   };
   const handleClickCreateOrder = async (user) => {
     try {
+      console.log(user._id);
+
       const responseOrder = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/${user._id}`
+        `http://localhost:8081/api/purchaseOrder/${user._id}`
       );
+      console.log(responseOrder);
 
       if (responseOrder.data) return router.push("/trolley/trolley-details");
 
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user._id}`
+        `http://localhost:8081/api/cart/courses/total/${user._id}`
       );
 
       const createOrder = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/add`,
+        "http://localhost:8081/api/purchaseOrder/add",
         { userId: data.userId, totalAmmount: data.totalAmount }
       );
+      //console.log(createOrder);
       router.push("/trolley/trolley-details");
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
+    //router.push("/trolley/trolley-details");
   };
 
   return (
