@@ -58,7 +58,8 @@ export default function MpButtonIvan({ price, id }) {
               alt="mp"
               className="w-7  md:w-9"
             />
-            <p className="text-[#FFF] hidden sm-450:block text-[.8rem] sm-450:text-[.9rem]  md:text-[1rem] font-medium">
+
+            <p className="text-[#FFF] hidden sm:block text-[.8rem] sm-450:text-[.9rem]  md:text-[1rem] font-medium">
               Mercado Pago
             </p>
           </div>

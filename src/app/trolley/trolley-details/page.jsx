@@ -258,8 +258,16 @@ export default function trolleyDetails() {
               </div>
             </div>
 
-            <div className="">
-              {/* <MpButton cartCourses={cartCourses} orderId={order._id} /> */}
+            <div
+              className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
+            >
+              {/* <MpButton
+                cartCourses={cartCourses}
+                orderId={order._id}
+                statusbtn={refresh}
+              /> */}
+              {/* {JSON.stringify(cartAmount)} */}
+
               <MpButtonIvan
                 price={
                   cartAmount.totalDiscount !== 0
@@ -268,6 +276,7 @@ export default function trolleyDetails() {
                 }
                 id={cartAmount._id}
               />
+
               <PayPalButton
                 orderId={order._id}
                 amount={trolley}
