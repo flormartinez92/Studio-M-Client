@@ -258,7 +258,7 @@ export default function trolleyDetails() {
               </div>
             </div>
 
-            <div>
+            <div className="">
               {/* <MpButton cartCourses={cartCourses} orderId={order._id} /> */}
               <MpButtonIvan
                 price={
