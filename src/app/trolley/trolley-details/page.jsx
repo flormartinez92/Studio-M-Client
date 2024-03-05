@@ -164,6 +164,29 @@ export default function trolleyDetails() {
       console.error(error);
     }
   };
+  const updateOrderMp = async (statusId, userId) => {
+    //console.log(userId);
+    try {
+      const responseUpdateOrder = await axios.put(
+        `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+        {
+          mpPreferenceID: statusId,
+        }
+      );
+      //console.log(responseUpdateOrder);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (statusId) {
+      //console.log(statusId);
+      //console.log(user._id);
+      updateOrderMp(statusId, user._id);
+      //buscar el id_user del usuario con status false
+      //
+    }
+  }, [statusId]);
 
   useEffect(() => {
     getUser();
