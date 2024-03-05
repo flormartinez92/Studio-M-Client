@@ -4,13 +4,76 @@ import Button from "@/common/Button";
 import CardsDesktop from "@/components/CardsDesktop";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function PurchasedCourseResume({ params }) {
   const [courseResume, setCourseResume] = useState([]);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const getUser = async () => {
+    try {
+      const user = await fetchUser();
+      //console.log(user);
+      dispatch(setCredentials(user));
+      preferenceIdPayment(user._id);
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateOrderMp = async (userId) => {
+    try {
+      const responseUpdateOrder = await axios.put(
+        `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+        {
+          mpStatus: true,
+          status: true,
+        }
+      );
+      //console.log(responseUpdateOrder);
+      const responseCourses = await axios.get(
+        `http://localhost:8081/api/cart/courses/${userId}`
+      );
+      //
+      setCourseResume(responseCourses.data);
+      //console.log(userId);
+      const responseConfirmBuy = await axios.post(
+        `http://localhost:8081/api/cart/confirmBuy/${userId}`
+      );
+      //console.log(responseConfirmBuy);
+      dispatch(addToCart(0));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const preferenceIdPayment = async (UserID) => {
+    //console.log(routes.get("preference_id"));
+    //356814201-7e0a3387-3c12-4925-abf2-828a01e2947c
+    //console.log(user);
+    if (routes.get("preference_id")) {
+      //console.log(routes.get("status") === "null");
+      const dataQuery = routes.get("status") === "null" ? false : true;
+      //console.log(dataQuery);
+
+      if (dataQuery) {
+        updateOrderMp(UserID);
+        setStatusMp(dataQuery);
+      }
+    }
+  };
 
   useEffect(() => {
-    const purchase = JSON.parse(localStorage.getItem("purchase"));
+    //console.log(user);
+    //preferenceIdPayment(user?._id);
+    getUser();
+    /* const purchase = JSON.parse(localStorage.getItem("purchase"));
     const newArr = purchase?.map((courseUser) => {
       const newCourseUser = { ...courseUser };
       courseUser.modules.forEach((module, i) => {
@@ -25,7 +88,8 @@ export default function PurchasedCourseResume({ params }) {
       return newCourseUser;
     });
 
-    setCourseResume(newArr);
+    console.log(newArr);
+    setCourseResume(newArr); */
   }, []);
 
   return (
