@@ -32,7 +32,7 @@ export default function trolleyDetails() {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
+  const statusId = useSelector((state) => state.mercadoPago.preferenceId);
   const modalRef = useRef();
   const router = useRouter();
 
