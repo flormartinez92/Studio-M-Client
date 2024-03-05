@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
 import { useDispatch, useSelector } from "react-redux";
 import MpButton from "@/components/mpButton";
+import MpButtonIvan from "@/components/mpButtonIvan";
 
 export default function trolleyDetails() {
   const [{ isPending }] = usePayPalScriptReducer();
@@ -258,7 +259,15 @@ export default function trolleyDetails() {
             </div>
 
             <div>
-              <MpButton cartCourses={cartCourses} orderId={order._id} />
+              {/* <MpButton cartCourses={cartCourses} orderId={order._id} /> */}
+              <MpButtonIvan
+                price={
+                  cartAmount.totalDiscount !== 0
+                    ? cartAmount.totalDiscount
+                    : cartAmount.totalAmount
+                }
+                id={cartAmount._id}
+              />
               <PayPalButton
                 orderId={order._id}
                 amount={trolley}
