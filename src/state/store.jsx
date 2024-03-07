@@ -4,6 +4,7 @@ import cartReducer from "./features/cartSlice";
 import buttonProjectReducer from "./features/buttonProjectSlice";
 import DiscountReducer from "./features/totalDiscountSlice";
 import MpReducer from "./features/mpSlice";
+import CartArrReducer from "./features/arrayCartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     buttonProject: buttonProjectReducer,
     totalDiscount: DiscountReducer,
     mercadoPago: MpReducer,
+    arrCartUser: CartArrReducer,
   },
 });

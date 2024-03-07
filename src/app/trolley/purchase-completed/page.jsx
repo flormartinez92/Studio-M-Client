@@ -2,16 +2,22 @@
 
 import Button from "@/common/Button";
 import CardsDesktop from "@/components/CardsDesktop";
+import { fetchUser } from "@/helpers/apiHelpers";
+import { setCredentials } from "@/state/features/authSlice";
+import { addToCart } from "@/state/features/cartSlice";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PurchasedCourseResume({ params }) {
   const [courseResume, setCourseResume] = useState([]);
+  const routes = useSearchParams();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { arrCart } = useSelector((state) => state.arrCartUser);
 
   const getUser = async () => {
     try {
@@ -26,6 +32,9 @@ export default function PurchasedCourseResume({ params }) {
     } catch (error) {
       console.error(error);
     }
+  };
+  const updateOrderPaypal = async () => {
+    if (arrCart.length !== 0) setCourseResume(arrCart);
   };
 
   const updateOrderMp = async (userId) => {
@@ -57,6 +66,7 @@ export default function PurchasedCourseResume({ params }) {
     //console.log(routes.get("preference_id"));
     //356814201-7e0a3387-3c12-4925-abf2-828a01e2947c
     //console.log(user);
+
     if (routes.get("preference_id")) {
       //console.log(routes.get("status") === "null");
       const dataQuery = routes.get("status") === "null" ? false : true;
@@ -64,8 +74,9 @@ export default function PurchasedCourseResume({ params }) {
 
       if (dataQuery) {
         updateOrderMp(UserID);
-        setStatusMp(dataQuery);
       }
+    } else {
+      updateOrderPaypal();
     }
   };
 

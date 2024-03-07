@@ -3,6 +3,7 @@ import {
   paypalCheckPayment,
   setTransactionId,
 } from "@/helpers/apiHelpers";
+import { updateCart } from "@/state/features/arrayCartSlice";
 import { addToCart } from "@/state/features/cartSlice";
 
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -59,10 +60,17 @@ export const PayPalButton = ({ orderId, amount, userId, cartCourses }) => {
       const details = await actions.order.capture();
       if (!details) return;
       await paypalCheckPayment(details.id, userId);
+      const responseCourses = await axios.get(
+        `http://localhost:8081/api/cart/courses/${userId}`
+      );
+      //console.log(responseCourses.data);
+      dispatch(updateCart(responseCourses.data));
       const responseCart = await axios.post(
         `http://localhost:8081/api/cart/confirmBuy/${userId}`
       );
+
       dispatch(addToCart(0));
+
       /* console.log(cartCourses); */
       localStorage.setItem("purchase", JSON.stringify(cartCourses));
       //console.log(responseCart);
