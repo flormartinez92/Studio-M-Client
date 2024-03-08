@@ -5,15 +5,18 @@ import axios from "axios";
 // import inputScroll from "@/hooks/useScroll";
 import IconButton from "@/common/IconButton";
 import { ArrowBlack1, ArrowBlack2 } from "@/common/Icons";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
-const MyCourses = ({ decodedToken }) => {
+const MyCourses = ({ decodedToken, arrCourses }) => {
   //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
   const [startCourse, setStartCourse] = useState(0);
   const cardsPerPage = 3;
+  const { coursesUser } = useSelector((state) => state.myAccount);
 
   //Pedido al back para traer los cursos de un usuario
-  useEffect(() => {
+  /* useEffect(() => {
     if (decodedToken._id) {
       try {
         axios
@@ -25,7 +28,13 @@ const MyCourses = ({ decodedToken }) => {
         console.error(error);
       }
     }
-  }, []);
+  }, []); */
+  //console.log(coursesUser);
+  useEffect(() => {
+    /* console.log("sd");
+    console.log(coursesUser); */
+    setUserCourses(coursesUser);
+  }, [coursesUser]);
 
   const handlePrevPage = () => {
     if (startCourse > 0) {
@@ -40,7 +49,10 @@ const MyCourses = ({ decodedToken }) => {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6 }}
       className={`py-14 flex overflow-x-auto md:bg-center md:h-[400px] items-center md:mx-[1%] lg:mx-[8%] xl:mx-[11%]`}
     >
       <div className="w-70 ml-6 mr-4 md:w-72 md:ml-6 md:mr-6 flex flex-row">
@@ -48,10 +60,7 @@ const MyCourses = ({ decodedToken }) => {
           {userCourses
             ?.slice(startCourse, startCourse + cardsPerPage)
             .map((userCourse, index) => (
-              <div
-                key={userCourse.courseInfo._id}
-                className="flex justify-center items-center"
-              >
+              <div key={index} className="flex justify-center items-center">
                 <Link href={`/my-account/${userCourse.courseInfo._id}`}>
                   <Cards
                     title={userCourse.courseInfo.courseShortTitle}
@@ -85,7 +94,7 @@ const MyCourses = ({ decodedToken }) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

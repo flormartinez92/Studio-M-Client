@@ -14,6 +14,12 @@ import { setCredentials } from "@/state/features/authSlice";
 import { useEffect } from "react";
 import Alert_common from "@/common/Alert_common";
 import CartAlert_common from "@/common/CartAlert";
+import {
+  deleteFavorite,
+  listFavorites,
+  updateAlertDelete,
+  updateStatusDelete,
+} from "@/state/features/myAccountSlice";
 
 export default function Cards({
   title,
@@ -39,6 +45,15 @@ export default function Cards({
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
+  const {
+    favoritesUser,
+    myAccountStatus,
+    alertDelete,
+    statusDelete,
+    idCoursedelete,
+  } = useSelector((state) => state.myAccount);
+
+  console.log(idCoursedelete);
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
@@ -87,18 +102,59 @@ export default function Cards({
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${user?._id}`
       );
+
+      /* const newArr = favoritesUser.push({
+        _id: courseId,
+        courseShortTitle: title,
+        courseImg_url: img,
+      }); */
+
+      if (!favoritesUser.find((favorite) => favorite._id === courseId)) {
+        dispatch(
+          listFavorites([
+            ...favoritesUser,
+            { _id: courseId, courseShortTitle: title, courseImg_url: img },
+          ])
+        );
+      }
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
     }
   };
+  const deleteFavoriteUser = async (courseId, user) => {
+    try {
+      const fetchDelete = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${user?._id}`
+      );
+      dispatch(
+        listFavorites(
+          favoritesUser.filter((favorites) => favorites._id !== courseId)
+        )
+      );
+      setIsFavorite(!isFavorite);
+      dispatch(updateStatusDelete(!statusDelete));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    //console.log(statusDelete);
+
+    if (statusDelete) {
+      if (courseId == idCoursedelete) {
+        console.log(courseId == idCoursedelete);
+        deleteFavoriteUser(courseId, user);
+      }
+      console.log(courseId);
+    }
+  }, [statusDelete]);
 
   const handleDeleteFavorites = async () => {
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/remove/${courseId}/${user?._id}`
-      );
-      setIsFavorite(!isFavorite);
+      dispatch(deleteFavorite(courseId));
+      dispatch(updateAlertDelete(!alertDelete));
     } catch (error) {
       console.error(error);
     }

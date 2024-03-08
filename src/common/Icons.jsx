@@ -426,9 +426,9 @@ export function ArrowBlack1({ width, height, color }) {
       <path
         d="M17.9167 27L27.4167 17.5M17.9167 27L27.4167 36.5M17.9167 27L40.0834 27"
         stroke="#F8F8F8"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <defs>
         <filter
@@ -438,9 +438,9 @@ export function ArrowBlack1({ width, height, color }) {
           width="59"
           height="61.6001"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -486,9 +486,9 @@ export function ArrowBlack2({ width, height, color }) {
       <path
         d="M40.0834 27L30.5834 17.5M40.0834 27L30.5834 36.5M40.0834 27L17.9167 27"
         stroke="#F8F8F8"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <defs>
         <filter
@@ -498,9 +498,9 @@ export function ArrowBlack2({ width, height, color }) {
           width="59"
           height="61.6001"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"

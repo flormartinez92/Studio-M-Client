@@ -8,7 +8,7 @@ import useInput from "@/hooks/useInput";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
-
+import { motion } from "framer-motion";
 const MyData = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -105,7 +105,12 @@ const MyData = () => {
 
   return (
     //Contenedor
-    <div className="mt-7 relative flex flex-col items-center md:mt-10 md:h-80 md:flex-row md:items-start md:ml-[8%]">
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6 }}
+      className="mt-7 relative flex flex-col items-center md:mt-10 md:h-80 md:flex-row md:items-start md:ml-[8%]"
+    >
       {/*Imagen e Icono*/}
       <div className="md:basis-[27.5%] flex justify-center items-center md:mr-6">
         <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5 md:mt-2.5 ">
@@ -254,7 +259,7 @@ const MyData = () => {
           </IconButton>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
