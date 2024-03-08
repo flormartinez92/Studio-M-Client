@@ -3,7 +3,8 @@ import authReducer from "./features/authSlice";
 import cartReducer from "./features/cartSlice";
 import buttonProjectReducer from "./features/buttonProjectSlice";
 import DiscountReducer from "./features/totalDiscountSlice";
-import coursesReducer from "./features/coursesSlice";
+import MpReducer from "./features/mpSlice";
+import CartArrReducer from "./features/arrayCartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     cart: cartReducer,
     buttonProject: buttonProjectReducer,
     totalDiscount: DiscountReducer,
-    courses: coursesReducer,
+    mercadoPago: MpReducer,
+    arrCartUser: CartArrReducer,
   },
 });

@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { PayPalButton, PaypalButton } from "@/components/PaypalButton";
 import { useDispatch, useSelector } from "react-redux";
 import MpButton from "@/components/mpButton";
+import MpButtonIvan from "@/components/mpButtonIvan";
 
 export default function trolleyDetails() {
   const [{ isPending }] = usePayPalScriptReducer();
@@ -31,7 +32,7 @@ export default function trolleyDetails() {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
+  const statusId = useSelector((state) => state.mercadoPago.preferenceId);
   const modalRef = useRef();
   const router = useRouter();
 
@@ -163,6 +164,29 @@ export default function trolleyDetails() {
       console.error(error);
     }
   };
+  const updateOrderMp = async (statusId, userId) => {
+    //console.log(userId);
+    try {
+      const responseUpdateOrder = await axios.put(
+        `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+        {
+          mpPreferenceID: statusId,
+        }
+      );
+      //console.log(responseUpdateOrder);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (statusId) {
+      //console.log(statusId);
+      //console.log(user._id);
+      updateOrderMp(statusId, user._id);
+      //buscar el id_user del usuario con status false
+      //
+    }
+  }, [statusId]);
 
   useEffect(() => {
     getUser();
@@ -257,8 +281,25 @@ export default function trolleyDetails() {
               </div>
             </div>
 
-            <div>
-              <MpButton cartCourses={cartCourses} orderId={order._id} />
+            <div
+              className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
+            >
+              {/* <MpButton
+                cartCourses={cartCourses}
+                orderId={order._id}
+                statusbtn={refresh}
+              /> */}
+              {/* {JSON.stringify(cartAmount)} */}
+
+              <MpButtonIvan
+                price={
+                  cartAmount.totalDiscount !== 0
+                    ? cartAmount.totalDiscount
+                    : cartAmount.totalAmount
+                }
+                id={cartAmount._id}
+              />
+
               <PayPalButton
                 orderId={order._id}
                 amount={trolley}
