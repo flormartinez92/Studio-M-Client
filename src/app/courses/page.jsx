@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/state/features/cartSlice";
 import Cards from "../../components/Cards";
 import { Arrow, ArrowBack, CartShopSimple, Vector } from "@/common/Icons";
@@ -21,9 +21,14 @@ import Loading_common from "@/common/Loading_common";
 import Alert_common from "@/common/Alert_common";
 import IconButton from "@/common/IconButton";
 import CartAlert_common from "@/common/CartAlert";
+import {
+  fetchCourses,
+  updateIsFavorite,
+} from "@/state/features/setCoursesSlice";
+import { listFavorites } from "@/state/features/myAccountSlice";
 
 export default function Courses() {
-  const [courses, setCourses] = useState([]);
+  const { allCourses } = useSelector((state) => state.fetchCourses);
   const [sortOrder, setSortOrder] = useState("asc");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,47 +44,49 @@ export default function Courses() {
   const [deletingId, setDeletingId] = useState(null);
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = allCourses?.slice(
+    indexOfFirstCourse,
+    indexOfLastCourse
+  );
+
+  const fetchAllCourses = async () => {
+    try {
+      const responseCourses = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`
+      );
+      const coursesData = responseCourses.data;
+
+      const userData = await fetchUser();
+      setUser(userData);
+
+      let userCart = [];
+      let userFavorites = [];
+      if (userData) {
+        userFavorites = await fetchFavorites(userData._id);
+        userCart = await fetchCart(userData._id);
+      }
+
+      const coursesWithFavorites = coursesData.map((course) => ({
+        ...course,
+        isFavorite: userFavorites.some(
+          (favoriteCourse) => favoriteCourse._id === course._id
+        ),
+        isInCart: userCart.some((courseCart) => courseCart._id === course._id),
+      }));
+
+      dispatch(fetchCourses(coursesWithFavorites));
+
+      const updatedTotalPages = Math.ceil(
+        coursesWithFavorites.length / coursesPerPage
+      );
+      setTotalPages(updatedTotalPages);
+    } catch (error) {
+      console.error("Error while fetching courses:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const responseCourses = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`
-        );
-        const coursesData = responseCourses.data;
-
-        const userData = await fetchUser();
-        setUser(userData);
-
-        let userCart = [];
-        let userFavorites = [];
-        if (userData) {
-          userFavorites = await fetchFavorites(userData._id);
-          userCart = await fetchCart(userData._id);
-        }
-
-        const coursesWithFavorites = coursesData.map((course) => ({
-          ...course,
-          isFavorite: userFavorites.some(
-            (favoriteCourse) => favoriteCourse._id === course._id
-          ),
-          isInCart: userCart.some(
-            (courseCart) => courseCart._id === course._id
-          ),
-        }));
-
-        setCourses(coursesWithFavorites);
-
-        const updatedTotalPages = Math.ceil(
-          coursesWithFavorites.length / coursesPerPage
-        );
-        setTotalPages(updatedTotalPages);
-      } catch (error) {
-        console.error("Error while fetching courses:", error);
-      }
-    };
-    fetchCourses();
+    fetchAllCourses();
   }, []);
 
   const handleViewCourseClick = async (courseId) => {
@@ -97,26 +104,20 @@ export default function Courses() {
     try {
       setLoading(true);
 
-      const userFavorites = await fetchFavorites(user._id);
-      const isCourseFavorite = userFavorites.some(
-        (favoriteCourse) => favoriteCourse._id === courseId
+      const isCourseFavorite = allCourses.some(
+        (course) => course._id === courseId && course.isFavorite
       );
 
-      isCourseFavorite
-        ? await removeFavorite(courseId, user._id)
-        : await addFavorite(courseId, user._id);
+      if (isCourseFavorite) {
+        dispatch(updateIsFavorite(courseId));
+        await removeFavorite(courseId, user._id);
+      } else {
+        dispatch(updateIsFavorite(courseId));
+        await addFavorite(courseId, user._id);
+      }
 
-      const updatedCourses = courses.map((course) => {
-        if (course._id === courseId) {
-          return {
-            ...course,
-            isFavorite: !course.isFavorite,
-          };
-        }
-        return course;
-      });
-
-      setCourses(updatedCourses);
+      const userFav = await fetchFavorites(user._id);
+      dispatch(listFavorites(userFav));
     } catch (error) {
       console.error("Error while updating favorites:", error);
     } finally {
@@ -133,7 +134,7 @@ export default function Courses() {
   };
 
   const renderCourseRangeIndicator = () => {
-    const totalPages = Math.ceil(courses.length / coursesPerPage);
+    const totalPages = Math.ceil(allCourses?.length / coursesPerPage);
     let indicator = `${currentPage}-${totalPages}`;
 
     return indicator;
@@ -175,7 +176,7 @@ export default function Courses() {
           classNameAlert="w-[300px]"
         />
       )}
-      {courses.length === 0 ? (
+      {allCourses.length === 0 ? (
         <div className="w-full h-[600px]  flex justify-center items-center">
           <Loading_common />
         </div>
@@ -185,7 +186,7 @@ export default function Courses() {
             Nuestros cursos
           </h2>
           <div className="md:hidden flex flex-col justify-center p-3 items-center pb-14 min-[768px]:pb-24 min-[1024px]:pb-36">
-            {courses?.map((course) => (
+            {allCourses?.map((course) => (
               <Cards
                 key={course._id}
                 courseId={course._id}

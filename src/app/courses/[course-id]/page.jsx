@@ -15,11 +15,14 @@ import {
 import Loading_common from "@/common/Loading_common";
 import { useRouter } from "next/navigation";
 import { addToCart } from "@/state/features/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Alert_common from "@/common/Alert_common";
 import CartAlert_common from "@/common/CartAlert";
+import { updateIsFavorite } from "@/state/features/setCoursesSlice";
+import { listFavorites } from "@/state/features/myAccountSlice";
 
 export default function CourseInformation({ params }) {
+  const { allCourses } = useSelector((state) => state.fetchCourses);
   const [course, setCourse] = useState({});
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -70,20 +73,25 @@ export default function CourseInformation({ params }) {
     try {
       setLoading(true);
 
-      const userFavorites = await fetchFavorites(user._id);
-
-      const isCourseInFavorites = userFavorites.some(
-        (favoriteCourse) => favoriteCourse._id === course._id
+      const isCourseInFavorites = allCourses.some(
+        (course) => course._id === courseId && course.isFavorite
       );
 
-      isCourseInFavorites
-        ? await removeFavorite(courseId, user._id)
-        : await addFavorite(courseId, user._id);
+      if (isCourseInFavorites) {
+        dispatch(updateIsFavorite(courseId));
+        await removeFavorite(courseId, user._id);
+      } else {
+        dispatch(updateIsFavorite(courseId));
+        await addFavorite(courseId, user._id);
+      }
 
       setCourse({
         ...course,
         isFavorite: !isCourseInFavorites,
       });
+
+      const userFav = await fetchFavorites(user._id);
+      dispatch(listFavorites(userFav));
     } catch (error) {
       console.error("Error while updating favorites:", error);
     } finally {

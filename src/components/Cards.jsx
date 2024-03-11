@@ -9,7 +9,7 @@ import { addToCart } from "@/state/features/cartSlice";
 import Button from "@/common/Button";
 import Border from "../common/Border";
 import IconButton from "@/common/IconButton";
-import { fetchUser } from "@/helpers/apiHelpers";
+import { fetchFavorites, fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
 import { useEffect } from "react";
 import Alert_common from "@/common/Alert_common";
@@ -20,6 +20,10 @@ import {
   updateAlertDelete,
   updateStatusDelete,
 } from "@/state/features/myAccountSlice";
+import {
+  fetchCourses,
+  toggleStatusCourse,
+} from "@/state/features/setCoursesSlice";
 
 export default function Cards({
   title,
@@ -52,8 +56,6 @@ export default function Cards({
     statusDelete,
     idCoursedelete,
   } = useSelector((state) => state.myAccount);
-
-  console.log(idCoursedelete);
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
@@ -103,12 +105,6 @@ export default function Cards({
         `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/add/${courseId}/${user?._id}`
       );
 
-      /* const newArr = favoritesUser.push({
-        _id: courseId,
-        courseShortTitle: title,
-        courseImg_url: img,
-      }); */
-
       if (!favoritesUser.find((favorite) => favorite._id === courseId)) {
         dispatch(
           listFavorites([
@@ -140,14 +136,10 @@ export default function Cards({
   };
 
   useEffect(() => {
-    //console.log(statusDelete);
-
     if (statusDelete) {
       if (courseId == idCoursedelete) {
-        console.log(courseId == idCoursedelete);
         deleteFavoriteUser(courseId, user);
       }
-      console.log(courseId);
     }
   }, [statusDelete]);
 

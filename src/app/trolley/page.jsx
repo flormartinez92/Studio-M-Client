@@ -10,8 +10,9 @@ import Loading_common from "@/common/Loading_common";
 import CardsMobile from "@/components/CardsMobile";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/state/features/cartSlice";
-import { fetchUser } from "@/helpers/apiHelpers";
+import { fetchFavorites, fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
+import { listFavorites } from "@/state/features/myAccountSlice";
 
 export default function Trolley() {
   const [cartCourses, setCartCourses] = useState(null);
@@ -64,6 +65,8 @@ export default function Trolley() {
         );
         setCartCourses(responseCourses.data);
       }
+      const userFav = await fetchFavorites(user._id);
+      dispatch(listFavorites(userFav));
     } catch (err) {
       console.error(err);
     }
@@ -99,18 +102,18 @@ export default function Trolley() {
       console.log(user._id);
 
       const responseOrder = await axios.get(
-        `http://localhost:8081/api/purchaseOrder/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/${user._id}`
       );
       console.log(responseOrder);
 
       if (responseOrder.data) return router.push("/trolley/trolley-details");
 
       const { data } = await axios.get(
-        `http://localhost:8081/api/cart/courses/total/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/total/${user._id}`
       );
 
       const createOrder = await axios.post(
-        "http://localhost:8081/api/purchaseOrder/add",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/add`,
         { userId: data.userId, totalAmmount: data.totalAmount }
       );
       //console.log(createOrder);

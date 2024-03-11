@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@/common/Button";
 import IconButton from "@/common/IconButton";
-import { Arrow, User } from "@/common/Icons";
+import { Arrow } from "@/common/Icons";
 import MyData from "@/components/MyData";
 import MyCourses from "@/components/MyCourses";
 import MyList from "@/components/MyList";
@@ -38,11 +38,9 @@ export default function MyAccount() {
   const dispatch = useDispatch();
 
   //Si no hay user, te redirige a Login
-  console.log(certificates);
   useEffect(() => {
     const checkUserAuthentication = async () => {
       const user = await fetchUser();
-      console.log(user);
       dispatch(setCredentials(user));
       setUser(user);
       if (!user) {
@@ -123,29 +121,10 @@ export default function MyAccount() {
   const handleTitle = (title) => {
     setCurrentTitle(title);
   };
-  const getFavoritesUser = async (userId) => {
-    try {
-      const favorites = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/${userId}`
-      );
-      dispatch(listFavorites(favorites.data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   const getDataUser = async (userId) => {
-    //console.log(userId);
     try {
       if (userId) {
-        /* const courses = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${userId}`
-        );
-        const favorites = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/favorites/${userId}`
-        );
-        const certificates = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${userId}`
-        ); */
         const [courses, favorites, certificates] = await Promise.all([
           axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${userId}`
@@ -157,24 +136,19 @@ export default function MyAccount() {
             `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${userId}`
           ),
         ]);
-        //console.log(certificates);
         dispatch(certificatesUser(certificates.data));
         dispatch(listFavorites(favorites.data));
         dispatch(addCourses(courses.data));
         dispatch(updatemyAccountStatus(!myAccountStatus));
         setIsLoading(!isLoading);
-
-        //console.log(courses.data);
       }
-
-      //console.log(coursesUser);
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (myAccountStatus) {
-      //console.log("esta lleno");
       setIsLoading(false);
     } else {
       getDataUser(user?._id);
@@ -224,7 +198,6 @@ export default function MyAccount() {
                 >
                   {pages[currentPage].title}
                 </h2>
-                dispatch
                 {currentPage < pages.length - 1 && (
                   <IconButton
                     className="absolute right-0 mr-[10%]"
@@ -272,7 +245,7 @@ export default function MyAccount() {
                 ))}
               </div>
               {/* Renderiza el contenido basado en el título activo */}
-              <div className="h-[380px]">
+              <div className="min-h-[380px]">
                 {pages.map((page, index) => (
                   <div key={index}>
                     {currentTitle === page.title && page.content}

@@ -49,8 +49,6 @@ const MyCertificates = ({ decodedToken }) => {
     window.open(pdfPath, "_blank");
   };
 
-  console.log("----------------------", userCertificates);
-
   return (
     <>
       {/*modo desktop*/}
@@ -61,7 +59,9 @@ const MyCertificates = ({ decodedToken }) => {
           transition={{ duration: 0.6 }}
           className="h-[380px] flex justify-center items-center"
         >
-          <p className="text-2xl font-ms-gothic">No tienes certificados</p>
+          <p className="text-xl md:text-2xl font-ms-gothic">
+            Aún no tienes certificados
+          </p>
         </motion.div>
       ) : (
         <>
