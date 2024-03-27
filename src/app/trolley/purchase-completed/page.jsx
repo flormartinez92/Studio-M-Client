@@ -4,7 +4,7 @@ import Button from "@/common/Button";
 import CardsDesktop from "@/components/CardsDesktop";
 import { fetchUser } from "@/helpers/apiHelpers";
 import { setCredentials } from "@/state/features/authSlice";
-import { addToCart } from "@/state/features/cartSlice";
+import { addToCart, statusLoadingPurchase } from "@/state/features/cartSlice";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,12 +18,15 @@ export default function PurchasedCourseResume({ params }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { arrCart } = useSelector((state) => state.arrCartUser);
+  const { isLoadingPurchase } = useSelector((state) => state.cart);
 
+  console.log(isLoadingPurchase);
   const getUser = async () => {
     try {
       const user = await fetchUser();
       //console.log(user);
       dispatch(setCredentials(user));
+
       preferenceIdPayment(user._id);
       if (!user) {
         router.push("/login");
@@ -40,7 +43,7 @@ export default function PurchasedCourseResume({ params }) {
   const updateOrderMp = async (userId) => {
     try {
       const responseUpdateOrder = await axios.put(
-        `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/updateOrder/${userId}`,
         {
           mpStatus: true,
           status: true,
@@ -48,16 +51,18 @@ export default function PurchasedCourseResume({ params }) {
       );
       //console.log(responseUpdateOrder);
       const responseCourses = await axios.get(
-        `http://localhost:8081/api/cart/courses/${userId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${userId}`
       );
       //
+
       setCourseResume(responseCourses.data);
       //console.log(userId);
       const responseConfirmBuy = await axios.post(
-        `http://localhost:8081/api/cart/confirmBuy/${userId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${userId}`
       );
-      //console.log(responseConfirmBuy);
+      console.log(responseConfirmBuy);
       dispatch(addToCart(0));
+      dispatch(statusLoadingPurchase(true));
     } catch (error) {
       console.error(error);
     }
@@ -73,34 +78,23 @@ export default function PurchasedCourseResume({ params }) {
       //console.log(dataQuery);
 
       if (dataQuery) {
-        updateOrderMp(UserID);
+        await updateOrderMp(UserID);
       }
     } else {
-      updateOrderPaypal();
+      await updateOrderPaypal();
     }
   };
 
   useEffect(() => {
-    //console.log(user);
-    //preferenceIdPayment(user?._id);
-    getUser();
-    /* const purchase = JSON.parse(localStorage.getItem("purchase"));
-    const newArr = purchase?.map((courseUser) => {
-      const newCourseUser = { ...courseUser };
-      courseUser.modules.forEach((module, i) => {
-        if (i === 0) {
-          module.topics.forEach((topic, z) => {
-            if (z === 0) {
-              newCourseUser.firstClass = topic.classes[0]._id;
-            }
-          });
-        }
-      });
-      return newCourseUser;
-    });
+    if (!isLoadingPurchase) {
+      getUser();
+    }
+  }, [isLoadingPurchase]);
 
-    console.log(newArr);
-    setCourseResume(newArr); */
+  useEffect(() => {
+    //console.log("asd");
+    //preferenceIdPayment(user?._id);
+    dispatch(statusLoadingPurchase(false));
   }, []);
 
   return (
