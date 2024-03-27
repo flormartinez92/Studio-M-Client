@@ -36,7 +36,7 @@ export default function trolleyDetails() {
   const modalRef = useRef();
   const router = useRouter();
 
-  const handleCheck = async () => {
+  /* const handleCheck = async () => {
     try {
       const responseCart = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
@@ -47,7 +47,7 @@ export default function trolleyDetails() {
     } catch (err) {
       console.error(err);
     }
-  };
+  }; */
 
   const resetDiscount = async () => {
     try {

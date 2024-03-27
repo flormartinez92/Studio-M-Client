@@ -16,7 +16,7 @@ export default function MpButtonIvan({ price, id }) {
     setPreferenceId(null);
     try {
       const res = await axios.post(
-        `http://localhost:8081/api/paymentMp/create-order-ivan`,
+        `http://localhost:8081/api/paymentMp/create-order`,
         { quantity: 1, id, title: "Total ammount", price }
       );
       //console.log(res);
