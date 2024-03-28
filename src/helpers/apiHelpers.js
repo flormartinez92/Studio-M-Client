@@ -39,6 +39,18 @@ export const fetchCart = async (userId) => {
   }
 };
 
+export const fetchUserCoursesBought = async (userId) => {
+  try {
+    const userCoursesBought = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/user/boughtCourses/${userId}`
+    );
+    return userCoursesBought.data;
+  } catch (error) {
+    console.error("Error while fetching courses bought:", error);
+    return [];
+  }
+};
+
 export const removeFavorite = async (courseId, userId) => {
   try {
     await axios.delete(
@@ -65,10 +77,17 @@ export const handleCartClick = async (
   setShowAlert,
   setCartAlert,
   setLoading,
-  setDeletingId
+  setDeletingId,
+  isBought,
+  setIsBoughtAlert
 ) => {
   try {
     setLoading(true);
+
+    if (isBought) {
+      throw new Error("Course already bought");
+    }
+
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
       courseId,
       userId,
@@ -79,7 +98,11 @@ export const handleCartClick = async (
       setCartAlert(false);
     }, 2500);
   } catch (error) {
-    setShowAlert(true);
+    if (isBought) {
+      setIsBoughtAlert(true);
+    } else {
+      setShowAlert(true);
+    }
     console.error("Error while adding cart:", error);
   } finally {
     setLoading(false);

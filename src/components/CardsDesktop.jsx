@@ -29,6 +29,7 @@ export default function CardsDesktop({
   subtitleFull = false,
   iconDelete = false,
   isDeleting = false,
+  isBought = false,
 }) {
   const is900Screen = useMediaQuery("(min-width: 900px)");
   const isCart1024Screen = useMediaQuery("(min-width: 1024px)");
@@ -185,7 +186,7 @@ export default function CardsDesktop({
               {cardWithoutItems ? (
                 <></>
               ) : (
-                <div className="flex justify-center items-center gap-x-1">
+                <div className={`flex justify-center items-center gap-x-1`}>
                   {cartShopPlusBgBlack ? (
                     <div onClick={handleCartClick} className="cursor-pointer">
                       {isCart820Screen && (

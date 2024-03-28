@@ -16,6 +16,7 @@ import {
   removeFavorite,
   handleCartClick,
   fetchCart,
+  fetchUserCoursesBought,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
 import Alert_common from "@/common/Alert_common";
@@ -26,11 +27,11 @@ import {
   updateIsFavorite,
 } from "@/state/features/setCoursesSlice";
 import { listFavorites } from "@/state/features/myAccountSlice";
+import { setCredentials } from "@/state/features/authSlice";
 
 export default function Courses() {
   const { allCourses } = useSelector((state) => state.fetchCourses);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -41,6 +42,7 @@ export default function Courses() {
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
+  const [isBoughtAlert, setIsBoughtAlert] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -48,6 +50,7 @@ export default function Courses() {
     indexOfFirstCourse,
     indexOfLastCourse
   );
+  const userRedux = useSelector((state) => state.auth.user);
 
   const fetchAllCourses = async () => {
     try {
@@ -57,27 +60,32 @@ export default function Courses() {
       const coursesData = responseCourses.data;
 
       const userData = await fetchUser();
-      setUser(userData);
+      dispatch(setCredentials(userData));
 
       let userCart = [];
       let userFavorites = [];
+      let userBougth = [];
       if (userData) {
         userFavorites = await fetchFavorites(userData._id);
         userCart = await fetchCart(userData._id);
+        userBougth = await fetchUserCoursesBought(userData._id);
       }
 
-      const coursesWithFavorites = coursesData.map((course) => ({
+      const coursesWithFavoritesAndIsBougth = coursesData.map((course) => ({
         ...course,
         isFavorite: userFavorites.some(
           (favoriteCourse) => favoriteCourse._id === course._id
         ),
         isInCart: userCart.some((courseCart) => courseCart._id === course._id),
+        isBought: userBougth.some(
+          (courseBought) => courseBought === course._id
+        ),
       }));
 
-      dispatch(fetchCourses(coursesWithFavorites));
+      dispatch(fetchCourses(coursesWithFavoritesAndIsBougth));
 
       const updatedTotalPages = Math.ceil(
-        coursesWithFavorites.length / coursesPerPage
+        coursesWithFavoritesAndIsBougth.length / coursesPerPage
       );
       setTotalPages(updatedTotalPages);
     } catch (error) {
@@ -97,7 +105,7 @@ export default function Courses() {
   };
 
   const handleclickFavorite = async (courseId) => {
-    if (!user) {
+    if (!userRedux) {
       router.push("/login");
       return;
     }
@@ -110,13 +118,13 @@ export default function Courses() {
 
       if (isCourseFavorite) {
         dispatch(updateIsFavorite(courseId));
-        await removeFavorite(courseId, user._id);
+        await removeFavorite(courseId, userRedux._id);
       } else {
         dispatch(updateIsFavorite(courseId));
-        await addFavorite(courseId, user._id);
+        await addFavorite(courseId, userRedux._id);
       }
 
-      const userFav = await fetchFavorites(user._id);
+      const userFav = await fetchFavorites(userRedux._id);
       dispatch(listFavorites(userFav));
     } catch (error) {
       console.error("Error while updating favorites:", error);
@@ -129,6 +137,7 @@ export default function Courses() {
     setout(true);
     setTimeout(() => {
       setShowAlert(false);
+      setIsBoughtAlert(false);
       setout(false);
     }, 700);
   };
@@ -151,7 +160,7 @@ export default function Courses() {
   const handleItemsCart = async () => {
     try {
       const responseCart = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${userRedux._id}`
       );
       dispatch(addToCart(responseCart.data.length));
     } catch (error) {
@@ -161,6 +170,14 @@ export default function Courses() {
 
   return (
     <section className={`h-full  ${loading ? "cursor-wait" : ""} relative`}>
+      {isBoughtAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="¡Ya tienes este curso comprado!"
+          classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
       {showAlert && (
         <Alert_common
           handleAlert={handleAlert}
@@ -199,6 +216,7 @@ export default function Courses() {
                 buttonTitle="Ver curso"
                 classNameIconButton="h-[90%] pl-[15px] pr-[15px] pb-3 pt-3 bg-[#181717]"
                 icon={<CartShopSimple width={"16px"} height={"16px"} />}
+                isBought={course.isBought}
               />
             ))}
           </div>
@@ -244,6 +262,7 @@ export default function Courses() {
                         key={index}
                         notjustPrice={true}
                         cartShopPlusBgBlack={true}
+                        isBought={course.isBought}
                         isFavorite={course.isFavorite}
                         handleFavoriteClick={() =>
                           handleclickFavorite(course._id)
@@ -252,14 +271,16 @@ export default function Courses() {
                           handleViewCourseClick(course._id)
                         }
                         handleCartClick={async () => {
-                          if (user) {
+                          if (userRedux) {
                             await handleCartClick(
                               course._id,
-                              user._id,
+                              userRedux._id,
                               setShowAlert,
                               setCartAlert,
                               setLoading,
-                              setDeletingId
+                              setDeletingId,
+                              course.isBought,
+                              setIsBoughtAlert
                             );
                             await handleItemsCart();
                           } else {
