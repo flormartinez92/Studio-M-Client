@@ -11,6 +11,7 @@ import {
   fetchUser,
   removeFavorite,
   handleCartClick,
+  fetchUserCoursesBought,
 } from "@/helpers/apiHelpers";
 import Loading_common from "@/common/Loading_common";
 import { useRouter } from "next/navigation";
@@ -30,6 +31,7 @@ export default function CourseInformation({ params }) {
   const [deletingId, setDeletingId] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
+  const [isBoughtAlert, setIsBoughtAlert] = useState(false);
   const router = useRouter();
   const courseId = params["course-id"];
   const dispatch = useDispatch();
@@ -47,16 +49,23 @@ export default function CourseInformation({ params }) {
 
         let userFavorite = [];
         let isFavorite = false;
+        let userCourseIsBought = [];
+        let courseIsBought = false;
         if (userData) {
           userFavorite = await fetchFavorites(userData._id);
           isFavorite = userFavorite.some(
             (favoriteCourse) => favoriteCourse._id === courseId
+          );
+          userCourseIsBought = await fetchUserCoursesBought(userData._id);
+          courseIsBought = userCourseIsBought.some(
+            (courseIsBought) => courseIsBought === courseId
           );
         }
 
         setCourse({
           ...courseData,
           isFavorite: isFavorite,
+          isBought: courseIsBought,
         });
       } catch (error) {
         console.error("Error while fetching course:", error);
@@ -103,6 +112,7 @@ export default function CourseInformation({ params }) {
     setout(true);
     setTimeout(() => {
       setShowAlert(false);
+      setIsBoughtAlert(false);
       setout(false);
     }, 700);
   };
@@ -120,6 +130,14 @@ export default function CourseInformation({ params }) {
 
   return (
     <section className={`${loading ? "cursor-wait" : ""}`}>
+      {isBoughtAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="¡Ya tienes este curso comprado!"
+          classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
+        />
+      )}
       {showAlert && (
         <Alert_common
           handleAlert={handleAlert}
@@ -189,6 +207,7 @@ export default function CourseInformation({ params }) {
                   coursePrice={course.coursePrice}
                   fullDescription={true}
                   courseDescription={course.courseDescription}
+                  isBought={course.isBought}
                 />
               </div>
             </div>
@@ -278,7 +297,9 @@ export default function CourseInformation({ params }) {
                         setShowAlert,
                         setCartAlert,
                         setLoading,
-                        setDeletingId
+                        setDeletingId,
+                        course.isBought,
+                        setIsBoughtAlert
                       );
                       await handleItemsCart();
                     } else {

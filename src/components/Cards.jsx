@@ -41,11 +41,13 @@ export default function Cards({
   classNameIconButton,
   classNameBorder,
   courseId,
+  isBought,
 }) {
   const [isFavorite, setIsFavorite] = useState(true);
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
+  const [isBoughtAlert, setIsBoughtAlert] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
@@ -71,6 +73,9 @@ export default function Cards({
       return;
     }
     try {
+      if (isBought) {
+        throw new Error("Course already bought");
+      }
       const cartItems = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`,
         {
@@ -85,7 +90,9 @@ export default function Cards({
 
       dispatch(addToCart(cartItems.data.courseId.length));
     } catch (error) {
-      if (error.response.data === "Course already in the cart") {
+      if (isBought) {
+        setIsBoughtAlert(true);
+      } else if (error.response.data === "Course already in the cart") {
         setShowAlert(true);
       }
     }
@@ -156,12 +163,21 @@ export default function Cards({
     setout(true);
     setTimeout(() => {
       setShowAlert(false);
+      setIsBoughtAlert(false);
       setout(false);
     }, 700);
   };
 
   return (
     <div className={`w-80 relative ${className || ""}`}>
+      {isBoughtAlert && (
+        <Alert_common
+          handleAlert={handleAlert}
+          out={out}
+          titleAlert="¡Ya tienes este curso comprado!"
+          classNameAlert="w-[300px]"
+        />
+      )}
       {showAlert && (
         <Alert_common
           handleAlert={handleAlert}
