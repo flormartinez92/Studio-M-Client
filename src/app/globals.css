@@ -7,10 +7,18 @@
     font-family: "mystery-mixed";
     src: url(../../public/fonts/Mystery-Mixed-Regular.otf);
   }
+  @font-face {
+    font-family: "ms-gothic";
+    src: url(../../public/fonts/ms-pgothic-Nueva.ttf);
+  }
 }
 
-body {
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+.paypal-buttons {
+  height: 3rem !important; /* Asegúrate de usar !important si los estilos no están siendo aplicados */
+  /* Otros estilos necesarios */
 }
