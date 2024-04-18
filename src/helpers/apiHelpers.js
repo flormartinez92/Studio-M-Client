@@ -14,6 +14,16 @@ export const fetchUser = async () => {
     return null;
   }
 };
+export const fetchUserData = async (userId) => {
+  try {
+    const user = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}`
+    );
+    return user.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const fetchFavorites = async (userId) => {
   try {

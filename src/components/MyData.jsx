@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { Pencil, Save } from "@/common/Icons";
 import IconButton from "@/common/IconButton";
 import Input from "@/common/Input";
 import useInput from "@/hooks/useInput";
-import { fetchUser } from "@/helpers/apiHelpers";
+import { fetchUser, fetchUserData } from "@/helpers/apiHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { motion } from "framer-motion";
@@ -15,7 +15,7 @@ const MyData = () => {
   const [changePassword, setChangePassword] = useState(false);
   const [messageAlert, setMessageAlert] = useState("");
   const [messageAlertOk, setMessageAlertOk] = useState("");
-
+  const fileInputRef = useRef(null);
   const {
     OnChange: OnChangePassword,
     value: valuePassword,
@@ -34,12 +34,18 @@ const MyData = () => {
     isPasswordVisible: isPasswordVisible2,
     setIsPasswordVisible: setIsPasswordVisible2,
   } = useInput("password");
+  const [value, setValue] = useState("");
+  const [file, setFile] = useState({});
+  console.log(user);
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
       const user = await fetchUser();
+      const userData = await fetchUserData(user._id);
+      setValue(userData.profileImg);
       dispatch(setCredentials(user));
     };
+
     checkUserAuthentication();
   }, []);
 
@@ -102,6 +108,38 @@ const MyData = () => {
       }
     }
   };
+  const handleDivClick = () => {
+    // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append("archivo", file);
+    try {
+      const userImage = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg/${user?.mail}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(userImage);
+      setValue(userImage.data.profileImg);
+      console.log(userImage.data.profileImg);
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.log(file);
+    console.log(formData);
+  };
+  console.log(value);
 
   return (
     //Contenedor
@@ -115,20 +153,27 @@ const MyData = () => {
       <div className="md:basis-[27.5%] flex justify-center items-center md:mr-6">
         <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5 md:mt-2.5 ">
           <Image
-            src={"/img/perfilDefault.png"}
+            src={value !== "" ? value : "/img/perfilDefault.png"}
             width={100}
             height={100}
             alt="Profile Image"
             className="rounded-full w-[85px] h-[85px] md:w-[150px] md:h-[150px] lg:w-[190px] lg:h-[190px]"
           />
-          <div className="relative md:mb-[6.5%] md:mr-[7.5%]">
+
+          <div
+            className="relative md:mb-[6.5%] md:mr-[7.5%]"
+            onClick={handleDivClick}
+            onChange={handleFileChange}
+          >
             <IconButton
               className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]
               lg:bottom-1 lg:right-1"
               style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
+
               // onClick={handleImage}
             >
               <Pencil color="white" width="12" height="10" />
+              <input ref={fileInputRef} type="file" className="hidden" />
             </IconButton>
           </div>
         </div>
