@@ -8,6 +8,7 @@ import myAccountReducer from "./features/myAccountSlice";
 import MpReducer from "./features/mpSlice";
 import CartArrReducer from "./features/arrayCartSlice";
 import fetchCoursesReducer from "./features/setCoursesSlice";
+import userImgReducer from "./features/userImgSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     mercadoPago: MpReducer,
     arrCartUser: CartArrReducer,
     fetchCourses: fetchCoursesReducer,
+    userImg: userImgReducer,
   },
 });
