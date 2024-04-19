@@ -9,6 +9,9 @@ import { fetchUser, fetchUserData } from "@/helpers/apiHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/state/features/authSlice";
 import { motion } from "framer-motion";
+import Loading_common from "@/common/Loading_common";
+import { setUserImg } from "@/state/features/userImgSlice";
+import Spin_loading from "@/common/Spin_loading";
 const MyData = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -34,15 +37,14 @@ const MyData = () => {
     isPasswordVisible: isPasswordVisible2,
     setIsPasswordVisible: setIsPasswordVisible2,
   } = useInput("password");
-  const [value, setValue] = useState("");
-  const [file, setFile] = useState({});
-  console.log(user);
+  const [loading, setLoading] = useState(false);
+  const { userImg } = useSelector((state) => state.userImg);
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
       const user = await fetchUser();
       const userData = await fetchUserData(user._id);
-      setValue(userData.profileImg);
+      dispatch(setUserImg(userData.profileImg));
       dispatch(setCredentials(user));
     };
 
@@ -52,21 +54,6 @@ const MyData = () => {
   const handleEditMode = () => {
     setChangePassword(!changePassword);
   };
-
-  // Pedido al back para cambiar la imagen
-  // const handleImage = async () => {
-  //   try {
-  //     await axios
-  //       .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user/updateImg`, {
-  //         mail: userData.mail,
-  //       })
-  //       .then((res) => setUserData({ ...userData, profileImg: res.data.img }))
-  //       .catch((error) => console.error(error));
-  //     // userData.profileImg = data.img;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   //Manejador de click de contraseña
   const handleClickEdit = async (e) => {
@@ -117,6 +104,8 @@ const MyData = () => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
 
+    setLoading(true);
+
     const formData = new FormData();
     formData.append("archivo", file);
     try {
@@ -129,17 +118,14 @@ const MyData = () => {
           },
         }
       );
-      console.log(userImage);
-      setValue(userImage.data.profileImg);
-      console.log(userImage.data.profileImg);
+
+      dispatch(setUserImg(userImage.data.profileImg));
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-
-    console.log(file);
-    console.log(formData);
   };
-  console.log(value);
 
   return (
     //Contenedor
@@ -151,13 +137,17 @@ const MyData = () => {
     >
       {/*Imagen e Icono*/}
       <div className="md:basis-[27.5%] flex justify-center items-center md:mr-6">
-        <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5 md:mt-2.5 ">
+        {/* Indicador de carga */}
+        <div className="flex flex-row justify-between md:absolute md:top-1 md:left-5 md:mt-2.5  ">
+          {loading && <Spin_loading />}
           <Image
-            src={value !== "" ? value : "/img/perfilDefault.png"}
+            src={userImg !== "" ? userImg : "/img/perfilDefault.png"}
             width={100}
             height={100}
             alt="Profile Image"
-            className="rounded-full w-[85px] h-[85px] md:w-[150px] md:h-[150px] lg:w-[190px] lg:h-[190px]"
+            className={`rounded-full w-[85px] h-[85px] md:w-[150px] md:h-[150px] lg:w-[190px] lg:h-[190px] ${
+              loading ? "opacity-25" : ""
+            }`}
           />
 
           <div
@@ -169,11 +159,14 @@ const MyData = () => {
               className="absolute bottom-0 right-0 bg-[#1E1E1E] items-center justify-center rounded-full w-[18px] h-[18px] md:w-[24px] md:h-[24px]
               lg:bottom-1 lg:right-1"
               style={{ boxShadow: "0px 4px 6px -2px rgba(0,0,0,0.75)" }}
-
-              // onClick={handleImage}
             >
               <Pencil color="white" width="12" height="10" />
-              <input ref={fileInputRef} type="file" className="hidden" />
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                accept=".png, .jpg, .jpeg, .gif, .avif"
+              />
             </IconButton>
           </div>
         </div>
