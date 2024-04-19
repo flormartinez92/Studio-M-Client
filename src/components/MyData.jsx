@@ -173,7 +173,12 @@ const MyData = () => {
               // onClick={handleImage}
             >
               <Pencil color="white" width="12" height="10" />
-              <input ref={fileInputRef} type="file" className="hidden" />
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                accept=".png, .jpg, .jpeg, .gif, .avif"
+              />
             </IconButton>
           </div>
         </div>
