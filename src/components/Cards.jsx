@@ -74,6 +74,7 @@ export default function Cards({
     }
     try {
       if (isBought) {
+        router.push(`/my-account/${courseId}`);
         throw new Error("Course already bought");
       }
       const cartItems = await axios.post(

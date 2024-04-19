@@ -1,3 +1,4 @@
+import { IoBookOutline } from "react-icons/io5";
 import Border from "./Border";
 import { Clock, Signal, Heart, CartShopPlusBgBlack, LineHeart } from "./Icons";
 import { useMediaQuery } from "@react-hook/media-query";
@@ -10,6 +11,7 @@ export default function CourseSummary({
   isFavorite = false,
   handleFavoriteClick,
   handleCartClick,
+  isBought = false,
 }) {
   const isLgBreakpoint = useMediaQuery("(min-width: 1024px)");
 
@@ -60,11 +62,22 @@ export default function CourseSummary({
             ${Number(price).toLocaleString().replace(",", ".")} USD
           </h5>
           <div className="cursor-pointer">
-            <CartShopPlusBgBlack
-              width={isLgBreakpoint ? "57px" : "45px"}
-              height={isLgBreakpoint ? "57px" : "45px"}
-              onClick={handleCartClick}
-            />
+            {isBought ? (
+              <div
+                onClick={handleCartClick}
+                className={`cursor-pointer flex justify-center items-center rounded-full bg-[#1E1E1E] 
+                  w-9 h-9 md:w-10 md:h-10
+                  drop-shadow-lg`}
+              >
+                <IoBookOutline className={`text-white text-lg md:text-xl`} />
+              </div>
+            ) : (
+              <CartShopPlusBgBlack
+                width={isLgBreakpoint ? "57px" : "45px"}
+                height={isLgBreakpoint ? "57px" : "45px"}
+                onClick={handleCartClick}
+              />
+            )}
           </div>
         </div>
       </div>
