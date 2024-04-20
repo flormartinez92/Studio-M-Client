@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
+import { IoBookOutline } from "react-icons/io5";
 
 export default function CardsDesktop({
   courseLongTitle,
@@ -195,6 +196,19 @@ export default function CardsDesktop({
                       {isCart1024Screen && (
                         <CartShopPlusBgBlack width={50} height={50} />
                       )}
+                    </div>
+                  ) : isBought ? (
+                    <div
+                      onClick={handleCartClick}
+                      className={`cursor-pointer flex justify-center items-center rounded-full bg-[#1E1E1E] ${
+                        isCart820Screen ? `w-9 h-9` : `w-10 h-10`
+                      }  drop-shadow-lg`}
+                    >
+                      <IoBookOutline
+                        className={`text-white ${
+                          isCart820Screen ? `text-lg` : `text-xl`
+                        }`}
+                      />
                     </div>
                   ) : (
                     <h2 className="lg:text-[19px]">
