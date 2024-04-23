@@ -28,13 +28,10 @@ export default function CardsMobile({ img, title, price, handleClickDelete }) {
     "only screen and (min-width : 768px) and (max-width : 820px)"
   );
 
-  //console.log(statusAnimated);
-
   return (
     <section
       className={`animate__animated animate__fadeInLeft flex flex-col justify-start items-center  select-none  w-[15rem] h-[16.5rem] `}
     >
-      {/* <Image src={img} layout="fill" objectFit="cover" /> */}
       <div className="w-full bg-buttonBlack h-14 text-[1.6rem] text-white font-mystery-mixed flex justify-center items-center rounded-t-[10px]">
         <div className="flex basis-[85%] text-[1.5rem] justify-center">
           {title}

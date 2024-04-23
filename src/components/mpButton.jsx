@@ -16,7 +16,6 @@ export default function MpButton({ cartCourses, orderId }) {
             orderId: orderId,
           }
         );
-        // console.log("---------------------------", res.data);
         const preferenceId = res.data.mpPreferenceID;
         setDataMp({ preferenceId });
       } catch (error) {
@@ -27,7 +26,6 @@ export default function MpButton({ cartCourses, orderId }) {
       createOrder();
     }
   }, [dataMp, orderId]);
-  // agregar cartCourses a la dependece
 
   return (
     <div>

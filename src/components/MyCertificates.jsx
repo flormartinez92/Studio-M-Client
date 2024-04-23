@@ -19,30 +19,10 @@ const MyCertificates = ({ decodedToken }) => {
   const endIndex = startIndex + certificatesPerPage;
   const { certificates } = useSelector((state) => state.myAccount);
 
-  //funcion para cuando se genere un certificado vaya cambiando el color
-  // const generateRandomColor = () => {
-  //   let colors = ["border-pink", "border-turquoise", "border-green"];
-  //   let randomColor = colors[Math.floor(Math.random() * 2)];
-  //   return randomColor
-  // }
-
-  //pedido al back para traer todos los certificados
   useEffect(() => {
     setUserCertificates(certificates);
-    /* if (decodedToken._id) {
-      try {
-        axios
-          .get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/${decodedToken._id}`
-          )
-          .then((res) => setUserCertificates(res.data));
-      } catch (error) {
-        console.error(error);
-      }
-    } */
   }, [certificates]);
 
-  //manejador para abrir una nueva ventana y descargar el PDF del certificado
   const handlePDFdownload = (userId, courseId) => {
     const pdfPath = `${process.env.NEXT_PUBLIC_API_URL}/api/user/certificate/download/${userId}/${courseId}`;
 

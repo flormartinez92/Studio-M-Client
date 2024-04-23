@@ -1,38 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cards from "./Cards";
-import axios from "axios";
-// import inputScroll from "@/hooks/useScroll";
 import IconButton from "@/common/IconButton";
 import { ArrowBlack1, ArrowBlack2 } from "@/common/Icons";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 
 const MyCourses = ({ decodedToken, arrCourses }) => {
-  //Estado para los cursos
   const [userCourses, setUserCourses] = useState([]);
   const [startCourse, setStartCourse] = useState(0);
   const cardsPerPage = 3;
   const { coursesUser } = useSelector((state) => state.myAccount);
 
-  //Pedido al back para traer los cursos de un usuario
-  /* useEffect(() => {
-    if (decodedToken._id) {
-      try {
-        axios
-          .get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/user/userCourses/${decodedToken._id}`
-          )
-          .then((res) => setUserCourses(res.data));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, []); */
-  //console.log(coursesUser);
   useEffect(() => {
-    /* console.log("sd");
-    console.log(coursesUser); */
     setUserCourses(coursesUser);
   }, [coursesUser]);
 

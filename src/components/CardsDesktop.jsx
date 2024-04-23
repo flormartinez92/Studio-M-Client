@@ -57,7 +57,6 @@ export default function CardsDesktop({
         >
           <h2 className="text-[1.4rem] lg:text-[1.8rem]">{courseLongTitle}</h2>
           {iconDelete && (
-            /* md:bottom-[.5rem] md:right-4 */
             <div
               className="absolute  right-4  font-mystery-mixed text-4xl"
               onClick={handleDelteCourse}
