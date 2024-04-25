@@ -24,7 +24,6 @@ export default function PurchasedCourseResume({ params }) {
   const getUser = async () => {
     try {
       const user = await fetchUser();
-      //console.log(user);
       dispatch(setCredentials(user));
 
       preferenceIdPayment(user._id);
@@ -49,14 +48,11 @@ export default function PurchasedCourseResume({ params }) {
           status: true,
         }
       );
-      //console.log(responseUpdateOrder);
       const responseCourses = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${userId}`
       );
-      //
 
       setCourseResume(responseCourses.data);
-      //console.log(userId);
       const responseConfirmBuy = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${userId}`
       );
@@ -68,15 +64,8 @@ export default function PurchasedCourseResume({ params }) {
     }
   };
   const preferenceIdPayment = async (UserID) => {
-    //console.log(routes.get("preference_id"));
-    //356814201-7e0a3387-3c12-4925-abf2-828a01e2947c
-    //console.log(user);
-
     if (routes.get("preference_id")) {
-      //console.log(routes.get("status") === "null");
       const dataQuery = routes.get("status") === "null" ? false : true;
-      //console.log(dataQuery);
-
       if (dataQuery) {
         await updateOrderMp(UserID);
       }
@@ -92,8 +81,6 @@ export default function PurchasedCourseResume({ params }) {
   }, [isLoadingPurchase]);
 
   useEffect(() => {
-    //console.log("asd");
-    //preferenceIdPayment(user?._id);
     dispatch(statusLoadingPurchase(false));
   }, []);
 

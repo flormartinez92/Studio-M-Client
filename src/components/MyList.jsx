@@ -20,7 +20,6 @@ import {
 } from "@/state/features/myAccountSlice";
 
 const MyList = ({ decodedToken }) => {
-  //Estado que setea los favoritos del usuario
   const [userFavorites, setUserFavorites] = useState([]);
   const [startCourse, setStartCourse] = useState(0);
   const [userCourses, setUserCourses] = useState([]);
@@ -31,10 +30,6 @@ const MyList = ({ decodedToken }) => {
   );
   const [showModal, setshowModal] = useState(false);
 
-  console.log("VER ESTO", favoritesUser);
-  console.log("ESTO ES USER FAV USE STATE", userFavorites);
-
-  //Pedido al back para trae los favoritos de un usuario
   useEffect(() => {
     setshowModal(alertDelete);
   }, [alertDelete]);
