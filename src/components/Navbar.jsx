@@ -53,6 +53,11 @@ export default function Navbar() {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+    if (!menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
   };
 
   const handleClick = (title) => {
@@ -74,7 +79,7 @@ export default function Navbar() {
   };
 
   return (
-    <>
+    <section>
       {menuOpen ? (
         <nav className="h-screen bg-[url(../../public/img/background.png)] bg-no-repeat bg-cover bg-center animate-navbar">
           <div className="flex items-center justify-end">
@@ -272,6 +277,6 @@ export default function Navbar() {
           </div>
         </nav>
       )}
-    </>
+    </section>
   );
 }
