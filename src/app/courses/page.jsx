@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/state/features/cartSlice";
 import Cards from "../../components/Cards";
 import { Arrow, ArrowBack, CartShopSimple, Vector } from "@/common/Icons";
+import { IoBookOutline } from "react-icons/io5";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import CardsDesktop from "@/components/CardsDesktop";
@@ -42,7 +43,6 @@ export default function Courses() {
   const [out, setout] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
-  const [isBoughtAlert, setIsBoughtAlert] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -137,7 +137,6 @@ export default function Courses() {
     setout(true);
     setTimeout(() => {
       setShowAlert(false);
-      setIsBoughtAlert(false);
       setout(false);
     }, 700);
   };
@@ -170,14 +169,6 @@ export default function Courses() {
 
   return (
     <section className={`h-full  ${loading ? "cursor-wait" : ""} relative`}>
-      {isBoughtAlert && (
-        <Alert_common
-          handleAlert={handleAlert}
-          out={out}
-          titleAlert="¡Ya tienes este curso comprado!"
-          classNameAlert="w-[300px] md:w-[400px] md:h-[100px] md:text-[1.1rem]"
-        />
-      )}
       {showAlert && (
         <Alert_common
           handleAlert={handleAlert}
@@ -215,7 +206,13 @@ export default function Courses() {
                 classNameButton="text-xl tracking-wider w-[120px] pl-[14px] pr-[14px] h-[90%] items-center"
                 buttonTitle="Ver curso"
                 classNameIconButton="h-[90%] pl-[15px] pr-[15px] pb-3 pt-3 bg-[#181717]"
-                icon={<CartShopSimple width={"16px"} height={"16px"} />}
+                icon={
+                  course.isBought ? (
+                    <IoBookOutline className="md:hidden text-white text-lg" />
+                  ) : (
+                    <CartShopSimple width={"16px"} height={"16px"} />
+                  )
+                }
                 isBought={course.isBought}
               />
             ))}
@@ -261,7 +258,7 @@ export default function Courses() {
                         coursePrice={course.coursePrice}
                         key={index}
                         notjustPrice={true}
-                        cartShopPlusBgBlack={true}
+                        cartShopPlusBgBlack={course.isBought ? false : true}
                         isBought={course.isBought}
                         isFavorite={course.isFavorite}
                         handleFavoriteClick={() =>
@@ -280,7 +277,7 @@ export default function Courses() {
                               setLoading,
                               setDeletingId,
                               course.isBought,
-                              setIsBoughtAlert
+                              () => router.push(`/my-account/${course._id}`)
                             );
                             await handleItemsCart();
                           } else {

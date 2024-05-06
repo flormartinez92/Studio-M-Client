@@ -8,22 +8,18 @@ import { updateStatus } from "@/state/features/mpSlice";
 export default function MpButtonIvan({ price, id }) {
   const dispatch = useDispatch();
   const [preferenceId, setPreferenceId] = useState(null);
-  //const status = useSelector((state) => state.mercadoPago.status);
-  //console.log(price);
   const [linkmp, setlinkmp] = useState("");
   initMercadoPago(process.env.NEXT_PUBLIC_KEY);
   const createOrder = async () => {
     setPreferenceId(null);
     try {
       const res = await axios.post(
-        `http://localhost:8081/api/paymentMp/create-order`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/paymentMp/create-order`,
         { quantity: 1, id, title: "Total ammount", price }
       );
-      //console.log(res);
 
       setPreferenceId(res.data.id);
       dispatch(updateStatus(res.data.id));
-      //console.log(res.data);
       setlinkmp(res.data.sandbox_init_point);
     } catch (error) {
       console.error(error);
@@ -39,13 +35,6 @@ export default function MpButtonIvan({ price, id }) {
     }
   }, [preferenceId]);
 
-  //console.log(linkmp);
-  {
-    /* <Wallet
-          initialization={{ preferenceId: preferenceId }}
-          onReady={() => console.log("LISTOOO")}
-        /> */
-  }
   return (
     <div className="h-14">
       {preferenceId && (

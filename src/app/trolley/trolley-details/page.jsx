@@ -36,19 +36,6 @@ export default function trolleyDetails() {
   const modalRef = useRef();
   const router = useRouter();
 
-  /* const handleCheck = async () => {
-    try {
-      const responseCart = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/confirmBuy/${user._id}`
-      );
-
-      localStorage.setItem("purchase", JSON.stringify(cartCourses));
-      router.push("/trolley/purchase-completed");
-    } catch (err) {
-      console.error(err);
-    }
-  }; */
-
   const resetDiscount = async () => {
     try {
       const user = await fetchUser();
@@ -165,26 +152,20 @@ export default function trolleyDetails() {
     }
   };
   const updateOrderMp = async (statusId, userId) => {
-    //console.log(userId);
     try {
       const responseUpdateOrder = await axios.put(
-        `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/updateOrder/${userId}`,
         {
           mpPreferenceID: statusId,
         }
       );
-      //console.log(responseUpdateOrder);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
     if (statusId) {
-      //console.log(statusId);
-      //console.log(user._id);
       updateOrderMp(statusId, user._id);
-      //buscar el id_user del usuario con status false
-      //
     }
   }, [statusId]);
 
@@ -284,13 +265,6 @@ export default function trolleyDetails() {
             <div
               className={`w-[60%]  max-w-[270px] mt-4 py-1  mb-[5rem] sm:mb-[8rem] sm:max-w-[270px]`}
             >
-              {/* <MpButton
-                cartCourses={cartCourses}
-                orderId={order._id}
-                statusbtn={refresh}
-              /> */}
-              {/* {JSON.stringify(cartAmount)} */}
-
               <MpButtonIvan
                 price={
                   cartAmount.totalDiscount !== 0

@@ -9,13 +9,14 @@ import Image from "next/image";
 
 export default function EditCourse() {
   const router = useRouter();
-
   const fileInputRef = useRef(null);
+
   const fileInputRef2 = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const [file, setFile] = useState({});
   const [file2, setFile2] = useState({});
+
   const [campos, setCampos] = useState([
     {
       moduleName: "",
@@ -23,9 +24,7 @@ export default function EditCourse() {
     },
   ]);
   const [classes, setClasses] = useState({});
-
   const [topics, setTopics] = useState({});
-
   const [value, setValue] = useState("");
   const [value2, setValue2] = useState("");
   const [editCourse, seteditCourse] = useState([]);
@@ -54,7 +53,6 @@ export default function EditCourse() {
     message: MessageSubtitle,
     setValue: setValueData3,
   } = useInput("course_add");
-
   const {
     OnChange: OnChangeDescription,
     value: valueDescription,
@@ -87,7 +85,6 @@ export default function EditCourse() {
     message: MessageCourseDuration,
     setValue: setValueData7,
   } = useInput("course_add");
-
   const {
     OnChange: OnChangeImage,
     value: valueImage,
@@ -155,7 +152,6 @@ export default function EditCourse() {
       modules: campos,
     };
 
-    //console.log(file.name);
     const formData = new FormData();
     if (!file || !file2) console.log("esta vacio");
     console.log(file);
@@ -177,12 +173,13 @@ export default function EditCourse() {
       formData.append("condicion", "3");
     } else {
       formData.append("archivo", file);
+
       formData.append("archivo2", file2);
       formData.append("condicion", "4");
+
     }
     const arrData = campos.map((idem, i) => {
       idem.topics.forEach((r, t) => {
-        console.log(!!classes[i]);
         //Condicion si la iteracion de classes es undefined
         if (!!classes[i]) {
           classes[i][t].forEach((b, n) => {
@@ -192,13 +189,10 @@ export default function EditCourse() {
       });
       return idem;
     });
-    /* const formData = new FormData();
-    formData.append("archivo", file); */
 
-    console.log(campos);
     try {
       const resp2 = await axios.put(
-        `http://localhost:8081/api/adminCourse/${editCourse._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/${editCourse._id}`,
         data
       );
       console.log(file);
@@ -215,7 +209,7 @@ export default function EditCourse() {
       console.log(resp);
       /* if (file.name) {
         const resp = await axios.put(
-          `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/updateImg/${resp2.data._id}`,
           formData,
           {
             headers: {
@@ -224,8 +218,12 @@ export default function EditCourse() {
           }
         );
 
+
         console.log(resp);
       } */
+
+      }
+
 
       setmessageAlertOk("Cambios realizados!");
       setTimeout(() => {
@@ -234,17 +232,8 @@ export default function EditCourse() {
         router.push("/active-courses");
         localStorage.removeItem("courseEdit");
       }, 1500);
-      /* const resp = await axios.put(
-        `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      ); */
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   const agregarCampo = () => {
@@ -255,20 +244,15 @@ export default function EditCourse() {
         topics: [{ topicName: "", classes: [] }],
       },
     ]);
-    //console.log(campos);
   };
   const agregarTema = (i, y) => {
-    console.log("agregando tema al modulo " + i);
     if (!topics[i]) topics[i] = [];
     const objs = { ...topics };
     objs[i].push("TEMA");
-    console.log(objs);
     setTopics(objs);
   };
 
   const agregarClasse = (i, x) => {
-    //console.log(i);
-
     if (!classes[i]) classes[i] = [];
     if (!classes[i][x]) classes[i][x] = [];
 
@@ -276,6 +260,7 @@ export default function EditCourse() {
     objs[i][x].push({ video_url: "", classInfo: "" });
     setClasses(objs);
   };
+
   const handleInputChange = (i, e) => {
     const nuevosCampos = [...campos];
     nuevosCampos[i][e.target.name] = e.target.value;
@@ -286,8 +271,8 @@ export default function EditCourse() {
     const objs = { ...classes };
     classes[i][c][p].classInfo = e.target.value;
     setClasses(objs);
-    console.log(classes);
   };
+
   const handleInputChangeUrlVideo = (e, i, c, p) => {
     const objs = { ...classes };
     classes[i][c][p].video_url = e.target.value;
@@ -300,8 +285,6 @@ export default function EditCourse() {
         topicName: "",
         classes: [],
       };
-
-    //console.log(campos[i]["topics"][c]?.topicName);
     const topic_name = [...campos];
     topic_name[i]["topics"][c].topicName = e.target.value;
     setCampos(topic_name);
@@ -309,11 +292,8 @@ export default function EditCourse() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log("Archivo seleccionado:", file);
-    //console.log(file);
     setFile(file);
     setValue(file.name);
-    // Puedes realizar otras acciones aquí, como cargar el archivo o procesarlo de alguna manera
   };
   const handleFileChange2 = (e) => {
     const file = e.target.files[0];
@@ -338,13 +318,9 @@ export default function EditCourse() {
   };
 
   useEffect(() => {
-    //console.log(edit);
-
     const courseInfo = localStorage.getItem("courseEdit");
     if (courseInfo) {
       const courseData = JSON.parse(courseInfo);
-      //console.log(courseData.courseImg_url.substring(0, 212));
-
       setValueData1(courseData.courseLongTitle);
       setValueData2(courseData.courseShortTitle);
       setValueData3(courseData.courseSubtitle);
@@ -357,13 +333,12 @@ export default function EditCourse() {
       setValueData10(courseData.projectAim);
 
       setValue("res.cloudinary.com");
+
       setValue2("res.cloudinary.com");
       //console.log(courseData);
       seteditCourse(courseData);
       setCampos(courseData.modules);
 
-      //console.log(courseData);
-      //console.log(topics);
       courseData.modules.forEach((module, i) => {
         const topicData = new Array(module.topics.length).fill("TEMA");
         const dataTopics = module.topics;
@@ -372,18 +347,13 @@ export default function EditCourse() {
           if (!classes[i][t]) classes[i][t] = info.classes;
 
           const objs = { ...classes };
-          /* objs[i][t].push({ video_url: "", classInfo: "" }); */
           setClasses(objs);
-
-          /* console.log(info.classes);
-          console.log({ [i]: "PROBANDO" }); */
         });
 
         if (!topics[i]) topics[i] = topicData;
         const objs = { ...topics };
         setTopics(objs);
       });
-      //console.log(courseData.modules);
     }
   }, []);
 
@@ -706,8 +676,6 @@ export default function EditCourse() {
             </div>
             <div className="flex flex-col w-[100%] h-auto gap-y-4">
               {campos.map((e, i) => {
-                //console.log(`course_add_${i}`);
-
                 return (
                   <div className="w-[100%]  py-4" key={i}>
                     <Input

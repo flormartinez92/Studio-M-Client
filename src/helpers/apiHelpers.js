@@ -89,7 +89,7 @@ export const handleCartClick = async (
   setLoading,
   setDeletingId,
   isBought,
-  setIsBoughtAlert
+  redirect
 ) => {
   try {
     setLoading(true);
@@ -109,7 +109,7 @@ export const handleCartClick = async (
     }, 2500);
   } catch (error) {
     if (isBought) {
-      setIsBoughtAlert(true);
+      redirect();
     } else {
       setShowAlert(true);
     }
@@ -134,7 +134,7 @@ export const fetchUserProject = async (userId) => {
 export const setTransactionId = async (transactionId = "", userId = "") => {
   try {
     const updateOrder = await axios.put(
-      `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/updateOrder/${userId}`,
       { transactionID: transactionId }
     );
 
@@ -148,9 +148,6 @@ export const setTransactionId = async (transactionId = "", userId = "") => {
 };
 
 export const paypalCheckPayment = async (transactionID = "", userId = "") => {
-  //console.log({ transactionID });
-  //console.log({ id_user });
-
   const authToken = await getPaypalBearerToken();
   if (!authToken) {
     return {
@@ -168,10 +165,9 @@ export const paypalCheckPayment = async (transactionID = "", userId = "") => {
   }
 
   const updateOrder = await axios.put(
-    `http://localhost:8081/api/purchaseOrder/updateOrder/${userId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/updateOrder/${userId}`,
     { status: true }
   );
-  //console.log(updateOrder);
 };
 
 const getPaypalBearerToken = async () => {

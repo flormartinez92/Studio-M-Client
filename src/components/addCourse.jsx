@@ -157,7 +157,6 @@ export default function AddCourse() {
 
     const arrData = campos.map((idem, i) => {
       idem.topics.forEach((r, t) => {
-        console.log(!!classes[i]);
         //Condicion si la iteracion de classes es undefined
         if (!!classes[i]) {
           classes[i][t].forEach((b, n) => {
@@ -167,7 +166,6 @@ export default function AddCourse() {
       });
       return idem;
     });
-    //console.log(arrData);
 
     const data = {
       courseLongTitle: valueTitleLong,
@@ -186,11 +184,12 @@ export default function AddCourse() {
 
     try {
       const resp2 = await axios.post(
-        "http://localhost:8081/api/adminCourse/add",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/add`,
         data
       );
       const resp = await axios.put(
-        `http://localhost:8081/api/adminCourse/createImg/${resp2.data._id}`,
+
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/createImg/${resp2.data._id}`,
         formData,
         {
           headers: {
@@ -211,12 +210,11 @@ export default function AddCourse() {
       setTimeout(() => {
         setmessageAlertOk("");
       }, 2000);
-
-      console.log(resp);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+
   const agregarCampo = () => {
     setCampos([
       ...campos,
@@ -225,20 +223,16 @@ export default function AddCourse() {
         topics: [{ topicName: "", classes: [] }],
       },
     ]);
-    //console.log(campos);
   };
+
   const agregarTema = (i, y) => {
-    console.log("agregando tema al modulo " + i);
     if (!topics[i]) topics[i] = [];
     const objs = { ...topics };
     objs[i].push("TEMA");
-    console.log(objs);
     setTopics(objs);
   };
 
   const agregarClasse = (i, x) => {
-    //console.log(i);
-
     if (!classes[i]) classes[i] = [];
     if (!classes[i][x]) classes[i][x] = [];
 
@@ -246,6 +240,7 @@ export default function AddCourse() {
     objs[i][x].push({ video_url: "", classInfo: "" });
     setClasses(objs);
   };
+
   const handleInputChange = (i, e) => {
     const nuevosCampos = [...campos];
     nuevosCampos[i][e.target.name] = e.target.value;
@@ -257,6 +252,7 @@ export default function AddCourse() {
     classes[i][c][p].classInfo = e.target.value;
     setClasses(objs);
   };
+
   const handleInputChangeUrlVideo = (e, i, c, p) => {
     const objs = { ...classes };
     classes[i][c][p].video_url = e.target.value;
@@ -270,7 +266,6 @@ export default function AddCourse() {
         classes: [],
       };
 
-    //console.log(campos[i]["topics"][c]?.topicName);
     const topic_name = [...campos];
     topic_name[i]["topics"][c].topicName = e.target.value;
     setCampos(topic_name);
@@ -278,11 +273,8 @@ export default function AddCourse() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log("Archivo seleccionado:", file);
-    //console.log(file);
     setFile(file);
     setValue(file.name);
-    // Puedes realizar otras acciones aquí, como cargar el archivo o procesarlo de alguna manera
   };
   const handleFileChange2 = (e) => {
     const file = e.target.files[0];
@@ -624,8 +616,6 @@ export default function AddCourse() {
             </div>
             <div className="flex flex-col w-[100%] h-auto gap-y-4">
               {campos.map((e, i) => {
-                //console.log(`course_add_${i}`);
-
                 return (
                   <div className="w-[100%]  py-4" key={i}>
                     <Input

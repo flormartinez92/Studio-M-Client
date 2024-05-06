@@ -80,7 +80,6 @@ export default function ModalCommentProject({ status, closeModal, projectId }) {
         dialofRef.current &&
         !dialofRef.current.contains(event.target)
       ) {
-        console.log("Cerrando modal con click por fuera");
         closeModal();
       }
     };

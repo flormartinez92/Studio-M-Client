@@ -116,12 +116,10 @@ export default function Trolley() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/purchaseOrder/add`,
         { userId: data.userId, totalAmmount: data.totalAmount }
       );
-      //console.log(createOrder);
       router.push("/trolley/trolley-details");
     } catch (error) {
       console.log(error);
     }
-    //router.push("/trolley/trolley-details");
   };
 
   return (
