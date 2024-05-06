@@ -11,11 +11,11 @@ export default function EditCourse() {
   const router = useRouter();
 
   const fileInputRef = useRef(null);
-
+  const fileInputRef2 = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
   const [file, setFile] = useState({});
-
+  const [file2, setFile2] = useState({});
   const [campos, setCampos] = useState([
     {
       moduleName: "",
@@ -27,7 +27,9 @@ export default function EditCourse() {
   const [topics, setTopics] = useState({});
 
   const [value, setValue] = useState("");
+  const [value2, setValue2] = useState("");
   const [editCourse, seteditCourse] = useState([]);
+
   const {
     OnChange: OnChangeTitleLong,
     value: valueTitleLong,
@@ -155,11 +157,28 @@ export default function EditCourse() {
 
     //console.log(file.name);
     const formData = new FormData();
-    if (!file) console.log("esta vacio");
-    if (!value) return;
-    if (file.name) {
+    if (!file || !file2) console.log("esta vacio");
+    console.log(file);
+    console.log(file2);
+    if (!value || !value2) return;
+
+    if (!file.name && !file2.name) {
+      //console.log("estoy aca");
+      formData.append("archivo", "");
+      formData.append("archivo2", "");
+      formData.append("condicion", "1");
+    } else if (file.name && !file2.name) {
       formData.append("archivo", file);
-      //console.log(file);
+      formData.append("archivo2", "");
+      formData.append("condicion", "2");
+    } else if (!file.name && file2.name) {
+      formData.append("archivo", "");
+      formData.append("archivo2", file2);
+      formData.append("condicion", "3");
+    } else {
+      formData.append("archivo", file);
+      formData.append("archivo2", file2);
+      formData.append("condicion", "4");
     }
     const arrData = campos.map((idem, i) => {
       idem.topics.forEach((r, t) => {
@@ -182,7 +201,19 @@ export default function EditCourse() {
         `http://localhost:8081/api/adminCourse/${editCourse._id}`,
         data
       );
-      if (file.name) {
+      console.log(file);
+      const resp = await axios.put(
+        `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(resp);
+      /* if (file.name) {
         const resp = await axios.put(
           `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
           formData,
@@ -194,7 +225,7 @@ export default function EditCourse() {
         );
 
         console.log(resp);
-      }
+      } */
 
       setmessageAlertOk("Cambios realizados!");
       setTimeout(() => {
@@ -284,11 +315,25 @@ export default function EditCourse() {
     setValue(file.name);
     // Puedes realizar otras acciones aquí, como cargar el archivo o procesarlo de alguna manera
   };
+  const handleFileChange2 = (e) => {
+    const file = e.target.files[0];
+    console.log("Archivo seleccionado:", file);
+    //console.log(file);
+    setFile2(file);
+    setValue2(file.name);
+    // Puedes realizar otras acciones aquí, como cargar el archivo o procesarlo de alguna manera
+  };
 
   const handleDivClick = () => {
     // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
     if (fileInputRef.current) {
       fileInputRef.current.click();
+    }
+  };
+  const handleDivClick2 = () => {
+    // Programáticamente hacer clic en el input de tipo file cuando se hace clic en el div
+    if (fileInputRef2.current) {
+      fileInputRef2.current.click();
     }
   };
 
@@ -312,6 +357,7 @@ export default function EditCourse() {
       setValueData10(courseData.projectAim);
 
       setValue("res.cloudinary.com");
+      setValue2("res.cloudinary.com");
       //console.log(courseData);
       seteditCourse(courseData);
       setCampos(courseData.modules);
@@ -538,7 +584,7 @@ export default function EditCourse() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-x-3 w-auto">
-            <div className="w-full basis-[50%]">
+            <div className="w-full basis-[33.3%]">
               <div className="flex flex-col justify-center">
                 <p className="block text-[1.21rem] font-mystery-mixed mb-1">
                   Carga de Imagen
@@ -579,7 +625,48 @@ export default function EditCourse() {
                 )}
               </div>
             </div>
-            <div className="w-full basis-[50%] ">
+            <div className="w-full basis-[33.3%]">
+              <div className="flex flex-col justify-center">
+                <p className="block text-[1.21rem] font-mystery-mixed mb-1">
+                  Carga de Imagen Pequeña
+                </p>
+                <div
+                  className="border h-[40px] bg-buttonBlack p-4 cursor-pointer flex gap-x-5 text-letterWhite justify-center items-center "
+                  onClick={handleDivClick2}
+                >
+                  <h1>Selecciona un archivo</h1>
+
+                  <h1>
+                    {value2 == "" ? (
+                      <Image
+                        src={"/svg/bx-file-blank.svg"}
+                        width={24}
+                        height={24}
+                        className=""
+                        alt="SVG Icon"
+                      />
+                    ) : (
+                      value2
+                    )}
+                  </h1>
+
+                  <input
+                    type="file"
+                    ref={fileInputRef2} // Ref para acceder al input de tipo file
+                    className="hidden" // Ocultar el input, ya que haremos clic en él programáticamente
+                    onChange={handleFileChange2}
+                  />
+                </div>
+              </div>
+              <div className="h-[.5rem] mb-2">
+                {MessageImage && (
+                  <p className="text-red text-[.9rem] leading-3">
+                    {MessageImage}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="w-full basis-[33.3%] ">
               <Input
                 className={"flex-none"}
                 label={"Duracion del curso"}

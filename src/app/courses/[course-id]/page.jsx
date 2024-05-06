@@ -165,23 +165,18 @@ export default function CourseInformation({ params }) {
               <h2 className="font-mystery-mixed min-[280px]:text-3xl min-[390px]:text-4xl -rotate-3">
                 {course.courseShortTitle}
               </h2>
-              <div className="relative">
-                <Image
-                  src={"/img/papersmall.png"}
-                  width={"100"}
-                  height={"100"}
-                  alt="FOTO"
-                ></Image>
+
+              <div>
                 <Image
                   src={
-                    course.courseImg_url
-                      ? course.courseImg_url
+                    course.courseImgSmall_url
+                      ? course.courseImgSmall_url
                       : "https://res.cloudinary.com/dpgnbh7ok/image/upload/v1699647575/zkchfhesmwxg2zyts45u.jpg"
                   }
-                  width={"69"}
-                  height={"69"}
+                  width={"90"}
+                  height={"100"}
                   alt="FOTO"
-                  className="h-full max-h-[69px] absolute top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  className="h-full max-h-[69px]"
                 ></Image>
               </div>
             </div>

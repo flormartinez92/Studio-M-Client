@@ -16,6 +16,7 @@ import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
 import CartAlert_common from "@/common/CartAlert";
 import { useRouter } from "next/navigation";
+import { TbShoppingCartOff } from "react-icons/tb";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
@@ -25,24 +26,52 @@ export default function Intro() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
+  console.log(user);
+
+  const allCoursesFetch = async () => {
+    const responseCourses = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`
+    );
+    const courses = responseCourses.data.map(
+      ({ _id, courseShortTitle, courseImg_url }) => ({
+        _id,
+        courseShortTitle,
+        courseImg_url,
+      })
+    );
+    setValue(courses);
+  };
+  const allCoursesUserFetch = async (dataUser) => {
+    const responseCourses = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses-user/${dataUser?._id}`
+    );
+    const courses = responseCourses.data.map(
+      ({ _id, courseShortTitle, courseImg_url, statusPurchase }) => ({
+        _id,
+        courseShortTitle,
+        courseImg_url,
+        statusPurchase,
+      })
+    );
+    console.log(responseCourses);
+    setValue(courses);
+  };
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/course/all-courses`
-      );
-
-      const courses = response.data.map(
-        ({ _id, courseShortTitle, courseImg_url }) => ({
-          _id,
-          courseShortTitle,
-          courseImg_url,
-        })
-      );
-      setValue(courses);
-    } catch (err) {
-      console.error(err);
+    const dataUser = await fetchUser();
+    if (!dataUser) {
+      return await allCoursesFetch();
     }
+    dispatch(
+      setCredentials({
+        dni: dataUser.dni,
+        name: dataUser.name,
+        lastname: dataUser.lastname,
+        mail: dataUser.mail,
+        id: dataUser._id,
+      })
+    );
+    return await allCoursesUserFetch(dataUser);
   };
 
   const cartUser = async () => {
@@ -54,7 +83,7 @@ export default function Intro() {
       dispatch(setCredentials(user));
 
       const responseCart = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?._id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/courses/${user?.id}`
       );
       dispatch(addToCart(responseCart.data.length));
     } catch (error) {
@@ -62,7 +91,8 @@ export default function Intro() {
     }
   };
 
-  const addCourseCart = async (id_curse) => {
+  const addCourseCart = async (id_curse, statusPurchase) => {
+    if (statusPurchase) return;
     try {
       const responseAddCart = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`,
@@ -224,13 +254,27 @@ export default function Intro() {
                                     </Link>
                                     <Button
                                       className={`py-2 px-2 flex items-center`}
-                                      onClick={() =>
-                                        user
+                                      onClick={() => {
+                                        if (user) {
+                                          addCourseCart(
+                                            item._id,
+                                            item.statusPurchase
+                                          );
+                                          //console.log(item.statusPurchase);
+                                        } else {
+                                          router.push("/login");
+                                        }
+                                        /* user
                                           ? addCourseCart(item._id)
-                                          : router.push("/login")
-                                      }
+                                          : router.push("/login"); */
+                                      }}
                                     >
-                                      {<CartShopSimple />}
+                                      {item.statusPurchase ? (
+                                        <TbShoppingCartOff />
+                                      ) : (
+                                        <CartShopSimple />
+                                      )}
+                                      {/* {<CartShopSimple />} */}
                                     </Button>
                                   </Border>
                                 </div>
@@ -290,9 +334,23 @@ export default function Intro() {
                         </Button>
                         <Button
                           className={`py-2 px-2 flex items-center`}
-                          onClick={() => addCourseCart(item._id)}
+                          onClick={() => {
+                            if (user) {
+                              addCourseCart(item._id, item.statusPurchase);
+                              //console.log(item.statusPurchase);
+                            } else {
+                              router.push("/login");
+                            }
+                            /* user
+                              ? addCourseCart(item._id)
+                              : router.push("/login"); */
+                          }}
                         >
-                          {<CartShopSimple />}
+                          {item.statusPurchase ? (
+                            <TbShoppingCartOff />
+                          ) : (
+                            <CartShopSimple />
+                          )}
                         </Button>
                       </Border>
                     </div>
@@ -391,7 +449,7 @@ export default function Intro() {
           <h2 className="font-mystery-mixed text-[1.2rem] min-[400px]:text-[1.5rem] min-[500px]:text-[1.8rem] min-[600px]:text-[2rem] md:text-[1.9rem] lg:text-[3.2rem] xl:text-[3.5rem] pb-[2px] leading-5 lg:leading-3">
             Cuenta con el apoyo de
           </h2>
-          <div className="relative mb-[4rem] hidden md:block translate-y-[2.6rem]">
+          {/* <div className="relative mb-[4rem] hidden md:block translate-y-[2.6rem]">
             <div className="flex w-full items-end gap-x-7 min-[1500px]:mt-4">
               <Image
                 src={"/img/image1.png"}
@@ -408,10 +466,10 @@ export default function Intro() {
                 alt="image2"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="relative flex flex-col items-center justify-center mb-[4rem] md:hidden">
+      {/* <div className="relative flex flex-col items-center justify-center mb-[4rem] md:hidden">
         <Image
           src={"/img/image1.png"}
           width={200}
@@ -426,7 +484,7 @@ export default function Intro() {
           className="w-[5rem] min-[450px]:w-[6rem] min-[550px]:w-[7rem] h-full"
           alt="image2"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
