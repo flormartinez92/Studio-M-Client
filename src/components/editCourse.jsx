@@ -10,7 +10,6 @@ import Image from "next/image";
 export default function EditCourse() {
   const router = useRouter();
   const fileInputRef = useRef(null);
-
   const fileInputRef2 = useRef(null);
   const [messageAlert, setmessageAlert] = useState("");
   const [messageAlertOk, setmessageAlertOk] = useState("");
@@ -196,7 +195,7 @@ export default function EditCourse() {
       );
       console.log(file);
       const resp = await axios.put(
-        `http://localhost:8081/api/adminCourse/updateImg/${resp2.data._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/adminCourse/updateImg/${resp2.data._id}`,
         formData,
         {
           headers: {
