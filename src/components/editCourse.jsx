@@ -176,7 +176,6 @@ export default function EditCourse() {
 
       formData.append("archivo2", file2);
       formData.append("condicion", "4");
-
     }
     const arrData = campos.map((idem, i) => {
       idem.topics.forEach((r, t) => {
@@ -221,9 +220,6 @@ export default function EditCourse() {
 
         console.log(resp);
       } */
-
-      }
-
 
       setmessageAlertOk("Cambios realizados!");
       setTimeout(() => {
