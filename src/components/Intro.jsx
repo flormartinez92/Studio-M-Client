@@ -113,6 +113,7 @@ export default function Intro() {
         setShowAlert(true);
       }
     }
+    /*  sd*/
   };
 
   useEffect(() => {
@@ -449,6 +450,7 @@ export default function Intro() {
           <h2 className="font-mystery-mixed text-[1.2rem] min-[400px]:text-[1.5rem] min-[500px]:text-[1.8rem] min-[600px]:text-[2rem] md:text-[1.9rem] lg:text-[3.2rem] xl:text-[3.5rem] pb-[2px] leading-5 lg:leading-3">
             Cuenta con el apoyo de
           </h2>
+
           {/* <div className="relative mb-[4rem] hidden md:block translate-y-[2.6rem]">
             <div className="flex w-full items-end gap-x-7 min-[1500px]:mt-4">
               <Image
