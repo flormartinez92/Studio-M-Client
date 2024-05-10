@@ -16,7 +16,7 @@ import { setCredentials } from "@/state/features/authSlice";
 import { addToCart } from "@/state/features/cartSlice";
 import CartAlert_common from "@/common/CartAlert";
 import { useRouter } from "next/navigation";
-import { TbShoppingCartOff } from "react-icons/tb";
+import { IoBookOutline } from "react-icons/io5";
 
 export default function Intro() {
   const [value, setValue] = useState([]);
@@ -26,7 +26,6 @@ export default function Intro() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
-  console.log(user);
 
   const allCoursesFetch = async () => {
     const responseCourses = await axios.get(
@@ -53,7 +52,6 @@ export default function Intro() {
         statusPurchase,
       })
     );
-    console.log(responseCourses);
     setValue(courses);
   };
 
@@ -92,8 +90,11 @@ export default function Intro() {
   };
 
   const addCourseCart = async (id_curse, statusPurchase) => {
-    if (statusPurchase) return;
     try {
+      if (statusPurchase) {
+        router.push(`/my-account/${id_curse}`);
+        throw new Error("Course already bought");
+      }
       const responseAddCart = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`,
         {
@@ -109,11 +110,10 @@ export default function Intro() {
       dispatch(addToCart(responseAddCart.data.courseId.length));
     } catch (error) {
       console.error(error);
-      if (error.response.data === "Course already in the cart") {
+      if (error.response?.data === "Course already in the cart") {
         setShowAlert(true);
       }
     }
-    /*  sd*/
   };
 
   useEffect(() => {
@@ -261,21 +261,16 @@ export default function Intro() {
                                             item._id,
                                             item.statusPurchase
                                           );
-                                          //console.log(item.statusPurchase);
                                         } else {
                                           router.push("/login");
                                         }
-                                        /* user
-                                          ? addCourseCart(item._id)
-                                          : router.push("/login"); */
                                       }}
                                     >
                                       {item.statusPurchase ? (
-                                        <TbShoppingCartOff />
+                                        <IoBookOutline />
                                       ) : (
                                         <CartShopSimple />
                                       )}
-                                      {/* {<CartShopSimple />} */}
                                     </Button>
                                   </Border>
                                 </div>
@@ -338,17 +333,13 @@ export default function Intro() {
                           onClick={() => {
                             if (user) {
                               addCourseCart(item._id, item.statusPurchase);
-                              //console.log(item.statusPurchase);
                             } else {
                               router.push("/login");
                             }
-                            /* user
-                              ? addCourseCart(item._id)
-                              : router.push("/login"); */
                           }}
                         >
                           {item.statusPurchase ? (
-                            <TbShoppingCartOff />
+                            <IoBookOutline />
                           ) : (
                             <CartShopSimple />
                           )}
