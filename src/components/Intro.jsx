@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import inputScroll from "@/hooks/useScroll";
+import InputScroll from "@/hooks/useScroll";
 import Border from "@/common/Border";
 import Button from "@/common/Button";
 import Alert_common from "@/common/Alert_common";
@@ -127,7 +127,7 @@ export default function Intro() {
     handleMouseLeave: LeaveScroll_1,
     handleMouseMove: MoveScroll_1,
     handleMouseUp: MouseUpScroll_1,
-  } = inputScroll();
+  } = InputScroll();
 
   const {
     containerRef: ContainerScroll_2,
@@ -135,7 +135,7 @@ export default function Intro() {
     handleMouseLeave: LeaveScroll_2,
     handleMouseMove: MoveScroll_2,
     handleMouseUp: MouseUpScroll_2,
-  } = inputScroll();
+  } = InputScroll();
 
   const handleAlert = () => {
     setout(true);
