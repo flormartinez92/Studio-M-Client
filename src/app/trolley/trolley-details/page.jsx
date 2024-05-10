@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MpButton from "@/components/mpButton";
 import MpButtonIvan from "@/components/mpButtonIvan";
 
-export default function trolleyDetails() {
+export default function TrolleyDetails() {
   const [{ isPending }] = usePayPalScriptReducer();
   const [cartCourses, setCartCourses] = useState([]);
   const [cartAmount, setCartAmount] = useState({});

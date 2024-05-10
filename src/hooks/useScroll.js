@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-function inputScroll() {
+function InputScroll() {
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   let isDragging = false;
@@ -37,4 +37,4 @@ function inputScroll() {
   };
 }
 
-export default inputScroll;
+export default InputScroll;
