@@ -159,7 +159,6 @@ export default function Cover() {
                 </Link>
               </li>
             </ul>
-
             <div className=" mx-auto  mb-[60px] mt-[4rem] relative">
               <Image
                 src="/img/pink-square.png"

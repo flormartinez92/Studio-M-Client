@@ -132,7 +132,7 @@ export default function Navbar() {
                 </Link>
               </li>
               {user && (
-                <li className="mx-[6rem]">
+                <li className="mx-[6rem] mb-6">
                   <Link
                     href="/"
                     className="text-[50px] text-white font-mystery-mixed"
