@@ -61,6 +61,7 @@ export default function Navbar() {
   };
 
   const handleClick = (title) => {
+    document.body.style.overflow = "";
     setTitle(title);
     setMenuOpen(false);
   };
