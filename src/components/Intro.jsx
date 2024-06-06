@@ -323,11 +323,13 @@ export default function Intro() {
                       <Border
                         className={`flex gap-0.5 w-auto h-auto absolute bottom-2 left-1/2 transform -translate-x-1/2 border-pink border-[1px] p-1 ${""}`}
                       >
-                        <Button
-                          className={`font-mystery-mixed py-2 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
-                        >
-                          {"Ver curso"}
-                        </Button>
+                        <Link href={`/courses/${item._id}`}>
+                          <Button
+                            className={`font-mystery-mixed py-3 px-3 whitespace-nowrap flex items-center text-[1.19rem] leading-3`}
+                          >
+                            {"Ver curso"}
+                          </Button>
+                        </Link>
                         <Button
                           className={`py-2 px-2 flex items-center`}
                           onClick={() => {

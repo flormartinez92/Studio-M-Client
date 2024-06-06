@@ -163,7 +163,7 @@ export default function CourseInformation({ params }) {
                       ? course.courseImgSmall_url
                       : "https://res.cloudinary.com/dpgnbh7ok/image/upload/v1699647575/zkchfhesmwxg2zyts45u.jpg"
                   }
-                  width={"90"}
+                  width={"80"}
                   height={"100"}
                   alt="FOTO"
                   className="h-full max-h-[69px]"
